@@ -1,7 +1,17 @@
-import headerView from "views/headerView";
+// Import libs
+import 'jquery';
+import 'underscore';
+import 'backbone';
 
-var vibe = function() {
-	// Run the app
-};
+import Router from 'router';
 
-vibe();
+import AppView from 'views/AppView';
+
+window.Vibe = window.Vibe || {};
+
+$(function() {
+	window.Vibe.appView = new AppView();
+	window.Vibe.appView.render();
+
+	Router.init();
+});

@@ -1,12 +1,19 @@
 define("vibe", 
-  ["views/headerView"],
-  function(__dependency1__) {
+  ["jquery","underscore","backbone","router","views/AppView"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__) {
     "use strict";
-    var headerView = __dependency1__["default"];
+    // Import libs
 
-    var vibe = function() {
-    	// Run the app
-    };
+    var Router = __dependency4__["default"];
 
-    vibe();
+    var AppView = __dependency5__["default"];
+
+    window.Vibe = window.Vibe || {};
+
+    $(function() {
+    	window.Vibe.appView = new AppView();
+    	window.Vibe.appView.render();
+
+    	Router.init();
+    });
   });

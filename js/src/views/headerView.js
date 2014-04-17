@@ -2,6 +2,14 @@
 // 
 // Future home of the header view
 
-var headerView = function() {};
+import 'backbone';
+import 'jquery';
 
-export default = headerView;
+var HeaderView = Backbone.View.extend({
+	className: 'test',
+	render: function() {
+		this.$el.html('i am a test');
+	}
+});
+
+export default = HeaderView;
