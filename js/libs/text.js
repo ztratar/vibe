@@ -1,1 +1,1 @@
-../node_modules/text/text.js
+../../node_modules/text/text.js

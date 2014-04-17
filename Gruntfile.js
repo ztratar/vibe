@@ -15,9 +15,9 @@ module.exports = function(grunt) {
 		copy: {
 			main: {
 				expand: true,
-				cwd: 'src/templates/',
+				cwd: 'js/src/templates/',
 				src: '**',
-				dest: 'build/templates/',
+				dest: 'js/build/templates/',
 				filter: 'isFile'
 			}
 		},
@@ -26,9 +26,9 @@ module.exports = function(grunt) {
 				type: "amd", // or "amd" or "yui"
 				files: [{
 					expand: true,
-					cwd: 'src/',
+					cwd: 'js/src/',
 					src: ['**/*.js'],
-					dest: 'build/'
+					dest: 'js/build/'
 				}]
 			}
 		}
