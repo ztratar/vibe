@@ -7,4 +7,5 @@ require.config({
 		backbone: '../libs/backbone'
 	}
 });
+
 require(['vibe']);

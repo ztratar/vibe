@@ -13,6 +13,9 @@ module.exports = function(grunt) {
 	//
 	// (4) Run 'grunt' in the command line
 	//
+	// Note: js/libs should be symlinking to specific files
+	//       in node_module directories
+	//
 	// -----------------------------------------------------------
 
 	// Load NPM Tasks
@@ -47,8 +50,8 @@ module.exports = function(grunt) {
 			main: {
 				files: {
 					'css/all.css': [
-						'less/all.less',
-						'bower_components/bootstrap/less/bootstrap.less'
+						'bower_components/bootstrap/less/bootstrap.less',
+						'less/all.less'
 					]
 				}
 			}

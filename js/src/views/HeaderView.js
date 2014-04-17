@@ -1,14 +1,10 @@
-// headerView.js
-// 
-// Future home of the header view
-
 import 'backbone';
 import 'jquery';
 
 var HeaderView = Backbone.View.extend({
-	className: 'test',
+	className: 'header-view',
 	render: function() {
-		this.$el.html('i am a test');
+		this.$el.html('header');
 	}
 });
 

@@ -11,5 +11,6 @@ define("start",
     		backbone: '../libs/backbone'
     	}
     });
+
     require(['vibe']);
   });
