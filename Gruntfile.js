@@ -10,6 +10,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-es6-module-transpiler');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -43,6 +44,16 @@ module.exports = function(grunt) {
 				files: {
 					'css/all.css': 'less/all.less'
 				}
+			}
+		},
+		watch: {
+			css: {
+				files: ['less/**'],
+				tasks: 'less'
+			},
+			js: {
+				files: ['js/src/**'],
+				tasks: ['copy', 'transpile']
 			}
 		}
 	});
