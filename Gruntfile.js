@@ -1,10 +1,19 @@
 module.exports = function(grunt) {
 
+	// -----------------------------------------------------------
+	//
 	// Getting Started:
 	//
 	// (1) NPM Install the required dependencies in the
-	// package.json dir to ./node_modules
-	// (2) Run 'grunt' in the command line to transpile JS
+	//     package.json dir to ./node_modules (npm install)
+	//
+	// (2) Install bower globally (npm install -g bower)
+	//
+	// (3) Install bootstrap (bower install bootstrap)
+	//
+	// (4) Run 'grunt' in the command line
+	//
+	// -----------------------------------------------------------
 
 	// Load NPM Tasks
 	grunt.loadNpmTasks('grunt-es6-module-transpiler');
