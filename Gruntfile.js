@@ -35,14 +35,12 @@ module.exports = function(grunt) {
 			}
 		},
 		less: {
-			development: {
+			main: {
 				files: {
-					'css/all.css': 'less/all.less'
-				}
-			},
-			production: {
-				files: {
-					'css/all.css': 'less/all.less'
+					'css/all.css': [
+						'less/all.less',
+						'bower_components/bootstrap/less/bootstrap.less'
+					]
 				}
 			}
 		},
