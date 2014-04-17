@@ -5,7 +5,6 @@ define("vibe",
     // Import libs
 
     var Router = __dependency4__["default"];
-
     var AppView = __dependency5__["default"];
 
     window.Vibe = window.Vibe || {};

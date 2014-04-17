@@ -4,7 +4,6 @@ import 'underscore';
 import 'backbone';
 
 import Router from 'router';
-
 import AppView from 'views/AppView';
 
 window.Vibe = window.Vibe || {};
