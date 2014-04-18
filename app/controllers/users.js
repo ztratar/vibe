@@ -82,23 +82,6 @@ exports.create = function (req, res) {
     });
 }
 
-/**
- *  Show profile
- */
-
-exports.show = function (req, res) {
-  User
-    .findOne({ _id : req.params['userId'] })
-    .exec(function (err, user) {
-      if (err) return next(err)
-      if (!user) return next(new Error('Failed to load User ' + id))
-
-      res.render('users/show', {
-        title: user.name,
-        user: user
-      })    
-    });  
-}
 
 /**
  * Find user by id
