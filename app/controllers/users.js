@@ -31,10 +31,14 @@ exports.authCallback = function (req, res, next) {
  */
 
 exports.login = function (req, res) {
-  res.render('users/login', {
-    title: 'Login',
-    message: req.flash('error')
-  });
+  if(req.isAuthenticated){
+    res.redirect('/');
+  } else {
+    res.render('users/login', {
+      title: 'Login',
+      message: req.flash('error')
+    });
+  }
 }
 
 /**
