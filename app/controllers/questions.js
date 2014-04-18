@@ -41,5 +41,18 @@ exports.create = function (req, res) {
 * retrieve a question
 */
 exports.delete = function (req, res) {
+  Question
+    .findOne({ _id: req.params['id']})
+    .exec(function (err, question){
+      if (err) return next(err);
+      if (!question){
+        res.send({question: null});
+      } else {
+        question.remove(function(err, question){
+          if(err) return next(err);
+          res.send({question: question});
+        })
+      }
+    })
 
 };
