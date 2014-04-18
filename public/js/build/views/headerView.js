@@ -1,13 +1,26 @@
 define("views/HeaderView", 
-  ["backbone","jquery","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+  ["backbone","jquery","underscore","text!templates/HeaderView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
 
+    var template = __dependency4__;
+
     var HeaderView = Backbone.View.extend({
+
     	className: 'header-view',
+
+    	initialize: function(opts) {
+    		this.data = {
+    			title: 'vibe',
+    			leftAction: {},
+    			rightAction: {}
+    		};
+    	},
+
     	render: function() {
-    		this.$el.html('header');
+    		this.$el.html(_.template(template, this.data));
     	}
+
     });
 
     __exports__["default"] = HeaderView;
