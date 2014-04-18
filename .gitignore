@@ -1,6 +1,5 @@
 node_modules/
 .monitor
-config/config.js
 Makefile
 sftp-config.json
 syncAll
