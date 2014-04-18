@@ -24,7 +24,9 @@ module.exports = function (app, passport) {
   // app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/' })); 
   
   app.get('/', function(req, res){
-    if(req.isAuthenticated){
+    console.log(req.user)
+
+    if(req.isAuthenticated()){
       res.render('home/index');
     } else {
       res.render('splash/index');
