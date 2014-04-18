@@ -12,9 +12,13 @@ define("views/HeaderView",
     	initialize: function(opts) {
     		this.data = {
     			title: 'vibe',
-    			leftAction: {},
-    			rightAction: {}
+    			leftAction: undefined,
+    			rightAction: undefined
     		};
+
+    		this.data.leftAction = {
+    			title: 'back'
+    		}
     	},
 
     	render: function() {

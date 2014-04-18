@@ -5773,6 +5773,31 @@ button.close {
   }
 }
 
+.header-view {
+  background: #2f557c;
+  padding: 15px;
+  height: 64px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.header-view h2 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 32px;
+}
+.header-view a {
+  position: absolute;
+  color: white;
+  font-size: 18px;
+}
+.header-view a.left-action {
+  left: 10px;
+}
+.header-view a.right-action {
+  right: 10px;
+}
 html,
 body {
   text-align: center;
@@ -5780,11 +5805,7 @@ body {
   color: white;
   font-family: 'Lato', sans-serif;
 }
-.header-view {
-  padding: 20px;
-  text-transform: uppercase;
-  background: #2f557c;
-}
 .app-content {
+  margin-top: 64px;
   padding: 40px;
 }
