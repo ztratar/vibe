@@ -2,9 +2,7 @@ define("views/AppView",
   ["backbone","jquery","views/HeaderView","text!templates/AppView.html","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
-
     var HeaderView = __dependency3__["default"];
-
     var template = __dependency4__;
 
     var AppView = Backbone.View.extend({
@@ -15,12 +13,28 @@ define("views/AppView",
 
     	initialize: function() {
     		this.headerView = new HeaderView();
+    		this.overrideLinks();
     	},
 
     	render: function() {
     		this.$el.html(template);
     		this.$('.app-header').html(this.headerView.$el);
     		this.headerView.render();
+    	},
+
+    	overrideLinks: function() {
+    		this.$el.on('click', 'a', function(ev) {
+    			var $target = $(ev.target),
+    				href= $target.attr('href'),
+    				animation = $target.attr('data-animation');
+
+    			if (!$target.hasClass('no-override') && href && href.charAt(0) === '/') {
+    				window.Vibe.appRouter.navigateWithAnimation(href, animation, {
+    					trigger: true	
+    				});
+    				return false;
+    			}
+    		});
     	}
 
     });

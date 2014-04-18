@@ -5773,6 +5773,10 @@ button.close {
   }
 }
 
+.btn-link:hover {
+  color: white;
+  text-decoration: none;
+}
 .header-view {
   background: #2f557c;
   padding: 15px;
@@ -5787,6 +5791,8 @@ button.close {
   padding: 0;
   font-weight: 600;
   font-size: 32px;
+  line-height: 32px;
+  cursor: default;
 }
 .header-view a {
   position: absolute;
@@ -5795,11 +5801,24 @@ button.close {
   top: 4px;
   padding: 13px;
 }
+.header-view a span {
+  font-size: 22px;
+  font-weight: 100;
+  line-height: 32px;
+}
 .header-view a.left-action {
   left: 0px;
 }
+.header-view a.left-action i {
+  float: left;
+  margin-right: 15px;
+}
 .header-view a.right-action {
   right: 0px;
+}
+.header-view a.right-action i {
+  float: right;
+  margin-left: 15px;
 }
 /*  iOS7-icon-font
  *  (c) 2014 AKIRA-MIAYEK
@@ -5816,7 +5835,7 @@ button.close {
 .icon {
   display: inline-block;
   font-size: 32px;
-  line-height: 32px;
+  line-height: 35px;
   font-family: 'ios7-icon';
   margin: 0;
   -webkit-text-rendering: geometricPrecision;
@@ -6369,11 +6388,25 @@ body {
   color: white;
   font-family: 'Lato', sans-serif;
 }
-a {
-  color: white;
+.screen {
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-overflow-scrolling: touch;
+  z-index: 10;
 }
-a:hover {
-  color: white;
+.screen.current {
+  z-index: 20;
+}
+.screen.full {
+  z-index: 100;
+  top: 0;
+  background: #23405c;
+}
+.screen.full.current {
+  z-index: 120;
 }
 .app-content {
   margin-top: 64px;

@@ -1,7 +1,7 @@
 <% if (leftAction) { %>
 	<a href="#" class="btn btn-link left-action" title="<%- leftAction.title %>">
 		<% if (leftAction.icon) { %>
-		<i class="icon"><%= leftAction.icon %></i>
+		<i class="icon">&<%= leftAction.icon %></i>
 		<% } %>
 		<% if (leftAction.title) { %>
 		<span><%- leftAction.title %></span>
@@ -14,7 +14,7 @@
 <% if (rightAction) { %>
 	<a href="#" class="btn btn-link right-action" title="<%- rightAction.title %>">
 		<% if (rightAction.icon) { %>
-		<i class="icon"><%= rightAction.icon %></i>
+		<i class="icon">&<%= rightAction.icon %></i>
 		<% } %>
 		<% if (rightAction.title) { %>
 		<span><%- rightAction.title %></span>

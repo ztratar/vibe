@@ -1,4 +1,5 @@
 @import 'mixins';
+@import 'bootstrap';
 @import 'colors';
 @import 'header';
 @import 'icon-font/icon';
@@ -11,11 +12,27 @@ html, body {
 	font-family: 'Lato', sans-serif;
 }
 
-a {
-	color: white;
+.screen {
+	position: fixed;
+	top: 64px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	-webkit-overflow-scrolling: touch;
+	z-index: 10;
 
-	&:hover {
-		color: white;
+	&.current {
+		z-index: 20;
+	}
+
+	&.full {
+		z-index: 100;
+		top: 0;
+		background: @vibe-primary;
+
+		&.current {
+			z-index: 120;
+		}
 	}
 }
 

@@ -12,6 +12,8 @@
 		padding: 0;
 		font-weight: 600;
 		font-size: 32px;
+		line-height: 32px;
+		cursor: default;
 	}
 
 	a {
@@ -21,12 +23,28 @@
 		top: 4px;
 		padding: 13px;
 
+		span {
+			font-size: 22px;
+			font-weight: 100;
+			line-height: 32px;
+		}
+
 		&.left-action {
 			left: 0px;
+
+			i {
+				float: left;
+				margin-right: 15px;
+			}
 		}
 
 		&.right-action {
 			right: 0px;
+
+			i {
+				float: right;
+				margin-left: 15px;
+			}
 		}
 	}
 }
