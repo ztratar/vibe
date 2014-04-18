@@ -12,7 +12,9 @@ var mongoose = require('mongoose')
  */
 
 var QuestionSchema = new Schema({
-  body: String
+  body: String,
+  answers: [{ type: Number, ref: 'Answer'}],
+  _creator: { type: Schema.Types.ObjectId, ref: 'User' }
 })
 
 /**
