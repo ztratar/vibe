@@ -1,0 +1,8 @@
+before_script:
+  - cp config/config.example.js config/config.js
+services:
+  - mongodb
+language: node_js
+node_js:
+  - "0.10"
+  - "0.8"
