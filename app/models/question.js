@@ -1,6 +1,7 @@
 
 /**
  * Module dependencies.
+ * Questions for master list of questions
  */
 
 var mongoose = require('mongoose')
@@ -11,34 +12,21 @@ var mongoose = require('mongoose')
  * Question Schema
  */
 
-var QuestionSchema = new Schema({
+var MetaQuestionSchema = new Schema({
   body: String,
-  answers: [{ type: Number, ref: 'Answer'}],
   _creator: { type: Schema.Types.ObjectId, ref: 'User' }
-})
+});
 
-/**
- * Virtuals
- */
+mongoose.model('MetaQuestion', MetaQuestionSchema);
 
 
 
-/**
- * Validations
- */
-
-
-
-/**
- * Pre-save hook
- */
-
-
-
-/**
- * Methods
- */
-
-
-
+var QuestionSchema = new Schema({
+  metaQuestion: { type: Schema.Types.ObjectId, ref: 'MetaQuestion'},
+  body: String,
+  _creator: { type: Schema.Types.ObjectId, ref: 'User' }
+});
 mongoose.model('Question', QuestionSchema);
+
+
+
