@@ -8,16 +8,21 @@ define("views/AppView",
     var template = __dependency4__;
 
     var AppView = Backbone.View.extend({
+
     	el: 'body',
+
     	className: 'vibe-app app-view',
+
     	initialize: function() {
     		this.headerView = new HeaderView();
     	},
+
     	render: function() {
     		this.$el.html(template);
     		this.$('.app-header').html(this.headerView.$el);
     		this.headerView.render();
     	}
+
     });
 
     __exports__["default"] = AppView;
