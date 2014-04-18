@@ -6,6 +6,16 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User');
 
+
+
+exports.auth = function (req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login')
+  }
+  next()
+};
+
+
 exports.signin = function (req, res) {}
 
 /**

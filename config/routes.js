@@ -1,4 +1,4 @@
-module.exports = function (app, passport, auth) {
+module.exports = function (app, passport) {
   // user routes
   var users = require('../app/controllers/users');
   app.get('/login', users.login);
