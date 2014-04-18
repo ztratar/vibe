@@ -29,9 +29,9 @@ module.exports = function(grunt) {
 		copy: {
 			main: {
 				expand: true,
-				cwd: 'js/src/templates/',
+				cwd: 'public/js/src/templates/',
 				src: '**',
-				dest: 'js/build/templates/',
+				dest: 'public/js/build/templates/',
 				filter: 'isFile'
 			}
 		},
@@ -40,29 +40,29 @@ module.exports = function(grunt) {
 				type: "amd", // or "amd" or "yui"
 				files: [{
 					expand: true,
-					cwd: 'js/src/',
+					cwd: 'public/js/src/',
 					src: ['**/*.js'],
-					dest: 'js/build/'
+					dest: 'public/js/build/'
 				}]
 			}
 		},
 		less: {
 			main: {
 				files: {
-					'css/all.css': [
+					'public/css/all.css': [
 						'bower_components/bootstrap/less/bootstrap.less',
-						'less/all.less'
+						'public/less/all.less'
 					]
 				}
 			}
 		},
 		watch: {
 			css: {
-				files: ['less/**'],
+				files: ['public/less/**'],
 				tasks: 'less'
 			},
 			js: {
-				files: ['js/src/**'],
+				files: ['public/js/src/**'],
 				tasks: ['copy', 'transpile']
 			}
 		}
