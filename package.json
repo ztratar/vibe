@@ -1,9 +1,9 @@
 {
-  "name": "NodeJS-Passort-BoilerPlate",
-  "description": "A demo app in nodejs illustrating the use of passport in express, swig and mongoose environment",
+  "name": "Vibe",
+  "description": "Making feedback easy.",
   "version": "1.0.0",
-  "private": false,
-  "author": "Mustafa Dikici <musdikici@gmail.com>, Madhusudhan Srinivasa <madhums8@gmail.com>",
+  "private": true,
+  "author": "Zach Tratar and Matt Green",
   "engines": {
     "node": "0.10.x",
     "npm": "1.2.x"
