@@ -7,6 +7,14 @@ module.exports = function (app, passport, auth) {
   app.post('/users', users.create);
   app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login', failureFlash: 'Invalid email or password.'}), users.session);
   app.get('/users/:userId', users.show);
+
+
+  var questions = require('../app/controllers/questions');
+  app.get('/questions/:id', questions.get);
+  app.post('/questions', questions.create);
+  app.delete('/questions/:id', questions.delete);
+
+
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin);
   app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback);
   app.get('/auth/github', passport.authenticate('github', { failureRedirect: '/login' }), users.signin);
