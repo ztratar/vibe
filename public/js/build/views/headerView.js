@@ -17,7 +17,11 @@ define("views/HeaderView",
     		};
 
     		this.data.leftAction = {
-    			title: 'back'
+    			icon: '&#61903'
+    		}
+
+    		this.data.rightAction = {
+    			icon: '&#61886'
     		}
     	},
 

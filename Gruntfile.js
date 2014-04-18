@@ -33,6 +33,13 @@ module.exports = function(grunt) {
 				src: '**',
 				dest: 'public/js/build/templates/',
 				filter: 'isFile'
+			},
+			'ios7-font': {
+				expand: true,
+				cwd: 'public/less/icon-font/fonts/',
+				src: '**',	
+				dest: 'public/css/fonts/',
+				filter: 'isFile'
 			}
 		},
 		transpile: {
