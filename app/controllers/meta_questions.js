@@ -14,9 +14,9 @@ var mongoose = require('mongoose')
 * GET /meta_questions/:id
 * retrieve a question
 */
-exports.get = function (req, res) {
+exports.get = function (req, res, next) {
   MetaQuestion.findById(req.params['id'], function (err, question){
-    if (err || !question) return res.send(null);
+    if (err || !question) return next(new Error("can't find meta question"));
 
     return res.send(question);
   });
@@ -31,13 +31,14 @@ params:
   question: question content
 }
 */
-exports.create = function (req, res) {
-  if(!req.body.question) res.send({error: "no question specified"});
+exports.create = function (req, res, next) {
+  if(!req.body.question) return next(new Error("no question specified"));
+
   MetaQuestion.create({
     body: req.body.question,
     _creator: req.user._id
   }, function(err, question){
-    if(err || !question) return res.send({error: "can't create meta question"});
+    if(err || !question) return next(new Error("can't create meta question"));
 
     return res.send(question);
   });
@@ -48,12 +49,12 @@ exports.create = function (req, res) {
 * DELETE /meta_questions/:id
 * retrieve a question
 */
-exports.delete = function (req, res) {
+exports.delete = function (req, res, next) {
   MetaQuestion.findById(req.params['id'], function (err, question){
-    if (err || !question) return res.send({});
+    if (err || !question) return next(new Error("can't find meta question"));
 
     question.remove(function(err, question){
-      if(err) return res.send({error: err});
+      if(err) return next(err);
 
       return res.send(question);
     });
