@@ -10,9 +10,14 @@ module.exports = function (app, passport) {
 
   var questions = require('../app/controllers/questions');
   app.get('/questions/:id', questions.get);
-  app.post('/questions', questions.create);
+  app.post('/questions/:metaId/:companyId', questions.create);
   app.delete('/questions/:id', questions.delete);
 
+
+  var metaQuestions = require('../app/controllers/meta_questions');
+  app.get('/meta_questions/:id', metaQuestions.get);
+  app.post('/meta_questions', metaQuestions.create);
+  app.delete('/meta_questions/:id', metaQuestions.delete);
 
   // app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin);
   // app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback);
@@ -23,17 +28,20 @@ module.exports = function (app, passport) {
   // app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
   // app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/' })); 
   
-  app.get('/', function(req, res){
-    console.log(req.user)
+  // app.get('/', function(req, res){
+  //   if(req.isAuthenticated()){
+  //     res.render('home/index');
+  //   } else {
+  //     res.render('splash/index');
+  //   }
+  // });
 
+  app.get('*', function(req, res){
+    console.log("r")
     if(req.isAuthenticated()){
       res.render('home/index');
     } else {
       res.render('splash/index');
     }
   });
-
-  app.get('*', function(req, res){
-    res.redirect('/');
-  });
-}
+};
