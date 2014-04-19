@@ -11,7 +11,16 @@ var mongoose = require('mongoose')
 
 
 
-/**
+// exports.index = function(req, res, next){
+//   if(req.query.includeAnswers) return res.send();
+
+  
+
+// };
+
+
+
+/** 
 * GET /questions/:id
 * retrieve a question
 */
