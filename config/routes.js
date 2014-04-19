@@ -10,9 +10,14 @@ module.exports = function (app, passport) {
 
   var questions = require('../app/controllers/questions');
   app.get('/questions/:id', questions.get);
-  app.post('/questions/metaId', questions.create);
+  app.post('/questions/:metaId', questions.create);
   app.delete('/questions/:id', questions.delete);
 
+
+  var metaQuestions = require('../app/controllers/meta_questions');
+  app.get('/meta_questions/:id', metaQuestions.get);
+  app.post('/meta_questions', metaQuestions.create);
+  app.delete('/meta_questions/:id', metaQuestions.delete);
 
   // app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin);
   // app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback);

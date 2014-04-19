@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
+  , MetaQuestion = mongoose.model('MetaQuestion')
   , Question = mongoose.model('Question');
 
 
