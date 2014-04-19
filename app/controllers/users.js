@@ -4,7 +4,9 @@
  */
 
 var mongoose = require('mongoose')
-  , User = mongoose.model('User');
+  , User = mongoose.model('User')
+  , Company = mongoose.model('Company')
+  , Async = require('async');
 
 
 
@@ -74,26 +76,70 @@ exports.session = function (req, res) {
  */
 
 exports.create = function (req, res) {
-  var newUser = new User(req.body);
-  newUser.isAdmin = true;
-  newUser.provider = 'local';
 
-  User
-    .findOne({ email: newUser.email })
-    .exec(function(err, user){
-      if(err) return next(err)
-      if(!user){
-        newUser.save(function(err){
-          if (err) { console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
+  var domain = req.body.companyDomain;
+  var company = new Company({
+    name: req.body.companyName,
+    domain: domain
+  });
 
-          req.logIn(newUser, function(err) {
-            if (err) return next(err) 
-            return res.redirect('/')
-          });
-        });
-      } else {
-        return res.render('users/signup', { errors: [{"message":"email already registered"}], user:newUser })
+  var newUser = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    isAdmin: true,
+    provider: 'local',
+    company: company._id
+  });
+
+  Async.waterfall([
+    function(cb){
+      User.findOne({email: newUser.email},function(err, user){
+        if(err) return cb(err);
+        if(user){
+          return res.render('users/signup', { errors: [{"message":"email already registered"}], user:newUser });
+        }
+        return cb(null);
+      });
+    },
+    // try to create the company
+    function(cb){
+      Company.findOne({domain: domain}, function(err, company){
+        if(err) return cb(err);
+        if(company){
+          return res.render('users/signup', { errors: [{"message":"Company already exists"}], user:newUser });
+        }
+        return cb(null);
+      });
+    },
+    // create the company
+    function(cb){
+      company.save(function(err){
+        if (err) { console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
+        return cb(null, company);
+      });
+    },
+    // save user
+    function(cb){
+      newUser.save(function(err){
+        if (err) { console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
+        return cb(null, newUser);
+      });
+    }], function(err, user){
+      if(err){
+        console.error("splat");
+        console.error(err.stack);
+        return res.send(500, {error: "splat"});
       }
+      //log the user in
+      req.logIn(user, function(err) {
+        if (err){
+          console.error("splat");
+          console.error(err.stack);
+          return res.send(500, {error: "splat"});
+        }
+        return res.redirect('/');
+      });
     });
 }
 
