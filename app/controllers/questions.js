@@ -4,19 +4,43 @@
  */
 
 var mongoose = require('mongoose')
+  , Async = require('async')
   , User = mongoose.model('User')
   , MetaQuestion = mongoose.model('MetaQuestion')
   , Question = mongoose.model('Question')
-  , Company = mongoose.model('Company');
+  , Company = mongoose.model('Company')
+  , Answer = mongoose.model('Answer');
 
 
 
-// exports.index = function(req, res, next){
-//   if(req.query.includeAnswers) return res.send();
+exports.index = function(req, res, next){
 
-  
+  Question.find({company: req.user.company})
+    .lean()
+    .exec(function(err, questions){
+      if(err) return next(err)
 
-// };
+      if(req.query.includeAnswers){
+        Async.map(questions, function(question, done){
+          Answer.find({question: question._id})
+            .lean()
+            .exec(function(err, answers){
+              if(err) return done(err);
+              question.answers = answers;
+
+              return done(null, question)
+          });
+
+        }, function(err, questions){
+          if(err) return next(err);
+          
+          return res.send(questions);
+        });
+      } else {
+        return res.send(questions);
+      };
+    });
+};
 
 
 
@@ -26,7 +50,7 @@ var mongoose = require('mongoose')
 */
 exports.get = function (req, res, next) {
   Question.findById(req.params['id'], function (err, question){
-    if (err || !question) return next(new Error("can't find question"));
+    if (err) return next(err);
 
     return res.send(question);
   });
@@ -41,24 +65,22 @@ MetaCommentId
 */
 exports.create = function (req, res, next) {
   var metaId = req.params['metaId'];
-  var companyId = req.params['companyId'];
 
   MetaQuestion.findById(metaId, function(err,metaQ){
-    if(err || !metaQ) return next(new Error("can't find question"));
+    if (err)    return next(err);
+    if (!metaQ) return next(new Error("can't find question"));
 
-    Company.findById(companyId, function(err, company){
-      if(err || !company) return next(new Error("can't find company"));
+    Question.create({
+      metaQuestion: metaQ._id,
+      body: metaQ.body,
+      creator: req.user._id,
+      company: req.user.company
+    }, function(err, question){
+      if(err || !question) return next(new Error("can't create question"));
 
-      Question.create({
-        metaQuestion: metaQ._id,
-        body: metaQ.body,
-        _creator: req.user._id
-      }, function(err, question){
-        if(err || !question) return next(new Error("can't create question"));
+      return res.send(question);
+    });
 
-        return res.send(question);
-      });
-    })
   });
 };
 
@@ -69,7 +91,8 @@ exports.create = function (req, res, next) {
 */
 exports.delete = function (req, res, next) {
   Question.findById(req.params['id'], function (err, question){
-    if (err || !question) return next(new Error("can't find company"));
+    if (err)       return next(err);
+    if (!question) return next(new Error("can't find question"));
 
     question.remove(function(err, question){
       if(err) return res.send({error: err});

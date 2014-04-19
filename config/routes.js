@@ -7,18 +7,16 @@ module.exports = function (app, passport) {
   app.post('/users', users.create);
   app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login', failureFlash: 'Invalid email or password.'}), users.session);
   
-
-  var questions = require('../app/controllers/questions');
-  app.get('/api/questions/:id', questions.get);
-  app.post('/api/questions/:metaId/:companyId', questions.create);
-  app.delete('/api/questions/:id', questions.delete);
-
-
   var metaQuestions = require('../app/controllers/meta_questions');
   app.get('/api/meta_questions/:id', metaQuestions.get);
   app.post('/api/meta_questions', metaQuestions.create);
   app.delete('/api/meta_questions/:id', metaQuestions.delete);
 
+  var questions = require('../app/controllers/questions');
+  app.get('/api/questions', questions.index);
+  app.get('/api/questions/:id', questions.get);
+  app.post('/api/questions/:metaId', questions.create);
+  app.delete('/api/questions/:id', questions.delete);
 
   var answers = require('../app/controllers/answers');
   app.get('/api/answers/:id', answers.get);

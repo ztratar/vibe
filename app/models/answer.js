@@ -12,7 +12,7 @@ var mongoose = require('mongoose')
  */
 
 var AnswerSchema = new Schema({
-  _creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  creator: { type: Schema.Types.ObjectId, ref: 'User' },
   body: String,
   question: { type: Schema.Types.ObjectId, ref: 'Question' }
 })

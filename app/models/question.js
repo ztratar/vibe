@@ -14,7 +14,7 @@ var mongoose = require('mongoose')
 
 var MetaQuestionSchema = new Schema({
   body: String,
-  _creator: { type: Schema.Types.ObjectId, ref: 'User' }
+  creator: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 mongoose.model('MetaQuestion', MetaQuestionSchema);
@@ -24,7 +24,8 @@ mongoose.model('MetaQuestion', MetaQuestionSchema);
 var QuestionSchema = new Schema({
   metaQuestion: { type: Schema.Types.ObjectId, ref: 'MetaQuestion'},
   body: String,
-  _creator: { type: Schema.Types.ObjectId, ref: 'User' }
+  creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  company:  { type: Schema.Types.ObjectId, ref: 'Company' }
 });
 mongoose.model('Question', QuestionSchema);
 

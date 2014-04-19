@@ -17,7 +17,7 @@ var mongoose = require('mongoose')
 */
 exports.get = function (req, res, next) {
   Answer.findById(req.params['id'], function (err, answer){
-    if (err || !answer) return next(new Error("can't find answer"));
+    if (err) return next(err);
 
     return res.send(answer);
   });
@@ -36,14 +36,15 @@ exports.create = function (req, res, next) {
   if(!req.body.answer) return next(new Error("no answer specified"));
 
   Question.findById(req.params['questionId'], function(err, question){
-    if (err || !question) return next(new Error("can't find question"));
+    if (err)       return next(err);
+    if (!question) return next(new Error("can't find question"));
 
     Answer.create({
       body: req.body.answer,
-      _creator: req.user._id,
+      creator: req.user._id,
       question: question._id
     }, function(err, answer){
-      if(err || !answer) return next(new Error("can't create answer"));
+      if (err) return next(err);
 
       return res.send(answer);
     });
@@ -58,7 +59,8 @@ exports.create = function (req, res, next) {
 */
 exports.delete = function (req, res, next) {
   Answer.findById(req.params['id'], function (err, answer){
-    if (err || !answer) return next(new Error("can't find answer"));
+    if (err)     return next(err);
+    if (!answer) return next(new Error("can't find answer"));
 
     answer.remove(function(err, answer){
       if(err) return next(err);
