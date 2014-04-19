@@ -28,11 +28,27 @@ exports.get = function (req, res) {
 
 
 /**
-* POST /questions
+* POST /questions/:metaId
 * Create a new question
+params:
+MetaCommentId
 */
 exports.create = function (req, res) {
+  var metaId = req.params['metaId'];
+  MetaQuestion.findById(metaId, function(err,metaQ){
+    if(err || !metaQ) return res.send({error: "can't find meta question"});
+    
+    Question.create({
+      metaQuestion: metaQ._id,
+      body: metaQ.body,
+      _creator: req.user._id
+    }, function(err, question){
+      if(err || !question) return res.send({error: "can't create question"});
 
+      return res.send(question);
+    })
+
+  });
 };
 
 
@@ -50,7 +66,7 @@ exports.delete = function (req, res) {
       } else {
         question.remove(function(err, question){
           if(err) return next(err);
-          res.send({question: question});
+          res.send(question);
         })
       }
     })
