@@ -83,8 +83,10 @@ module.exports = function (app, config, passport) {
       // log it
       console.error(err.stack)
 
-      // error page
-      res.status(500).render('500', { error: err.stack })
+      console.log("we have and error")
+      console.log(err)
+
+      res.send(err.status || 404, { error: err.message })
     });
 
     // assume 404 since no middleware responded

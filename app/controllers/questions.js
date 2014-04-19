@@ -15,9 +15,9 @@ var mongoose = require('mongoose')
 * GET /questions/:id
 * retrieve a question
 */
-exports.get = function (req, res) {
+exports.get = function (req, res, next) {
   Question.findById(req.params['id'], function (err, question){
-    if (err || !question) return res.send(null);
+    if (err || !question) return next(new Error("can't find question"));
 
     return res.send(question);
   });
@@ -30,22 +30,22 @@ exports.get = function (req, res) {
 params:
 MetaCommentId
 */
-exports.create = function (req, res) {
+exports.create = function (req, res, next) {
   var metaId = req.params['metaId'];
   var companyId = req.params['companyId'];
 
   MetaQuestion.findById(metaId, function(err,metaQ){
-    if(err || !metaQ) return res.send({error: "can't find question"});
+    if(err || !metaQ) return next(new Error("can't find question"));
 
     Company.findById(companyId, function(err, company){
-      if(err || !company) return res.send({error: "can't find company"});
+      if(err || !company) return next(new Error("can't find company"));
 
       Question.create({
         metaQuestion: metaQ._id,
         body: metaQ.body,
         _creator: req.user._id
       }, function(err, question){
-        if(err || !question) return res.send({error: "can't create question"});
+        if(err || !question) return next(new Error("can't create question"));
 
         return res.send(question);
       });
@@ -58,9 +58,9 @@ exports.create = function (req, res) {
 * DELETE /questions/:id
 * retrieve a question
 */
-exports.delete = function (req, res) {
+exports.delete = function (req, res, next) {
   Question.findById(req.params['id'], function (err, question){
-    if (err || !question) return res.send({});
+    if (err || !question) return next(new Error("can't find company"));
 
     question.remove(function(err, question){
       if(err) return res.send({error: err});

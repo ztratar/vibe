@@ -37,11 +37,11 @@ module.exports = function (app, passport) {
   // });
 
   app.get('*', function(req, res){
-    console.log("r")
     if(req.isAuthenticated()){
       res.render('home/index');
     } else {
       res.render('splash/index');
     }
   });
+
 };
