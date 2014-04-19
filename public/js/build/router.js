@@ -56,6 +56,21 @@ define("router",
     		this.trigger('loaded');
     	},
     	admin: function() {
+    		var that = this;
+
+    		window.Vibe.appView.headerView.setButtons({
+    			title: 'admin',
+    			leftAction: {
+    				icon: '#61903',
+    				click: function(ev) {
+    					that.navigateWithAnimation('/', 'pushRight', {
+    						trigger: true
+    					});	
+    					return false;
+    				}
+    			}	
+    		});
+
     		this.screenRouter.currentScreen.html('admin');
     		this.trigger('loaded');
     	}
