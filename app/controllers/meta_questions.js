@@ -16,7 +16,7 @@ var mongoose = require('mongoose')
 */
 exports.get = function (req, res, next) {
   MetaQuestion.findById(req.params['id'], function (err, question){
-    if (err || !question) return next(new Error("can't find meta question"));
+    if (err) return next(err);
 
     return res.send(question);
   });
@@ -38,7 +38,8 @@ exports.create = function (req, res, next) {
     body: req.body.question,
     creator: req.user._id
   }, function(err, question){
-    if(err || !question) return next(new Error("can't create meta question"));
+    if (err)      return next(err);
+    if(!question) return next(new Error("can't create meta question"));
 
     return res.send(question);
   });
@@ -51,7 +52,8 @@ exports.create = function (req, res, next) {
 */
 exports.delete = function (req, res, next) {
   MetaQuestion.findById(req.params['id'], function (err, question){
-    if (err || !question) return next(new Error("can't find meta question"));
+    if (err)       return next(err);
+    if (!question) return next(new Error("can't find meta question"));
 
     question.remove(function(err, question){
       if(err) return next(err);

@@ -14,13 +14,14 @@ var mongoose = require('mongoose')
 
 exports.index = function(req, res, next){
 
-  Question.find({})
+  Question.find({company: req.user.company}, function(err, companies){
+    if(err) return next(err)
 
+    if(req.query.includeAnswers){
 
-  if(req.query.includeAnswers) return res.send();
+    }
 
-
-
+  });
 };
 
 
@@ -31,7 +32,7 @@ exports.index = function(req, res, next){
 */
 exports.get = function (req, res, next) {
   Question.findById(req.params['id'], function (err, question){
-    if (err || !question) return next(new Error("can't find question"));
+    if (err) return next(err);
 
     return res.send(question);
   });
@@ -48,7 +49,8 @@ exports.create = function (req, res, next) {
   var metaId = req.params['metaId'];
 
   MetaQuestion.findById(metaId, function(err,metaQ){
-    if(err || !metaQ) return next(new Error("can't find question"));
+    if (err)    return next(err);
+    if (!metaQ) return next(new Error("can't find question"));
 
     Question.create({
       metaQuestion: metaQ._id,
@@ -71,7 +73,8 @@ exports.create = function (req, res, next) {
 */
 exports.delete = function (req, res, next) {
   Question.findById(req.params['id'], function (err, question){
-    if (err || !question) return next(new Error("can't find company"));
+    if (err)       return next(err);
+    if (!question) return next(new Error("can't find question"));
 
     question.remove(function(err, question){
       if(err) return res.send({error: err});
