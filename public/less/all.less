@@ -9,52 +9,17 @@
 @import 'screen';
 @import 'icons';
 @import 'pages/charts';
+@import 'widgets/welcome';
 
 html, body {
 	text-align: center;
 	background: @vibe-primary;
 	color: white;
 	font-family: 'Lato', sans-serif;
+	-webkit-font-smoothing: antialiased;
 }
 
 .app-content {
 	margin-top: 64px;
 	padding: 40px;
-}
-
-.welcome {
-	margin: 0 auto;
-	text-align: left;
-	padding: 33px 15px 33px 100px;
-	position: relative;
-
-	img {
-		position: absolute;
-		border-radius: 400px;
-		width: 64px;
-		height: 64px;
-		top: 29px;
-		left: 15px;
-	}
-
-	h2 {
-		font-weight: 200;
-		margin: 0 0 4px 0;
-		padding: 0;
-		color: #c3d4e6;
-
-		strong {
-			color: white;
-			font-weight: 200;
-		}
-	}
-
-	p {
-		color: darken(#3c6b9a, 4%);
-		margin: 0;	
-
-		strong {
-			color: #3c6b9a;
-		}
-	}
 }

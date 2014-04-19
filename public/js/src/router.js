@@ -1,7 +1,11 @@
 import 'jquery';
 import 'underscore';
 import 'backbone';
+
 import ScreenRouter from 'screenRouter';
+
+import Question from 'models/question';
+
 import HomeView from 'views/homeView';
 import WelcomeView from 'views/welcomeView';
 
@@ -14,7 +18,8 @@ var Router = Backbone.Router.extend({
 		'': 'index',
 		'/': 'index',
 		'welcome/:step': 'welcome',
-		'admin': 'admin'
+		'admin': 'admin',
+		'discuss/:id': 'discuss'
 	},
 	index: function() {
 		var that = this,
@@ -78,6 +83,29 @@ var Router = Backbone.Router.extend({
 		});
 
 		this.screenRouter.currentScreen.html('admin');
+		this.trigger('loaded');
+	},
+	discuss: function(questionId) {
+		var that = this,
+			question = new Question({
+				id: questionId
+			});		
+
+		window.Vibe.appView.headerView.setButtons({
+			title: question.get('title'),
+			leftAction: {
+				icon: '#61903',
+				title: 'vibe',
+				click: function(ev) {
+					that.navigateWithAnimation('/', 'pushRight', {
+						trigger: true
+					});	
+					return false;
+				}
+			}	
+		});
+
+		this.screenRouter.currentScreen.html('discuss');
 		this.trigger('loaded');
 	}
 });

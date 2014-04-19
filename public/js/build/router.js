@@ -1,10 +1,14 @@
 define("router", 
-  ["jquery","underscore","backbone","screenRouter","views/homeView","views/welcomeView","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
+  ["jquery","underscore","backbone","screenRouter","models/question","views/homeView","views/welcomeView","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
     "use strict";
+
     var ScreenRouter = __dependency4__["default"];
-    var HomeView = __dependency5__["default"];
-    var WelcomeView = __dependency6__["default"];
+
+    var Question = __dependency5__["default"];
+
+    var HomeView = __dependency6__["default"];
+    var WelcomeView = __dependency7__["default"];
 
     var Router = Backbone.Router.extend({
     	initialize: function() {
@@ -15,7 +19,8 @@ define("router",
     		'': 'index',
     		'/': 'index',
     		'welcome/:step': 'welcome',
-    		'admin': 'admin'
+    		'admin': 'admin',
+    		'discuss/:id': 'discuss'
     	},
     	index: function() {
     		var that = this,
@@ -79,6 +84,29 @@ define("router",
     		});
 
     		this.screenRouter.currentScreen.html('admin');
+    		this.trigger('loaded');
+    	},
+    	discuss: function(questionId) {
+    		var that = this,
+    			question = new Question({
+    				id: questionId
+    			});		
+
+    		window.Vibe.appView.headerView.setButtons({
+    			title: question.get('title'),
+    			leftAction: {
+    				icon: '#61903',
+    				title: 'vibe',
+    				click: function(ev) {
+    					that.navigateWithAnimation('/', 'pushRight', {
+    						trigger: true
+    					});	
+    					return false;
+    				}
+    			}	
+    		});
+
+    		this.screenRouter.currentScreen.html('discuss');
     		this.trigger('loaded');
     	}
     });
