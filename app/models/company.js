@@ -14,7 +14,7 @@ var mongoose = require('mongoose')
 var CompanySchema = new Schema({
   name: String,
   domain: String
-})
+});
 
 /**
  * Virtuals
