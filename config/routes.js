@@ -28,17 +28,20 @@ module.exports = function (app, passport) {
   // app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
   // app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/' })); 
   
-  app.get('/', function(req, res){
-    console.log(req.user)
+  // app.get('/', function(req, res){
+  //   if(req.isAuthenticated()){
+  //     res.render('home/index');
+  //   } else {
+  //     res.render('splash/index');
+  //   }
+  // });
 
+  app.get('*', function(req, res){
+    console.log("r")
     if(req.isAuthenticated()){
       res.render('home/index');
     } else {
       res.render('splash/index');
     }
   });
-
-  app.get('*', function(req, res){
-    res.redirect('/');
-  });
-}
+};
