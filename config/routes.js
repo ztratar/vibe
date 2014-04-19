@@ -19,6 +19,13 @@ module.exports = function (app, passport) {
   app.post('/api/meta_questions', metaQuestions.create);
   app.delete('/api/meta_questions/:id', metaQuestions.delete);
 
+
+  var answers = require('../app/controllers/answers');
+  app.get('/api/answers/:id', answers.get);
+  app.post('/api/answers/:questionId', answers.create);
+  app.delete('/api/answers/:id', answers.delete);
+
+
   // app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin);
   // app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback);
   // app.get('/auth/github', passport.authenticate('github', { failureRedirect: '/login' }), users.signin);

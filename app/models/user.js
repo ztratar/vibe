@@ -17,8 +17,7 @@ var UserSchema = new Schema({
   name: String,
   email: String,
   company: { type: Schema.Types.ObjectId, ref: 'Company' },
-  // username: String,
-
+  isAdmin: Boolean,
   provider: String,
   hashed_password: String,
   salt: String,

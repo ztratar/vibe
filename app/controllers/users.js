@@ -75,6 +75,7 @@ exports.session = function (req, res) {
 
 exports.create = function (req, res) {
   var newUser = new User(req.body);
+  newUser.isAdmin = true;
   newUser.provider = 'local';
 
   User
@@ -83,12 +84,12 @@ exports.create = function (req, res) {
       if(err) return next(err)
       if(!user){
         newUser.save(function(err){
-          if (err) {  console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
+          if (err) { console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
 
           req.logIn(newUser, function(err) {
             if (err) return next(err) 
             return res.redirect('/')
-          })     
+          });
         });
       } else {
         return res.render('users/signup', { errors: [{"message":"email already registered"}], user:newUser })

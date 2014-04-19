@@ -18,7 +18,7 @@ module.exports = function (app, config, passport) {
     },
     level: 9
   }));
-  app.use(express.favicon());
+  // app.use(express.favicon());
   app.use(express.static(config.root + '/public'));
 
   // don't use logger for test env
@@ -81,10 +81,9 @@ module.exports = function (app, config, passport) {
       if (~err.message.indexOf('not found')) return next()
 
       // log it
-      console.error(err.stack)
-
       console.log("we have and error")
       console.log(err)
+      console.error(err.stack)
 
       res.send(err.status || 404, { error: err.message })
     });
