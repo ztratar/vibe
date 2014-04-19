@@ -36,7 +36,7 @@ exports.create = function (req, res, next) {
 
   MetaQuestion.create({
     body: req.body.question,
-    _creator: req.user._id
+    creator: req.user._id
   }, function(err, question){
     if(err || !question) return next(new Error("can't create meta question"));
 

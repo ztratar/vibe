@@ -40,7 +40,7 @@ exports.create = function (req, res, next) {
 
     Answer.create({
       body: req.body.answer,
-      _creator: req.user._id,
+      creator: req.user._id,
       question: question._id
     }, function(err, answer){
       if(err || !answer) return next(new Error("can't create answer"));

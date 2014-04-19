@@ -4,6 +4,7 @@
  */
 
 var mongoose = require('mongoose')
+  , Async = require('async')
   , User = mongoose.model('User')
   , MetaQuestion = mongoose.model('MetaQuestion')
   , Question = mongoose.model('Question')
@@ -11,12 +12,16 @@ var mongoose = require('mongoose')
 
 
 
-// exports.index = function(req, res, next){
-//   if(req.query.includeAnswers) return res.send();
+exports.index = function(req, res, next){
 
-  
+  Question.find({})
 
-// };
+
+  if(req.query.includeAnswers) return res.send();
+
+
+
+};
 
 
 
@@ -52,7 +57,7 @@ exports.create = function (req, res, next) {
       Question.create({
         metaQuestion: metaQ._id,
         body: metaQ.body,
-        _creator: req.user._id
+        creator: req.user._id
       }, function(err, question){
         if(err || !question) return next(new Error("can't create question"));
 
