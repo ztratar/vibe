@@ -9,23 +9,6 @@ var HeaderView = Backbone.View.extend({
 	className: 'header-view',
 
 	initialize: function(opts) {
-
-		// ----------------
-		//
-		// TODO: animate
-		//
-		// animations are linked in
-		// screen-animations.less
-		//
-		// Available: [
-		//   'pushRight',
-		//   'pushLeft',
-		//   'slideUp',
-		//   'slideDown'
-		// ]
-		//
-		// ----------------
-
 		this.data = _.extend({
 			title: '',
 			leftAction: undefined,

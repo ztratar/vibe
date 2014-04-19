@@ -12,9 +12,12 @@ var Router = Backbone.Router.extend({
 	routes: {
 		'': 'index',
 		'/': 'index',
-		'welcome/:step': 'welcome'
+		'welcome/:step': 'welcome',
+		'admin': 'admin'
 	},
 	index: function() {
+		var that = this;
+
 		// Started tutorial system to test screenRouter
 		if (false && !window.Vibe.user.get('seenTutorial')) {
 			this.navigate('welcome/1', { trigger: true });
@@ -26,13 +29,16 @@ var Router = Backbone.Router.extend({
 			rightAction: {
 				title: 'Admin',
 				icon: '#61886',
-				animate: 'push-left',
 				click: function(ev) {
 					var $target = $(ev.target);
-					$target.addClass('away');
+					that.navigateWithAnimation('admin', 'pushLeft', {
+						trigger: true
+					});	
+					return false;
 				}
 			}	
 		});
+		this.screenRouter.currentScreen.html('home');
 		this.trigger('loaded');
 	},
 	welcome: function(step) {
@@ -47,6 +53,10 @@ var Router = Backbone.Router.extend({
 		}
 
 		this.trigger('loaded');
+	},
+	admin: function() {
+		this.screenRouter.currentScreen.html('admin');
+		this.trigger('loaded');
 	}
 });
 
@@ -56,15 +66,18 @@ _.extend(Router.prototype, {
 			waitForLoad: false	
 		}, opts);
 
+		this.screenRouter.createNewScreen();
+
 		if (opts.waitForLoad) {
 			// TODO: Ajax Loader
-			this.screenRouter.createNewScreen(animation, function() {
-				this.navigate(href, opts);
-			});
+			this.once('loaded', _.bind(function() {
+				this.screenRouter.animateScreens(animation);
+			}, this));
 		} else {
-			this.screenRouter.createNewScreen(animation);
-			this.navigate(href, opts);
+			this.screenRouter.animateScreens(animation);
 		}
+
+		this.navigate(href, opts);
 	}
 });
 

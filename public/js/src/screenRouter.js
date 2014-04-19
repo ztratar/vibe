@@ -28,27 +28,35 @@ _.extend(ScreenRouter.prototype, {
 	createNewScreen: function(animation, cb) {
 		// If a screen has current when the animation
 		// is called, it should be entering the screen.
-		// Else, it is leaving the screen.
-
+		// Else, it is leaving the screen.	
 		if (this.currentScreen) {
 			this.oldScreen = this.currentScreen;
-			this.oldScreen.removeClass('current');
 		}
 
-		this.currentScreen = $('<div class="screen current"></div>');
+		this.currentScreen = $('<div class="screen new"></div>');
 		this.currentScreen.appendTo($('body'));
 
-		if (animation && animation.length) {
-			if (this.oldScreen) {
-				this.oldScreen.addClass('animate-' + animation);
-			}
-			this.currentScreen.addClass('animate-' + animation);
-		}
+		this.animateScreens(animation);
 
 		_.delay(_.bind(this.removeOldScreen, this), 3000);
 		cb && cb(this.currentScreen);
 
 		return this.currentScreen;
+	},
+	animateScreens: function(animation) {
+		var animationClass = '';
+		if (animation && animation.length) {
+			animationClass = 'animate-' + animation;
+		}
+
+		this.currentScreen.addClass(animationClass);
+
+		_.defer(_.bind(function() {
+			if (this.oldScreen) {
+				this.oldScreen.attr('class', 'screen old ' + animationClass);
+			}
+			this.currentScreen.attr('class', 'screen current ' + animationClass);
+		}, this));
 	},
 	removeOldScreen: function() {
 		if (this.oldScreen) {
