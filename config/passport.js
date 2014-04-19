@@ -17,9 +17,11 @@ module.exports = function (passport, config) {
   })
 
   passport.deserializeUser(function(id, done) {
-    User.findOne({ _id: id }, function (err, user) {
-      done(err, user)
-    })
+    User.findOne({ _id: id })
+      .populate('company')
+      .exec(function (err, user) {
+        done(err, user)
+      });
   })
 
   // use local strategy
