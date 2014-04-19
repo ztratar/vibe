@@ -8,20 +8,38 @@ var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , MetaQuestion = mongoose.model('MetaQuestion')
   , Question = mongoose.model('Question')
-  , Company = mongoose.model('Company');
+  , Company = mongoose.model('Company')
+  , Answer = mongoose.model('Answer');
 
 
 
 exports.index = function(req, res, next){
 
-  Question.find({company: req.user.company}, function(err, companies){
-    if(err) return next(err)
+  Question.find({company: req.user.company})
+    .lean()
+    .exec(function(err, questions){
+      if(err) return next(err)
 
-    if(req.query.includeAnswers){
+      if(req.query.includeAnswers){
+        Async.map(questions, function(question, done){
+          Answer.find({question: question._id})
+            .lean()
+            .exec(function(err, answers){
+              if(err) return done(err);
+              question.answers = answers;
 
-    }
+              return done(null, question)
+          });
 
-  });
+        }, function(err, questions){
+          if(err) return next(err);
+          
+          return res.send(questions);
+        });
+      } else {
+        return res.send(questions);
+      };
+    });
 };
 
 
