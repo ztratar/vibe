@@ -1,23 +1,23 @@
 {% extends 'auth.html' %}
 
+{% block main %}
+	<h2 class="sub-header">Log in</h2>
+{% endblock %}
+
 {% block auth %}
   <form action="/users/session" method="post" class="login form-horizontal">
-    <p class="error"></p>
     <div class="control-group">
-      <label for="email" class="control-label">Email</label>
       <div class="controls">
         <input id="email" type="text" name="email" placeholder="Email">
       </div>
     </div>
     <div class="control-group">
-      <label for="password" class="control-label">Password</label>
       <div class="controls">
         <input id="password" type="password" name="password" placeholder="Password">
       </div>
     </div>
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Login</button>&nbsp;
-      or&nbsp;<a href="/signup" class="show-signup">sign up</a>
+      <button type="submit" class="btn btn-success">Login</button>
     </div>
   </form>
 {% endblock %}
