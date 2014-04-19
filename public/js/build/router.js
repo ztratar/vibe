@@ -1,9 +1,10 @@
 define("router", 
-  ["jquery","underscore","backbone","screenRouter","views/welcomeView","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
+  ["jquery","underscore","backbone","screenRouter","views/homeView","views/welcomeView","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
     "use strict";
     var ScreenRouter = __dependency4__["default"];
-    var WelcomeView = __dependency5__["default"];
+    var HomeView = __dependency5__["default"];
+    var WelcomeView = __dependency6__["default"];
 
     var Router = Backbone.Router.extend({
     	initialize: function() {
@@ -17,7 +18,8 @@ define("router",
     		'admin': 'admin'
     	},
     	index: function() {
-    		var that = this;
+    		var that = this,
+    			chartsView;
 
     		// Started tutorial system to test screenRouter
     		if (false && !window.Vibe.user.get('seenTutorial')) {
@@ -39,7 +41,11 @@ define("router",
     				}
     			}	
     		});
-    		this.screenRouter.currentScreen.html('home');
+
+    		chartsView = new HomeView();
+    		this.screenRouter.currentScreen.html(chartsView.$el);
+    		chartsView.render();
+
     		this.trigger('loaded');
     	},
     	welcome: function(step) {

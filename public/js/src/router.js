@@ -2,6 +2,7 @@ import 'jquery';
 import 'underscore';
 import 'backbone';
 import ScreenRouter from 'screenRouter';
+import HomeView from 'views/homeView';
 import WelcomeView from 'views/welcomeView';
 
 var Router = Backbone.Router.extend({
@@ -16,7 +17,8 @@ var Router = Backbone.Router.extend({
 		'admin': 'admin'
 	},
 	index: function() {
-		var that = this;
+		var that = this,
+			chartsView;
 
 		// Started tutorial system to test screenRouter
 		if (false && !window.Vibe.user.get('seenTutorial')) {
@@ -38,7 +40,11 @@ var Router = Backbone.Router.extend({
 				}
 			}	
 		});
-		this.screenRouter.currentScreen.html('home');
+
+		chartsView = new HomeView();
+		this.screenRouter.currentScreen.html(chartsView.$el);
+		chartsView.render();
+
 		this.trigger('loaded');
 	},
 	welcome: function(step) {
