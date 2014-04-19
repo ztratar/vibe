@@ -10,29 +10,14 @@ define("views/HeaderView",
     	className: 'header-view',
 
     	initialize: function(opts) {
-
-    		// ----------------
-    		//
-    		// TODO: animate
-    		//
-    		// animations are linked in
-    		// screen-animations.less
-    		//
-    		// Available: [
-    		//   'pushRight',
-    		//   'pushLeft',
-    		//   'slideUp',
-    		//   'slideDown'
-    		// ]
-    		//
-    		// ----------------
-
-    		this.data = _.extend({
+    		this.data = {};
+    		this.initialData = {
     			title: '',
-    			leftAction: undefined,
-    			rightAction: undefined,
+    			leftAction: false,
+    			rightAction: false,
     			animate: false
-    		}, opts);
+    		};
+    		_.extend(this.data, this.initialData, opts);
     	},
 
     	render: function() {
@@ -56,7 +41,10 @@ define("views/HeaderView",
     	},
 
     	setButtons: function(opts) {
-    		this.data = _.extend(this.data, opts);
+    		var anim = this.data.animate;
+    		_.extend(this.data, this.initialData, opts);
+    		this.data.animate = anim;
+
     		this.render();
 
     		if (this.data.animate === false) {

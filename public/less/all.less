@@ -1,3 +1,4 @@
+@import '../../bower_components/bootstrap/less/mixins';
 @import 'mixins';
 @import 'bootstrap';
 @import 'colors';
@@ -18,12 +19,11 @@ html, body {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	background: @vibe-primary;
 	-webkit-overflow-scrolling: touch;
 	z-index: 10;
-
-	&.current {
-		z-index: 20;
-	}
+	.transition(all 0.14s ease-in-out);
+	.translate3d(0,0,0);
 
 	&.full {
 		z-index: 100;
@@ -32,6 +32,47 @@ html, body {
 
 		&.current {
 			z-index: 120;
+		}
+	}
+
+	&.current {
+		z-index: 20;
+		.translate3d(0,0,0);
+	}
+
+	&.animate-pushLeft {
+		&.new {
+			.translate3d(100%, 0, 0);
+		}
+		&.old {
+			.translate3d(-100%, 0, 0);
+		}
+	}
+
+	&.animate-pushRight {
+		&.new {
+			.translate3d(-100%, 0, 0);
+		}
+		&.old {
+			.translate3d(100%, 0, 0);
+		}
+	}
+
+	&.animate-slideUp {
+		&.new {
+			.translate3d(0, 100%, 0);
+		}
+		&.old {
+			.translate3d(0, 0, 0);
+		}
+	}
+
+	&.animate-slideDown {
+		&.new {
+			.translate3d(0, -100%, 0);
+		}
+		&.old {
+			.translate3d(0, 0, 0);
 		}
 	}
 }
