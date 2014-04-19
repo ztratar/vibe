@@ -87,12 +87,22 @@ var Router = Backbone.Router.extend({
 	},
 	discuss: function(questionId) {
 		var that = this,
+			qData = window.Vibe.modelCache.get('question-' + questionId),
+			question;
+
+		if (qData) {
+			question = new Question(qData);
+		} else {
 			question = new Question({
-				id: questionId
-			});		
+				id: questionId	
+			});
+			_.defer(_.bind(function() {
+				question.fetch();
+			}, this));
+		}
 
 		window.Vibe.appView.headerView.setButtons({
-			title: question.get('title'),
+			title: 'vibe',
 			leftAction: {
 				icon: '#61903',
 				title: 'vibe',
@@ -105,7 +115,7 @@ var Router = Backbone.Router.extend({
 			}	
 		});
 
-		this.screenRouter.currentScreen.html('discuss');
+		this.screenRouter.currentScreen.html(question.get('title'));
 		this.trigger('loaded');
 	}
 });

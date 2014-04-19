@@ -1,12 +1,13 @@
 define("vibe", 
-  ["jquery","underscore","backbone","router","screenRouter","models/user","views/AppView"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__) {
+  ["jquery","underscore","backbone","router","screenRouter","modelCache","models/user","views/AppView"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__) {
     "use strict";
     // Import libs
     var Router = __dependency4__["default"];
     var ScreenRouter = __dependency5__["default"];
-    var User = __dependency6__["default"];
-    var AppView = __dependency7__["default"];
+    var ModelCache = __dependency6__["default"];
+    var User = __dependency7__["default"];
+    var AppView = __dependency8__["default"];
 
     window.Vibe = window.Vibe || {};
 
@@ -23,6 +24,9 @@ define("vibe",
     		},
     		seenTutorial: false
     	});
+
+    	// Set up the data cache
+    	window.Vibe.modelCache = new ModelCache();
 
     	// Start the app visuals
     	window.Vibe.appView = new AppView();
