@@ -6498,6 +6498,9 @@ pre code {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+.icon {
+  font-size: 24px;
+}
 .icon-61903 {
   width: 18px;
 }
@@ -6506,22 +6509,43 @@ pre code {
   margin: 0;
 }
 .charts-view li {
-  height: 400px;
+  height: 340px;
   width: 100%;
-  background: red;
-  margin: 0 0 10px 0;
+  background: #122b43;
+  margin: 0;
   display: block;
+  position: relative;
+  text-align: left;
 }
-html,
-body {
-  text-align: center;
-  background: #23405c;
+.charts-view li:nth-child(2n) {
+  background: #973329;
+}
+.charts-view li:nth-child(3n) {
+  background: #7f8c8d;
+}
+.charts-view li h3 {
+  margin: 0 0 0 15px;
+  font-size: 18px;
+}
+.charts-view li a.discuss {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 15px 15px 9px 0;
+  margin: 0 0 0 15px;
+  font-size: 18px;
+  font-weight: 300;
   color: white;
-  font-family: 'Lato', sans-serif;
 }
-.app-content {
-  margin-top: 64px;
-  padding: 40px;
+.charts-view li a.discuss:hover {
+  text-decoration: none;
+}
+.charts-view li a.discuss i {
+  float: right;
+  margin-bottom: 2px;
 }
 .welcome {
   margin: 0 auto;
@@ -6553,4 +6577,16 @@ body {
 }
 .welcome p strong {
   color: #3c6b9a;
+}
+html,
+body {
+  text-align: center;
+  background: #23405c;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.app-content {
+  margin-top: 64px;
+  padding: 40px;
 }

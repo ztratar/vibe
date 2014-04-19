@@ -3,10 +3,48 @@
 	margin: 0;
 
 	li {
-		height: 400px;
+		height: 340px;
 		width: 100%;
-		background: red;
-		margin: 0 0 10px 0;
+		background: #122b43;
+		margin: 0;
 		display: block;
+		position: relative;
+		text-align: left;
+
+		&:nth-child(2n) {	
+			background: #973329;
+		}
+
+		&:nth-child(3n) {	
+			background: #7f8c8d;
+		}
+
+		h3 {
+			margin: 0 0 0 15px;
+			font-size: 18px;
+		}
+
+		a.discuss {
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			border-top: 1px solid rgba(255, 255, 255, 0.3);
+			padding: 15px 15px 9px 0;
+			margin: 0 0 0 15px;
+			font-size: 18px;
+			font-weight: 300;
+			color: white;
+
+			&:hover {
+				text-decoration: none;
+			}
+
+			i {
+				float: right;
+				margin-bottom: 2px;
+			}
+		}
 	}	
 }

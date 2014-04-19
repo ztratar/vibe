@@ -50,14 +50,14 @@ define("views/HeaderView",
 
     	bindButtonActions: function() {
     		// Clear old actions off buttons
-    		this.$('a').off('click.header');
+    		this.$('a').off('click.header touchstart.header');
 
     		// Bind new actions to the buttons
     		if (this.data.leftAction && typeof this.data.leftAction.click === 'function') {
-    			this.$('a.left-action').on('click.header', this.data.leftAction.click);
+    			this.$('a.left-action').on('touchstart.header click.header', this.data.leftAction.click);
     		}
     		if (this.data.rightAction && typeof this.data.rightAction.click === 'function') {
-    			this.$('a.right-action').on('click.header', this.data.rightAction.click);
+    			this.$('a.right-action').on('touchstart.header click.header', this.data.rightAction.click);
     		}
     	},
 
