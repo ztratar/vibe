@@ -32,4 +32,8 @@ module.exports = function (app, passport) {
       res.render('splash/index');
     }
   });
+
+  app.get('*', function(req, res){
+    res.redirect('/');
+  });
 }
