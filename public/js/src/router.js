@@ -27,7 +27,7 @@ var Router = Backbone.Router.extend({
 		window.Vibe.appView.headerView.setButtons({
 			title: 'vibe',
 			rightAction: {
-				title: 'Admin',
+				title: 'admin',
 				icon: '#61886',
 				click: function(ev) {
 					var $target = $(ev.target);
@@ -61,6 +61,7 @@ var Router = Backbone.Router.extend({
 			title: 'admin',
 			leftAction: {
 				icon: '#61903',
+				title: 'vibe',
 				click: function(ev) {
 					that.navigateWithAnimation('/', 'pushRight', {
 						trigger: true
@@ -87,12 +88,14 @@ _.extend(Router.prototype, {
 			// TODO: Ajax Loader
 			this.once('loaded', _.bind(function() {
 				this.screenRouter.animateScreens(animation);
+				window.Vibe.appView.headerView.animateToNewComponents(animation);
+				this.navigate(href, opts);
 			}, this));
 		} else {
 			this.screenRouter.animateScreens(animation);
+			this.navigate(href, opts);
+			window.Vibe.appView.headerView.animateToNewComponents(animation);
 		}
-
-		this.navigate(href, opts);
 	}
 });
 

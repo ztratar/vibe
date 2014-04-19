@@ -3,6 +3,8 @@
 @import 'bootstrap';
 @import 'colors';
 @import 'header';
+@import 'screen';
+@import 'icons';
 @import 'icon-font/icon';
 @import 'icon-font/kraken';
 
@@ -11,70 +13,6 @@ html, body {
 	background: @vibe-primary;
 	color: white;
 	font-family: 'Lato', sans-serif;
-}
-
-.screen {
-	position: fixed;
-	top: 64px;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background: @vibe-primary;
-	-webkit-overflow-scrolling: touch;
-	z-index: 10;
-	.transition(all 0.14s ease-in-out);
-	.translate3d(0,0,0);
-
-	&.full {
-		z-index: 100;
-		top: 0;
-		background: @vibe-primary;
-
-		&.current {
-			z-index: 120;
-		}
-	}
-
-	&.current {
-		z-index: 20;
-		.translate3d(0,0,0);
-	}
-
-	&.animate-pushLeft {
-		&.new {
-			.translate3d(100%, 0, 0);
-		}
-		&.old {
-			.translate3d(-100%, 0, 0);
-		}
-	}
-
-	&.animate-pushRight {
-		&.new {
-			.translate3d(-100%, 0, 0);
-		}
-		&.old {
-			.translate3d(100%, 0, 0);
-		}
-	}
-
-	&.animate-slideUp {
-		&.new {
-			.translate3d(0, 100%, 0);
-		}
-		&.old {
-			.translate3d(0, 0, 0);
-		}
-	}
-
-	&.animate-slideDown {
-		&.new {
-			.translate3d(0, -100%, 0);
-		}
-		&.old {
-			.translate3d(0, 0, 0);
-		}
-	}
 }
 
 .app-content {

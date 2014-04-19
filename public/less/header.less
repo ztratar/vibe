@@ -1,49 +1,110 @@
 .header-view {
 	background: @vibe-light;
-	padding: 15px;
+	padding: 0;
 	height: 64px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 
-	h2 {
-		margin: 0;
-		padding: 0;
-		font-weight: 600;
-		font-size: 32px;
-		line-height: 32px;
-		cursor: default;
-	}
-
-	a {
+	.header-components {
+		padding: 15px 0;
+		height: 64px;
+		width: 100%;
 		position: absolute;
-		color: white;
-		font-size: 18px;
-		top: 4px;
-		padding: 13px;
 
-		span {
-			font-size: 22px;
-			font-weight: 100;
-			line-height: 32px;
-		}
-
-		&.left-action {
-			left: 0px;
-
-			i {
-				float: left;
-				margin-right: 15px;
+		&.animate-pushLeft {
+			&.new {
+				h2 {
+					.translate3d(100%, 0, 0);
+					opacity: 0;
+				}
+				a {
+					opacity: 0;
+				}
+			}
+			&.old {
+				h2 {
+					.translate3d(-40%, 0, 0);
+					opacity: 0;
+				}
+				a {
+					opacity: 0;
+					.transition(opacity 0.18s ease-in-out 0s);
+				}
 			}
 		}
 
-		&.right-action {
-			right: 0px;
+		&.animate-pushRight {
+			&.new {
+				h2 {
+					.translate3d(-100%, 0, 0);
+					opacity: 0;
+				}
+				a {
+					opacity: 0;
+				}
+			}
+			&.old {
+				h2 {
+					.translate3d(40%, 0, 0);
+					opacity: 0;
+				}
+				a {
+					opacity: 0;
+					.transition(opacity 0.18s ease-in-out 0s);
+				}
+			}
+		}
 
-			i {
-				float: right;
-				margin-left: 15px;
+		h2 {
+			margin: 0;
+			padding: 0;
+			font-weight: 600;
+			font-size: 32px;
+			line-height: 32px;
+			cursor: default;
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			pointer-events: none;
+			opacity: 1;
+
+			.translate3d(0, 0, 0);
+			.transition(all 0.18s ease-in-out);
+		}
+
+		a {
+			position: absolute;
+			color: white;
+			font-size: 18px;
+			top: 4px;
+			padding: 13px;
+			opacity: 1;
+			.transition(opacity 0.18s ease-in-out 0.1s);
+
+			span {
+				font-size: 22px;
+				font-weight: 100;
+				line-height: 32px;
+			}
+
+			&.left-action {
+				left: 0px;
+
+				i {
+					float: left;
+					margin-right: 15px;
+				}
+			}
+
+			&.right-action {
+				right: 0px;
+
+				i {
+					float: right;
+					margin-left: 15px;
+				}
 			}
 		}
 	}
