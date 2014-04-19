@@ -15,17 +15,14 @@ var mongoose = require('mongoose')
 * retrieve a question
 */
 exports.get = function (req, res) {
-  Question
-    .findOne({ _id: req.params['id']})
-    .exec(function (err, question){
-      if (err) return next(err);
-      if (!question){
-        res.send({question: null});
-      } else {
-        res.send({question: question});
-      }
-    })
+  Question.findById(req.params['id'], function (err, question){
+    if (err || !question) return res.send(null);
+
+    return res.send(question);
+  });
 };
+
+
 
 
 /**
@@ -37,7 +34,7 @@ MetaCommentId
 exports.create = function (req, res) {
   var metaId = req.params['metaId'];
   MetaQuestion.findById(metaId, function(err,metaQ){
-    if(err || !metaQ) return res.send({error: "can't find meta question"});
+    if(err || !metaQ) return res.send({error: "can't find question"});
     
     Question.create({
       metaQuestion: metaQ._id,
@@ -47,7 +44,7 @@ exports.create = function (req, res) {
       if(err || !question) return res.send({error: "can't create question"});
 
       return res.send(question);
-    })
+    });
 
   });
 };
@@ -58,18 +55,14 @@ exports.create = function (req, res) {
 * retrieve a question
 */
 exports.delete = function (req, res) {
-  Question
-    .findOne({ _id: req.params['id']})
-    .exec(function (err, question){
-      if (err) return next(err);
-      if (!question){
-        res.send({question: null});
-      } else {
-        question.remove(function(err, question){
-          if(err) return next(err);
-          res.send(question);
-        })
-      }
-    })
+  Question.findById(req.params['id'], function (err, question){
+    if (err || !question) return res.send({});
+
+    question.remove(function(err, question){
+      if(err) return res.send({error: err});
+
+      return res.send(question);
+    });
+  });
 
 };

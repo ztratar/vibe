@@ -37,7 +37,7 @@ exports.create = function (req, res) {
     body: req.body.question,
     _creator: req.user._id
   }, function(err, question){
-    if(err || !question) return res.send({error: "can't create question"});
+    if(err || !question) return res.send({error: "can't create meta question"});
 
     return res.send(question);
   });
