@@ -46,24 +46,21 @@ MetaCommentId
 */
 exports.create = function (req, res, next) {
   var metaId = req.params['metaId'];
-  var companyId = req.params['companyId'];
 
   MetaQuestion.findById(metaId, function(err,metaQ){
     if(err || !metaQ) return next(new Error("can't find question"));
 
-    Company.findById(companyId, function(err, company){
-      if(err || !company) return next(new Error("can't find company"));
+    Question.create({
+      metaQuestion: metaQ._id,
+      body: metaQ.body,
+      creator: req.user._id,
+      company: req.user.company
+    }, function(err, question){
+      if(err || !question) return next(new Error("can't create question"));
 
-      Question.create({
-        metaQuestion: metaQ._id,
-        body: metaQ.body,
-        creator: req.user._id
-      }, function(err, question){
-        if(err || !question) return next(new Error("can't create question"));
+      return res.send(question);
+    });
 
-        return res.send(question);
-      });
-    })
   });
 };
 

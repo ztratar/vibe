@@ -10,7 +10,7 @@ module.exports = function (app, passport) {
 
   var questions = require('../app/controllers/questions');
   app.get('/api/questions/:id', questions.get);
-  app.post('/api/questions/:metaId/:companyId', questions.create);
+  app.post('/api/questions/:metaId', questions.create);
   app.delete('/api/questions/:id', questions.delete);
 
 
