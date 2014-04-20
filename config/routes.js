@@ -29,7 +29,7 @@ module.exports = function (app, passport) {
   app.get('/api/meta_questions', metaQuestions.index);
   app.get('/api/meta_questions/:meta_question', metaQuestions.get);
   app.post('/api/meta_questions', metaQuestions.create);
-  app.delete('/api/meta_questions/:id', metaQuestions.delete);
+  app.delete('/api/meta_questions/:meta_question', metaQuestions.delete);
 
   app.get('/api/questions', questions.index);
   app.get('/api/questions/:id', questions.get);

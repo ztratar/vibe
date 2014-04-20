@@ -58,19 +58,15 @@ exports.create = function (req, res, next) {
 
 
 /**
-* DELETE /meta_questions/:id
+* DELETE /meta_questions/:meta_question
 * retrieve a question
 */
 exports.delete = function (req, res, next) {
-  MetaQuestion.findById(req.params['id'], function (err, question){
-    if (err)       return next(err);
-    if (!question) return next(new Error("can't find meta question"));
 
-    question.remove(function(err, question){
-      if(err) return next(err);
+  req.meta_question.remove(function(err, question){
+    if(err) return next(err);
 
-      return res.send(question);
-    });
+    return res.send(question);
   });
 
 };
@@ -82,6 +78,8 @@ exports.loadMetaQuestion = function(req, res, next, id){
   console.log("loading meta question");
   MetaQuestion.findById(id, function (err, question){
     if (err) return next(err);
+    if (!question) return next(new Error("can't find meta question"));
+
 
     req.meta_question = question;
     return next();
