@@ -33,7 +33,6 @@ var HeaderView = Backbone.View.extend({
 	},
 
 	animateToNewComponents: function(animation) {
-		console.log(animation);
 		this.newComponents.addClass('animate-' + animation);
 		_.delay(_.bind(function() {
 			if (this.oldComponents) {
