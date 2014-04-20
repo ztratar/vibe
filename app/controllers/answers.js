@@ -25,17 +25,19 @@ exports.get = function (req, res, next) {
 
 
 /**
-* POST /api/answers/:questionId
+* POST /api/answers
 * Create a new answer
 params:
 {
+  questionId: question to answer
   answer: answer content
 }
 */
 exports.create = function (req, res, next) {
+  if(!req.body.questionId) return next(new Error("no question ID specified"));
   if(!req.body.answer) return next(new Error("no answer specified"));
 
-  Question.findById(req.params['questionId'], function(err, question){
+  Question.findById(req.body.questionId, function(err, question){
     if (err)       return next(err);
     if (!question) return next(new Error("can't find question"));
 

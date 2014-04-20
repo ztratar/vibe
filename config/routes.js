@@ -25,12 +25,12 @@ module.exports = function (app, passport) {
   var questions = require('../app/controllers/questions');
   app.get('/api/questions', questions.index);
   app.get('/api/questions/:id', questions.get);
-  app.post('/api/questions/:metaId', questions.create);
+  app.post('/api/questions', questions.create);
   app.delete('/api/questions/:id', questions.delete);
 
   var answers = require('../app/controllers/answers');
   app.get('/api/answers/:id', answers.get);
-  app.post('/api/answers/:questionId', answers.create);
+  app.post('/api/answers', answers.create);
   app.delete('/api/answers/:id', answers.delete);
 
 

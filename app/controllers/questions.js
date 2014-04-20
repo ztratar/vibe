@@ -64,13 +64,13 @@ exports.get = function (req, res, next) {
 
 
 /**
-* POST /questions/:metaId
+* POST /questions
 * Create a new question
-params:
-MetaCommentId
+* body:
+*   metaId: meta_question to copy
 */
 exports.create = function (req, res, next) {
-  var metaId = req.params['metaId'];
+  var metaId = req.body['metaId'];
 
   MetaQuestion.findById(metaId, function(err,metaQ){
     if (err)    return next(err);
