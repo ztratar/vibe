@@ -26,15 +26,11 @@ exports.index = function(req, res, next){
 };
 
 /**
-* GET /meta_questions/:id
+* GET /meta_questions/:meta_question
 * retrieve a question
 */
 exports.get = function (req, res, next) {
-  MetaQuestion.findById(req.params['id'], function (err, question){
-    if (err) return next(err);
-
-    return res.send(question);
-  });
+  return res.send(req.meta_question);
 };
 
 
@@ -77,4 +73,17 @@ exports.delete = function (req, res, next) {
     });
   });
 
+};
+
+
+
+
+exports.loadMetaQuestion = function(req, res, next, id){
+  console.log("loading meta question");
+  MetaQuestion.findById(id, function (err, question){
+    if (err) return next(err);
+
+    req.meta_question = question;
+    return next();
+  });
 };

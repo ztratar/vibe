@@ -17,25 +17,31 @@ module.exports = function (app, passport) {
     users.session);
   
   var metaQuestions = require('../app/controllers/meta_questions');
+  var questions = require('../app/controllers/questions');
+  var answers = require('../app/controllers/answers');
+  var surveys = require('../app/controllers/surveys');
+
+  app.param('meta_question', metaQuestions.loadMetaQuestion);
+
+
+
+
   app.get('/api/meta_questions', metaQuestions.index);
-  app.get('/api/meta_questions/:id', metaQuestions.get);
+  app.get('/api/meta_questions/:meta_question', metaQuestions.get);
   app.post('/api/meta_questions', metaQuestions.create);
   app.delete('/api/meta_questions/:id', metaQuestions.delete);
 
-  var questions = require('../app/controllers/questions');
   app.get('/api/questions', questions.index);
   app.get('/api/questions/:id', questions.get);
   app.post('/api/questions', questions.create);
   app.delete('/api/questions/:id', questions.delete);
 
-  var answers = require('../app/controllers/answers');
   app.get('/api/answers', answers.index);
   app.get('/api/answers/:id', answers.get);
   app.post('/api/answers', answers.create);
   app.delete('/api/answers/:id', answers.delete);
 
 
-  var surveys = require('../app/controllers/surveys');
   app.get('/api/surveys', surveys.index);
   app.get('/api/surveys/:id', surveys.get);
   app.post('/api/surveys', surveys.create);

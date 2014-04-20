@@ -65,6 +65,7 @@ exports.get = function (req, res, next) {
 * Create a new survey
 * params:
 *   name
+*   dueDate
 */
 exports.create = function (req, res, next) {
   if(!req.body.name) return next(new Error("no survey name"));
@@ -90,10 +91,10 @@ exports.create = function (req, res, next) {
 */
 exports.addQuestion = function (req, res, next) {
 
-  Survey.findById(req.params['id'], function (err, survey){
+  Survey.findById(req.body.id, function (err, survey){
     if (err) return next(err);
 
-    Question.findById(req.params['questionId'], function(err, question){
+    Question.findById(req.body.questionId, function(err, question){
       if (err) return next(err);
       if (!question) return next(new Error("can't find question"));
 
@@ -126,3 +127,14 @@ exports.delete = function (req, res, next) {
   });
 
 };
+
+
+
+
+
+
+
+
+
+
+

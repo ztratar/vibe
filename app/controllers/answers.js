@@ -11,11 +11,10 @@ var mongoose = require('mongoose')
 
 
 /**
-* GET /surveys
-* get all surveys
+* GET /answers
+* get all users' answers
 * query strings:
-*   includeQuestions
-*   dueDate
+*
 */
 exports.index = function(req, res, next){
 
