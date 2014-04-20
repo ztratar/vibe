@@ -96,7 +96,7 @@ exports.delete = function (req, res, next) {
     if (!question) return next(new Error("can't find question"));
 
     question.remove(function(err, question){
-      if(err) return res.send({error: err});
+      if(err) return next(err);
 
       return res.send(question);
     });

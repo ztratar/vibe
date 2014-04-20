@@ -87,11 +87,11 @@ exports.create = function (req, res, next) {
 */
 exports.delete = function (req, res, next) {
   Survey.findById(req.params['id'], function (err, survey){
-    if (err)       return next(err);
+    if (err)     return next(err);
     if (!survey) return next(new Error("can't find survey"));
 
     survey.remove(function(err, survey){
-      if(err) return res.send({error: err});
+      if(err) return next(err);
 
       return res.send(survey);
     });
