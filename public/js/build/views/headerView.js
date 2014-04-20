@@ -21,6 +21,7 @@ define("views/HeaderView",
     	},
 
     	render: function() {
+    		if (this.oldComponents) this.removeOldComponents();
     		this.oldComponents = this.$('.header-components');
     		this.newComponents = $('<div class="header-components new"></div>');
     		this.$el.append(this.newComponents);
@@ -28,14 +29,19 @@ define("views/HeaderView",
     		this.bindButtonActions();
     	},
 
+    	renderCurrentComponents: function() {
+    		this.newComponents.attr('class', 'header-components current');
+    	},
+
     	animateToNewComponents: function(animation) {
+    		console.log(animation);
     		this.newComponents.addClass('animate-' + animation);
     		_.delay(_.bind(function() {
     			if (this.oldComponents) {
     				this.oldComponents.attr('class', 'header-components old animate-' + animation);
     			}
     			this.newComponents.attr('class', 'header-components current animate-' + animation);
-    		}, this), 10);
+    		}, this), 4);
     		this.removeOldComponents();
     	},
 
@@ -44,7 +50,7 @@ define("views/HeaderView",
     		if (removeComponents) {
     			_.delay(_.bind(function() {
     				removeComponents.remove();	
-    			}, this), 10400);
+    			}, this), 600);
     		}
     	},
 

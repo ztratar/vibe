@@ -6070,6 +6070,10 @@ a:active {
   -webkit-transition: opacity 0.18s ease-in-out 0s;
   transition: opacity 0.18s ease-in-out 0s;
 }
+.header-view .header-components.new h2,
+.header-view .header-components.new a {
+  opacity: 0;
+}
 .header-view .header-components h2 {
   margin: 0;
   padding: 0;
@@ -6300,7 +6304,7 @@ form.login .form-actions {
   bottom: 0;
   left: 0;
   right: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
   padding: 15px 15px 9px 0;
   margin: 0 0 0 15px;
   font-size: 18px;
@@ -6341,9 +6345,9 @@ form.login .form-actions {
   font-weight: 200;
 }
 .welcome p {
-  color: #36618b;
+  color: #31577d;
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
 }
 .welcome p strong {
   color: #3c6b9a;

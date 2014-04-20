@@ -30,6 +30,7 @@ _.extend(ScreenRouter.prototype, {
 		// is called, it should be entering the screen.
 		// Else, it is leaving the screen.	
 		if (this.currentScreen) {
+			this.removeOldScreen();
 			this.oldScreen = this.currentScreen;
 		}
 

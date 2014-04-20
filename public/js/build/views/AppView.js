@@ -27,7 +27,6 @@ define("views/AppView",
     		_.delay(_.bind(function() {
     			this.$('.survey-notif').addClass('show');
     		}, this), 1000);
-    		this.headerView.render();
     	},
 
     	overrideLinks: function() {
