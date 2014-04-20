@@ -9,6 +9,21 @@ var mongoose = require('mongoose')
   , Question = mongoose.model('Question');
 
 
+/**
+* GET /questions
+* retrieve a list of questions
+* query strings:
+*/
+exports.index = function(req, res, next){
+
+  MetaQuestion.find({})
+    .lean()
+    .exec(function(err, questions){
+      if(err) return next(err)
+
+      return res.send(questions);
+    });
+};
 
 /**
 * GET /meta_questions/:id

@@ -17,6 +17,7 @@ module.exports = function (app, passport) {
     users.session);
   
   var metaQuestions = require('../app/controllers/meta_questions');
+  app.get('/api/meta_questions', metaQuestions.index);
   app.get('/api/meta_questions/:id', metaQuestions.get);
   app.post('/api/meta_questions', metaQuestions.create);
   app.delete('/api/meta_questions/:id', metaQuestions.delete);
