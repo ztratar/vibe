@@ -12,7 +12,12 @@ var mongoose = require('mongoose')
   , Answer = mongoose.model('Answer');
 
 
-
+/**
+* GET /questions
+* retrieve a list of questions
+* query strings:
+*   includeAnswers
+*/
 exports.index = function(req, res, next){
 
   Question.find({company: req.user.company})
@@ -20,7 +25,8 @@ exports.index = function(req, res, next){
     .exec(function(err, questions){
       if(err) return next(err)
 
-      if(req.query.includeAnswers){
+      // populate answers if instructed
+      if(req.query.includeAnswers === 'true'){
         Async.map(questions, function(question, done){
           Answer.find({question: question._id})
             .lean()
@@ -33,7 +39,7 @@ exports.index = function(req, res, next){
 
         }, function(err, questions){
           if(err) return next(err);
-          
+
           return res.send(questions);
         });
       } else {
@@ -45,26 +51,22 @@ exports.index = function(req, res, next){
 
 
 /** 
-* GET /questions/:id
+* GET /questions/:question
 * retrieve a question
 */
 exports.get = function (req, res, next) {
-  Question.findById(req.params['id'], function (err, question){
-    if (err) return next(err);
-
-    return res.send(question);
-  });
+  return res.send(req.question);
 };
 
 
 /**
-* POST /questions/:metaId
+* POST /questions
 * Create a new question
-params:
-MetaCommentId
+* body:
+*   metaId: meta_question to copy
 */
 exports.create = function (req, res, next) {
-  var metaId = req.params['metaId'];
+  var metaId = req.body['metaId'];
 
   MetaQuestion.findById(metaId, function(err,metaQ){
     if (err)    return next(err);
@@ -86,19 +88,28 @@ exports.create = function (req, res, next) {
 
 
 /**
-* DELETE /questions/:id
+* DELETE /questions/:question
 * retrieve a question
 */
 exports.delete = function (req, res, next) {
-  Question.findById(req.params['id'], function (err, question){
-    if (err)       return next(err);
+  req.question.remove(function(err, question){
+    if(err) return next(err);
+    return res.send(question);
+  });
+};
+
+
+
+exports.loadQuestion = function(req, res, next, id){
+  Question.findById(id, function (err, question){
+    if (err) return next(err);
     if (!question) return next(new Error("can't find question"));
 
-    question.remove(function(err, question){
-      if(err) return res.send({error: err});
-
-      return res.send(question);
-    });
+    req.question = question;
+    return next();
   });
-
 };
+
+
+
+

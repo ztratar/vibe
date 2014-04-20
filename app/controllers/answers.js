@@ -10,6 +10,24 @@ var mongoose = require('mongoose')
   , Answer = mongoose.model('Answer');
 
 
+/**
+* GET /answers
+* get all users' answers
+* query strings:
+*
+*/
+exports.index = function(req, res, next){
+
+  var query = Answer.find({creator: req.user._id});
+
+  query.exec(function(err, answers){
+    if(err) return next(err)
+
+    return res.send(answers);
+  });
+};
+
+
 
 /**
 * GET /api/answers/:id
@@ -25,17 +43,19 @@ exports.get = function (req, res, next) {
 
 
 /**
-* POST /api/answers/:questionId
+* POST /api/answers
 * Create a new answer
 params:
 {
+  questionId: question to answer
   answer: answer content
 }
 */
 exports.create = function (req, res, next) {
+  if(!req.body.questionId) return next(new Error("no question ID specified"));
   if(!req.body.answer) return next(new Error("no answer specified"));
 
-  Question.findById(req.params['questionId'], function(err, question){
+  Question.findById(req.body.questionId, function(err, question){
     if (err)       return next(err);
     if (!question) return next(new Error("can't find question"));
 

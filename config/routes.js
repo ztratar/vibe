@@ -5,23 +5,50 @@ module.exports = function (app, passport) {
   app.get('/signup', users.signup);
   app.get('/logout', users.logout);
   app.post('/users', users.create);
-  app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login', failureFlash: 'Invalid email or password.'}), users.session);
+  app.post('/users/session', 
+    function(req, res, next){
+      req.body.email = req.body.email.toLowerCase();
+
+      next();
+    }, passport.authenticate('local', {
+      failureRedirect: '/login',
+      failureFlash: 'Invalid email or password.'
+    }),
+    users.session);
   
   var metaQuestions = require('../app/controllers/meta_questions');
-  app.get('/api/meta_questions/:id', metaQuestions.get);
-  app.post('/api/meta_questions', metaQuestions.create);
-  app.delete('/api/meta_questions/:id', metaQuestions.delete);
-
   var questions = require('../app/controllers/questions');
-  app.get('/api/questions', questions.index);
-  app.get('/api/questions/:id', questions.get);
-  app.post('/api/questions/:metaId', questions.create);
-  app.delete('/api/questions/:id', questions.delete);
-
   var answers = require('../app/controllers/answers');
+  var surveys = require('../app/controllers/surveys');
+
+  app.param('meta_question', metaQuestions.loadMetaQuestion);
+  app.param('question', questions.loadQuestion);
+
+
+
+
+  app.get('/api/meta_questions', metaQuestions.index);
+  app.get('/api/meta_questions/:meta_question', metaQuestions.get);
+  app.post('/api/meta_questions', metaQuestions.create);
+  app.delete('/api/meta_questions/:meta_question', metaQuestions.delete);
+
+  app.get('/api/questions', questions.index);
+  app.get('/api/questions/:question', questions.get);
+  app.post('/api/questions', questions.create);
+  app.delete('/api/questions/:question', questions.delete);
+
+  app.get('/api/answers', answers.index);
   app.get('/api/answers/:id', answers.get);
-  app.post('/api/answers/:questionId', answers.create);
+  app.post('/api/answers', answers.create);
   app.delete('/api/answers/:id', answers.delete);
+
+
+  app.get('/api/surveys', surveys.index);
+  app.get('/api/surveys/:id', surveys.get);
+  app.post('/api/surveys', surveys.create);
+  app.put('/api/surveys/:id/:questionId', surveys.addQuestion);
+  // app.delete('/api/surveys/:id/:questionId', surveys.deleteQuestion);
+  app.delete('/api/surveys/:id', surveys.delete);
 
 
   // app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin);
