@@ -45,7 +45,14 @@ exports.index = function(req, res, next){
 * retrieve a survey
 */
 exports.get = function (req, res, next) {
-  Survey.findById(req.params['id'], function (err, survey){
+
+  var query = Survey.findOne({_id: req.params['id']});
+
+  if(req.query.includeQuestions === 'true'){
+    query.populate('questions');
+  }
+
+  query.exec(function(err, survey){
     if (err) return next(err);
 
     return res.send(survey);
