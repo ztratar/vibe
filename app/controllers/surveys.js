@@ -13,8 +13,8 @@ var mongoose = require('mongoose')
 
 
 /**
-* POST /surveys
-* Create a new survey
+* GET /surveys
+* get all surveys
 * query strings:
 *   includeQuestions
 *   dueDate

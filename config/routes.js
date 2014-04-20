@@ -29,6 +29,7 @@ module.exports = function (app, passport) {
   app.delete('/api/questions/:id', questions.delete);
 
   var answers = require('../app/controllers/answers');
+  app.get('/api/answers', answers.index);
   app.get('/api/answers/:id', answers.get);
   app.post('/api/answers', answers.create);
   app.delete('/api/answers/:id', answers.delete);

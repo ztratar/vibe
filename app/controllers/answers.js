@@ -10,6 +10,25 @@ var mongoose = require('mongoose')
   , Answer = mongoose.model('Answer');
 
 
+/**
+* GET /surveys
+* get all surveys
+* query strings:
+*   includeQuestions
+*   dueDate
+*/
+exports.index = function(req, res, next){
+
+  var query = Answer.find({creator: req.user._id});
+
+  query.exec(function(err, answers){
+    if(err) return next(err)
+
+    return res.send(answers);
+  });
+};
+
+
 
 /**
 * GET /api/answers/:id
