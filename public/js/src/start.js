@@ -4,7 +4,13 @@ require.config({
 		text: '../libs/text',
 		jquery: '../libs/jquery',
 		underscore: '../libs/underscore',
-		backbone: '../libs/backbone'
+		backbone: '../libs/backbone',
+		d3: '../libs/d3'
+	},
+	shim: {
+		d3: {
+			exports: 'd3'
+		}
 	}
 });
 

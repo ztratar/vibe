@@ -2,6 +2,7 @@ import 'backbone';
 import 'jquery';
 import HeaderView from 'views/HeaderView';
 module template from 'text!templates/AppView.html';
+module surveyTemplate from 'text!templates/surveyNotification.html';
 
 var AppView = Backbone.View.extend({
 
@@ -17,6 +18,13 @@ var AppView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(template);
 		this.$('.app-header').html(this.headerView.$el);
+		this.$('.survey-notif').html(_.template(surveyTemplate, {
+			dueString: '3 days'	
+		}));
+
+		_.delay(_.bind(function() {
+			this.$('.survey-notif').addClass('show');
+		}, this), 1000);
 		this.headerView.render();
 	},
 

@@ -13,16 +13,66 @@
 
 		&:nth-child(2n) {	
 			background: #973329;
+
+			circle {
+				fill: #ca4030;
+			}
+
+			line {
+				stroke: #b13b2d;
+			}
 		}
 
 		&:nth-child(3n) {	
 			background: #7f8c8d;
+
+			circle {
+				fill: #ccc;
+			}
+
+			line {
+				stroke: #b9b9b9;
+			}
 		}
 
 		h3 {
 			margin: 0 0 0 15px;
 			padding: 20px 0 0 0;
 			font-size: 18px;
+		}
+
+		.chart-scroller {
+			overflow-x: scroll;
+			overflow-y: hidden;
+			margin-top: 15px;
+		}
+
+		.chart {
+			height: 196px;
+
+			svg {
+				display: block;
+				margin: 0 auto;
+			}
+		}
+
+		line {
+			fill: none;
+			stroke: #2f567c;
+			stroke-width: 2px;
+
+			&.axis {
+				opacity: 0.1;
+				stroke: url(#axis-gradient);
+			}
+		}
+
+		circle {
+			fill: #326599;
+		}
+
+		text {
+			fill: rgba(255, 255, 255, 0.6);
 		}
 
 		a.discuss {
