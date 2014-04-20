@@ -82,6 +82,31 @@ exports.create = function (req, res, next) {
 
 
 /**
+* PUT /surveys/:id/:questionId
+* Add qustion to survey
+*/
+exports.addQuestion = function (req, res, next) {
+
+  Survey.findById(req.params['id'], function (err, survey){
+    if (err) return next(err);
+
+    Question.findById(req.params['questionId'], function(err, question){
+      if (err) return next(err);
+      if (!question) return next(new Error("can't find question"));
+
+      survey.questions.addToSet(question._id);
+      survey.save(function(err){
+        if (err) return next(err);
+
+        return res.send(survey);
+      })
+    })
+  });
+};
+
+
+
+/**
 * DELETE /surveys/:id
 * retrieve a survey
 */
