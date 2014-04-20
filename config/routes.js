@@ -38,6 +38,7 @@ module.exports = function (app, passport) {
   app.get('/api/surveys/:id', surveys.get);
   app.post('/api/surveys', surveys.create);
   app.put('/api/surveys/:id/:questionId', surveys.addQuestion);
+  // app.delete('/api/surveys/:id/:questionId', surveys.deleteQuestion);
   app.delete('/api/surveys/:id', surveys.delete);
 
 

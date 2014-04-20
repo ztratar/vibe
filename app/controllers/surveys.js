@@ -12,35 +12,25 @@ var mongoose = require('mongoose')
   , Answer = mongoose.model('Answer');
 
 
-
+/**
+* POST /surveys
+* Create a new survey
+* query strings:
+*   includeQuestions
+*/
 exports.index = function(req, res, next){
 
-  Survey.find({company: req.user.company})
-    .lean()
-    .exec(function(err, surveys){
-      if(err) return next(err)
+  var query = Survey.find({company: req.user.company});
 
-      // populate answers if instructed
-      if(req.query.includeAnswers){
-        Async.map(surveys, function(survey, done){
-          Answer.find({survey: survey._id})
-            .lean()
-            .exec(function(err, answers){
-              if(err) return done(err);
-              survey.answers = answers;
+  if(req.query.includeQuestions){
+    query.populate('questions');
+  }
 
-              return done(null, survey)
-          });
+  query.exec(function(err, surveys){
+    if(err) return next(err)
 
-        }, function(err, surveys){
-          if(err) return next(err);
-
-          return res.send(surveys);
-        });
-      } else {
-        return res.send(surveys);
-      };
-    });
+    return res.send(surveys);
+  });
 };
 
 
@@ -61,9 +51,8 @@ exports.get = function (req, res, next) {
 /**
 * POST /surveys
 * Create a new survey
-params:
-name
-
+* params:
+*   name
 */
 exports.create = function (req, res, next) {
   if(!req.body.name) return next(new Error("no survey name"));
