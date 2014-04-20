@@ -8,6 +8,12 @@ var ChartItemView = Backbone.View.extend({
 	tagName: 'li',
 	className: 'chart-item',
 	template: _.template(template),
+	chartSettings: {
+		timeIntervalWidth: 78,
+		chartMargin: 15,
+		chartBottomMargin: 24,
+		maxRating: 4
+	},
 	events: {
 		'touchstart a.discuss': 'discuss',
 		'click a.discuss': 'discuss'
@@ -17,31 +23,33 @@ var ChartItemView = Backbone.View.extend({
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
+		this.drawChart();
 
+		return this;
+	},
+	drawChart: function() {
 		var $chart = this.$('.chart'),
 			answerData = this.model.get('answerData'),
 			numTimeIntervals = Object.keys(answerData).length,
 			chartHeight = $chart.height(),
-			chartWidth = (numTimeIntervals) * 100,
-			chartMargin = 15,
-			chartBottomMargin = 24;
+			chartWidth = (numTimeIntervals) * this.chartSettings.timeIntervalWidth;
 
 		this.svg = d3.select(this.$('.chart')[0]).append("svg")
-				.attr("width", chartWidth + 2*chartMargin)
+				.attr("width", chartWidth + 2*this.chartSettings.chartMargin)
 				.attr("height", chartHeight);
 
-		this.chartHeight = chartHeight - chartBottomMargin;
+		this.chartHeight = chartHeight - this.chartSettings.chartBottomMargin;
 
 		this.drawAxisGradient();
 
 		for (var i = 0; i < numTimeIntervals-1; i++) {
 			var point1 = {
-					x: chartWidth - (i*100) - chartMargin,
-					y: this.chartHeight - (answerData[i]/4)*this.chartHeight
+					x: chartWidth - (i*this.chartSettings.timeIntervalWidth) - this.chartSettings.chartMargin,
+					y: this.chartHeight - (answerData[i]/this.chartSettings.maxRating)*this.chartHeight
 				},
 				point2 = {
-					x: chartWidth - ((i+1)*100) - chartMargin,
-					y: this.chartHeight - (answerData[i+1]/4)*this.chartHeight
+					x: chartWidth - ((i+1)*this.chartSettings.timeIntervalWidth) - this.chartSettings.chartMargin,
+					y: this.chartHeight - (answerData[i+1]/this.chartSettings.maxRating)*this.chartHeight
 				};
 
 			this.drawLine(point1, point2);
@@ -55,8 +63,6 @@ var ChartItemView = Backbone.View.extend({
 		};
 
 		this.$('.chart-scroller').scrollLeft(chartWidth);
-
-		return this;
 	},
 	drawLine: function(point1, point2) {
 		this.svg.append('line')

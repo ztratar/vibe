@@ -20,7 +20,9 @@ var Question = Backbone.Model.extend({
 			4: 1,
 			5: 2.3,
 			6: 1.6,
-			7: 1.6
+			7: 1.6,
+			8: 1.2,
+			9: 2.3
 		}
 	}
 });
