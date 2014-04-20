@@ -20,11 +20,16 @@ var HeaderView = Backbone.View.extend({
 	},
 
 	render: function() {
+		if (this.oldComponents) this.removeOldComponents();
 		this.oldComponents = this.$('.header-components');
 		this.newComponents = $('<div class="header-components new"></div>');
 		this.$el.append(this.newComponents);
 		this.newComponents.html(_.template(template, this.data));
 		this.bindButtonActions();
+	},
+
+	renderCurrentComponents: function() {
+		this.newComponents.attr('class', 'header-components current');
 	},
 
 	animateToNewComponents: function(animation) {
@@ -34,7 +39,7 @@ var HeaderView = Backbone.View.extend({
 				this.oldComponents.attr('class', 'header-components old animate-' + animation);
 			}
 			this.newComponents.attr('class', 'header-components current animate-' + animation);
-		}, this), 10);
+		}, this), 4);
 		this.removeOldComponents();
 	},
 
@@ -43,7 +48,7 @@ var HeaderView = Backbone.View.extend({
 		if (removeComponents) {
 			_.delay(_.bind(function() {
 				removeComponents.remove();	
-			}, this), 10400);
+			}, this), 600);
 		}
 	},
 

@@ -133,8 +133,8 @@ define("router",
     			// TODO: Ajax Loader
     			this.once('loaded', _.bind(function() {
     				this.screenRouter.animateScreens(animation);
-    				window.Vibe.appView.headerView.animateToNewComponents(animation);
     				this.navigate(href, opts);
+    				window.Vibe.appView.headerView.animateToNewComponents(animation);
     			}, this));
     		} else {
     			this.screenRouter.animateScreens(animation);
@@ -146,6 +146,10 @@ define("router",
 
     var initRouter = function() {
     	window.Vibe.appRouter = new Router();
+
+    	window.Vibe.appRouter.once('loaded', function() {
+    		window.Vibe.appView.headerView.renderCurrentComponents();
+    	});
 
     	Backbone.history.start({
     		pushState: true,
