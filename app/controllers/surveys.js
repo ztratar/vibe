@@ -41,22 +41,11 @@ exports.index = function(req, res, next){
 
 
 /** 
-* GET /surveys/:id
+* GET /surveys/:survey
 * retrieve a survey
 */
 exports.get = function (req, res, next) {
-
-  var query = Survey.findOne({_id: req.params['id']});
-
-  if(req.query.includeQuestions === 'true'){
-    query.populate('questions');
-  }
-
-  query.exec(function(err, survey){
-    if (err) return next(err);
-
-    return res.send(survey);
-  });
+  return res.send(req.survey);
 };
 
 
@@ -111,26 +100,34 @@ exports.addQuestion = function (req, res, next) {
 
 
 /**
-* DELETE /surveys/:id
+* DELETE /surveys/:survey
 * retrieve a survey
 */
 exports.delete = function (req, res, next) {
-  Survey.findById(req.params['id'], function (err, survey){
-    if (err)     return next(err);
-    if (!survey) return next(new Error("can't find survey"));
-
-    survey.remove(function(err, survey){
-      if(err) return next(err);
-
-      return res.send(survey);
-    });
+  req.survey.remove(function(err, survey){
+    if(err) return next(err);
+    return res.send(survey);
   });
-
 };
 
 
+exports.loadSurvey = function(req, res, next, id){
 
+  var query = Survey.findOne({_id: id});
 
+  if(req.query.includeQuestions === 'true'){
+    console.log("populating questions");
+    query.populate('questions');
+  }
+
+  query.exec(function(err, survey){
+    if (err) return next(err);
+    if (!survey) return next(new Error("can't find survey"));
+
+    req.survey = survey;
+    return next();
+  });
+};
 
 
 
