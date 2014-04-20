@@ -39,6 +39,7 @@ mongoose.model('Question', QuestionSchema);
  */
 var SurveySchema = new Schema({
   name: String,
+  dueDate: Date,
   questions: [{type: Schema.Types.ObjectId, ref: 'Question' }],
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   company:  { type: Schema.Types.ObjectId, ref: 'Company' }

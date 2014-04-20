@@ -56,9 +56,11 @@ exports.get = function (req, res, next) {
 */
 exports.create = function (req, res, next) {
   if(!req.body.name) return next(new Error("no survey name"));
+  if(!req.body.dueDate) return next(new Error("no due date"));
 
   Survey.create({
     name: req.body.name,
+    dueDate: req.body.dueDate,
     creator: req.user._id,
     company: req.user.company
   }, function(err, survey){
