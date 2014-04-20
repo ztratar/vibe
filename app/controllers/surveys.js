@@ -75,26 +75,17 @@ exports.create = function (req, res, next) {
 
 
 /**
-* PUT /surveys/:id/:questionId
+* PUT /surveys/:survey/:question
 * Add qustion to survey
 */
 exports.addQuestion = function (req, res, next) {
-
-  Survey.findById(req.body.id, function (err, survey){
+  req.survey.questions.addToSet(req.question._id);
+  req.survey.save(function(err){
     if (err) return next(err);
 
-    Question.findById(req.body.questionId, function(err, question){
-      if (err) return next(err);
-      if (!question) return next(new Error("can't find question"));
+    return res.send(req.survey);
+  })
 
-      survey.questions.addToSet(question._id);
-      survey.save(function(err){
-        if (err) return next(err);
-
-        return res.send(survey);
-      })
-    })
-  });
 };
 
 
@@ -112,13 +103,8 @@ exports.delete = function (req, res, next) {
 
 
 exports.loadSurvey = function(req, res, next, id){
-
+  console.log("Loading survey")
   var query = Survey.findOne({_id: id});
-
-  if(req.query.includeQuestions === 'true'){
-    console.log("populating questions");
-    query.populate('questions');
-  }
 
   query.exec(function(err, survey){
     if (err) return next(err);

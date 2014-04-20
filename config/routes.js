@@ -47,7 +47,7 @@ module.exports = function (app, passport) {
   app.get('/api/surveys', surveys.index);
   app.get('/api/surveys/:survey', surveys.get);
   app.post('/api/surveys', surveys.create);
-  app.put('/api/surveys/:survey/:question', surveys.addQuestion);
+  app.put('/api/surveys/:survey/question/:question', surveys.addQuestion);
   // app.delete('/api/surveys/:id/:questionId', surveys.deleteQuestion);
   app.delete('/api/surveys/:survey', surveys.delete);
 
