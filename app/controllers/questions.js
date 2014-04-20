@@ -12,7 +12,12 @@ var mongoose = require('mongoose')
   , Answer = mongoose.model('Answer');
 
 
-
+/**
+* POST /questions
+* retrieve a list of questions
+* query strings:
+*   includeAnswers
+*/
 exports.index = function(req, res, next){
 
   Question.find({company: req.user.company})
@@ -20,8 +25,10 @@ exports.index = function(req, res, next){
     .exec(function(err, questions){
       if(err) return next(err)
 
+      console.log(req.query)
       // populate answers if instructed
-      if(req.query.includeAnswers){
+      if(req.query.includeAnswers === 'true'){
+        console.log("includeAnswers")
         Async.map(questions, function(question, done){
           Answer.find({question: question._id})
             .lean()

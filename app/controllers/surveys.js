@@ -27,7 +27,7 @@ exports.index = function(req, res, next){
     query.$lte('dueDate', req.query.dueDate)
   }
 
-  if(req.query.includeQuestions === true){
+  if(req.query.includeQuestions === 'true'){
     query.populate('questions');
   }
 
