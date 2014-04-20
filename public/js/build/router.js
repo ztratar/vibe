@@ -88,7 +88,7 @@ define("router",
     	},
     	discuss: function(questionId) {
     		var that = this,
-    			qData = window.Vibe.modelCache.get('question-' + questionId),
+    			qData = window.Vibe.modelCache.getAndRemove('question-' + questionId),
     			question;
 
     		if (qData) {
