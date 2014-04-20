@@ -17,12 +17,17 @@ var mongoose = require('mongoose')
 * Create a new survey
 * query strings:
 *   includeQuestions
+*   dueDate
 */
 exports.index = function(req, res, next){
 
   var query = Survey.find({company: req.user.company});
 
-  if(req.query.includeQuestions){
+  if(req.query.dueDate){
+    query.$lte('dueDate', req.query.dueDate)
+  }
+
+  if(req.query.includeQuestions === true){
     query.populate('questions');
   }
 
