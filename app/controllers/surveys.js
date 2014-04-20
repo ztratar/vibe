@@ -103,7 +103,6 @@ exports.delete = function (req, res, next) {
 
 
 exports.loadSurvey = function(req, res, next, id){
-  console.log("Loading survey")
   var query = Survey.findOne({_id: id});
 
   query.exec(function(err, survey){
