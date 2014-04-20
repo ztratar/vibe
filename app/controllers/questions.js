@@ -51,15 +51,11 @@ exports.index = function(req, res, next){
 
 
 /** 
-* GET /questions/:id
+* GET /questions/:question
 * retrieve a question
 */
 exports.get = function (req, res, next) {
-  Question.findById(req.params['id'], function (err, question){
-    if (err) return next(err);
-
-    return res.send(question);
-  });
+  return res.send(req.question);
 };
 
 
@@ -92,19 +88,28 @@ exports.create = function (req, res, next) {
 
 
 /**
-* DELETE /questions/:id
+* DELETE /questions/:question
 * retrieve a question
 */
 exports.delete = function (req, res, next) {
-  Question.findById(req.params['id'], function (err, question){
-    if (err)       return next(err);
+  req.question.remove(function(err, question){
+    if(err) return next(err);
+    return res.send(question);
+  });
+};
+
+
+
+exports.loadQuestion = function(req, res, next, id){
+  Question.findById(id, function (err, question){
+    if (err) return next(err);
     if (!question) return next(new Error("can't find question"));
 
-    question.remove(function(err, question){
-      if(err) return next(err);
-
-      return res.send(question);
-    });
+    req.question = question;
+    return next();
   });
-
 };
+
+
+
+
