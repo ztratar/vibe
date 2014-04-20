@@ -5,7 +5,16 @@ module.exports = function (app, passport) {
   app.get('/signup', users.signup);
   app.get('/logout', users.logout);
   app.post('/users', users.create);
-  app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login', failureFlash: 'Invalid email or password.'}), users.session);
+  app.post('/users/session', 
+    function(req, res, next){
+      req.body.email = req.body.email.toLowerCase();
+
+      next();
+    }, passport.authenticate('local', {
+      failureRedirect: '/login',
+      failureFlash: 'Invalid email or password.'
+    }),
+    users.session);
   
   var metaQuestions = require('../app/controllers/meta_questions');
   app.get('/api/meta_questions/:id', metaQuestions.get);

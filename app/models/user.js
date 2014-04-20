@@ -15,7 +15,7 @@ var mongoose = require('mongoose')
 
 var UserSchema = new Schema({
   name: String,
-  email: String,
+  email: { type: String, lowercase: true, trim: true },
   company: { type: Schema.Types.ObjectId, ref: 'Company' },
   isAdmin: Boolean,
   provider: String,

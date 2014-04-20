@@ -20,6 +20,7 @@ exports.index = function(req, res, next){
     .exec(function(err, questions){
       if(err) return next(err)
 
+      // populate answers if instructed
       if(req.query.includeAnswers){
         Async.map(questions, function(question, done){
           Answer.find({question: question._id})
@@ -33,7 +34,7 @@ exports.index = function(req, res, next){
 
         }, function(err, questions){
           if(err) return next(err);
-          
+
           return res.send(questions);
         });
       } else {
