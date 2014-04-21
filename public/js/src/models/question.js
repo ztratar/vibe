@@ -1,10 +1,10 @@
-import 'backbone';
+import BaseModel from 'models/baseModel';
 
-var Question = Backbone.Model.extend({
+var Question = BaseModel.extend({
 	defaults: {
-		id: '_20398402938402834098',
+		_id: '_20398402938402834098',
 		title: 'Team Productivity',
-		ask: '<strong>Team Productivity</strong> is going...',
+		body: '<strong>Team Productivity</strong> is going...',
 		from: {
 			name: 'anonymous'
 		},

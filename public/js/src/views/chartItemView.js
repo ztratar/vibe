@@ -15,7 +15,6 @@ var ChartItemView = Backbone.View.extend({
 		maxRating: 4
 	},
 	events: {
-		'touchstart a.discuss': 'discuss',
 		'click a.discuss': 'discuss'
 	},
 	initialize: function() {

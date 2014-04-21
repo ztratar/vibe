@@ -34,7 +34,6 @@ define("views/HeaderView",
     	},
 
     	animateToNewComponents: function(animation) {
-    		console.log(animation);
     		this.newComponents.addClass('animate-' + animation);
     		_.delay(_.bind(function() {
     			if (this.oldComponents) {

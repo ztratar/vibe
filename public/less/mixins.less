@@ -59,3 +59,41 @@
 	  }
 	}
 }
+
+.makeBounceZoom(@name, @origin, @top, @reach, @end) {
+	@keyframes @name {
+	  0% {
+		.scale(@origin, @origin);
+	  }
+
+	  30% {
+		.scale(@top, @top);
+	  }
+
+	  70% {
+		.scale(@reach, @reach);
+	  }
+
+	  100% {
+		.scale(@end, @end);
+	  }
+	}
+
+	@-webkit-keyframes @name {
+	  0% {
+		.scale(@origin, @origin);
+	  }
+
+	  30% {
+		.scale(@top, @top);
+	  }
+
+	  70% {
+		.scale(@reach, @reach);
+	  }
+
+	  100% {
+		.scale(@end, @end);
+	  }
+	}
+}

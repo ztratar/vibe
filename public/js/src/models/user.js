@@ -1,5 +1,5 @@
-import 'backbone';
+import BaseModel from 'models/baseModel';
 
-var User = Backbone.Model.extend({});
+var User = BaseModel.extend({});
 
 export default = User;
