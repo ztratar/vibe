@@ -23,6 +23,7 @@ module.exports = function (app, passport) {
 
   app.param('meta_question', metaQuestions.loadMetaQuestion);
   app.param('question', questions.loadQuestion);
+  app.param('survey', surveys.loadSurvey);
 
 
 
@@ -44,11 +45,11 @@ module.exports = function (app, passport) {
 
 
   app.get('/api/surveys', surveys.index);
-  app.get('/api/surveys/:id', surveys.get);
+  app.get('/api/surveys/:survey', surveys.get);
   app.post('/api/surveys', surveys.create);
-  app.put('/api/surveys/:id/:questionId', surveys.addQuestion);
+  app.put('/api/surveys/:survey/question/:question', surveys.addQuestion);
   // app.delete('/api/surveys/:id/:questionId', surveys.deleteQuestion);
-  app.delete('/api/surveys/:id', surveys.delete);
+  app.delete('/api/surveys/:survey', surveys.delete);
 
 
   // app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin);

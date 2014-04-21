@@ -41,22 +41,11 @@ exports.index = function(req, res, next){
 
 
 /** 
-* GET /surveys/:id
+* GET /surveys/:survey
 * retrieve a survey
 */
 exports.get = function (req, res, next) {
-
-  var query = Survey.findOne({_id: req.params['id']});
-
-  if(req.query.includeQuestions === 'true'){
-    query.populate('questions');
-  }
-
-  query.exec(function(err, survey){
-    if (err) return next(err);
-
-    return res.send(survey);
-  });
+  return res.send(req.survey);
 };
 
 
@@ -86,51 +75,44 @@ exports.create = function (req, res, next) {
 
 
 /**
-* PUT /surveys/:id/:questionId
+* PUT /surveys/:survey/:question
 * Add qustion to survey
 */
 exports.addQuestion = function (req, res, next) {
-
-  Survey.findById(req.body.id, function (err, survey){
+  req.survey.questions.addToSet(req.question._id);
+  req.survey.save(function(err){
     if (err) return next(err);
 
-    Question.findById(req.body.questionId, function(err, question){
-      if (err) return next(err);
-      if (!question) return next(new Error("can't find question"));
+    return res.send(req.survey);
+  })
 
-      survey.questions.addToSet(question._id);
-      survey.save(function(err){
-        if (err) return next(err);
-
-        return res.send(survey);
-      })
-    })
-  });
 };
 
 
 
 /**
-* DELETE /surveys/:id
+* DELETE /surveys/:survey
 * retrieve a survey
 */
 exports.delete = function (req, res, next) {
-  Survey.findById(req.params['id'], function (err, survey){
-    if (err)     return next(err);
-    if (!survey) return next(new Error("can't find survey"));
-
-    survey.remove(function(err, survey){
-      if(err) return next(err);
-
-      return res.send(survey);
-    });
+  req.survey.remove(function(err, survey){
+    if(err) return next(err);
+    return res.send(survey);
   });
-
 };
 
 
+exports.loadSurvey = function(req, res, next, id){
+  var query = Survey.findOne({_id: id});
 
+  query.exec(function(err, survey){
+    if (err) return next(err);
+    if (!survey) return next(new Error("can't find survey"));
 
+    req.survey = survey;
+    return next();
+  });
+};
 
 
 
