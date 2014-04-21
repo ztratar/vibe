@@ -45,6 +45,8 @@
 	}
 
 	&.animate-slideUp {
+		.transition(all 0.44s ease-in-out);
+
 		&.new {
 			.translate3d(0, 100%, 0);
 		}
@@ -55,10 +57,10 @@
 
 	&.animate-slideDown {
 		&.new {
-			.translate3d(0, -100%, 0);
+			.translate3d(0, 0, 0);
 		}
 		&.old {
-			.translate3d(0, 0, 0);
+			.translate3d(0, 100%, 0);
 		}
 	}
 }

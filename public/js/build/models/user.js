@@ -1,9 +1,10 @@
 define("models/user", 
-  ["backbone","exports"],
+  ["models/baseModel","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
+    var BaseModel = __dependency1__["default"];
 
-    var User = Backbone.Model.extend({});
+    var User = BaseModel.extend({});
 
     __exports__["default"] = User;
   });

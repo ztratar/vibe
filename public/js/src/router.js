@@ -4,10 +4,13 @@ import 'backbone';
 
 import ScreenRouter from 'screenRouter';
 
+import Survey from 'models/survey';
 import Question from 'models/question';
 
 import HomeView from 'views/homeView';
 import WelcomeView from 'views/welcomeView';
+import SurveyView from 'views/surveyView';
+import SurveyDoneView from 'views/surveyDoneView';
 
 var Router = Backbone.Router.extend({
 	initialize: function() {
@@ -17,9 +20,11 @@ var Router = Backbone.Router.extend({
 	routes: {
 		'': 'index',
 		'/': 'index',
-		'welcome/:step': 'welcome',
 		'admin': 'admin',
-		'discuss/:id': 'discuss'
+		'welcome/:step': 'welcome',
+		'discuss/:id': 'discuss',
+		'survey/:tag': 'survey',
+		'surveyDone': 'surveyDone'
 	},
 	index: function() {
 		var that = this,
@@ -94,11 +99,9 @@ var Router = Backbone.Router.extend({
 			question = new Question(qData);
 		} else {
 			question = new Question({
-				id: questionId	
+				_id: questionId	
 			});
-			_.defer(_.bind(function() {
-				question.fetch();
-			}, this));
+			_.defer(question.fetch);
 		}
 
 		window.Vibe.appView.headerView.setButtons({
@@ -117,16 +120,63 @@ var Router = Backbone.Router.extend({
 
 		this.screenRouter.currentScreen.html(question.get('title'));
 		this.trigger('loaded');
+	},
+	survey: function(surveyId) {
+		var surveyData = window.Vibe.modelCache.getAndRemove('survey-' + surveyId),
+			surveyView,
+			survey;
+
+		if (surveyData) {
+			survey = new Survey(surveyData);
+		} else {
+			survey = new Survey({
+				id: surveyId
+			});
+			_.defer(survey.fetch);
+		}
+
+		surveyView = new SurveyView({
+			model: survey	
+		});
+
+		this.screenRouter.currentScreen.html(surveyView.$el);
+		surveyView.render();
+
+		this.trigger('loaded');
+	},
+	surveyDone: function() {
+		var that = this,
+			surveyDoneView = new SurveyDoneView();
+
+		window.Vibe.appView.headerView.setButtons({
+			title: '',
+			leftAction: {
+				icon: '#61903',
+				title: 'vibe',
+				click: function(ev) {
+					that.navigateWithAnimation('/', 'pushRight', {
+						trigger: true
+					});	
+					return false;
+				}
+			}	
+		});
+
+		this.screenRouter.currentScreen.html(surveyDoneView.$el);
+		surveyDoneView.render();
+
+		this.trigger('loaded');
 	}
 });
 
 _.extend(Router.prototype, {
 	navigateWithAnimation: function(href, animation, opts) {
 		opts = _.extend({
-			waitForLoad: false	
+			waitForLoad: false,
+			screenSize: 'std'
 		}, opts);
 
-		this.screenRouter.createNewScreen();
+		this.screenRouter.createNewScreen(opts.screenSize);
 
 		if (opts.waitForLoad) {
 			// TODO: Ajax Loader

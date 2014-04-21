@@ -1,13 +1,14 @@
 define("models/question", 
-  ["backbone","exports"],
+  ["models/baseModel","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
+    var BaseModel = __dependency1__["default"];
 
-    var Question = Backbone.Model.extend({
+    var Question = BaseModel.extend({
     	defaults: {
-    		id: '_20398402938402834098',
+    		_id: '_20398402938402834098',
     		title: 'Team Productivity',
-    		ask: '<strong>Team Productivity</strong> is going...',
+    		body: '<strong>Team Productivity</strong> is going...',
     		from: {
     			name: 'anonymous'
     		},

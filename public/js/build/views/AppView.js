@@ -1,10 +1,11 @@
 define("views/AppView", 
-  ["backbone","jquery","views/HeaderView","text!templates/AppView.html","text!templates/surveyNotification.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
+  ["backbone","jquery","models/survey","views/HeaderView","text!templates/AppView.html","text!templates/surveyNotification.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
     "use strict";
-    var HeaderView = __dependency3__["default"];
-    var template = __dependency4__;
-    var surveyTemplate = __dependency5__;
+    var Survey = __dependency3__["default"];
+    var HeaderView = __dependency4__["default"];
+    var template = __dependency5__;
+    var surveyTemplate = __dependency6__;
 
     var AppView = Backbone.View.extend({
 
@@ -20,13 +21,8 @@ define("views/AppView",
     	render: function() {
     		this.$el.html(template);
     		this.$('.app-header').html(this.headerView.$el);
-    		this.$('.survey-notif').html(_.template(surveyTemplate, {
-    			dueString: '3 days'	
-    		}));
 
-    		_.delay(_.bind(function() {
-    			this.$('.survey-notif').addClass('show');
-    		}, this), 1000);
+    		this.checkForNewSurvey();
     	},
 
     	overrideLinks: function() {
@@ -41,6 +37,41 @@ define("views/AppView",
     				});
     				return false;
     			}
+    		});
+    	},
+
+    	checkForNewSurvey: function() {
+    		var surveyData = {};
+    		// Check for survey
+    		if (surveyData) {
+    			// If survey is found, render the notification and
+    			// cache the data.
+    			this.survey = new Survey(surveyData);
+    			window.Vibe.modelCache.set('survey-' + this.survey.get('_id'), this.survey.toJSON());	
+    			this.renderAndShowSurveyNotification();
+    		}
+    	},
+
+    	renderAndShowSurveyNotification: function() {
+    		var msTimeDiff = (new Date()).getTime() - this.survey.get('timeDue').getTime(),
+    			daysTime = Math.floor(msTimeDiff / (1000 * 60 * 60 * 24)),
+    			dueString = 'Due in ' + daysTime + ' days';
+
+    		if (daysTime === 0) {
+    			dueString = 'Due now!';	
+    		}
+
+    		this.$('.survey-notif').html(_.template(surveyTemplate, {
+    			dueString: dueString	
+    		}));
+
+    		this.$('.survey-notif').addClass('show');
+    		this.$('.survey-notif').click(function() {
+    			window.Vibe.appRouter.navigateWithAnimation('/survey/03993029', 'slideUp', {
+    				trigger: true,
+    				screenSize: 'full'
+    			});	
+    			$(this).removeClass('show');
     		});
     	}
 

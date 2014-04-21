@@ -17,7 +17,6 @@ define("views/chartItemView",
     		maxRating: 4
     	},
     	events: {
-    		'touchstart a.discuss': 'discuss',
     		'click a.discuss': 'discuss'
     	},
     	initialize: function() {
