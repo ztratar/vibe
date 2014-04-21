@@ -146,7 +146,8 @@ define("router",
     		this.trigger('loaded');
     	},
     	surveyDone: function() {
-    		var surveyDoneView = new SurveyDoneView();
+    		var that = this,
+    			surveyDoneView = new SurveyDoneView();
 
     		window.Vibe.appView.headerView.setButtons({
     			title: '',
