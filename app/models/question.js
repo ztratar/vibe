@@ -39,10 +39,37 @@ var QuestionSchema = new Schema({
 });
 
 QuestionSchema.methods = {
-  calculateDate: function(){
-    var data = [];
+  calculateData: function(cb){
 
+    Answer.find({
+        question: this._id,
+        type: 'scale'
+      })
+      .sort(timeDue)
+      .exec(function(err, answers){
+        if(err) return cb(err);
+        if(!answers.length) return cb(null, []);
 
+        var data = [];
+        var i;
+        var total = 0;
+        var count = 0;
+        var currDate = answers[0].timeDue;
+        for(i = 0; i < answers.length; i++){
+          if(answers[i].timeDue === currDate){
+            total += answers[i].body;
+            count += 1;
+          } else {
+            data.push(total/count);
+            total = 0;
+            count = 0;
+            currDate = answers[i].timeDue;
+          }
+        }
+
+        return cb(null, data);
+
+      });
   }
 
 };
