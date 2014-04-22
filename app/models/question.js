@@ -46,9 +46,12 @@ QuestionSchema.methods = {
         type: 'scale'
       })
       .sort(timeDue)
+      .lean()
       .exec(function(err, answers){
         if(err) return cb(err);
-        if(!answers.length) return cb(null, []);
+        if(!answers.length){
+          return cb(null, []);
+        }
 
         var data = [];
         var i;
@@ -70,7 +73,20 @@ QuestionSchema.methods = {
         return cb(null, data);
 
       });
+  },
+
+  getAnswers: function(cb){
+    var _this = this;
+
+    Answer.find({question: _this._id})
+    .lean()
+    .exec(function(err, answers){
+      if(err) return cb(err);
+
+      return cb(null, answers)
+    });
   }
+
 
 };
 

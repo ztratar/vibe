@@ -18,24 +18,23 @@ var mongoose = require('mongoose')
 * retrieve a list of questions
 * query strings:
 *   includeAnswers
+*   includeData
 */
 exports.index = function(req, res, next){
 
   Question.find({company: req.user.company})
-    .lean()
     .exec(function(err, questions){
       if(err) return next(err)
 
       // populate answers if instructed
       if(req.query.includeAnswers === 'true'){
         Async.map(questions, function(question, done){
-          Answer.find({question: question._id})
-            .lean()
-            .exec(function(err, answers){
-              if(err) return done(err);
-              question.answers = answers;
+          question.getAnswers(function(err, answers){
+            if(err) return done(err);
 
-              return done(null, question)
+            var t = question.toObject();
+            t.answers = answers;
+            return done(null, t);
           });
 
         }, function(err, questions){
