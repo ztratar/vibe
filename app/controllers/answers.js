@@ -55,9 +55,14 @@ exports.create = function (req, res, next) {
   if(!req.body.type) return next(new Error("no answer type specified"));
   if(!req.body.body) return next(new Error("no answer body specified"));
 
+  var body = req.body.body;
+  var type = req.body.type;
+  if(typeof(body) === "string"){
+    body = parseInt(body, 10);
+  }
 
   Answer.create({
-    body: req.body.body,
+    body: body,
     type: req.body.type,
     creator: req.user._id,
     question: req.question._id,
