@@ -100,6 +100,35 @@ exports.delete = function (req, res, next) {
 };
 
 
+/**
+* GET /questions/:question/comments
+* Get comments associated with question
+* params:
+*   
+*/
+exports.getComments = function(req, res, next){
+
+  var query = Comment.find({question: req.question._id});
+
+  if(req.query.limit){
+    var limit = parseInt(req.query.limit);
+    if(!isNaN(limit)) query.limit(limit);
+  }
+
+  if(req.query.offset){
+    var offset = parseInt(req.query.offset);
+    if(!isNaN(offset)) query.skip(offset);
+  }
+
+
+  query.exec(function(err, comments){
+    if(err) return next(err);
+
+    return res.send(comments);
+  });
+};
+
+
 
 /**
 * POST /questions/:question/comments
