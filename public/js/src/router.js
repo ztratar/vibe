@@ -18,6 +18,7 @@ var Router = Backbone.Router.extend({
 		this.screenRouter.initCurrentScreen();
 	},
 	routes: {
+		'index.html': 'index',
 		'': 'index',
 		'/': 'index',
 		'admin': 'admin',
@@ -202,7 +203,7 @@ var initRouter = function() {
 
 	Backbone.history.start({
 		pushState: true,
-		root: '/'
+		root: decodeURI(document.location.pathname.replace('index.html', ''))
 	});
 };
 
