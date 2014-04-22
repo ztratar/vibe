@@ -33,6 +33,7 @@ var QuestionSchema = new Schema({
   audience: { type: String, default: 'all' },
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   company:  { type: Schema.Types.ObjectId, ref: 'Company' }
+
 });
 mongoose.model('Question', QuestionSchema);
 

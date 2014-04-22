@@ -13,7 +13,7 @@ var mongoose = require('mongoose')
 
 var AnswerSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  body: String,
+  body: Schema.Types.Mixed,
   anonymous: { type: Boolean, default: false },
   type: String,
   question: { type: Schema.Types.ObjectId, ref: 'Question' },

@@ -20,6 +20,7 @@ var UserSchema = new Schema({
   isAdmin: Boolean,
   provider: String,
   hashed_password: String,
+  tutorial: { type: String, default: "{}" },
   salt: String,
   facebook: {},
   twitter: {},
