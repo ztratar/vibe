@@ -87,3 +87,18 @@ Terminating in response to SpringBoard's termination.
 2014-04-21 22:52:29.593 Vibe[9288:70b] Unlimited access to network resources
 2014-04-21 22:52:29.757 Vibe[9288:70b] Resetting plugins due to page load.
 2014-04-21 22:52:29.908 Vibe[9288:70b] Finished load of: file:///Users/backplane1/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/2897A16B-805A-4535-9810-0964FA575FAA/Vibe.app/www/index.html
+2014-04-21 23:23:41.907 Vibe[11618:70b] Multi-tasking -> Device: YES, App: YES
+2014-04-21 23:23:41.913 Vibe[11618:70b] Unlimited access to network resources
+2014-04-21 23:23:42.040 Vibe[11618:70b] Resetting plugins due to page load.
+2014-04-21 23:23:42.231 Vibe[11618:70b] Finished load of: file:///Users/backplane1/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/2897A16B-805A-4535-9810-0964FA575FAA/Vibe.app/www/index.html
+Terminating in response to SpringBoard's termination.
+2014-04-22 01:26:02.433 Vibe[18519:70b] Multi-tasking -> Device: YES, App: YES
+2014-04-22 01:26:02.457 Vibe[18519:70b] Unlimited access to network resources
+2014-04-22 01:26:02.965 Vibe[18519:70b] Resetting plugins due to page load.
+2014-04-22 01:26:03.403 Vibe[18519:70b] Finished load of: file:///Users/backplane1/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/2897A16B-805A-4535-9810-0964FA575FAA/Vibe.app/www/index.html
+2014-04-22 01:29:45.387 Vibe[18519:70b] Received memory warning.
+2014-04-22 01:30:18.952 Vibe[18942:70b] Multi-tasking -> Device: YES, App: YES
+2014-04-22 01:30:18.961 Vibe[18942:70b] Unlimited access to network resources
+2014-04-22 01:30:19.105 Vibe[18942:70b] Resetting plugins due to page load.
+2014-04-22 01:30:19.481 Vibe[18942:70b] Finished load of: file:///Users/backplane1/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/2897A16B-805A-4535-9810-0964FA575FAA/Vibe.app/www/index.html
+2014-04-22 01:31:10.823 Vibe[18942:70b] Received memory warning.

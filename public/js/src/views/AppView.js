@@ -53,10 +53,10 @@ var AppView = Backbone.View.extend({
 	renderAndShowSurveyNotification: function() {
 		var msTimeDiff = (new Date()).getTime() - this.survey.get('timeDue').getTime(),
 			daysTime = Math.floor(msTimeDiff / (1000 * 60 * 60 * 24)),
-			dueString = 'Due in ' + daysTime + ' days';
+			dueString = 'Take Survey - Due in ' + daysTime + ' days';
 
 		if (daysTime === 0) {
-			dueString = 'Due now!';	
+			dueString = 'Take Survey - Due Now!';	
 		}
 
 		this.$('.survey-notif').html(_.template(surveyTemplate, {

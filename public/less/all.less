@@ -11,14 +11,19 @@
 @import 'forms';
 @import 'pages/charts';
 @import 'pages/survey';
+@import 'pages/settings';
 @import 'widgets/welcome';
 
 html, body {
 	text-align: center;
 	background: @vibe-primary;
 	color: white;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Lato', sans-serif !important;
 	-webkit-font-smoothing: antialiased;
+}
+
+input, label {
+	font-family: 'Lato', sans-serif;
 }
 
 .v-center {
@@ -81,7 +86,7 @@ html, body {
 		bottom: 0;
 		left: 0;
 		right: 0;
-		background: #12ab97;
+		background: rgba(18, 171, 151, 0.86);
 		color: white;
 		height: 100px;
 		text-align: left;
