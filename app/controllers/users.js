@@ -148,7 +148,8 @@ exports.create = function (req, res) {
 * get current user
 */
 exports.get = function(req, res, next){
-  return res.send(req.user);
+  
+  return res.send(req.user.stripInfo());
 }
 
 
@@ -166,10 +167,10 @@ exports.update = function(req, res, next){
   if(body.password) user.password = body.password;
 
 
-  req.user.save(function(err){
+  req.user.save(function(err, user){
     if(err) return next(err);
 
-    return res.send(user);
+    return res.send(user.stripInfo());
   });
 };
 

@@ -96,6 +96,15 @@ UserSchema.pre('save', function(next) {
 
 UserSchema.methods = {
 
+  stripInfo: function(){
+    var user = this.toObject();
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    user.provider = undefined;
+
+    return user;
+  },
+
   /**
    * Authenticate - check if the passwords are the same
    *
