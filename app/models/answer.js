@@ -17,8 +17,8 @@ var AnswerSchema = new Schema({
   anonymous: { type: Boolean, default: false },
   type: { type: String, enum: ['text', 'scale'] },
   question: { type: Schema.Types.ObjectId, ref: 'Question' },
-  survey: { type: Schema.Types.ObjectId, ref: 'Survey' }
-
+  survey: { type: Schema.Types.ObjectId, ref: 'Survey' },
+  timeCreated: { type: Date, default: Date.now() }
 });
 
 /**
