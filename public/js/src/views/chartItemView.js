@@ -9,7 +9,7 @@ var ChartItemView = Backbone.View.extend({
 	className: 'chart-item',
 	template: _.template(template),
 	chartSettings: {
-		timeIntervalWidth: 78,
+		timeIntervalWidth: 68,
 		chartMargin: 15,
 		chartBottomMargin: 24,
 		maxRating: 4

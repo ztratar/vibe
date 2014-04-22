@@ -1,6 +1,6 @@
 define("router", 
-  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __exports__) {
+  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","views/discussView","views/settingsView","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __exports__) {
     "use strict";
 
     var ScreenRouter = __dependency4__["default"];
@@ -12,6 +12,8 @@ define("router",
     var WelcomeView = __dependency8__["default"];
     var SurveyView = __dependency9__["default"];
     var SurveyDoneView = __dependency10__["default"];
+    var DiscussView = __dependency11__["default"];
+    var SettingsView = __dependency12__["default"];
 
     var Router = Backbone.Router.extend({
     	initialize: function() {
@@ -22,7 +24,7 @@ define("router",
     		'index.html': 'index',
     		'': 'index',
     		'/': 'index',
-    		'admin': 'admin',
+    		'settings': 'settings',
     		'welcome/:step': 'welcome',
     		'discuss/:id': 'discuss',
     		'survey/:tag': 'survey',
@@ -41,11 +43,11 @@ define("router",
     		window.Vibe.appView.headerView.setButtons({
     			title: 'vibe',
     			rightAction: {
-    				title: 'admin',
+    				title: '',
     				icon: '#61886',
     				click: function(ev) {
     					var $target = $(ev.target);
-    					that.navigateWithAnimation('admin', 'pushLeft', {
+    					that.navigateWithAnimation('settings', 'pushLeft', {
     						trigger: true
     					});	
     					return false;
@@ -72,11 +74,12 @@ define("router",
 
     		this.trigger('loaded');
     	},
-    	admin: function() {
-    		var that = this;
+    	settings: function() {
+    		var that = this,
+    			settingsView = new SettingsView();
 
     		window.Vibe.appView.headerView.setButtons({
-    			title: 'admin',
+    			title: 'settings',
     			leftAction: {
     				icon: '#61903',
     				title: 'vibe',
@@ -89,11 +92,14 @@ define("router",
     			}	
     		});
 
-    		this.screenRouter.currentScreen.html('admin');
+    		this.screenRouter.currentScreen.html(settingsView.$el);
+    		settingsView.render();
+
     		this.trigger('loaded');
     	},
     	discuss: function(questionId) {
     		var that = this,
+    			discussView,
     			qData = window.Vibe.modelCache.getAndRemove('question-' + questionId),
     			question;
 
@@ -105,6 +111,10 @@ define("router",
     			});
     			_.defer(question.fetch);
     		}
+
+    		discussView = new DiscussView({
+    			model: question	
+    		});
 
     		window.Vibe.appView.headerView.setButtons({
     			title: 'vibe',
@@ -120,7 +130,9 @@ define("router",
     			}	
     		});
 
-    		this.screenRouter.currentScreen.html(question.get('title'));
+    		this.screenRouter.currentScreen.html(discussView.$el);
+    		discussView.render();
+
     		this.trigger('loaded');
     	},
     	survey: function(surveyId) {

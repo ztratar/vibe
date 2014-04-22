@@ -11,6 +11,8 @@ import HomeView from 'views/homeView';
 import WelcomeView from 'views/welcomeView';
 import SurveyView from 'views/surveyView';
 import SurveyDoneView from 'views/surveyDoneView';
+import DiscussView from 'views/discussView';
+import SettingsView from 'views/settingsView';
 
 var Router = Backbone.Router.extend({
 	initialize: function() {
@@ -21,7 +23,7 @@ var Router = Backbone.Router.extend({
 		'index.html': 'index',
 		'': 'index',
 		'/': 'index',
-		'admin': 'admin',
+		'settings': 'settings',
 		'welcome/:step': 'welcome',
 		'discuss/:id': 'discuss',
 		'survey/:tag': 'survey',
@@ -40,11 +42,11 @@ var Router = Backbone.Router.extend({
 		window.Vibe.appView.headerView.setButtons({
 			title: 'vibe',
 			rightAction: {
-				title: 'admin',
+				title: '',
 				icon: '#61886',
 				click: function(ev) {
 					var $target = $(ev.target);
-					that.navigateWithAnimation('admin', 'pushLeft', {
+					that.navigateWithAnimation('settings', 'pushLeft', {
 						trigger: true
 					});	
 					return false;
@@ -71,11 +73,12 @@ var Router = Backbone.Router.extend({
 
 		this.trigger('loaded');
 	},
-	admin: function() {
-		var that = this;
+	settings: function() {
+		var that = this,
+			settingsView = new SettingsView();
 
 		window.Vibe.appView.headerView.setButtons({
-			title: 'admin',
+			title: 'settings',
 			leftAction: {
 				icon: '#61903',
 				title: 'vibe',
@@ -88,11 +91,14 @@ var Router = Backbone.Router.extend({
 			}	
 		});
 
-		this.screenRouter.currentScreen.html('admin');
+		this.screenRouter.currentScreen.html(settingsView.$el);
+		settingsView.render();
+
 		this.trigger('loaded');
 	},
 	discuss: function(questionId) {
 		var that = this,
+			discussView,
 			qData = window.Vibe.modelCache.getAndRemove('question-' + questionId),
 			question;
 
@@ -104,6 +110,10 @@ var Router = Backbone.Router.extend({
 			});
 			_.defer(question.fetch);
 		}
+
+		discussView = new DiscussView({
+			model: question	
+		});
 
 		window.Vibe.appView.headerView.setButtons({
 			title: 'vibe',
@@ -119,7 +129,9 @@ var Router = Backbone.Router.extend({
 			}	
 		});
 
-		this.screenRouter.currentScreen.html(question.get('title'));
+		this.screenRouter.currentScreen.html(discussView.$el);
+		discussView.render();
+
 		this.trigger('loaded');
 	},
 	survey: function(surveyId) {
