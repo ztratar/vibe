@@ -55,7 +55,7 @@ define("views/AppView",
     	renderAndShowSurveyNotification: function() {
     		var msTimeDiff = (new Date()).getTime() - this.survey.get('timeDue').getTime(),
     			daysTime = Math.floor(msTimeDiff / (1000 * 60 * 60 * 24)),
-    			dueString = 'Survey Due in ' + daysTime + ' days';
+    			dueString = 'Take Survey - Due in ' + daysTime + ' days';
 
     		if (daysTime === 0) {
     			dueString = 'Take Survey - Due Now!';	

@@ -6636,7 +6636,7 @@ form.login .form-actions {
 .welcome {
   margin: 0 auto;
   text-align: left;
-  padding: 18px 15px 18px 79px;
+  padding: 32px 15px 32px 79px;
   position: relative;
 }
 .welcome img {
@@ -6644,19 +6644,19 @@ form.login .form-actions {
   border-radius: 400px;
   width: 48px;
   height: 48px;
-  top: 17px;
+  top: 32px;
   left: 15px;
 }
 .welcome h2 {
-  font-weight: 200;
+  font-weight: 500;
   font-size: 20px;
   margin: 0 0 2px 0;
   padding: 0;
-  color: #c3d4e6;
+  opacity: .9;
 }
 .welcome h2 strong {
   color: white;
-  font-weight: 200;
+  font-weight: 500;
 }
 .welcome p {
   color: #31577d;
