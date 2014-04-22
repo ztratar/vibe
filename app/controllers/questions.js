@@ -101,7 +101,9 @@ exports.delete = function (req, res, next) {
 
 
 exports.loadQuestion = function(req, res, next, id){
-  Question.findById(id, function (err, question){
+  query = Question.findById(id);
+
+  query.exec(function (err, question){
     if (err) return next(err);
     if (!question) return next(new Error("can't find question"));
 

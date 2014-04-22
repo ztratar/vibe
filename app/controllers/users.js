@@ -148,7 +148,7 @@ exports.create = function (req, res) {
  * Find user by id
  */
 
-// exports.user = function (req, res, next, id) {
+// exports.loadUser = function (req, res, next, id) {
 //   User
 //     .findOne({ _id : id })
 //     .exec(function (err, user) {

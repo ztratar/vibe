@@ -15,7 +15,7 @@ var AnswerSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   body: Schema.Types.Mixed,
   anonymous: { type: Boolean, default: false },
-  type: String,
+  type: { type: String, enum: ['text', 'scale'] },
   question: { type: Schema.Types.ObjectId, ref: 'Question' },
   survey: { type: Schema.Types.ObjectId, ref: 'Survey' }
 
