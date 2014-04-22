@@ -43,31 +43,29 @@ exports.get = function (req, res, next) {
 
 
 /**
-* POST /api/answers
+* POST /api/answers/question/:question/survey/:survey
 * Create a new answer
 params:
 {
-  questionId: question to answer
-  answer: answer content
-}
+  type: "",
+  body: ""
+ }
 */
 exports.create = function (req, res, next) {
-  if(!req.body.questionId) return next(new Error("no question ID specified"));
-  if(!req.body.answer) return next(new Error("no answer specified"));
+  if(!req.params.type) return next(new Error("no answer type specified"));
+  if(!req.params.body) return next(new Error("no answer body specified"));
 
-  Question.findById(req.body.questionId, function(err, question){
-    if (err)       return next(err);
-    if (!question) return next(new Error("can't find question"));
 
-    Answer.create({
-      body: req.body.answer,
-      creator: req.user._id,
-      question: question._id
-    }, function(err, answer){
-      if (err) return next(err);
+  Answer.create({
+    body: req.params.body,
+    type: req.params.type,
+    creator: req.user._id,
+    question: req.question._id,
+    survey: req.survey._id
+  }, function(err, answer){
+    if (err) return next(err);
 
-      return res.send(answer);
-    });
+    return res.send(answer);
   });
 
 };
