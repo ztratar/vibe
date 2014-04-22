@@ -10,7 +10,7 @@ import AppView from 'views/AppView';
 
 window.Vibe = window.Vibe || {};
 
-$(function() {
+window.Vibe.run = function() {
 	// Load in data, such as user
 	window.Vibe.user = new User({
 		name: 'Zach Tratar',
@@ -33,4 +33,6 @@ $(function() {
 
 	// inits window.Vibe.appRouter
 	Router.init();
-});
+};
+
+window.Vibe.run();

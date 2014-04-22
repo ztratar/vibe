@@ -40,6 +40,34 @@ module.exports = function(grunt) {
 				src: '**',	
 				dest: 'public/css/fonts/',
 				filter: 'isFile'
+			},
+			'cordova-js-libs': {
+				expand: true,
+				cwd: 'public/js/libs/',
+				src: '**',
+				dest: 'vibe_app/www/js/libs',
+				filter: 'isFile'
+			},
+			'cordova-js': {
+				expand: true,
+				cwd: 'public/js/build/',
+				src: '**',
+				dest: 'vibe_app/www/js/build/',
+				filter: 'isFile'
+			},
+			'cordova-css': {
+				expand: true,
+				cwd: 'public/css/',
+				src: '**',
+				dest: 'vibe_app/www/css/',
+				filter: 'isFile'
+			},
+			'cordova-img': {
+				expand: true,
+				cwd: 'public/img/',
+				src: '**',
+				dest: 'vibe_app/www/img/',
+				filter: 'isFile'
 			}
 		},
 		transpile: {
@@ -75,5 +103,5 @@ module.exports = function(grunt) {
 		}
 	});
 
-	grunt.registerTask('default', ['copy', 'transpile', 'less']);
+	grunt.registerTask('default', ['transpile', 'less', 'copy']);
 };
