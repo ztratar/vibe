@@ -48,7 +48,8 @@ exports.get = function (req, res, next) {
 params:
 {
   type: "",
-  body: ""
+  body: "",
+  anonymous: true/false
  }
 */
 exports.create = function (req, res, next) {
@@ -61,13 +62,17 @@ exports.create = function (req, res, next) {
     body = parseInt(body, 10);
   }
 
+  var anonymous = req.body.anonymous;
+  anonymous = anonymous === "true" ? true : false;
+
   Answer.create({
     body: body,
     type: req.body.type,
     creator: req.user._id,
     question: req.question._id,
     survey: req.survey._id,
-    timeDue: req.survey.timeDue
+    timeDue: req.survey.timeDue,
+    anonymous: anonymous
   }, function(err, answer){
     if (err) return next(err);
 
