@@ -24,6 +24,7 @@ module.exports = function (app, passport) {
   app.param('meta_question', metaQuestions.loadMetaQuestion);
   app.param('question', questions.loadQuestion);
   app.param('survey', surveys.loadSurvey);
+  app.param('answer', answers.loadAnswer);
 
 
 
@@ -39,9 +40,9 @@ module.exports = function (app, passport) {
   app.delete('/api/questions/:question', questions.delete);
 
   app.get('/api/answers', answers.index);
-  app.get('/api/answers/:id', answers.get);
+  app.get('/api/answers/:answer', answers.get);
   app.post('/api/answers', answers.create);
-  app.delete('/api/answers/:id', answers.delete);
+  app.delete('/api/answers/:answer', answers.delete);
 
 
   app.get('/api/surveys', surveys.index);

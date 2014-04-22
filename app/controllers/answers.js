@@ -34,11 +34,7 @@ exports.index = function(req, res, next){
 * retrieve an answer
 */
 exports.get = function (req, res, next) {
-  Answer.findById(req.params['id'], function (err, answer){
-    if (err) return next(err);
-
-    return res.send(answer);
-  });
+  return res.send(req.answer);
 };
 
 
@@ -78,15 +74,28 @@ exports.create = function (req, res, next) {
 * retrieve an answer
 */
 exports.delete = function (req, res, next) {
-  Answer.findById(req.params['id'], function (err, answer){
-    if (err)     return next(err);
+  req.answer.remove(function(err, answer){
+    if(err) return next(err);
+
+    return res.send(answer);
+  });
+};
+
+
+
+/**
+* retrieve an answer
+*/
+exports.loadAnswer = function(req, res, next, id){
+  var query = Answer.findOne({_id: id});
+
+  query.exec(function(err, answer){
+    if (err) return next(err);
     if (!answer) return next(new Error("can't find answer"));
 
-    answer.remove(function(err, answer){
-      if(err) return next(err);
-
-      return res.send(answer);
-    });
+    req.answer = answer;
+    return next();
   });
-
 };
+
+
