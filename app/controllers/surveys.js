@@ -58,12 +58,14 @@ exports.get = function (req, res, next) {
 */
 exports.create = function (req, res, next) {
   if(!req.body.name) return next(new Error("no survey name"));
+  if(!req.body.recipient) return next(new Error("no recipient specified"));
   if(!req.body.timeDue) return next(new Error("no due date"));
 
   Survey.create({
     name: req.body.name,
     timeDue: req.body.timeDue,
     creator: req.user._id,
+    recipient: req.body.recipient,
     company: req.user.company
   }, function(err, survey){
     if(err || !survey) return next(new Error("can't create survey"));

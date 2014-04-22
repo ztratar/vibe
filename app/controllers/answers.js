@@ -52,13 +52,13 @@ params:
  }
 */
 exports.create = function (req, res, next) {
-  if(!req.params.type) return next(new Error("no answer type specified"));
-  if(!req.params.body) return next(new Error("no answer body specified"));
+  if(!req.body.type) return next(new Error("no answer type specified"));
+  if(!req.body.body) return next(new Error("no answer body specified"));
 
 
   Answer.create({
-    body: req.params.body,
-    type: req.params.type,
+    body: req.body.body,
+    type: req.body.type,
     creator: req.user._id,
     question: req.question._id,
     survey: req.survey._id,
