@@ -15,6 +15,9 @@ module.exports = function (app, passport) {
       failureFlash: 'Invalid email or password.'
     }),
     users.session);
+
+  app.get('/api/users', users.get);
+  app.put('/api/users', users.update);
   
   var metaQuestions = require('../app/controllers/meta_questions');
   var questions = require('../app/controllers/questions');
