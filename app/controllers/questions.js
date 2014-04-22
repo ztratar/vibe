@@ -8,6 +8,7 @@ var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , MetaQuestion = mongoose.model('MetaQuestion')
   , Question = mongoose.model('Question')
+  , Comment = mongoose.model('Comment')
   , Company = mongoose.model('Company')
   , Answer = mongoose.model('Answer');
 
@@ -96,6 +97,31 @@ exports.delete = function (req, res, next) {
     if(err) return next(err);
     return res.send(question);
   });
+};
+
+
+
+/**
+* POST /questions/:question/comments
+* create a new comment
+* body:
+*   comment: comment
+*/
+exports.newComment = function(req, res, next){
+  if(!req.body.comment) return next(new Error("no comment body"));
+
+  var comment = new Comment({
+    question: req.question._id,
+    creator: req.user._id,
+    body: req.body.comment
+  });
+
+  comment.save(function(err, comment){
+    if(err) return next(err);
+
+    return res.send(comment);
+  });
+
 };
 
 

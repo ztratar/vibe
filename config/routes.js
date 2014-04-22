@@ -42,6 +42,8 @@ module.exports = function (app, passport) {
   app.post('/api/questions', questions.create);
   app.delete('/api/questions/:question', questions.delete);
 
+  app.post('/api/questions/:question/comments', questions.newComment);
+
   app.get('/api/answers', answers.index);
   app.get('/api/answers/:answer', answers.get);
   app.post('/api/answers/question/:question/survey/:survey', answers.create);
