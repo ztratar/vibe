@@ -21,7 +21,7 @@ var mongoose = require('mongoose')
 */
 exports.index = function(req, res, next){
 
-  var query = Survey.find({company: req.user.company});
+  var query = Survey.find({recipient: req.user._id});
 
   if(req.query.dueDate){
     query.$lte('dueDate', req.query.dueDate)
