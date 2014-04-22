@@ -48,21 +48,31 @@ exports.get = function (req, res, next) {
 params:
 {
   type: "",
-  body: ""
+  body: "",
+  anonymous: true/false
  }
 */
 exports.create = function (req, res, next) {
-  if(!req.params.type) return next(new Error("no answer type specified"));
-  if(!req.params.body) return next(new Error("no answer body specified"));
+  if(!req.body.type) return next(new Error("no answer type specified"));
+  if(!req.body.body) return next(new Error("no answer body specified"));
 
+  var body = req.body.body;
+  var type = req.body.type;
+  if(typeof(body) === "string"){
+    body = parseInt(body, 10);
+  }
+
+  var anonymous = req.body.anonymous;
+  anonymous = anonymous === "true" ? true : false;
 
   Answer.create({
-    body: req.params.body,
-    type: req.params.type,
+    body: body,
+    type: req.body.type,
     creator: req.user._id,
     question: req.question._id,
     survey: req.survey._id,
-    timeDue: req.survey.timeDue
+    timeDue: req.survey.timeDue,
+    anonymous: anonymous
   }, function(err, answer){
     if (err) return next(err);
 
