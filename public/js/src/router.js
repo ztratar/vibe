@@ -11,6 +11,7 @@ import HomeView from 'views/homeView';
 import WelcomeView from 'views/welcomeView';
 import SurveyView from 'views/surveyView';
 import SurveyDoneView from 'views/surveyDoneView';
+import DiscussView from 'views/discussView';
 import SettingsView from 'views/settingsView';
 
 var Router = Backbone.Router.extend({
@@ -97,6 +98,7 @@ var Router = Backbone.Router.extend({
 	},
 	discuss: function(questionId) {
 		var that = this,
+			discussView,
 			qData = window.Vibe.modelCache.getAndRemove('question-' + questionId),
 			question;
 
@@ -108,6 +110,10 @@ var Router = Backbone.Router.extend({
 			});
 			_.defer(question.fetch);
 		}
+
+		discussView = new DiscussView({
+			model: question	
+		});
 
 		window.Vibe.appView.headerView.setButtons({
 			title: 'vibe',
@@ -123,7 +129,9 @@ var Router = Backbone.Router.extend({
 			}	
 		});
 
-		this.screenRouter.currentScreen.html(question.get('title'));
+		this.screenRouter.currentScreen.html(discussView.$el);
+		discussView.render();
+
 		this.trigger('loaded');
 	},
 	survey: function(surveyId) {

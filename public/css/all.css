@@ -6571,6 +6571,92 @@ form.login .form-actions {
   -webkit-animation: bounceHit 0.32s linear;
   animation: bounceHit 0.32s linear;
 }
+.comments {
+  position: absolute;
+  top: 0;
+  bottom: 54px;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.comments li {
+  position: relative;
+  margin: 24px 24px 0 0;
+  display: block;
+  padding-left: 71px;
+}
+.comments li p {
+  display: block;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.08);
+  color: white;
+  font-size: 16px;
+  text-align: left;
+  padding: 10px;
+}
+.comments li .user img {
+  position: absolute;
+  border-radius: 100px;
+  width: 32px;
+  height: 32px;
+  top: 4px;
+  left: 25px;
+  background: #666;
+}
+.comments li .user h4 {
+  color: white;
+  font-weight: 500;
+  position: absolute;
+  left: 77px;
+  top: 5px;
+}
+.comment-input-group {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: #203447;
+  padding: 10px 0;
+  height: 54px;
+}
+.comment-input-group .textarea-wrap {
+  position: relative;
+  margin: 0 10px;
+  height: 36px;
+}
+.comment-input-group .textarea-wrap input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  padding: 8px;
+  color: white;
+  background: #182836;
+  resize: none;
+}
+.comment-input-group .textarea-wrap input::-webkit-input-placeholder {
+  color: #7392ad;
+}
+.comment-input-group .textarea-wrap input:-moz-placeholder {
+  /* Firefox 18- */
+  color: #7392ad;
+}
+.comment-input-group .textarea-wrap input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #7392ad;
+}
+.comment-input-group .textarea-wrap input:-ms-input-placeholder {
+  color: #7392ad;
+}
+.comment-input-group .textarea-wrap input:focus {
+  outline: none;
+  box-shadow: none;
+}
 .settings-view {
   text-align: left;
   padding: 15px;

@@ -1,0 +1,83 @@
+.comments {
+	position: absolute;
+	top: 0;
+	bottom: 54px;
+	left: 0;
+	right: 0;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+
+	li {
+		position: relative;
+		margin: 24px 24px 0 0;
+		display: block;
+		padding-left: 71px;
+
+		p {
+			display: block;
+			border-radius: 10px;
+			background: rgba(0,0,0,.08);
+			color: white;
+			font-size: 16px;
+			text-align: left;
+			padding: 10px;
+		}
+
+		.user {
+			img {
+				position: absolute;
+				border-radius: 100px;
+				width: 32px;
+				height: 32px;
+				top: 4px;
+				left: 25px;
+				background: #666;
+			}	
+			h4 {
+				color: white;
+				font-weight: 500;
+				position: absolute;
+				left: 77px;
+				top: 5px;
+			}
+		}
+	}
+}
+
+.comment-input-group {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background: #203447;
+	padding: 10px 0;
+	height: 54px;
+
+	.textarea-wrap {
+		position: relative;
+		margin: 0 10px;
+		height: 36px;
+
+		input {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border: none;
+			border-radius: 5px;
+			width: 100%;
+			padding: 8px;
+			color: white;
+			background: #182836;
+			resize: none;
+
+			.placeholderTextColor(#7392ad);
+
+			&:focus {
+				outline: none;
+				box-shadow: none;
+			}
+		}
+	}
+}
