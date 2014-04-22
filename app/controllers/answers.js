@@ -61,7 +61,8 @@ exports.create = function (req, res, next) {
     type: req.params.type,
     creator: req.user._id,
     question: req.question._id,
-    survey: req.survey._id
+    survey: req.survey._id,
+    timeDue: req.survey.timeDue
   }, function(err, answer){
     if (err) return next(err);
 

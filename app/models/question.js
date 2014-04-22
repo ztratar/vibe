@@ -6,6 +6,8 @@
 
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
+  , Async = require('async')
+  , Answer = mongoose.model('Answer')
   , _ = require('underscore');
 
 
@@ -32,9 +34,19 @@ var QuestionSchema = new Schema({
   active: { type: Boolean, default: true },
   audience: { type: String, default: 'all' },
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  company:  { type: Schema.Types.ObjectId, ref: 'Company' }
-
+  company:  { type: Schema.Types.ObjectId, ref: 'Company' },
+  timeCreated: { type: Date, default: Date.now() }
 });
+
+QuestionSchema.methods = {
+  calculateDate: function(){
+    var data = [];
+
+
+  }
+
+};
+
 mongoose.model('Question', QuestionSchema);
 
 

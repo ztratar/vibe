@@ -17,14 +17,14 @@ var mongoose = require('mongoose')
 * get all surveys
 * query strings:
 *   includeQuestions
-*   dueDate
+*   timeDue
 */
 exports.index = function(req, res, next){
 
   var query = Survey.find({recipient: req.user._id});
 
-  if(req.query.dueDate){
-    query.$lte('dueDate', req.query.dueDate)
+  if(req.query.timeDue){
+    query.$lte('timeDue', req.query.timeDue)
   }
 
   if(req.query.includeQuestions === 'true'){
@@ -54,15 +54,15 @@ exports.get = function (req, res, next) {
 * Create a new survey
 * params:
 *   name
-*   dueDate
+*   timeDue
 */
 exports.create = function (req, res, next) {
   if(!req.body.name) return next(new Error("no survey name"));
-  if(!req.body.dueDate) return next(new Error("no due date"));
+  if(!req.body.timeDue) return next(new Error("no due date"));
 
   Survey.create({
     name: req.body.name,
-    dueDate: req.body.dueDate,
+    timeDue: req.body.timeDue,
     creator: req.user._id,
     company: req.user.company
   }, function(err, survey){

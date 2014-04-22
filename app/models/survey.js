@@ -15,7 +15,7 @@ var SurveySchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
   company:  { type: Schema.Types.ObjectId, ref: 'Company' },
   recipient: { type: Schema.Types.ObjectId, ref: 'User' },
-  dueDate: Date,
+  timeDue: Date,
   timeCreated: { type: Date, default: Date.now() }
 
 });
