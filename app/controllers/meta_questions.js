@@ -5,23 +5,54 @@
 
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
+  , Async = require('async')
   , MetaQuestion = mongoose.model('MetaQuestion')
   , Question = mongoose.model('Question');
 
 
 /**
-* GET /questions
-* retrieve a list of questions
+* GET /meta_questions
+* retrieve a list of meta_questions
 * query strings:
 */
 exports.index = function(req, res, next){
+  query = MetaQuestion.find({});
+  query.lean();
+  query.exec(function(err, metaQuestions){
+      if(err) return next(err);
 
-  MetaQuestion.find({})
-    .lean()
-    .exec(function(err, questions){
-      if(err) return next(err)
+      // check to see if we need to diff against the company
+      if(req.query.populateDiffs === "true"){
+        Question.find({company: req.user.company}, function(err, questions){
+          if(err) return next(err);
 
-      return res.send(questions);
+          Async.map(metaQuestions,
+            function(meta_question, done){
+
+              Async.detect(questions,
+                function(question, done2){
+                  return done2(meta_question._id.equals(question.metaQuestion));
+                },
+                function(question){
+                  if(question){
+                    meta_question.selected = true;
+                    meta_question.active = question.active;
+                  }
+
+                  return done(null, meta_question);
+                });
+
+            },
+            function(err, metaQuestions){
+              if(err) return next(err);
+
+              return res.send(metaQuestions);
+            });
+
+        });
+      } else {
+        return res.send(metaQuestions);
+      }
     });
 };
 

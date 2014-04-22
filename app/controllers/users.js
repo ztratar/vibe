@@ -143,12 +143,44 @@ exports.create = function (req, res) {
     });
 }
 
+/**
+* get /api/users
+* get current user
+*/
+exports.get = function(req, res, next){
+  
+  return res.send(req.user.stripInfo());
+}
+
+
+/**
+* PUT /api/users
+* query strings:
+*/
+exports.update = function(req, res, next){
+
+  var user = req.user;
+  var body = req.body;
+
+  if(body.tutorial) user.tutorial = JSON.stringify(body.tutorial);
+  if(body.name) user.name = body.name;
+  if(body.password) user.password = body.password;
+
+
+  req.user.save(function(err, user){
+    if(err) return next(err);
+
+    return res.send(user.stripInfo());
+  });
+};
+
+
 
 /**
  * Find user by id
  */
 
-// exports.user = function (req, res, next, id) {
+// exports.loadUser = function (req, res, next, id) {
 //   User
 //     .findOne({ _id : id })
 //     .exec(function (err, user) {

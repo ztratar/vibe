@@ -13,9 +13,15 @@ var mongoose = require('mongoose')
 
 var AnswerSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  body: String,
-  question: { type: Schema.Types.ObjectId, ref: 'Question' }
-})
+  body: Schema.Types.Mixed,
+  anonymous: { type: Boolean, default: false },
+  type: { type: String, enum: ['text', 'scale'] },
+  question: { type: Schema.Types.ObjectId, ref: 'Question' },
+  survey: { type: Schema.Types.ObjectId, ref: 'Survey' },
+  timeCreated: { type: Date, default: Date.now() },
+  timeDue: Date 
+
+});
 
 /**
  * Virtuals

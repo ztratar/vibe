@@ -15,6 +15,9 @@ module.exports = function (app, passport) {
       failureFlash: 'Invalid email or password.'
     }),
     users.session);
+
+  app.get('/api/users', users.get);
+  app.put('/api/users', users.update);
   
   var metaQuestions = require('../app/controllers/meta_questions');
   var questions = require('../app/controllers/questions');
@@ -24,6 +27,7 @@ module.exports = function (app, passport) {
   app.param('meta_question', metaQuestions.loadMetaQuestion);
   app.param('question', questions.loadQuestion);
   app.param('survey', surveys.loadSurvey);
+  app.param('answer', answers.loadAnswer);
 
 
 
@@ -38,10 +42,13 @@ module.exports = function (app, passport) {
   app.post('/api/questions', questions.create);
   app.delete('/api/questions/:question', questions.delete);
 
+  app.get('/api/questions/:question/comments', questions.getComments);
+  app.post('/api/questions/:question/comments', questions.newComment);
+
   app.get('/api/answers', answers.index);
-  app.get('/api/answers/:id', answers.get);
-  app.post('/api/answers', answers.create);
-  app.delete('/api/answers/:id', answers.delete);
+  app.get('/api/answers/:answer', answers.get);
+  app.post('/api/answers/question/:question/survey/:survey', answers.create);
+  app.delete('/api/answers/:answer', answers.delete);
 
 
   app.get('/api/surveys', surveys.index);

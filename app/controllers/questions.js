@@ -8,6 +8,7 @@ var mongoose = require('mongoose')
   , User = mongoose.model('User')
   , MetaQuestion = mongoose.model('MetaQuestion')
   , Question = mongoose.model('Question')
+  , Comment = mongoose.model('Comment')
   , Company = mongoose.model('Company')
   , Answer = mongoose.model('Answer');
 
@@ -99,9 +100,65 @@ exports.delete = function (req, res, next) {
 };
 
 
+/**
+* GET /questions/:question/comments
+* Get comments associated with question
+* params:
+*   
+*/
+exports.getComments = function(req, res, next){
+
+  var query = Comment.find({question: req.question._id});
+
+  if(req.query.limit){
+    var limit = parseInt(req.query.limit);
+    if(!isNaN(limit)) query.limit(limit);
+  }
+
+  if(req.query.offset){
+    var offset = parseInt(req.query.offset);
+    if(!isNaN(offset)) query.skip(offset);
+  }
+
+
+  query.exec(function(err, comments){
+    if(err) return next(err);
+
+    return res.send(comments);
+  });
+};
+
+
+
+/**
+* POST /questions/:question/comments
+* create a new comment
+* body:
+*   comment: comment
+*/
+exports.newComment = function(req, res, next){
+  if(!req.body.comment) return next(new Error("no comment body"));
+
+  var comment = new Comment({
+    question: req.question._id,
+    creator: req.user._id,
+    body: req.body.comment
+  });
+
+  comment.save(function(err, comment){
+    if(err) return next(err);
+
+    return res.send(comment);
+  });
+
+};
+
+
 
 exports.loadQuestion = function(req, res, next, id){
-  Question.findById(id, function (err, question){
+  query = Question.findById(id);
+
+  query.exec(function (err, question){
     if (err) return next(err);
     if (!question) return next(new Error("can't find question"));
 

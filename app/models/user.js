@@ -20,6 +20,7 @@ var UserSchema = new Schema({
   isAdmin: Boolean,
   provider: String,
   hashed_password: String,
+  tutorial: { type: String, default: "{}" },
   salt: String,
   facebook: {},
   twitter: {},
@@ -94,6 +95,15 @@ UserSchema.pre('save', function(next) {
  */
 
 UserSchema.methods = {
+
+  stripInfo: function(){
+    var user = this.toObject();
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    user.provider = undefined;
+
+    return user;
+  },
 
   /**
    * Authenticate - check if the passwords are the same
