@@ -59,6 +59,10 @@ QuestionSchema.methods = {
         var count = 0;
         var currDate = answers[0].timeDue;
         for(i = 0; i < answers.length; i++){
+          if(typeof(answers[i].body) !== "number"){
+            answers[i].body = parseInt(answers[i].body, 10);
+          }
+
           if(answers[i].timeDue === currDate){
             total += answers[i].body;
             count += 1;
