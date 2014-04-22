@@ -20,6 +20,10 @@ exports.index = function(req, res, next){
 
   var query = Answer.find({creator: req.user._id});
 
+  if(req.query.answerType){
+    query.where('type', req.query.answerType);
+  }
+
   query.exec(function(err, answers){
     if(err) return next(err)
 
