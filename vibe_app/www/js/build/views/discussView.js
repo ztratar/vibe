@@ -49,6 +49,7 @@ define("views/discussView",
     			}
 
     			ev.preventDefault();
+    			ev.stopPropagation();
     			return false;
     		}
     	},

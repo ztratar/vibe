@@ -1,7 +1,7 @@
 import 'backbone';
 import 'jquery';
 import Survey from 'models/survey';
-import HeaderView from 'views/HeaderView';
+import HeaderView from 'views/headerView';
 module template from 'text!templates/AppView.html';
 module surveyTemplate from 'text!templates/surveyNotification.html';
 

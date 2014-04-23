@@ -1,4 +1,4 @@
-define("views/HeaderView", 
+define("views/headerView", 
   ["backbone","jquery","underscore","text!templates/HeaderView.html","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";

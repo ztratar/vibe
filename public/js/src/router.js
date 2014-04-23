@@ -215,7 +215,10 @@ var initRouter = function() {
 
 	Backbone.history.start({
 		pushState: true,
-		root: decodeURI(document.location.pathname.replace('index.html', ''))
+		root: '/'
+	});
+	window.Vibe.appRouter.navigate('/', {
+		trigger: true
 	});
 };
 

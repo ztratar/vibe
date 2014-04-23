@@ -1,5 +1,5 @@
 define("views/AppView", 
-  ["backbone","jquery","models/survey","views/HeaderView","text!templates/AppView.html","text!templates/surveyNotification.html","exports"],
+  ["backbone","jquery","models/survey","views/headerView","text!templates/AppView.html","text!templates/surveyNotification.html","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
     "use strict";
     var Survey = __dependency3__["default"];
