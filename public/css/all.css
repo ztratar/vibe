@@ -6277,13 +6277,13 @@ form.login .form-actions {
   text-align: left;
   box-shadow: 0 1px 12px rgba(0, 24, 46, 0.14);
 }
-.charts-view li:nth-child(2n) {
+.charts-view li:nth-child(3n-1) {
   background: #973329;
 }
-.charts-view li:nth-child(2n) circle {
+.charts-view li:nth-child(3n-1) circle {
   fill: #ca4030;
 }
-.charts-view li:nth-child(2n) line {
+.charts-view li:nth-child(3n-1) line {
   stroke: #b13b2d;
 }
 .charts-view li:nth-child(3n) {

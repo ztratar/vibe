@@ -21,6 +21,12 @@ var HomeView = Backbone.View.extend({
 			title: 'Design Deliverables'	
 		}, {
 			title: 'Scrum Process'	
+		}, {
+			title: 'Productivity',
+			body: '<strong>Productivity</strong> is going...'
+		}, {
+			title: 'Goals & Focus',
+			body: 'We <strong>focus</strong> on our <strong>goals</strong>...'
 		}]);
 		return this;
 	}

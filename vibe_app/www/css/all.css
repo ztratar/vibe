@@ -6144,6 +6144,9 @@ a:active {
   float: right;
   margin-left: 8px;
 }
+body.survey-show .screen {
+  padding-bottom: 80px;
+}
 .screen {
   position: fixed;
   top: 64px;
@@ -6274,13 +6277,13 @@ form.login .form-actions {
   text-align: left;
   box-shadow: 0 1px 12px rgba(0, 24, 46, 0.14);
 }
-.charts-view li:nth-child(2n) {
+.charts-view li:nth-child(3n-1) {
   background: #973329;
 }
-.charts-view li:nth-child(2n) circle {
+.charts-view li:nth-child(3n-1) circle {
   fill: #ca4030;
 }
-.charts-view li:nth-child(2n) line {
+.charts-view li:nth-child(3n-1) line {
   stroke: #b13b2d;
 }
 .charts-view li:nth-child(3n) {
@@ -6892,17 +6895,17 @@ label {
     transform: translate3d(0, 20px, 0);
   }
 }
+body.survey-show .survey-notif {
+  height: 80px;
+}
+body.survey-show .survey-notif a {
+  -webkit-animation: bounceInUp 0.42s linear 0s forwards;
+  animation: bounceInUp 0.42s linear 0s forwards;
+}
 .survey-notif {
   height: 0;
   -webkit-transition: all 0.42s ease-out;
   transition: all 0.42s ease-out;
-}
-.survey-notif.show {
-  height: 80px;
-}
-.survey-notif.show a {
-  -webkit-animation: bounceInUp 0.42s linear 0s forwards;
-  animation: bounceInUp 0.42s linear 0s forwards;
 }
 .survey-notif a {
   position: fixed;

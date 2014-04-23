@@ -17,6 +17,15 @@ var Survey = BaseModel.extend({
 		}, {
 			title: 'Scrum Process',
 			body: 'The <strong>Scrum process</strong> is going...'	
+		}, {
+			title: 'Productivity',
+			body: '<strong>Productivity</strong> is going...'
+		}, {
+			title: 'Goals & Focus',
+			body: 'We <strong>focus</strong> on our <strong>goals</strong>...'
+		}, {
+			title: 'Vibe',
+			body: '<strong>Vibe</strong> is going...'
 		}]);
 	},
 
