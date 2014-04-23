@@ -24,27 +24,55 @@ exports.index = function(req, res, next){
 
   Question.find({company: req.user.company})
     .exec(function(err, questions){
-      if(err) return next(err)
+      if(err) return next(err);
+
 
       // populate answers if instructed
-      if(req.query.includeAnswers === 'true'){
-        Async.map(questions, function(question, done){
-          question.getAnswers(function(err, answers){
+      Async.map(questions, function(question, done){
+        var leanQuestion = question.toObject();
+
+        Async.waterfall([
+          function(cb){
+
+            if(req.query.includeAnswers === 'true'){
+              question.getAnswers(function(err, answers){
+                if(err) return cb(err);
+
+                return cb(null, answers);
+              });
+            } else {
+              return cb(null, null);
+            }
+
+          },
+          function(answers, cb){
+
+            if(req.query.includeData === 'true'){
+              question.calculateData(function(err, data){
+                if(err) return cb(err);
+
+                return cb(null, answers, data);
+              });
+            } else {
+              return cb(null, answers, null);
+            }
+
+          }], 
+          function(err, answers, data){
             if(err) return done(err);
 
-            var t = question.toObject();
-            t.answers = answers;
-            return done(null, t);
+            if(answers) leanQuestion.answers = answers;
+            if(data) leanQuestion.data = data;
+
+            return done(null, leanQuestion);
           });
 
-        }, function(err, questions){
-          if(err) return next(err);
+      }, function(err, questions){
+        if(err) return next(err);
 
-          return res.send(questions);
-        });
-      } else {
         return res.send(questions);
-      };
+      });
+
     });
 };
 
