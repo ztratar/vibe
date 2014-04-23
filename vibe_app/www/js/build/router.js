@@ -121,7 +121,7 @@ define("router",
     			headerSize: 'small',
     			leftAction: {
     				icon: '#61903',
-    				title: 'vibe',
+    				title: '',
     				click: function(ev) {
     					that.navigateWithAnimation('/', 'pushRight', {
     						trigger: true

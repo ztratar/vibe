@@ -61,16 +61,17 @@ var AppView = Backbone.View.extend({
 			dueString: dueString	
 		}));
 
-		this.$('.survey-notif').addClass('show');
-		this.$('.survey-notif').off('click touchstart').on('click touchstart', function() {
+		this.$el.addClass('survey-show');
+
+		this.$('.survey-notif').off('click touchstart').on('click touchstart', _.bind(function() {
 			window.Vibe.appRouter.navigateWithAnimation('/survey/03993029', 'slideUp', {
 				trigger: true,
 				screenSize: 'full'
 			});	
-			$(this).removeClass('show');
+			this.$el.removeClass('survey-show');
 
 			return false;
-		});
+		}, this));
 	}
 
 });

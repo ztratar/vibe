@@ -68,18 +68,18 @@ input, label {
 
 .makeBounceUp(bounceInUp, 100px, 12px, 24px, 20px);
 
+body.survey-show .survey-notif {
+	height: 80px;
+
+	a {
+		-webkit-animation: bounceInUp 0.42s linear 0s forwards;
+		animation: bounceInUp 0.42s linear 0s forwards;
+	}
+}
+
 .survey-notif {
 	height: 0;	
 	.transition(all .42s ease-out);
-
-	&.show {
-		height: 80px;
-
-		a {
-			-webkit-animation: bounceInUp 0.42s linear 0s forwards;
-			animation: bounceInUp 0.42s linear 0s forwards;
-		}
-	}
 
 	a {
 		position: fixed;
