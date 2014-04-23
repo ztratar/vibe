@@ -45,7 +45,7 @@ QuestionSchema.methods = {
         question: this._id,
         type: 'scale'
       })
-      .sort(timeDue)
+      .sort('timeDue')
       .lean()
       .exec(function(err, answers){
         if(err) return cb(err);
@@ -57,22 +57,28 @@ QuestionSchema.methods = {
         var i;
         var total = 0;
         var count = 0;
-        var currDate = answers[0].timeDue;
+        var currDate = new Date(answers[0].timeDue);
+
         for(i = 0; i < answers.length; i++){
           if(typeof(answers[i].body) !== "number"){
             answers[i].body = parseInt(answers[i].body, 10);
           }
 
-          if(answers[i].timeDue === currDate){
+
+          if(answers[i].timeDue.getTime() === currDate.getTime()){
             total += answers[i].body;
             count += 1;
           } else {
+
             data.push(total/count);
+
             total = 0;
             count = 0;
-            currDate = answers[i].timeDue;
+            currDate = new Date(answers[i].timeDue);
           }
         }
+
+        data.push(total/count);
 
         return cb(null, data);
 
