@@ -6522,8 +6522,6 @@ form.login .form-actions {
   text-align: left;
   font-size: 26px;
   font-weight: 500;
-  -webkit-transform: translate3d(0, 50%, 0);
-  transform: translate3d(0, 50%, 0);
 }
 .survey-view .question h2 strong {
   font-weight: 600;

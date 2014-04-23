@@ -87,7 +87,9 @@ define("views/surveyView",
     		}, 600);
     		_.delay(function() {
     			that.setAnswerHeight();
-    			$nextQuestion.addClass('show');
+    			_.defer(function() {
+    				$nextQuestion.addClass('show');
+    			});
     		}, 880);
     	},
     	surveyDone: function() {
