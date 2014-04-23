@@ -39,7 +39,7 @@ define("views/surveyView",
     			marginExists = 26,
     			answerHeight = windowHeight - headerHeight - 180;
 
-    		var translateString = 'translate3d(0, ' + Math.floor(answerHeight/2) + 'px, 0)';
+    		var translateString = 'translate3d(0, ' + Math.floor((answerHeight/2) + (headerHeight/2)) + 'px, 0)';
     		$header.css('transform', translateString);
     		$header.css('-webkit-transform', translateString);
     		this.$('.answers').height(answerHeight);
@@ -87,9 +87,9 @@ define("views/surveyView",
     		}, 600);
     		_.delay(function() {
     			that.setAnswerHeight();
-    			_.defer(function() {
+    			_.delay(function() {
     				$nextQuestion.addClass('show');
-    			});
+    			}, 10);
     		}, 880);
     	},
     	surveyDone: function() {

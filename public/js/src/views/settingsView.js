@@ -1,4 +1,6 @@
 import 'backbone';
+import 'underscore';
+
 import MetaQuestions from 'models/metaQuestions';
 import MetaQuestionSelectView from 'views/metaQuestionSelectView';
 
@@ -9,6 +11,10 @@ var SettingsView = Backbone.View.extend({
 	className: 'settings-view',
 
 	template: _.template(template),
+
+	events: {
+		'click a.trigger-survey': 'triggerSurvey'
+	},
 
 	initialize: function() {
 		this.metaQuestions = new MetaQuestions([{
@@ -40,6 +46,13 @@ var SettingsView = Backbone.View.extend({
 	addAll: function() {
 		this.$metaContainer.empty();
 		this.metaQuestions.each(_.bind(this.addOne, this));
+	},
+
+	triggerSurvey: function() {
+		_.delay(function() {
+			window.Vibe.appView.checkForNewSurvey();
+		}, 2800);
+		return false;
 	}
 
 });

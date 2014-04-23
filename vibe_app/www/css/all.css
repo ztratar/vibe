@@ -6071,6 +6071,22 @@ a:active {
   -webkit-transition: opacity 0.18s ease-in-out 0s;
   transition: opacity 0.18s ease-in-out 0s;
 }
+.header-view .header-components.animate-slideDown.new h2 {
+  opacity: 0;
+}
+.header-view .header-components.animate-slideDown.new a {
+  opacity: 0;
+}
+.header-view .header-components.animate-slideDown.old h2 {
+  opacity: 0;
+  -webkit-transition: all 0s;
+  transition: all 0s;
+}
+.header-view .header-components.animate-slideDown.old a {
+  opacity: 0;
+  -webkit-transition: all 0s;
+  transition: all 0s;
+}
 .header-view .header-components.new h2,
 .header-view .header-components.new a {
   opacity: 0;
@@ -6522,6 +6538,8 @@ form.login .form-actions {
   text-align: left;
   font-size: 26px;
   font-weight: 500;
+  -webkit-transition: opacity 0.24s ease-in-out;
+  transition: opacity 0.24s ease-in-out;
 }
 .survey-view .question h2 strong {
   font-weight: 600;

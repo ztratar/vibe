@@ -58,6 +58,27 @@
 			}
 		}
 
+		&.animate-slideDown {
+			&.new {
+				h2 {
+					opacity: 0;
+				}
+				a {
+					opacity: 0;
+				}
+			}
+			&.old {
+				h2 {
+					opacity: 0;
+					.transition(all 0s);
+				}
+				a {
+					opacity: 0;
+					.transition(all 0s);
+				}
+			}
+		}
+
 		&.new {
 			h2, a {
 				opacity: 0;

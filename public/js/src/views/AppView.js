@@ -19,8 +19,6 @@ var AppView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(template);
 		this.$('.app-header').html(this.headerView.$el);
-
-		this.checkForNewSurvey();
 	},
 
 	overrideLinks: function() {
@@ -64,12 +62,14 @@ var AppView = Backbone.View.extend({
 		}));
 
 		this.$('.survey-notif').addClass('show');
-		this.$('.survey-notif').click(function() {
+		this.$('.survey-notif').off('click touchstart').on('click touchstart', function() {
 			window.Vibe.appRouter.navigateWithAnimation('/survey/03993029', 'slideUp', {
 				trigger: true,
 				screenSize: 'full'
 			});	
 			$(this).removeClass('show');
+
+			return false;
 		});
 	}
 
