@@ -116,10 +116,11 @@ var Router = Backbone.Router.extend({
 		});
 
 		window.Vibe.appView.headerView.setButtons({
-			title: 'vibe',
+			title: question.get('title'),
+			headerSize: 'small',
 			leftAction: {
 				icon: '#61903',
-				title: 'vibe',
+				title: '',
 				click: function(ev) {
 					that.navigateWithAnimation('/', 'pushRight', {
 						trigger: true

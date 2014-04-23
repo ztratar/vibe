@@ -117,7 +117,8 @@ define("router",
     		});
 
     		window.Vibe.appView.headerView.setButtons({
-    			title: 'vibe',
+    			title: question.get('title'),
+    			headerSize: 'small',
     			leftAction: {
     				icon: '#61903',
     				title: 'vibe',

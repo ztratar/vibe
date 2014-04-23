@@ -72,6 +72,10 @@ var HeaderView = Backbone.View.extend({
 
 		this.render();
 
+		if (opts.headerSize === 'small') {
+			this.newComponents.find('h2').addClass('small');
+		}
+
 		if (this.data.animate === false) {
 			this.$('a').addClass('now');	
 		}
