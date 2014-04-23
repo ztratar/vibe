@@ -6473,6 +6473,7 @@ form.login .form-actions {
   top: 112px;
   left: 0;
   right: 0;
+  bottom: 0;
   -webkit-transform: scale(1, 1);
   -ms-transform: scale(1, 1);
   transform: scale(1, 1);
@@ -6484,6 +6485,19 @@ form.login .form-actions {
   opacity: 1;
   -webkit-transition: opacity 0.24s ease-in-out;
   transition: opacity 0.24s ease-in-out;
+}
+.survey-view .question.show h2 {
+  opacity: 1;
+  transition: transform 0.32s ease-in-out, opacity 0.24s ease-in-out;
+  -webkit-transition: -webkit-transform 0.32s ease-in-out, opacity 0.24s ease-in-out;
+}
+.survey-view .question.show ul.answers {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.24s ease-in-out 2.1s;
+  transition: all 0.24s ease-in-out 2.1s;
 }
 .survey-view .question.showNow {
   opacity: 1;
@@ -6501,19 +6515,31 @@ form.login .form-actions {
   opacity: 0;
 }
 .survey-view .question h2 {
+  opacity: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
   text-align: left;
   font-size: 26px;
   font-weight: 500;
+  -webkit-transform: translate3d(0, 50%, 0);
+  transform: translate3d(0, 50%, 0);
 }
 .survey-view .question h2 strong {
   font-weight: 600;
 }
 .survey-view .question ul.answers {
-  position: relative;
-  margin: 22px 0 0 0;
+  opacity: 0;
+  visibility: hidden;
+  margin: 0;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  right: 25px;
   padding: 0;
   list-style: none;
-  opacity: 1;
+  -webkit-transform: translate3d(0, 10px, 0);
+  transform: translate3d(0, 10px, 0);
 }
 .survey-view .question ul.answers li {
   position: absolute;
@@ -6554,6 +6580,13 @@ form.login .form-actions {
   background: #122b43;
   border-radius: 5px;
 }
+.survey-view .question ul.answers li a:hover {
+  text-decoration: none;
+}
+.survey-view .question ul.answers li a.selected {
+  -webkit-animation: bounceHit 0.32s linear;
+  animation: bounceHit 0.32s linear;
+}
 .survey-view .question ul.answers li a div {
   display: table-cell;
   vertical-align: middle;
@@ -6566,10 +6599,6 @@ form.login .form-actions {
   font-weight: 500;
   color: white;
   margin-top: 6px;
-}
-.survey-view .question ul.answers li a.selected {
-  -webkit-animation: bounceHit 0.32s linear;
-  animation: bounceHit 0.32s linear;
 }
 .chatMessages {
   position: absolute;

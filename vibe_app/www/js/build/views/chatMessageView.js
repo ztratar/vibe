@@ -2,7 +2,6 @@ define("views/chatMessageView",
   ["backbone","moment","text!templates/chatMessageView.html","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
-
     var moment = __dependency2__;
     var template = __dependency3__;
 

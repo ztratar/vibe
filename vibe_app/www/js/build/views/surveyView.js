@@ -24,19 +24,31 @@ define("views/surveyView",
 
     		_.defer(_.bind(function() {
     			this.setAnswerHeight();
+    			this.$('.question.q1').addClass('show');
     		}, this));
 
     		return this;
     	},
     	setAnswerHeight: function() {
-    		var $answers = this.$('.answers'),
+    		var $answers = this.$('.q' + this.activeQuestion + ' .answers'),
+    			$header = this.$('.q' + this.activeQuestion + ' h2'),
+    			headerHeight = $header.height(),
     			screenOffset = this.$el.offset().top,
     			answerTopOffset = $answers.offset().top - screenOffset,
     			windowHeight = $(window).height(),
     			marginExists = 26,
-    			answerHeight = windowHeight - answerTopOffset - marginExists;
+    			answerHeight = windowHeight - headerHeight - 180;
 
+    		var translateString = 'translate3d(0, ' + Math.floor(answerHeight/2) + 'px, 0)';
+    		$header.css('transform', translateString);
+    		$header.css('-webkit-transform', translateString);
     		this.$('.answers').height(answerHeight);
+
+    		_.delay(function() {
+    			var translateString = 'translate3d(0, 20px, 0)';
+    			$header.css('transform', translateString);
+    			$header.css('-webkit-transform', translateString);
+    		}, 1800);
     	},
     	answerQuestion: function(ev) {
     		var $target = $(ev.currentTarget);
@@ -56,7 +68,8 @@ define("views/surveyView",
     			return;
     		}
 
-    		var $questionElems = this.$('.q'+this.activeQuestion),
+    		var that = this,
+    			$questionElems = this.$('.q'+this.activeQuestion),
     			$nextQuestionBar = this.$('.participants-bar.q'+(this.activeQuestion+1)),
     			$nextQuestion = this.$('.question.q'+(this.activeQuestion+1)),
     			$step = $('ul.steps li.active');	
@@ -73,6 +86,7 @@ define("views/surveyView",
     			$nextQuestionBar.addClass('show');
     		}, 600);
     		_.delay(function() {
+    			that.setAnswerHeight();
     			$nextQuestion.addClass('show');
     		}, 880);
     	},
