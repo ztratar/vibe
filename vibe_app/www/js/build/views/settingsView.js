@@ -53,7 +53,7 @@ define("views/settingsView",
     	triggerSurvey: function() {
     		_.delay(function() {
     			window.Vibe.appView.checkForNewSurvey();
-    		}, 800);
+    		}, 2800);
     		return false;
     	}
 

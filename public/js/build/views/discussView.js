@@ -47,6 +47,9 @@ define("views/discussView",
     					text: chatMessageText
     				});
     				this.chatMessages.add(chatMessage);
+    				_.defer(_.bind(function() {
+    					this.$chatMessagesContainer.scrollTop(10000);
+    				}, this));
     			}
 
     			ev.preventDefault();
