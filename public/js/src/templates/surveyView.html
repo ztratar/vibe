@@ -7,7 +7,7 @@
 <div class="participants-bar q<%- j %> <%- (j === 1) ? 'showNow' : '' %>">
 	<img src="<%= window.staticRoute %>img/anonymous.png">
 	<div class="words"><span>anonymous </span><i class="icon to-arrow">&#61812</i><span> everyone</span></div>
-	<img class="to" src="<%- window.Vibe.user.get('img') %>">
+	<img class="to" src="<%= window.staticRoute %>img/everyone.png">
 </div>
 <div class="question q<%- j %>">
 	<h2><%= questions.at(j-1).get('body') %></h2>

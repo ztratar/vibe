@@ -81,7 +81,7 @@ var Router = Backbone.Router.extend({
 			title: 'settings',
 			leftAction: {
 				icon: '#61903',
-				title: 'vibe',
+				title: '',
 				click: function(ev) {
 					that.navigateWithAnimation('/', 'pushRight', {
 						trigger: true
