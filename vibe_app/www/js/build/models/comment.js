@@ -4,7 +4,7 @@ define("models/comment",
     "use strict";
     var BaseModel = __dependency1__["default"];
 
-    var Comment = BaseModel.extend({
+    var ChatMessage = BaseModel.extend({
     	defaults: {
     		user: {
     			img: '',
@@ -15,5 +15,5 @@ define("models/comment",
     	}
     });
 
-    __exports__["default"] = Comment;
+    __exports__["default"] = ChatMessage;
   });

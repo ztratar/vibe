@@ -1,14 +1,33 @@
 import BaseModel from 'models/baseModel';
+import User from 'models/user';
 
-var Comment = BaseModel.extend({
+var ChatMessage = BaseModel.extend({
+
 	defaults: {
-		user: {
-			img: '',
-			name: ''
-		},
+		user: {},
 		text: '',
 		timeCreated: new Date()
+	},
+
+	initialize: function() {
+		this.on('change:user', this.userToModel);
+		this.userToModel();
+	},
+
+	userToModel: function() {
+		var userData = this.get('user'),
+			tempUser;
+
+		if (userData) {
+			if (!(userData instanceof User)) {
+				tempUser = new User(userData);
+				this.set('user', tempUser, {
+					silent: true	
+				});
+			}
+		}
 	}
+
 });
 
-export default = Comment;
+export default = ChatMessage;

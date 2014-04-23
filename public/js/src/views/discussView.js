@@ -1,6 +1,7 @@
 import 'backbone';
-import Comments from 'models/comments';
-import CommentView from 'views/commentView';
+import ChatMessage from 'models/chatMessage';
+import ChatMessages from 'models/chatMessages';
+import ChatMessageView from 'views/chatMessageView';
 
 module template from 'text!templates/discussView.html';
 
@@ -11,38 +12,38 @@ var DiscussView = Backbone.View.extend({
 	template: _.template(template),
 
 	events: {
-		'keydown input': 'addComment'
+		'keydown input': 'addChatMessage'
 	},
 
 	initialize: function() {
-		this.comments = new Comments([{
+		this.chatMessages = new ChatMessages([{
 			text: 'sup'
 		},{
 			text: 'hey man'
 		}]);
-		this.comments.on('add', this.addOne, this);
-		this.comments.on('reset', this.addAll, this);
+		this.chatMessages.on('add', _.bind(this.addOne, this));
+		this.chatMessages.on('reset', _.bind(this.addAll, this));
 	},
 
 	render: function() {
 		this.$el.html(this.template());
 		this.$textInput = this.$('input');
-		this.$commentsContainer = this.$('.comments');
+		this.$chatMessagesContainer = this.$('.chatMessages');
 		this.addAll();
 		return this;
 	},
 
-	addComment: function(ev) {
-		if (ev && ev.keyCode === 32) {
-			var commentText = this.$textInput.val(),
-				comment;	
+	addChatMessage: function(ev) {
+		if (ev && ev.keyCode === 13) {
+			var chatMessageText = this.$textInput.val(),
+				chatMessage;	
 
-			if (commentText) {
+			if (chatMessageText && chatMessageText.length) {
 				this.$textInput.val('');	
-				comment = new Comment({
-					text: commentText
+				chatMessage = new ChatMessage({
+					text: chatMessageText
 				});
-				this.comments.add(comment);
+				this.chatMessages.add(chatMessage);
 			}
 
 			ev.preventDefault();
@@ -51,17 +52,17 @@ var DiscussView = Backbone.View.extend({
 		}
 	},
 
-	addOne: function(comment) {
-		var commentView = new CommentView({
-			model: comment
+	addOne: function(chatMessage) {
+		var chatMessageView = new ChatMessageView({
+			model: chatMessage
 		});	
-		this.$commentsContainer.append(commentView.$el);
-		commentView.render();
+		this.$chatMessagesContainer.append(chatMessageView.$el);
+		chatMessageView.render();
 	},
 
 	addAll: function() {
-		this.$commentsContainer.empty();
-		this.comments.each(_.bind(this.addOne, this));
+		this.$chatMessagesContainer.empty();
+		this.chatMessages.each(_.bind(this.addOne, this));
 	}
 
 });

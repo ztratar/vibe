@@ -1,4 +1,4 @@
-define("models/comments", 
+define("models/chatMessages", 
   ["backbone","models/chatMessage","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";

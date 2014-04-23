@@ -1,8 +1,8 @@
 import 'backbone';
-import Comment from 'models/comment';
+import ChatMessage from 'models/chatMessage';
 
-var Comments = Backbone.Collection.extend({
-	model: Comment
+var ChatMessages = Backbone.Collection.extend({
+	model: ChatMessage
 });
 
-export default = Comments;
+export default = ChatMessages;

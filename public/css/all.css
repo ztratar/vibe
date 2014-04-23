@@ -6571,7 +6571,7 @@ form.login .form-actions {
   -webkit-animation: bounceHit 0.32s linear;
   animation: bounceHit 0.32s linear;
 }
-.comments {
+.chatMessages {
   position: absolute;
   top: 0;
   bottom: 54px;
@@ -6580,13 +6580,13 @@ form.login .form-actions {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
-.comments li {
+.chatMessages li {
   position: relative;
   margin: 24px 24px 0 0;
   display: block;
   padding-left: 71px;
 }
-.comments li p {
+.chatMessages li p {
   display: block;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.08);
@@ -6595,7 +6595,13 @@ form.login .form-actions {
   text-align: left;
   padding: 10px;
 }
-.comments li .user img {
+.chatMessages li p span.time {
+  display: block;
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: .24;
+}
+.chatMessages li .user img {
   position: absolute;
   border-radius: 100px;
   width: 32px;
@@ -6604,14 +6610,14 @@ form.login .form-actions {
   left: 25px;
   background: #666;
 }
-.comments li .user h4 {
+.chatMessages li .user h4 {
   color: white;
   font-weight: 500;
   position: absolute;
   left: 77px;
   top: 5px;
 }
-.comment-input-group {
+.chatMessage-input-group {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -6620,12 +6626,12 @@ form.login .form-actions {
   padding: 10px 0;
   height: 54px;
 }
-.comment-input-group .textarea-wrap {
+.chatMessage-input-group .textarea-wrap {
   position: relative;
   margin: 0 10px;
   height: 36px;
 }
-.comment-input-group .textarea-wrap input {
+.chatMessage-input-group .textarea-wrap input {
   position: absolute;
   top: 0;
   left: 0;
@@ -6639,21 +6645,21 @@ form.login .form-actions {
   background: #182836;
   resize: none;
 }
-.comment-input-group .textarea-wrap input::-webkit-input-placeholder {
+.chatMessage-input-group .textarea-wrap input::-webkit-input-placeholder {
   color: #7392ad;
 }
-.comment-input-group .textarea-wrap input:-moz-placeholder {
+.chatMessage-input-group .textarea-wrap input:-moz-placeholder {
   /* Firefox 18- */
   color: #7392ad;
 }
-.comment-input-group .textarea-wrap input::-moz-placeholder {
+.chatMessage-input-group .textarea-wrap input::-moz-placeholder {
   /* Firefox 19+ */
   color: #7392ad;
 }
-.comment-input-group .textarea-wrap input:-ms-input-placeholder {
+.chatMessage-input-group .textarea-wrap input:-ms-input-placeholder {
   color: #7392ad;
 }
-.comment-input-group .textarea-wrap input:focus {
+.chatMessage-input-group .textarea-wrap input:focus {
   outline: none;
   box-shadow: none;
 }

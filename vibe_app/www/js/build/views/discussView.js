@@ -1,11 +1,12 @@
 define("views/discussView", 
-  ["backbone","models/comments","views/commentView","text!templates/discussView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
+  ["backbone","models/chatMessage","models/chatMessages","views/chatMessageView","text!templates/discussView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
     "use strict";
-    var Comments = __dependency2__["default"];
-    var CommentView = __dependency3__["default"];
+    var ChatMessage = __dependency2__["default"];
+    var ChatMessages = __dependency3__["default"];
+    var ChatMessageView = __dependency4__["default"];
 
-    var template = __dependency4__;
+    var template = __dependency5__;
 
     var DiscussView = Backbone.View.extend({
 
@@ -14,38 +15,38 @@ define("views/discussView",
     	template: _.template(template),
 
     	events: {
-    		'keydown input': 'addComment'
+    		'keydown input': 'addChatMessage'
     	},
 
     	initialize: function() {
-    		this.comments = new Comments([{
+    		this.chatMessages = new ChatMessages([{
     			text: 'sup'
     		},{
     			text: 'hey man'
     		}]);
-    		this.comments.on('add', this.addOne, this);
-    		this.comments.on('reset', this.addAll, this);
+    		this.chatMessages.on('add', _.bind(this.addOne, this));
+    		this.chatMessages.on('reset', _.bind(this.addAll, this));
     	},
 
     	render: function() {
     		this.$el.html(this.template());
     		this.$textInput = this.$('input');
-    		this.$commentsContainer = this.$('.comments');
+    		this.$chatMessagesContainer = this.$('.chatMessages');
     		this.addAll();
     		return this;
     	},
 
-    	addComment: function(ev) {
-    		if (ev && ev.keyCode === 32) {
-    			var commentText = this.$textInput.val(),
-    				comment;	
+    	addChatMessage: function(ev) {
+    		if (ev && ev.keyCode === 13) {
+    			var chatMessageText = this.$textInput.val(),
+    				chatMessage;	
 
-    			if (commentText) {
+    			if (chatMessageText && chatMessageText.length) {
     				this.$textInput.val('');	
-    				comment = new Comment({
-    					text: commentText
+    				chatMessage = new ChatMessage({
+    					text: chatMessageText
     				});
-    				this.comments.add(comment);
+    				this.chatMessages.add(chatMessage);
     			}
 
     			ev.preventDefault();
@@ -54,17 +55,17 @@ define("views/discussView",
     		}
     	},
 
-    	addOne: function(comment) {
-    		var commentView = new CommentView({
-    			model: comment
+    	addOne: function(chatMessage) {
+    		var chatMessageView = new ChatMessageView({
+    			model: chatMessage
     		});	
-    		this.$commentsContainer.append(commentView.$el);
-    		commentView.render();
+    		this.$chatMessagesContainer.append(chatMessageView.$el);
+    		chatMessageView.render();
     	},
 
     	addAll: function() {
-    		this.$commentsContainer.empty();
-    		this.comments.each(_.bind(this.addOne, this));
+    		this.$chatMessagesContainer.empty();
+    		this.chatMessages.each(_.bind(this.addOne, this));
     	}
 
     });

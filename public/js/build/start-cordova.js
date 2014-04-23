@@ -10,7 +10,8 @@ define("start-cordova",
     			jquery: '../libs/jquery',
     			underscore: '../libs/underscore',
     			backbone: '../libs/backbone',
-    			d3: '../libs/d3'
+    			d3: '../libs/d3',
+    			moment: '../libs/moment'
     		},
     		shim: {
     			d3: {

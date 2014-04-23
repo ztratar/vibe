@@ -1,23 +1,27 @@
 import 'backbone';
-module template from 'text!templates/commentView.html';
+module moment from 'moment';
+module template from 'text!templates/chatMessageView.html';
 
-var CommentView = Backbone.View.extend({
+var ChatMessageView = Backbone.View.extend({
 
 	template: _.template(template),
 
 	tagName: 'li',
 
-	className: 'comment-view',
+	className: 'chatMessage-view',
 
 	initialize: function() {
 		this.model.on('change', this.render, this);
 	},
 
 	render: function() {
-		this.$el.html(this.template(this.model.toJSON()));
+		this.$el.html(this.template(_.extend(this.model.toJSON(),{
+			user: this.model.get('user').toJSON(),
+			timeCreated: moment(this.model.get('timeCreated')).fromNow()
+		})));
 		return this;
 	}
 
 });
 
-export default = CommentView;
+export default = ChatMessageView;
