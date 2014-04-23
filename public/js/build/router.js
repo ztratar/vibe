@@ -197,9 +197,9 @@ define("router",
     			// TODO: Ajax Loader
     			this.once('loaded', _.bind(function() {
     				this.screenRouter.animateScreens(animation);
-    				this.navigate(href, opts);
     				window.Vibe.appView.headerView.animateToNewComponents(animation);
     			}, this));
+    			this.navigate(href, opts);
     		} else {
     			this.screenRouter.animateScreens(animation);
     			this.navigate(href, opts);

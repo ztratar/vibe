@@ -44,12 +44,12 @@ _.extend(ScreenRouter.prototype, {
 
 		this.currentScreen.addClass(animationClass);
 
-		_.defer(_.bind(function() {
+		_.delay(_.bind(function() {
 			if (this.oldScreen) {
 				this.oldScreen.attr('class', ['screen', 'old', animationClass, this.oldScreenSize].join(' '));
 			}
 			this.currentScreen.attr('class', ['screen', 'current', animationClass, this.screenSize].join(' '));
-		}, this));
+		}, this), 10);
 	},
 	removeOldScreen: function() {
 		if (this.oldScreen) {

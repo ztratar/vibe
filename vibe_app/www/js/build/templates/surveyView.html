@@ -5,8 +5,8 @@
 </ul>
 <% for (var j = 1; j <= questions.length; j++) { %>
 <div class="participants-bar q<%- j %> <%- (j === 1) ? 'showNow' : '' %>">
-	<img src="<%- window.Vibe.user.get('img') %>">
-	<div class="words"><span>anonymous </span><span class="midwords">- to -</span><span> everyone</span></div>
+	<img src="<%= window.staticRoute %>img/anonymous.png">
+	<div class="words"><span>anonymous </span><i class="icon to-arrow">&#61812</i><span> everyone</span></div>
 	<img class="to" src="<%- window.Vibe.user.get('img') %>">
 </div>
 <div class="question q<%- j %>">

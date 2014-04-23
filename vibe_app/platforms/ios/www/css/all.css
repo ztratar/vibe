@@ -6019,6 +6019,17 @@ a:hover,
 a:active {
   outline: 0;
 }
+/* Webfont: Lato-Regular */
+@font-face {
+  font-family: 'Lato';
+  src: url('fonts/Lato-Regular.eot');
+  src: url('fonts/Lato-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('fonts/Lato-Regular.woff') format('woff'), /* Modern Browsers */ url('fonts/Lato-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  
+  /* IE9 Compat Modes */
+}
 .header-view {
   background: #2f557c;
   padding: 0;
@@ -6071,6 +6082,22 @@ a:active {
   -webkit-transition: opacity 0.18s ease-in-out 0s;
   transition: opacity 0.18s ease-in-out 0s;
 }
+.header-view .header-components.animate-slideDown.new h2 {
+  opacity: 0;
+}
+.header-view .header-components.animate-slideDown.new a {
+  opacity: 0;
+}
+.header-view .header-components.animate-slideDown.old h2 {
+  opacity: 0;
+  -webkit-transition: all 0s;
+  transition: all 0s;
+}
+.header-view .header-components.animate-slideDown.old a {
+  opacity: 0;
+  -webkit-transition: all 0s;
+  transition: all 0s;
+}
 .header-view .header-components.new h2,
 .header-view .header-components.new a {
   opacity: 0;
@@ -6091,6 +6118,10 @@ a:active {
   transform: translate3d(0, 0, 0);
   -webkit-transition: all 0.18s ease-in-out;
   transition: all 0.18s ease-in-out;
+}
+.header-view .header-components h2.small {
+  font-size: 20px;
+  line-height: 36px;
 }
 .header-view .header-components a {
   position: absolute;
@@ -6123,6 +6154,9 @@ a:active {
 .header-view .header-components a.right-action i {
   float: right;
   margin-left: 8px;
+}
+body.survey-show .screen {
+  padding-bottom: 80px;
 }
 .screen {
   position: fixed;
@@ -6254,13 +6288,13 @@ form.login .form-actions {
   text-align: left;
   box-shadow: 0 1px 12px rgba(0, 24, 46, 0.14);
 }
-.charts-view li:nth-child(2n) {
+.charts-view li:nth-child(3n-1) {
   background: #973329;
 }
-.charts-view li:nth-child(2n) circle {
+.charts-view li:nth-child(3n-1) circle {
   fill: #ca4030;
 }
-.charts-view li:nth-child(2n) line {
+.charts-view li:nth-child(3n-1) line {
   stroke: #b13b2d;
 }
 .charts-view li:nth-child(3n) {
@@ -6448,10 +6482,14 @@ form.login .form-actions {
   displaY: inline-block;
   vertical-align: middle;
 }
-.survey-view .participants-bar .words span.midwords {
+.survey-view .participants-bar .words i.to-arrow {
+  font-size: 16px;
   color: #517BA7;
-  padding: 2px 6px 0;
-  font-size: 10px;
+  display: inline-block;
+  line-height: 19px;
+  margin-bottom: -3px;
+  vertical-align: bottom;
+  padding: 0 4px;
 }
 .survey-view .participants-bar img {
   height: 36px;
@@ -6522,6 +6560,8 @@ form.login .form-actions {
   text-align: left;
   font-size: 26px;
   font-weight: 500;
+  -webkit-transition: opacity 0.24s ease-in-out;
+  transition: opacity 0.24s ease-in-out;
 }
 .survey-view .question h2 strong {
   font-weight: 600;
@@ -6609,7 +6649,7 @@ form.login .form-actions {
 }
 .chatMessages li {
   position: relative;
-  margin: 24px 24px 0 0;
+  margin: 24px 24px 24px 0;
   display: block;
   padding-left: 71px;
 }
@@ -6870,17 +6910,17 @@ label {
     transform: translate3d(0, 20px, 0);
   }
 }
+body.survey-show .survey-notif {
+  height: 80px;
+}
+body.survey-show .survey-notif a {
+  -webkit-animation: bounceInUp 0.42s linear 0s forwards;
+  animation: bounceInUp 0.42s linear 0s forwards;
+}
 .survey-notif {
   height: 0;
   -webkit-transition: all 0.42s ease-out;
   transition: all 0.42s ease-out;
-}
-.survey-notif.show {
-  height: 80px;
-}
-.survey-notif.show a {
-  -webkit-animation: bounceInUp 0.42s linear 0s forwards;
-  animation: bounceInUp 0.42s linear 0s forwards;
 }
 .survey-notif a {
   position: fixed;
