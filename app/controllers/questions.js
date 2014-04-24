@@ -115,6 +115,23 @@ exports.create = function (req, res, next) {
 };
 
 
+/** 
+* PUT /questions/:question
+* update a question
+*/
+exports.update = function (req, res, next) {
+  if(req.body.active) req.question.active = req.body.active;
+
+  req.question.save(function(err, question){
+    if (err) return next(err);
+
+    console.log(question)
+    return res.send(question);
+  })
+
+};
+
+
 /**
 * DELETE /questions/:question
 * retrieve a question

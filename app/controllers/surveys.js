@@ -77,7 +77,7 @@ exports.create = function (req, res, next) {
 
 
 /**
-* PUT /surveys/:survey/:question
+* PUT /surveys/:survey/question/:question
 * Add qustion to survey
 */
 exports.addQuestion = function (req, res, next) {
