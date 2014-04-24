@@ -12,6 +12,82 @@
 		text-align: left;
 		box-shadow: 0 1px 12px rgba(0, 24, 46, 0.14);
 
+		&.locked-card {
+			background: rgba(0,0,0,.5) !important;
+			height: 76px;
+			padding: 20px 0;
+			font-size: 13px;
+			text-align: center;
+			color: rgba(255,255,255,.8);
+
+			i {
+				margin-right: 7px;
+				font-size: 20px;
+				color: white;
+			}
+		}
+
+		&.summary-card {
+			background: rgba(7, 17, 29, 0.33) !important;
+			height: auto;
+			padding: 0 0 20px 0;
+
+			h2 {
+				text-align: center;
+				font-family: 'Arvo', serif;
+				font-style: italic;
+				font-size: 28px;
+				color: rgba(255, 255, 255, 0.07);
+				font-weight: 200;
+				padding: 20px 0 0;
+
+				span {
+					font-weight: 400;
+					color: white;
+				}
+			}
+
+			table {
+				margin: 10px 11px;
+			}
+
+			td {
+				padding: 4px;
+				color: rgba(255, 255, 255, 0.61);
+
+				&.label {
+					font-weight: 600;
+					color: white;
+					font-size: 16px;
+					display: inline-block;
+					width: 75px;
+					text-align: left;
+				}
+			}
+
+			.stat {
+				padding: 10px 15px 0;
+				vertical-align: bottom;
+				font-size: 22px;
+
+				i {
+					float: left;
+					font-size: 26px;
+					color: rgba(0, 0, 0, 0.5);
+
+					&.filled {
+						color: #12ab97;
+					}
+				}
+
+				strong {
+					font-size: 36px;
+					font-weight: 600;
+					line-height: 32px;
+				}
+			}
+		}
+
 		&:nth-child(3n-1) {	
 			background: #973329;
 

@@ -8,11 +8,11 @@ var ChartsView = Backbone.View.extend({
 	template: _.template(template),
 	initialize: function() {
 		this.collection.on('add', this.addOne, this);
-		this.collection.on('reset', this.addAll);
+		this.collection.on('reset', this.addAll, this);
 	},
 	addAll: function() {
 		this.$el.empty();
-		this.collection.each(this.addOne);
+		this.collection.each(_.bind(this.addOne, this));
 	},
 	addOne: function(question) {
 		var chartItemView = new ChartItemView({

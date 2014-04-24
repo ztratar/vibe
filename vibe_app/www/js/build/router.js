@@ -31,8 +31,7 @@ define("router",
     		'surveyDone': 'surveyDone'
     	},
     	index: function() {
-    		var that = this,
-    			chartsView;
+    		var that = this;
 
     		// Started tutorial system to test screenRouter
     		if (false && !window.Vibe.user.get('seenTutorial')) {
@@ -55,9 +54,10 @@ define("router",
     			}	
     		});
 
-    		chartsView = new HomeView();
-    		this.screenRouter.currentScreen.html(chartsView.$el);
-    		chartsView.render();
+    		this.homeView = this.homeView || new HomeView();
+    		this.screenRouter.currentScreen.html(this.homeView.$el);
+
+    		this.homeView.render();
 
     		this.trigger('loaded');
     	},
@@ -162,6 +162,8 @@ define("router",
     	surveyDone: function() {
     		var that = this,
     			surveyDoneView = new SurveyDoneView();
+
+    		this.homeView.surveyTaken = true;
 
     		window.Vibe.appView.headerView.setButtons({
     			title: '',

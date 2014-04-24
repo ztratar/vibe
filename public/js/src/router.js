@@ -30,8 +30,7 @@ var Router = Backbone.Router.extend({
 		'surveyDone': 'surveyDone'
 	},
 	index: function() {
-		var that = this,
-			chartsView;
+		var that = this;
 
 		// Started tutorial system to test screenRouter
 		if (false && !window.Vibe.user.get('seenTutorial')) {
@@ -54,9 +53,10 @@ var Router = Backbone.Router.extend({
 			}	
 		});
 
-		chartsView = new HomeView();
-		this.screenRouter.currentScreen.html(chartsView.$el);
-		chartsView.render();
+		this.homeView = this.homeView || new HomeView();
+		this.screenRouter.currentScreen.html(this.homeView.$el);
+
+		this.homeView.render();
 
 		this.trigger('loaded');
 	},
@@ -161,6 +161,8 @@ var Router = Backbone.Router.extend({
 	surveyDone: function() {
 		var that = this,
 			surveyDoneView = new SurveyDoneView();
+
+		this.homeView.surveyTaken = true;
 
 		window.Vibe.appView.headerView.setButtons({
 			title: '',

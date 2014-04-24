@@ -11,7 +11,7 @@ define("views/chartsView",
     	template: _.template(template),
     	initialize: function() {
     		this.collection.on('add', this.addOne, this);
-    		this.collection.on('reset', this.addAll);
+    		this.collection.on('reset', this.addAll, this);
     	},
     	addAll: function() {
     		this.$el.empty();

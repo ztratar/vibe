@@ -33,6 +33,7 @@ define("views/chartItemView",
     			answerData = this.model.get('answerData'),
     			numTimeIntervals = Object.keys(answerData).length,
     			chartHeight = $chart.height(),
+    			topMargin = 10,
     			chartWidth = (numTimeIntervals) * this.chartSettings.timeIntervalWidth;
 
     		this.svg = d3.select(this.$('.chart')[0]).append("svg")
@@ -46,11 +47,11 @@ define("views/chartItemView",
     		for (var i = 0; i < numTimeIntervals-1; i++) {
     			var point1 = {
     					x: chartWidth - (i*this.chartSettings.timeIntervalWidth) - this.chartSettings.chartMargin,
-    					y: this.chartHeight - (answerData[i]/this.chartSettings.maxRating)*this.chartHeight
+    					y: topMargin + this.chartHeight * (1 - (answerData[i]/this.chartSettings.maxRating))
     				},
     				point2 = {
     					x: chartWidth - ((i+1)*this.chartSettings.timeIntervalWidth) - this.chartSettings.chartMargin,
-    					y: this.chartHeight - (answerData[i+1]/this.chartSettings.maxRating)*this.chartHeight
+    					y: topMargin + this.chartHeight * (1 - (answerData[i+1]/this.chartSettings.maxRating))
     				};
 
     			this.drawLine(point1, point2);
@@ -107,12 +108,12 @@ define("views/chartItemView",
     			.attr('x1', x)
     			.attr('y1', 0)
     			.attr('x2', x)
-    			.attr('y2', this.chartHeight);
+    			.attr('y2', this.chartHeight - 6);
 
     		axis.append('text')
     			.attr("text-anchor", "middle")
     			.attr('x', x)
-    			.attr('y', this.chartHeight + 22)
+    			.attr('y', this.chartHeight + 20)
     			.text(text);
     	},
     	discuss: function() {
