@@ -59,7 +59,7 @@ module.exports = {
     // }
   },
   production: {
-    db: 'mongodb://vibe:ksdiocskla@ds033487.mongolab.com:33487/heroku_app24476177/vibe',
+    db: process.env.MONGOLAB_URI,
     root: rootPath,
     app: {
       name: 'Vibe'
