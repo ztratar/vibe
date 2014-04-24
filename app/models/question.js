@@ -57,15 +57,16 @@ QuestionSchema.methods = {
         var i;
         var total = 0;
         var count = 0;
-        var currDate = new Date(answers[0].timeDue);
+        var currDate = Math.floor(new Date(answers[0].timeDue).getTime()/1000);
 
+        // All this is pretty slow... low hanging optimization fruit
         for(i = 0; i < answers.length; i++){
           if(typeof(answers[i].body) !== "number"){
             answers[i].body = parseInt(answers[i].body, 10);
           }
 
 
-          if(answers[i].timeDue.getTime() === currDate.getTime()){
+          if(Math.floor(answers[i].timeDue.getTime()/1000) === currDate){
             total += answers[i].body;
             count += 1;
           } else {
@@ -74,14 +75,12 @@ QuestionSchema.methods = {
 
             total = 0;
             count = 0;
-            currDate = new Date(answers[i].timeDue);
+            currDate = Math.floor(new Date(answers[i].timeDue).getTime()/1000);
           }
         }
 
         data.push(total/count);
-
         return cb(null, data);
-
       });
   },
 
