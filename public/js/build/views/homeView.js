@@ -30,6 +30,20 @@ define("views/homeView",
     				0: 3.7,
     				1: 3.2,
     				2: 3.6,
+    				3: 4,
+    				4: 4,
+    				5: 0,
+    				6: 0,
+    				7: 2,
+    				8: 1.8,
+    				9: 2.7
+    			}
+    		}, {
+    			title: 'Productivity',
+    			answerData: {
+    				0: 3.7,
+    				1: 3.2,
+    				2: 3.6,
     				3: 2.7,
     				4: 2.1,
     				5: 3.2,
@@ -38,8 +52,6 @@ define("views/homeView",
     				8: 1.8,
     				9: 2.7
     			}
-    		}, {
-    			title: 'Productivity'
     		}, {
     			title: 'Goal Breakdown',
     			body: '<strong>Productivity</strong> is going...',
@@ -57,7 +69,19 @@ define("views/homeView",
     			}
     		}, {
     			title: 'Focus On Goals',
-    			body: 'We <strong>focus</strong> on our <strong>goals</strong>...'
+    			body: 'We <strong>focus</strong> on our <strong>goals</strong>...',
+    			answerData: {
+    				0: 3.7,
+    				1: 3.2,
+    				2: 3.6,
+    				3: 2.7,
+    				4: 2.1,
+    				5: 3.2,
+    				6: 3.8,
+    				7: 2,
+    				8: 1.8,
+    				9: 2.7
+    			}
     		}, {
     			title: 'Vibe',
     			answerData: {

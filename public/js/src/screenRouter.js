@@ -49,7 +49,7 @@ _.extend(ScreenRouter.prototype, {
 				this.oldScreen.attr('class', ['screen', 'old', animationClass, this.oldScreenSize].join(' '));
 			}
 			this.currentScreen.attr('class', ['screen', 'current', animationClass, this.screenSize].join(' '));
-		}, this), 10);
+		}, this), 20);
 	},
 	removeOldScreen: function() {
 		if (this.oldScreen) {

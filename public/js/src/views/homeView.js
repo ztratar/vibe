@@ -27,6 +27,20 @@ var HomeView = Backbone.View.extend({
 				0: 3.7,
 				1: 3.2,
 				2: 3.6,
+				3: 4,
+				4: 4,
+				5: 0,
+				6: 0,
+				7: 2,
+				8: 1.8,
+				9: 2.7
+			}
+		}, {
+			title: 'Productivity',
+			answerData: {
+				0: 3.7,
+				1: 3.2,
+				2: 3.6,
 				3: 2.7,
 				4: 2.1,
 				5: 3.2,
@@ -35,8 +49,6 @@ var HomeView = Backbone.View.extend({
 				8: 1.8,
 				9: 2.7
 			}
-		}, {
-			title: 'Productivity'
 		}, {
 			title: 'Goal Breakdown',
 			body: '<strong>Productivity</strong> is going...',
@@ -54,7 +66,19 @@ var HomeView = Backbone.View.extend({
 			}
 		}, {
 			title: 'Focus On Goals',
-			body: 'We <strong>focus</strong> on our <strong>goals</strong>...'
+			body: 'We <strong>focus</strong> on our <strong>goals</strong>...',
+			answerData: {
+				0: 3.7,
+				1: 3.2,
+				2: 3.6,
+				3: 2.7,
+				4: 2.1,
+				5: 3.2,
+				6: 3.8,
+				7: 2,
+				8: 1.8,
+				9: 2.7
+			}
 		}, {
 			title: 'Vibe',
 			answerData: {

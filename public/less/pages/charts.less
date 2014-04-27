@@ -130,6 +130,8 @@
 			svg {
 				display: block;
 				margin: 0 auto;
+				.translate3d(0, 0, 0);
+				.transition(all 0.6s ease-out);
 			}
 		}
 
@@ -142,10 +144,28 @@
 				opacity: 0.1;
 				stroke: url(#axis-gradient);
 			}
+
+			&.anim {
+				.transition(all 1.2s ease-in-out);
+			}
+
+			&.new {
+				.transition(all 0s ease-in-out);
+				stroke: rgb(238, 238, 81) !important;
+			}
 		}
 
 		circle {
 			fill: #326599;
+
+			&.anim {
+				.transition(all 1.2s ease-in-out);
+			}
+
+			&.new {
+				.transition(all 0s ease-in-out);
+				fill: rgb(238, 238, 81) !important;
+			}
 		}
 
 		text {

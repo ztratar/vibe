@@ -29,4 +29,5 @@
     <content src="index.html" />
     <icon src="icon.png" />
     <access origin="*" />
+    <preference name="DisallowOverscroll" value="true" />
 </widget>
