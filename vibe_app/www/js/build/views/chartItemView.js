@@ -239,7 +239,7 @@ define("views/chartItemView",
 
     		if (chartPos < trigPos) {
     			this.newPointAlreadyAdded = true;
-    			this.addPoint(2.8, true);
+    			this.addPoint(2+2*Math.random(), true);
     			this.renderAxisText();
     		}
     	},
