@@ -1,0 +1,27 @@
+<li class="summary-card">
+	<h2>&mdash; <span><%= title %></span> &mdash;</h2>
+	<div class="stat-group">
+		<h3>Response Times</h3>
+		<table>
+			<tr>
+				<td class="label">Best</td><td><%= response_times.best %></td>
+			</tr>
+			<tr>
+				<td class="label">Median</td><td><%= response_times.median %></td>
+			</tr>
+			<tr>
+				<td class="label">You</td><td><%= response_times.you %></td>
+			</tr>
+		</table>
+	</div>
+	<div class="stat-group">
+		<div class="stat">
+			<strong><%= completed %></strong> completion!
+		</div>
+		<div class="stat clearfix">
+			<% for (var i = 0; i < numUsers; i++) { %>
+			<i class="icon <% if (i < numCompleted) { %>filled<% } %>">&#61822</i>
+			<% } %>
+		</div>
+	</div>
+</div>

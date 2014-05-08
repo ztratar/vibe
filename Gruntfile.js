@@ -87,6 +87,10 @@ module.exports = function(grunt) {
 					'public/css/all.css': [
 						'bower_components/bootstrap/less/bootstrap.less',
 						'public/less/all.less'
+					],
+					'public/css/splash.css': [
+						'bower_components/bootstrap/less/bootstrap.less',
+						'public/less/splash.less'
 					]
 				}
 			}

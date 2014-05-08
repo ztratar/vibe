@@ -17,9 +17,7 @@ var DiscussView = Backbone.View.extend({
 
 	initialize: function() {
 		this.chatMessages = new ChatMessages([{
-			text: 'sup'
-		},{
-			text: 'hey man'
+			text: 'Anyone know why the numbers here are going up? Let\'s celebrate!'
 		}]);
 		this.chatMessages.on('add', _.bind(this.addOne, this));
 		this.chatMessages.on('reset', _.bind(this.addAll, this));

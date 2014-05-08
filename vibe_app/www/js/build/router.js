@@ -16,10 +16,12 @@ define("router",
     var SettingsView = __dependency12__["default"];
 
     var Router = Backbone.Router.extend({
+
     	initialize: function() {
     		this.screenRouter = new ScreenRouter();
     		this.screenRouter.initCurrentScreen();
     	},
+
     	routes: {
     		'index.html': 'index',
     		'': 'index',
@@ -30,9 +32,9 @@ define("router",
     		'survey/:tag': 'survey',
     		'surveyDone': 'surveyDone'
     	},
+
     	index: function() {
-    		var that = this,
-    			chartsView;
+    		var that = this;
 
     		// Started tutorial system to test screenRouter
     		if (false && !window.Vibe.user.get('seenTutorial')) {
@@ -55,12 +57,14 @@ define("router",
     			}	
     		});
 
-    		chartsView = new HomeView();
-    		this.screenRouter.currentScreen.html(chartsView.$el);
-    		chartsView.render();
+    		this.homeView = this.homeView || new HomeView();
+    		this.screenRouter.currentScreen.html(this.homeView.$el);
+
+    		this.homeView.render();
 
     		this.trigger('loaded');
     	},
+
     	welcome: function(step) {
     		var welcomeView = new WelcomeView();
 
@@ -74,6 +78,7 @@ define("router",
 
     		this.trigger('loaded');
     	},
+
     	settings: function() {
     		var that = this,
     			settingsView = new SettingsView();
@@ -97,6 +102,7 @@ define("router",
 
     		this.trigger('loaded');
     	},
+
     	discuss: function(questionId) {
     		var that = this,
     			discussView,
@@ -136,6 +142,7 @@ define("router",
 
     		this.trigger('loaded');
     	},
+
     	survey: function(surveyId) {
     		var surveyData = window.Vibe.modelCache.getAndRemove('survey-' + surveyId),
     			surveyView,
@@ -159,9 +166,12 @@ define("router",
 
     		this.trigger('loaded');
     	},
+
     	surveyDone: function() {
     		var that = this,
     			surveyDoneView = new SurveyDoneView();
+
+    		this.homeView.surveyTaken = true;
 
     		window.Vibe.appView.headerView.setButtons({
     			title: '',
@@ -182,9 +192,11 @@ define("router",
 
     		this.trigger('loaded');
     	}
+
     });
 
     _.extend(Router.prototype, {
+
     	navigateWithAnimation: function(href, animation, opts) {
     		opts = _.extend({
     			waitForLoad: false,
@@ -206,6 +218,7 @@ define("router",
     			window.Vibe.appView.headerView.animateToNewComponents(animation);
     		}
     	}
+
     });
 
     var initRouter = function() {

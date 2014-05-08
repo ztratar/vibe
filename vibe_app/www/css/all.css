@@ -6288,6 +6288,70 @@ form.login .form-actions {
   text-align: left;
   box-shadow: 0 1px 12px rgba(0, 24, 46, 0.14);
 }
+.charts-view li.locked-card {
+  background: rgba(0, 0, 0, 0.5) !important;
+  height: 76px;
+  padding: 20px 0;
+  font-size: 13px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+.charts-view li.locked-card i {
+  margin-right: 7px;
+  font-size: 20px;
+  color: white;
+}
+.charts-view li.summary-card {
+  background: rgba(7, 17, 29, 0.33) !important;
+  height: auto;
+  padding: 0 0 20px 0;
+}
+.charts-view li.summary-card h2 {
+  text-align: center;
+  font-family: 'Arvo', serif;
+  font-style: italic;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.07);
+  font-weight: 200;
+  padding: 20px 0 0;
+}
+.charts-view li.summary-card h2 span {
+  font-weight: 400;
+  color: white;
+}
+.charts-view li.summary-card table {
+  margin: 10px 11px;
+}
+.charts-view li.summary-card td {
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.61);
+}
+.charts-view li.summary-card td.label {
+  font-weight: 600;
+  color: white;
+  font-size: 16px;
+  display: inline-block;
+  width: 75px;
+  text-align: left;
+}
+.charts-view li.summary-card .stat {
+  padding: 10px 15px 0;
+  vertical-align: bottom;
+  font-size: 22px;
+}
+.charts-view li.summary-card .stat i {
+  float: left;
+  font-size: 26px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.charts-view li.summary-card .stat i.filled {
+  color: #12ab97;
+}
+.charts-view li.summary-card .stat strong {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 32px;
+}
 .charts-view li:nth-child(3n-1) {
   background: #973329;
 }
@@ -6322,6 +6386,10 @@ form.login .form-actions {
 .charts-view li .chart svg {
   display: block;
   margin: 0 auto;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.6s ease-out;
+  transition: all 0.6s ease-out;
 }
 .charts-view li line {
   fill: none;
@@ -6332,8 +6400,26 @@ form.login .form-actions {
   opacity: 0.1;
   stroke: url(#axis-gradient);
 }
+.charts-view li line.anim {
+  -webkit-transition: all 1.2s ease-in-out;
+  transition: all 1.2s ease-in-out;
+}
+.charts-view li line.new {
+  -webkit-transition: all 0s ease-in-out;
+  transition: all 0s ease-in-out;
+  stroke: #eeee51 !important;
+}
 .charts-view li circle {
   fill: #326599;
+}
+.charts-view li circle.anim {
+  -webkit-transition: all 1.2s ease-in-out;
+  transition: all 1.2s ease-in-out;
+}
+.charts-view li circle.new {
+  -webkit-transition: all 0s ease-in-out;
+  transition: all 0s ease-in-out;
+  fill: #eeee51 !important;
 }
 .charts-view li text {
   fill: rgba(255, 255, 255, 0.6);
@@ -6557,6 +6643,8 @@ form.login .form-actions {
   margin: 0;
   position: absolute;
   top: 0;
+  left: 25px;
+  right: 25px;
   text-align: left;
   font-size: 26px;
   font-weight: 500;

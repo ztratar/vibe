@@ -15,10 +15,12 @@ import DiscussView from 'views/discussView';
 import SettingsView from 'views/settingsView';
 
 var Router = Backbone.Router.extend({
+
 	initialize: function() {
 		this.screenRouter = new ScreenRouter();
 		this.screenRouter.initCurrentScreen();
 	},
+
 	routes: {
 		'index.html': 'index',
 		'': 'index',
@@ -29,9 +31,9 @@ var Router = Backbone.Router.extend({
 		'survey/:tag': 'survey',
 		'surveyDone': 'surveyDone'
 	},
+
 	index: function() {
-		var that = this,
-			chartsView;
+		var that = this;
 
 		// Started tutorial system to test screenRouter
 		if (false && !window.Vibe.user.get('seenTutorial')) {
@@ -54,12 +56,14 @@ var Router = Backbone.Router.extend({
 			}	
 		});
 
-		chartsView = new HomeView();
-		this.screenRouter.currentScreen.html(chartsView.$el);
-		chartsView.render();
+		this.homeView = this.homeView || new HomeView();
+		this.screenRouter.currentScreen.html(this.homeView.$el);
+
+		this.homeView.render();
 
 		this.trigger('loaded');
 	},
+
 	welcome: function(step) {
 		var welcomeView = new WelcomeView();
 
@@ -73,6 +77,7 @@ var Router = Backbone.Router.extend({
 
 		this.trigger('loaded');
 	},
+
 	settings: function() {
 		var that = this,
 			settingsView = new SettingsView();
@@ -96,6 +101,7 @@ var Router = Backbone.Router.extend({
 
 		this.trigger('loaded');
 	},
+
 	discuss: function(questionId) {
 		var that = this,
 			discussView,
@@ -135,6 +141,7 @@ var Router = Backbone.Router.extend({
 
 		this.trigger('loaded');
 	},
+
 	survey: function(surveyId) {
 		var surveyData = window.Vibe.modelCache.getAndRemove('survey-' + surveyId),
 			surveyView,
@@ -158,9 +165,12 @@ var Router = Backbone.Router.extend({
 
 		this.trigger('loaded');
 	},
+
 	surveyDone: function() {
 		var that = this,
 			surveyDoneView = new SurveyDoneView();
+
+		this.homeView.surveyTaken = true;
 
 		window.Vibe.appView.headerView.setButtons({
 			title: '',
@@ -181,9 +191,11 @@ var Router = Backbone.Router.extend({
 
 		this.trigger('loaded');
 	}
+
 });
 
 _.extend(Router.prototype, {
+
 	navigateWithAnimation: function(href, animation, opts) {
 		opts = _.extend({
 			waitForLoad: false,
@@ -205,6 +217,7 @@ _.extend(Router.prototype, {
 			window.Vibe.appView.headerView.animateToNewComponents(animation);
 		}
 	}
+
 });
 
 var initRouter = function() {
