@@ -1,11 +1,103 @@
 {% extends '../layouts/default.html' %}
 
+{% block extra_head %}
+	<link rel="stylesheet" href="/css/splash.css">
+{% endblock %}
+
 {% block content %}
-	<div class="v-center">
-		<div>
-			<h1>vibe</h1>
-			<p>Team feedback has never been this fun.</p>
-			<a href="/login" class="btn btn-success">Log in</a>
+	<div class="splash-page">
+		<div class="section intro-section dark-blue-gradient">
+			<div>
+				<h1>vibe</h1>
+				<p>
+					Team feedback made safe and hassle-free
+				</p>
+				<img src="/img/splash_devices.png">
+				<a href="/login" class="btn log-in">Log in</a>
+			</div>
+		</div>
+		<div class="other-sections">
+			<div class="safety-section section small-section light-solid">
+				<div>
+					<div class="container">
+						<h2>Safety to speak one's mind</h2>
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<div class="icon-bubble bubble-1">
+									<i class="icon">&#61756</i>
+								</div>
+								<p>
+									Ideas and feedback are provided anonymously. Don't worry about being right or being judged.
+								</p>
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<div class="icon-bubble bubble-2">
+									<i class="icon">&#61875</i>
+								</div>
+								<p>
+									Feedback can go to a specific team or the entire company. You decide!
+								</p>
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<div class="icon-bubble bubble-3">
+									<i class="icon">&#61704</i>
+								</div>
+								<p>
+									After moderator approval, feedback automatically spreads as coworkers vote and discuss.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<svg id="triangleDown" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="80" viewBox="0 0 100 102" preserveAspectRatio="none">
+				<path d="M0 0 L50 100 L100 0 Z"></path>
+			</svg>
+			<div class="section small-section white">
+				<div>
+					<div class="container">
+						<h2>Keeping it simple</h2>
+						<div class="row">
+							<div class="col-cs-12 col-sm-6">
+								<i class="icon icon-blue">&#61868</i>
+								<p>
+									Requesting and giving feedback takes seconds. Gone are the days of scheduling conflicts and awkward conversations.
+								</p>
+							</div>
+							<div class="col-cs-12 col-sm-6">
+								<i class="icon icon-orange">&#61948</i>
+								<p>
+									Vibe is mobile friendly and always accessible no matter your role.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<svg id="triangleUp" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="80" viewBox="0 0 100 102" preserveAspectRatio="none">
+				<path d="M0 0 L50 100 L100 0 Z"></path>
+			</svg>
+			<div class="section small-section blue">
+				<div>
+					<div class="container">
+						<h2>Spreading knowledge, uncovering insights</h2>
+						<div class="row">
+							<div class="col-cs-12 col-sm-6">
+								<i class="icon">&#61790</i>
+								<p>
+									When communicating is easy, more perspectives are shared and problems are solved faster.
+								</p>
+							</div>
+							<div class="col-cs-12 col-sm-6">
+								<i class="icon">&#61753</i>
+								<p>
+									Feedback is data. We analyze that data for you to spot trends and ask better questions.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock %}
