@@ -40,6 +40,30 @@ exports.index = function(req, res, next){
 
 
 
+/**
+* GET /survey
+* get all surveys
+* query strings:
+*   includeQuestions
+*/
+exports.lastSurvey = function(req, res, next){
+
+  var query = Survey.findOne({recipient: req.user._id});
+  query.sort('timeCreated', -1);
+  
+
+  if(req.query.includeQuestions === 'true'){
+    query.populate('questions');
+  }
+
+  query.exec(function(err, survey){
+    if(err) return next(err)
+
+    return res.send(survey);
+  });
+};
+
+
 /** 
 * GET /surveys/:survey
 * retrieve a survey
