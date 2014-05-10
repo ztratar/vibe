@@ -120,12 +120,12 @@ exports.create = function (req, res) {
       });
     },
     // save user
-    function(cb){
+    function(company, cb){
       newUser.save(function(err){
         if (err) { console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
-        return cb(null, newUser);
+        return cb(null, company, newUser);
       });
-    }], function(err, user){
+    }], function(err, company, user){
       if(err){
         console.error("splat");
         console.error(err.stack);
