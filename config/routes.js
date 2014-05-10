@@ -53,6 +53,7 @@ module.exports = function (app, passport) {
 
 
   app.get('/api/surveys', surveys.index);
+  app.get('/api/survey', surveys.lastSurvey);
   app.get('/api/surveys/:survey', surveys.get);
   app.post('/api/surveys', surveys.create);
   app.put('/api/surveys/:survey/question/:question', surveys.addQuestion);
