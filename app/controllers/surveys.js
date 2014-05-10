@@ -49,7 +49,7 @@ exports.index = function(req, res, next){
 exports.lastSurvey = function(req, res, next){
 
   var query = Survey.findOne({recipient: req.user._id});
-  query.sort('timeCreated', -1);
+  query.sort('timeCreated');
   
 
   if(req.query.includeQuestions === 'true'){
