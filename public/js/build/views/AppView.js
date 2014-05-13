@@ -31,7 +31,7 @@ define("views/AppView",
 
     			if (!$target.hasClass('no-override') && href && href.charAt(0) === '/') {
     				window.Vibe.appRouter.navigateWithAnimation(href, animation, {
-    					trigger: true	
+    					trigger: true
     				});
     				return false;
     			}
@@ -39,34 +39,36 @@ define("views/AppView",
     	},
 
     	checkForNewSurvey: function() {
-    		var surveyData = {};
-    		// Check for survey
-    		if (surveyData) {
-    			// If survey is found, render the notification and
-    			// cache the data.
-    			this.survey = new Survey(surveyData);
-    			window.Vibe.modelCache.set('survey-' + this.survey.get('_id'), this.survey.toJSON());	
-    			this.renderAndShowSurveyNotification();
-    		}
+    		var that = this;
+
+    		this.survey = new Survey();
+    		this.survey.fetchNewSurvey({
+    			success: function(model, data) {
+    				if (!data._id) return;
+    				window.Vibe.modelCache.set('survey-' + model.get('_id'), model.toJSON());
+    				that.renderAndShowSurveyNotification();
+    			}
+    		});
     	},
 
     	renderAndShowSurveyNotification: function() {
     		var msTimeDiff = (new Date()).getTime() - this.survey.get('timeDue').getTime(),
     			daysTime = Math.floor(msTimeDiff / (1000 * 60 * 60 * 24)),
-    			dueString = 'Take Survey - Due in ' + daysTime + ' days';
+    			dueString = 'Take Survey - Due in ' + daysTime + ' days',
+    			that = this;
 
     		if (daysTime === 0) {
-    			dueString = 'Take Survey - Due Now!';	
+    			dueString = 'Take Survey - Due Now!';
     		}
 
     		this.$('.survey-notif').html(_.template(surveyTemplate, {
-    			dueString: dueString	
+    			dueString: dueString
     		}));
 
     		this.$el.addClass('survey-show');
 
     		this.$('.survey-notif').off('click touchstart').on('click touchstart', _.bind(function() {
-    			window.Vibe.appRouter.navigateWithAnimation('/survey/03993029', 'slideUp', {
+    			window.Vibe.appRouter.navigateWithAnimation('/survey/' + that.survey.get('_id'), 'slideUp', {
     				trigger: true,
     				screenSize: 'full'
     			});	

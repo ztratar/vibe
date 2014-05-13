@@ -59,7 +59,7 @@ exports.lastSurvey = function(req, res, next){
   query.exec(function(err, survey){
     if(err) return next(err)
 
-    return res.send(survey);
+    return res.json(survey);
   });
 };
 

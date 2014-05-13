@@ -51,10 +51,10 @@ define("router",
     					var $target = $(ev.target);
     					that.navigateWithAnimation('settings', 'pushLeft', {
     						trigger: true
-    					});	
+    					});
     					return false;
     				}
-    			}	
+    			}
     		});
 
     		this.homeView = this.homeView || new HomeView();
@@ -91,10 +91,10 @@ define("router",
     				click: function(ev) {
     					that.navigateWithAnimation('/', 'pushRight', {
     						trigger: true
-    					});	
+    					});
     					return false;
     				}
-    			}	
+    			}
     		});
 
     		this.screenRouter.currentScreen.html(settingsView.$el);
@@ -113,13 +113,13 @@ define("router",
     			question = new Question(qData);
     		} else {
     			question = new Question({
-    				_id: questionId	
+    				_id: questionId
     			});
     			_.defer(question.fetch);
     		}
 
     		discussView = new DiscussView({
-    			model: question	
+    			model: question
     		});
 
     		window.Vibe.appView.headerView.setButtons({
@@ -131,10 +131,10 @@ define("router",
     				click: function(ev) {
     					that.navigateWithAnimation('/', 'pushRight', {
     						trigger: true
-    					});	
+    					});
     					return false;
     				}
-    			}	
+    			}
     		});
 
     		this.screenRouter.currentScreen.html(discussView.$el);
@@ -158,7 +158,7 @@ define("router",
     		}
 
     		surveyView = new SurveyView({
-    			model: survey	
+    			model: survey
     		});
 
     		this.screenRouter.currentScreen.html(surveyView.$el);
@@ -181,10 +181,10 @@ define("router",
     				click: function(ev) {
     					that.navigateWithAnimation('/', 'pushRight', {
     						trigger: true
-    					});	
+    					});
     					return false;
     				}
-    			}	
+    			}
     		});
 
     		this.screenRouter.currentScreen.html(surveyDoneView.$el);

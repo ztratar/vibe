@@ -50,10 +50,10 @@ var Router = Backbone.Router.extend({
 					var $target = $(ev.target);
 					that.navigateWithAnimation('settings', 'pushLeft', {
 						trigger: true
-					});	
+					});
 					return false;
 				}
-			}	
+			}
 		});
 
 		this.homeView = this.homeView || new HomeView();
@@ -90,10 +90,10 @@ var Router = Backbone.Router.extend({
 				click: function(ev) {
 					that.navigateWithAnimation('/', 'pushRight', {
 						trigger: true
-					});	
+					});
 					return false;
 				}
-			}	
+			}
 		});
 
 		this.screenRouter.currentScreen.html(settingsView.$el);
@@ -112,13 +112,13 @@ var Router = Backbone.Router.extend({
 			question = new Question(qData);
 		} else {
 			question = new Question({
-				_id: questionId	
+				_id: questionId
 			});
 			_.defer(question.fetch);
 		}
 
 		discussView = new DiscussView({
-			model: question	
+			model: question
 		});
 
 		window.Vibe.appView.headerView.setButtons({
@@ -130,10 +130,10 @@ var Router = Backbone.Router.extend({
 				click: function(ev) {
 					that.navigateWithAnimation('/', 'pushRight', {
 						trigger: true
-					});	
+					});
 					return false;
 				}
-			}	
+			}
 		});
 
 		this.screenRouter.currentScreen.html(discussView.$el);
@@ -157,7 +157,7 @@ var Router = Backbone.Router.extend({
 		}
 
 		surveyView = new SurveyView({
-			model: survey	
+			model: survey
 		});
 
 		this.screenRouter.currentScreen.html(surveyView.$el);
@@ -180,10 +180,10 @@ var Router = Backbone.Router.extend({
 				click: function(ev) {
 					that.navigateWithAnimation('/', 'pushRight', {
 						trigger: true
-					});	
+					});
 					return false;
 				}
-			}	
+			}
 		});
 
 		this.screenRouter.currentScreen.html(surveyDoneView.$el);

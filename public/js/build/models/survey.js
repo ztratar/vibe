@@ -15,36 +15,43 @@ define("models/survey",
 
     	initialize: function() {
     		this.on('change:questions', this.questionsToObjects);
-    		this.set('questions', [{
-    			title: 'Design Deliverables',
-    			body: '<strong>Design Deliverables</strong> look...'			
-    		}, {
-    			title: 'Goal Breakdown',
-    			body: 'We break down our <strong>goals</strong> into <strong>tasks</strong>...'	
-    		}, {
-    			title: 'Productivity',
-    			body: '<strong>Productivity</strong> is going...'
-    		}, {
-    			title: 'Focus On Goals',
-    			body: 'We <strong>focus</strong> on our <strong>goals</strong>...'
-    		}, {
-    			title: 'Vibe',
-    			body: '<strong>Vibe</strong> is going...'
-    		}]);
+    		this.on('change:timeDue', this.timeToDateObject);
     	},
 
     	// Turn question data into real Question Models
     	questionsToObjects: function() {
     		var questionData = this.get('questions'),
     			tempQuestions;
+
     		if (questionData.length) {
     			if (!(questionData instanceof Questions)) {
     				tempQuestions = new Questions(questionData);
     				this.set('questions', tempQuestions, {
-    					silent: true	
+    					silent: true
     				});
     			}
     		}
+    	},
+
+    	timeToDateObject: function() {
+    		var due = this.get('timeDue');
+
+    		if (typeof due === 'string') {
+    			this.set('timeDue', new Date(due), {
+    				silent: true
+    			});
+    		}
+    	},
+
+    	fetchNewSurvey: function(options) {
+    		var fetchOpts = _.extend({
+    				url: 'api/survey',
+    				data: {
+    					includeQuestions: true
+    				}
+    			}, options);
+
+    		return this.fetch(fetchOpts);
     	}
 
     });
