@@ -5784,6 +5784,11 @@ button.close {
   
   /* IE9 Compat Modes */
 }
+body,
+html {
+  background: #122b43;
+  color: white;
+}
 .icon-blue {
   color: #31a6bd;
 }

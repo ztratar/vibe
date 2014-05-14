@@ -54,7 +54,8 @@ define("views/AppView",
     	renderAndShowSurveyNotification: function() {
     		var msTimeDiff = (new Date()).getTime() - this.survey.get('timeDue').getTime(),
     			daysTime = Math.floor(msTimeDiff / (1000 * 60 * 60 * 24)),
-    			dueString = 'Take Survey - Due in ' + daysTime + ' days';
+    			dueString = 'Take Survey - Due in ' + daysTime + ' days',
+    			that = this;
 
     		if (daysTime === 0) {
     			dueString = 'Take Survey - Due Now!';
@@ -67,7 +68,7 @@ define("views/AppView",
     		this.$el.addClass('survey-show');
 
     		this.$('.survey-notif').off('click touchstart').on('click touchstart', _.bind(function() {
-    			window.Vibe.appRouter.navigateWithAnimation('/survey/03993029', 'slideUp', {
+    			window.Vibe.appRouter.navigateWithAnimation('/survey/' + that.survey.get('_id'), 'slideUp', {
     				trigger: true,
     				screenSize: 'full'
     			});	
