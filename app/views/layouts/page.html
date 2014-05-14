@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% include '../includes/head.html' %}
+		{% block extra_head %}
+		{% endblock %}
+	</head>
+	<body>
+		<div class="page-header container">
+			<a href="/" class="btn back btn-lg"><i class="icon">&#61760</i> Back home</a>
+		</div>
+		<div class="page-content container">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</body>
+</html>

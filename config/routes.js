@@ -78,6 +78,14 @@ module.exports = function (app, passport) {
   //   }
   // });
 
+  app.get('/privacy.html', function(req, res) {
+    res.render('splash/privacy');
+  });
+
+  app.get('/terms.html', function(req, res) {
+    res.render('splash/terms');
+  });
+
   app.get('*', function(req, res){
     if(req.isAuthenticated()){
       console.log(req.user);

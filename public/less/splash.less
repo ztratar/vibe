@@ -4,6 +4,13 @@
 @import 'fonts';
 @import 'colors';
 
+@import 'pages';
+
+body, html {
+	background: @vibe-dark;
+	color: white;
+}
+
 .icon-blue {
 	color: rgb(49, 166, 189);
 }
@@ -107,7 +114,7 @@
 			background: inherit;
 			.rotate(-2deg);
 		}
-		 
+
 		&.ss-style-doublediagonal::before {
 			top: 0;
 			content: '';
@@ -165,7 +172,8 @@
 				@media (max-width: @screen-xs) {
 					font-size: 54px;
 				}
-			}			
+			}
+
 			p {
 				color: white;
 				font-size: 38px;
@@ -310,6 +318,17 @@
 			&.bubble-3 {
 				background: #AD3FC2;
 			}
+		}
+	}
+
+	.footer {
+		background: @vibe-dark;
+		font-size: 16px;
+		color: rgba(255,255,255,.5);
+		padding: 40px 0;
+
+		a {
+			color: white;
 		}
 	}
 }
