@@ -25,7 +25,7 @@ exports.request = function(req, res, next){
 
 	if (accessRequest.length) {
 		return res.send({
-			status: 'already_requested',
+			error: 'You\'ve already requested an invite',
 			request: accessRequest[0]
 		});
 	} else {

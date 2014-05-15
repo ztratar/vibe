@@ -7,13 +7,45 @@
 {% block content %}
 	<div class="splash-page">
 		<div class="section intro-section dark-blue-gradient">
-			<div>
-				<h1>vibe</h1>
-				<p>
-					Team feedback made safe and hassle-free
-				</p>
-				<img src="/img/splash_devices.png">
-				<a href="/login" class="btn log-in">Log in</a>
+			<div class="intro-page splash-intro">
+				<div>
+					<h1>vibe</h1>
+					<p>
+						Team feedback made safe and hassle-free
+					</p>
+					<div class="splash-buttons">
+						<a href="#" class="btn btn-large get-beta-access">Request Beta Access</a>
+						<a href="#" class="btn btn-large learn-more">Learn More</a>
+					</div>
+					<div class="splash-buttons beta-success hide alert-info">
+						<h3>Great! We'll email you when your invite is ready.</h3>
+						<p>Want it sooner? Email us at <a href="mailto:access@getvibe.org">access@getvibe.org</a></p>
+					</div>
+					<img src="/img/splash_devices.png">
+					<a href="/login" class="btn log-in">Log in</a>
+				</div>
+			</div>
+			<div class="intro-page splash-request-access page-hide">
+				<div>
+					<div class="container">
+						<h2>Request Beta Access</h2>
+						<p>
+							We are currently working closely with a select few companies. Want the invite sooner? Email us at <a href="mailto:access@getvibe.org">access@getvibe.org</a>.
+						</p>
+						<form id="requestAccessForm" action="/api/access/request" role="form">
+							<div class="alert alert-danger hide error-field"></div>
+							<div class="form-group">
+								<label>Email address</label>
+								<input type="email" name="email" placeholder="example@email.com">
+							</div>
+							<div class="form-group">
+								<label>Company Name</label>
+								<input type="text" name="company_name" placeholder="Example, Inc">
+							</div>
+							<button type="submit" class="btn btn-default btn-success">Submit Request</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="other-sections">
@@ -113,4 +145,9 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		window.staticRoute = '/';
+	</script>
+	<script data-main="js/build/splash" src="/js/libs/require.js"></script>
 {% endblock %}

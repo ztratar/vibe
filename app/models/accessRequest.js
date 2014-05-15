@@ -22,7 +22,7 @@ AccessRequestSchema.path('email').validate(function (email) {
 
 AccessRequestSchema.path('email').validate(function (email) {
   var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  return emailRegex.test(email.text);
+  return emailRegex.test(email);
 }, 'That email doesnt work');
 
 

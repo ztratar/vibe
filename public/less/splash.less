@@ -3,6 +3,7 @@
 @import 'mixins';
 @import 'fonts';
 @import 'colors';
+@import 'bootstrap';
 
 @import 'pages';
 
@@ -157,38 +158,160 @@ body, html {
 			height: 100%;
 
 			& > div {
-				padding-bottom: 430px;
-			}
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				left: 0;
+				display: table;
 
-			h1 {
-				color: white;
-				font-size: 82px;
-				font-weight: 600;
-
-				@media (max-width: @screen-md) {
-					font-size: 68px;
-				}
-
-				@media (max-width: @screen-xs) {
-					font-size: 54px;
+				& > div {
+					padding-bottom: 444px;
+					display: table-cell;
 				}
 			}
 
-			p {
-				color: white;
-				font-size: 38px;
-				width: 440px;
-				margin: 20px auto 0;
-				line-height: 1.2;
+			.intro-page {
+				opacity: 1;
+				visibility: visible;
+				pointer-events: auto;
+				position: absolute;
+				left: 0;
+				right: 0;
+				.transition(all 0.48s ease-out);
 
-				@media (max-width: @screen-md) {
-					font-size: 28px;
-					width: 360px;
+				&.splash-request-access {
+					padding-bottom: 0;
 				}
 
+				&.page-hide {
+					visibility: hidden;
+					pointer-events: none;
+					opacity: 0;
+				}
+			}
+
+			.splash-request-access > div {
+				padding-bottom: 0;
+				vertical-align: middle;
+
+				.container {
+					max-width: 600px;
+				}
+
+				h2 {
+					font-size: 32px;
+					margin: 0;
+				}
+
+				p {
+					font-size: 14px;
+					font-weight: 200;
+					margin: 20px auto 32px;
+					max-width: 390px;
+					opacity: .7;
+				}
+
+				label {
+					width: 120px;
+					text-align: right;
+					margin-right: 13px;
+				}
+
+				button {
+					background: transparent;
+					text-transform: uppercase;
+					padding: 14px 50px;
+					margin: 20px 0 0;
+					color: rgba(36, 226, 150, 0.98);
+					border: 1px solid rgba(36, 226, 150, 0.6);
+					opacity: .84;
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+			}
+
+			.splash-intro {
+				h1 {
+					color: white;
+					font-size: 82px;
+					font-weight: 600;
+
+					@media (max-width: @screen-md) {
+						font-size: 68px;
+					}
+
+					@media (max-width: @screen-xs) {
+						font-size: 48px;
+					}
+				}
+
+				p {
+					color: white;
+					font-size: 38px;
+					width: 440px;
+					margin: 20px auto 0;
+					line-height: 1.2;
+
+					@media (max-width: @screen-md) {
+						font-size: 28px;
+						width: 360px;
+					}
+
+					@media (max-width: @screen-xs) {
+						font-size: 20px;
+						margin: 10px auto 0;
+						width: 300px;
+					}
+				}
+			}
+
+			.splash-buttons {
+				margin-top: 30px;
+
 				@media (max-width: @screen-xs) {
-					font-size: 22px;
-					width: 300px;
+					margin-top: 12px;
+				}
+
+				a.btn {
+					opacity: .84;
+					border: 1px solid rgba(255, 255, 255, 0.5);
+					color: white;
+					font-weight: 700;
+					text-transform: uppercase;
+					padding: 12px 18px;
+					margin: 0 5px;
+
+					&.get-beta-access {
+						color: rgba(36, 226, 150, 0.98);
+						border: 1px solid rgba(36, 226, 150, 0.6);
+					}
+
+					&:hover {
+						opacity: 1;
+					}
+
+					@media (max-width: @screen-xs) {
+						margin: 6px 0;
+						padding: 10px 18px;
+					}
+				}
+
+				&.beta-success {
+					display: inline-block;
+					max-width: 400px;
+					padding: 30px;
+					border-radius: 10px;
+
+					h3 {
+						margin: 0;
+					}
+
+					p {
+						font-size: 14px;
+						width: auto;
+					}
 				}
 			}
 
@@ -206,7 +329,7 @@ body, html {
 					margin-left: -300px;
 				}
 				& > div {
-					padding-bottom: 378px;
+					padding-bottom: 398px;
 				}
 			}
 
@@ -216,7 +339,7 @@ body, html {
 					margin-left: -230px;
 				}
 				& > div {
-					padding-bottom: 300px;
+					padding-bottom: 320px;
 				}
 			}
 
@@ -226,7 +349,7 @@ body, html {
 					margin-left: -200px;
 				}
 				& > div {
-					padding-bottom: 250px;
+					padding-bottom: 270px;
 				}
 			}
 
@@ -236,7 +359,7 @@ body, html {
 					margin-left: -150px;
 				}
 				& > div {
-					padding-bottom: 160px;
+					padding-bottom: 190px;
 				}
 			}
 
@@ -259,9 +382,12 @@ body, html {
 				}
 
 				@media (max-width: @screen-xs) {
-					padding: 7px 17px;
-					top: 18px;
-					right: 18px;
+					font-size: 14px;
+					top: 8px;
+					right: 8px;
+					padding: 5px 11px;
+					opacity: .8;
+					border-color: rgba(255, 255, 255, 0.29);
 				}
 			}
 		}

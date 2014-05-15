@@ -5784,6 +5784,63 @@ button.close {
   
   /* IE9 Compat Modes */
 }
+.btn-link:hover {
+  color: white;
+  text-decoration: none;
+}
+.alert-info {
+  background: rgba(0, 0, 0, 0.4);
+}
+.alert-danger {
+  background-color: #B93D3D;
+  border-color: #942F3F;
+  color: white;
+}
+.page-header {
+  text-align: left;
+  border: none;
+}
+.page-header a.back {
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.37);
+  background: transparent;
+}
+.page-header a.back i {
+  display: inline-block;
+  height: 20px;
+  vertical-align: top;
+  margin-top: -4px;
+}
+.page-content {
+  text-align: left;
+  padding-bottom: 80px;
+}
+.page-content .page-title {
+  margin: 60px 0 20px 0;
+}
+.page-content .page-title h1 {
+  font-weight: 600;
+  font-size: 48px;
+}
+.page-content h2 {
+  margin-top: 60px;
+  margin-bottom: 15px;
+}
+.page-content p {
+  opacity: 0.86;
+  font-size: 16px;
+}
+.page-content .col {
+  padding: 0 0 0 30px;
+}
+.page-content .col.col-1 {
+  padding: 0 30px 0 0;
+}
+@media (max-width: 480px) {
+  .page-content .col {
+    padding: 0 20px !important;
+  }
+}
 body,
 html {
   background: #122b43;
@@ -5918,24 +5975,85 @@ html {
   height: 100%;
 }
 .splash-page .section.intro-section > div {
-  padding-bottom: 430px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  display: table;
 }
-.splash-page .section.intro-section h1 {
+.splash-page .section.intro-section > div > div {
+  padding-bottom: 444px;
+  display: table-cell;
+}
+.splash-page .section.intro-section .intro-page {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  -webkit-transition: all 0.48s ease-out;
+  transition: all 0.48s ease-out;
+}
+.splash-page .section.intro-section .intro-page.splash-request-access {
+  padding-bottom: 0;
+}
+.splash-page .section.intro-section .intro-page.page-hide {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+.splash-page .section.intro-section .splash-request-access > div {
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+.splash-page .section.intro-section .splash-request-access > div .container {
+  max-width: 600px;
+}
+.splash-page .section.intro-section .splash-request-access > div h2 {
+  font-size: 32px;
+  margin: 0;
+}
+.splash-page .section.intro-section .splash-request-access > div p {
+  font-size: 14px;
+  font-weight: 200;
+  margin: 20px auto 32px;
+  max-width: 390px;
+  opacity: .7;
+}
+.splash-page .section.intro-section .splash-request-access > div label {
+  width: 120px;
+  text-align: right;
+  margin-right: 13px;
+}
+.splash-page .section.intro-section .splash-request-access > div button {
+  background: transparent;
+  text-transform: uppercase;
+  padding: 14px 50px;
+  margin: 20px 0 0;
+  color: rgba(36, 226, 150, 0.98);
+  border: 1px solid rgba(36, 226, 150, 0.6);
+  opacity: .84;
+}
+.splash-page .section.intro-section .splash-request-access > div button:hover {
+  opacity: 1;
+}
+.splash-page .section.intro-section .splash-intro h1 {
   color: white;
   font-size: 82px;
   font-weight: 600;
 }
 @media (max-width: 992px) {
-  .splash-page .section.intro-section h1 {
+  .splash-page .section.intro-section .splash-intro h1 {
     font-size: 68px;
   }
 }
 @media (max-width: 480px) {
-  .splash-page .section.intro-section h1 {
-    font-size: 54px;
+  .splash-page .section.intro-section .splash-intro h1 {
+    font-size: 48px;
   }
 }
-.splash-page .section.intro-section p {
+.splash-page .section.intro-section .splash-intro p {
   color: white;
   font-size: 38px;
   width: 440px;
@@ -5943,16 +6061,60 @@ html {
   line-height: 1.2;
 }
 @media (max-width: 992px) {
-  .splash-page .section.intro-section p {
+  .splash-page .section.intro-section .splash-intro p {
     font-size: 28px;
     width: 360px;
   }
 }
 @media (max-width: 480px) {
-  .splash-page .section.intro-section p {
-    font-size: 22px;
+  .splash-page .section.intro-section .splash-intro p {
+    font-size: 20px;
+    margin: 10px auto 0;
     width: 300px;
   }
+}
+.splash-page .section.intro-section .splash-buttons {
+  margin-top: 30px;
+}
+@media (max-width: 480px) {
+  .splash-page .section.intro-section .splash-buttons {
+    margin-top: 12px;
+  }
+}
+.splash-page .section.intro-section .splash-buttons a.btn {
+  opacity: .84;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  margin: 0 5px;
+}
+.splash-page .section.intro-section .splash-buttons a.btn.get-beta-access {
+  color: rgba(36, 226, 150, 0.98);
+  border: 1px solid rgba(36, 226, 150, 0.6);
+}
+.splash-page .section.intro-section .splash-buttons a.btn:hover {
+  opacity: 1;
+}
+@media (max-width: 480px) {
+  .splash-page .section.intro-section .splash-buttons a.btn {
+    margin: 6px 0;
+    padding: 10px 18px;
+  }
+}
+.splash-page .section.intro-section .splash-buttons.beta-success {
+  display: inline-block;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 10px;
+}
+.splash-page .section.intro-section .splash-buttons.beta-success h3 {
+  margin: 0;
+}
+.splash-page .section.intro-section .splash-buttons.beta-success p {
+  font-size: 14px;
+  width: auto;
 }
 .splash-page .section.intro-section img {
   position: absolute;
@@ -5966,7 +6128,7 @@ html {
     margin-left: -300px;
   }
   .splash-page .section.intro-section > div {
-    padding-bottom: 378px;
+    padding-bottom: 398px;
   }
 }
 @media (max-width: 620px) {
@@ -5975,7 +6137,7 @@ html {
     margin-left: -230px;
   }
   .splash-page .section.intro-section > div {
-    padding-bottom: 300px;
+    padding-bottom: 320px;
   }
 }
 @media (max-width: 480px) {
@@ -5984,7 +6146,7 @@ html {
     margin-left: -200px;
   }
   .splash-page .section.intro-section > div {
-    padding-bottom: 250px;
+    padding-bottom: 270px;
   }
 }
 @media (max-width: 340px) {
@@ -5993,7 +6155,7 @@ html {
     margin-left: -150px;
   }
   .splash-page .section.intro-section > div {
-    padding-bottom: 160px;
+    padding-bottom: 190px;
   }
 }
 .splash-page .section.intro-section a.log-in {
@@ -6014,9 +6176,12 @@ html {
 }
 @media (max-width: 480px) {
   .splash-page .section.intro-section a.log-in {
-    padding: 7px 17px;
-    top: 18px;
-    right: 18px;
+    font-size: 14px;
+    top: 8px;
+    right: 8px;
+    padding: 5px 11px;
+    opacity: .8;
+    border-color: rgba(255, 255, 255, 0.29);
   }
 }
 .splash-page .section h2 {
@@ -6067,4 +6232,13 @@ html {
 }
 .splash-page .section .icon-bubble.bubble-3 {
   background: #AD3FC2;
+}
+.splash-page .footer {
+  background: #122b43;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 40px 0;
+}
+.splash-page .footer a {
+  color: rgba(255, 255, 255, 0.84);
 }
