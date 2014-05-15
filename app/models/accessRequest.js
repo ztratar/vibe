@@ -20,4 +20,10 @@ AccessRequestSchema.path('email').validate(function (email) {
   return email && email.length
 }, 'Email cannot be blank');
 
+AccessRequestSchema.path('email').validate(function (email) {
+  var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  return emailRegex.test(email.text);
+}, 'That email doesnt work');
+
+
 mongoose.model('AccessRequest', AccessRequestSchema);

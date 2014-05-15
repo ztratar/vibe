@@ -34,7 +34,13 @@ exports.request = function(req, res, next){
 			company_name: req.body.company_name
 		});
 		accessRequest.save(function(err, model) {
-			if (err) return next(err);
+			if (err) {
+				if (err.errors.email) {
+					return res.send({
+						error: err.errors.email.message
+					});
+				}
+			}
 
 			return res.send({
 				status: 'success',
