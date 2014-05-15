@@ -18,11 +18,12 @@ module.exports = function (app, passport) {
 
   app.get('/api/users', users.get);
   app.put('/api/users', users.update);
-  
+
   var metaQuestions = require('../app/controllers/meta_questions');
   var questions = require('../app/controllers/questions');
   var answers = require('../app/controllers/answers');
   var surveys = require('../app/controllers/surveys');
+  var access = require('../app/controllers/access');
 
   app.param('meta_question', metaQuestions.loadMetaQuestion);
   app.param('question', questions.loadQuestion);
@@ -31,6 +32,7 @@ module.exports = function (app, passport) {
 
 
 
+  app.post('/api/access/request', access.request);
 
   app.get('/api/meta_questions', metaQuestions.index);
   app.get('/api/meta_questions/:meta_question', metaQuestions.get);
@@ -69,7 +71,7 @@ module.exports = function (app, passport) {
   // app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), users.authCallback);
   // app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
   // app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/' })); 
-  
+
   // app.get('/', function(req, res){
   //   if(req.isAuthenticated()){
   //     res.render('home/index');
