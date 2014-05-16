@@ -7,7 +7,9 @@ define("splashApp",
     	var showRequestAccessForm = function() {
     			$('.splash-intro').addClass('page-hide');
     			$('.splash-request-access').removeClass('page-hide');
-    			$('input[name="email"]').focus();
+    			_.delay(function() {
+    				$('input[name="email"]').focus();
+    			}, 500);
     		},
     		showIntroPage = function() {
     			$('.splash-intro').removeClass('page-hide');
@@ -34,15 +36,15 @@ define("splashApp",
     		return false;
     	});
 
+    	$('.cancel-request-access').on('click', function() {
+    		showIntroPage();
+    		return false;
+    	});
+
     	$('.get-beta-access').on('click', function() {
     		showRequestAccessForm();
     		return false;
     	});
-
-		$('.cancel-request-access').on('click', function() {
-			showIntroPage();
-			return false;
-		});
 
     	$('#requestAccessForm').on('submit', function() {
     		var email = $('input[name="email"]').val(),

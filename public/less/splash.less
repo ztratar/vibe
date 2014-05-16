@@ -178,17 +178,26 @@ body, html {
 				position: absolute;
 				left: 0;
 				right: 0;
-				.transition(all 0.48s ease-out);
+				.translate3d(0, 0, 0);
+				.transition(all 0.26s ease-out 0s);
 
 				&.splash-request-access {
 					padding-bottom: 0;
+					.transition(all 0.26s ease-out 0.16s);
 				}
 
 				&.page-hide {
 					visibility: hidden;
 					pointer-events: none;
 					opacity: 0;
+					.translate3d(0, -20px, 0);
+					.transition(all 0.26s ease-out 0s);
+
+					&.splash-intro {
+						.translate3d(0, 20px, 0);
+					}
 				}
+
 			}
 
 			.splash-request-access > div {

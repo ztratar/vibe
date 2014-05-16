@@ -6172,7 +6172,7 @@ body.survey-show .screen {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #23405c;
+  background: #223e59;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   z-index: 10;
@@ -6184,7 +6184,7 @@ body.survey-show .screen {
 .screen.full {
   z-index: 100;
   top: 0;
-  background: #23405c;
+  background: #223e59;
 }
 .screen.full.current {
   z-index: 120;
@@ -6924,7 +6924,7 @@ form.login .form-actions {
 html,
 body {
   text-align: center;
-  background: #23405c;
+  background: #223e59;
   color: white;
   font-family: 'Lato', sans-serif !important;
   -webkit-font-smoothing: antialiased;

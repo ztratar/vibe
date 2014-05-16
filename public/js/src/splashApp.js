@@ -5,7 +5,9 @@ $(function() {
 	var showRequestAccessForm = function() {
 			$('.splash-intro').addClass('page-hide');
 			$('.splash-request-access').removeClass('page-hide');
-			$('input[name="email"]').focus();
+			_.delay(function() {
+				$('input[name="email"]').focus();
+			}, 500);
 		},
 		showIntroPage = function() {
 			$('.splash-intro').removeClass('page-hide');
@@ -29,6 +31,11 @@ $(function() {
 			scrollTop: windowHeight
 		}, 280);
 
+		return false;
+	});
+
+	$('.cancel-request-access').on('click', function() {
+		showIntroPage();
 		return false;
 	});
 

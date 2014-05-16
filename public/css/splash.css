@@ -5993,16 +5993,28 @@ html {
   position: absolute;
   left: 0;
   right: 0;
-  -webkit-transition: all 0.48s ease-out;
-  transition: all 0.48s ease-out;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.26s ease-out 0s;
+  transition: all 0.26s ease-out 0s;
 }
 .splash-page .section.intro-section .intro-page.splash-request-access {
   padding-bottom: 0;
+  -webkit-transition: all 0.26s ease-out 0.16s;
+  transition: all 0.26s ease-out 0.16s;
 }
 .splash-page .section.intro-section .intro-page.page-hide {
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
+  -webkit-transform: translate3d(0, -20px, 0);
+  transform: translate3d(0, -20px, 0);
+  -webkit-transition: all 0.26s ease-out 0s;
+  transition: all 0.26s ease-out 0s;
+}
+.splash-page .section.intro-section .intro-page.page-hide.splash-intro {
+  -webkit-transform: translate3d(0, 20px, 0);
+  transform: translate3d(0, 20px, 0);
 }
 .splash-page .section.intro-section .splash-request-access > div {
   padding-bottom: 0;

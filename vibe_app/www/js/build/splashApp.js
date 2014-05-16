@@ -7,7 +7,9 @@ define("splashApp",
     	var showRequestAccessForm = function() {
     			$('.splash-intro').addClass('page-hide');
     			$('.splash-request-access').removeClass('page-hide');
-    			$('input[name="email"]').focus();
+    			_.delay(function() {
+    				$('input[name="email"]').focus();
+    			}, 500);
     		},
     		showIntroPage = function() {
     			$('.splash-intro').removeClass('page-hide');
@@ -15,7 +17,7 @@ define("splashApp",
     		},
     		accessRequestSuccess = function() {
     			$('.splash-buttons').hide();
-    			$('.beta-success').show().removeClass('hide');
+    			$('.beta-success').css('display', 'inline-block').removeClass('hide');
     			showIntroPage();
     		},
     		showRequestError = function(error) {
