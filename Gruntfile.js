@@ -91,6 +91,9 @@ module.exports = function(grunt) {
 					'public/css/splash.css': [
 						'bower_components/bootstrap/less/bootstrap.less',
 						'public/less/splash.less'
+					],
+					'public/css/email.css': [
+						'public/less/email.less'
 					]
 				}
 			}

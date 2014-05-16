@@ -23,13 +23,12 @@ module.exports = function (app, passport) {
   var questions = require('../app/controllers/questions');
   var answers = require('../app/controllers/answers');
   var surveys = require('../app/controllers/surveys');
-  var access = require('../app/controllers/access');
+  var access = require('../app/controllers/access')(app);
 
   app.param('meta_question', metaQuestions.loadMetaQuestion);
   app.param('question', questions.loadQuestion);
   app.param('survey', surveys.loadSurvey);
   app.param('answer', answers.loadAnswer);
-
 
 
   app.post('/api/access/request', access.request);

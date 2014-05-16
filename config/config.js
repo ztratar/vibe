@@ -6,6 +6,7 @@ var path = require('path')
 module.exports = {
   development: {
     db: 'mongodb://localhost/vibe',
+	static_path: 'http://localhost:3000',
     root: rootPath,
     app: {
       name: 'Vibe'
@@ -60,6 +61,7 @@ module.exports = {
   },
   production: {
     db:  process.env.MONGOLAB_URI || 'mongodb://vibe:ksdiocskla@ds033487.mongolab.com:33487/heroku_app24476177/vibe',
+	static_path: 'http://www.getvibe.org',
     root: rootPath,
     app: {
       name: 'Vibe'

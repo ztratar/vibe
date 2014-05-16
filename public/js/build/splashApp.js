@@ -39,6 +39,11 @@ define("splashApp",
     		return false;
     	});
 
+		$('.cancel-request-access').on('click', function() {
+			showIntroPage();
+			return false;
+		});
+
     	$('#requestAccessForm').on('submit', function() {
     		var email = $('input[name="email"]').val(),
     			companyName = $('input[name="company_name"]').val();

@@ -202,6 +202,10 @@ body, html {
 				h2 {
 					font-size: 32px;
 					margin: 0;
+
+					@media (max-width: @screen-xs) {
+						font-size: 24px;
+					}
 				}
 
 				p {
@@ -229,6 +233,33 @@ body, html {
 
 					&:hover {
 						opacity: 1;
+					}
+				}
+
+				a.cancel-request-access {
+					position: absolute;
+					top: 16px;
+					right: 10px;
+					opacity: 0.6;
+					cursor: pointer;
+
+					@media (max-width: @screen-xs) {
+						top: 12px;
+						right: 8px;
+					}
+
+					&:hover {
+						opacity: 0.84;
+					}
+
+					i {
+						.rotate(45deg);
+						font-size: 42px;
+						color: white;
+
+						@media (max-width: @screen-xs) {
+							font-size: 32px;
+						}
 					}
 				}
 			}
@@ -329,7 +360,7 @@ body, html {
 					width: 600px;
 					margin-left: -300px;
 				}
-				& > div {
+				& > div > div {
 					padding-bottom: 398px;
 				}
 			}
@@ -339,7 +370,7 @@ body, html {
 					width: 460px;
 					margin-left: -230px;
 				}
-				& > div {
+				& > div > div {
 					padding-bottom: 320px;
 				}
 			}
@@ -349,7 +380,7 @@ body, html {
 					width: 400px;
 					margin-left: -200px;
 				}
-				& > div {
+				& > div > div {
 					padding-bottom: 270px;
 				}
 			}
@@ -359,7 +390,7 @@ body, html {
 					width: 300px;
 					margin-left: -150px;
 				}
-				& > div {
+				& > div > div {
 					padding-bottom: 190px;
 				}
 			}
