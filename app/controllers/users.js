@@ -148,7 +148,6 @@ exports.create = function (req, res) {
 * get current user
 */
 exports.get = function(req, res, next){
-  
   return res.send(req.user.stripInfo());
 }
 

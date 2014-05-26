@@ -44,8 +44,8 @@ var save = function(v, cb){
 
 var company = new Company({
 	name: 'Vibe',
-	domain: 'vibeapp.org',
-	size: 5
+	domain: 'getvibe.org',
+	size: 1
 });
 
 company.save();
@@ -64,6 +64,14 @@ var users = [
 		email: 'jakehsu@vibeapp.org',
 		password: 'testtest',
 		isAdmin: false,
+		provider: 'local',
+		company: company._id
+	}),
+	new User({
+		name: "Zach Tratar",
+		email: "zach@getvibe.org",
+		password: "test123",
+		isAdmin: true,
 		provider: 'local',
 		company: company._id
 	}),
