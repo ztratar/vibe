@@ -37,7 +37,7 @@ module.exports = function (app, passport) {
 	app.post('/api/login', c.users.login);
 	app.post('/api/logout', c.users.logout);
 	app.post('/api/users', c.users.create);
-	app.post('/api/users/:email/forgot_password', c.users.forgot_password_api);
+	app.post('/api/users/:email/forgot_password', c.users.forgot_password);
 	app.post('/api/access/request', c.access.request);
 	app.post('/api/meta_questions', c.meta_questions.create);
 	app.post('/api/questions', c.questions.create);
@@ -45,7 +45,7 @@ module.exports = function (app, passport) {
 	app.post('/api/answers/question/:question/survey/:survey', c.answers.create);
 	app.post('/api/surveys', c.surveys.create);
 
-	app.put('/api/users', c.users.update);
+	app.put('/api/users/:email', c.users.update);
 	app.put('/api/questions/:question', c.questions.update);
 	app.put('/api/surveys/:survey/question/:question', c.surveys.addQuestion);
 

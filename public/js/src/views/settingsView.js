@@ -13,16 +13,17 @@ var SettingsView = Backbone.View.extend({
 	template: _.template(template),
 
 	events: {
-		'click a.trigger-survey': 'triggerSurvey'
+		'click a.trigger-survey': 'triggerSurvey',
+		'click a.log-out': 'logOut'
 	},
 
 	initialize: function() {
 		this.metaQuestions = new MetaQuestions([{
-			title: 'Scrum Process'	
+			title: 'Scrum Process'
 		}, {
-			questionSelected: true	
+			questionSelected: true
 		}, {
-			title: 'Design Deliverables'	
+			title: 'Design Deliverables'
 		}]);
 		this.metaQuestions.on('add', this.addOne, this);
 		this.metaQuestions.on('reset', this.addAll, this);
@@ -52,6 +53,15 @@ var SettingsView = Backbone.View.extend({
 		_.delay(function() {
 			window.Vibe.appView.checkForNewSurvey();
 		}, 2800);
+
+		return false;
+	},
+
+	logOut: function() {
+		$.post('/api/logout', function(data) {
+			window.location.reload();
+		});
+
 		return false;
 	}
 

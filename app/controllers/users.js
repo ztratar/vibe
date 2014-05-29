@@ -10,24 +10,15 @@ var mongoose = require('mongoose'),
 	passport;
 
 /*
+ * POST /api/login
  *
- */
-exports.auth = function (req, res, next) {
-	if (!req.isAuthenticated()) {
-		return res.redirect('/login')
-	}
-	next()
-};
-
-/**
- * Auth callback
- */
-exports.authCallback = function (req, res, next) {
-	res.redirect('/');
-};
-
-/**
- * Login
+ * Log the user in if they send the proper credientials.
+ * Uses the passport module, which has docs at
+ * http://passportjs.org/guide
+ *
+ * Query vars:
+ *  	email (String)
+ *  	password (String)
  */
 exports.login = function (req, res) {
 	req.body.email = req.body.email.toLowerCase();
@@ -38,20 +29,28 @@ exports.login = function (req, res) {
 	})(req, res);
 };
 
-/**
- * Logout
+/*
+ * POST /api/Logout
+ *
+ * Log the user out.
  */
-
 exports.logout = function (req, res) {
 	req.logout();
 	res.redirect('/login');
 };
 
-/**
- * Forgot Password
+/*
+ * POST /api/users/:email/forgot_password
+ *
+ * Called on the forgot password page. User inputs
+ * their email and we start the forgot password
+ * process by sending them an email, which directs
+ * to the rest password flow.
+ *
+ * Query vars:
+ * 		email (String)
  */
-
-exports.forgot_password_api = function(req, res) {
+exports.forgot_password = function(req, res) {
 	var findQuery;
 
 	// Check if valid email
@@ -92,13 +91,20 @@ exports.forgot_password_api = function(req, res) {
 	});
 };
 
-/**
- * Create user
+/*
+ * POST /api/users
+ *
+ * Create a user and new company.
+ *
+ * Query vars:
+ * 		name (String): Full name of the user
+ * 		email (String): User's email
+ * 		password (String): User's password
+ * 		companyName (String): Name of their company
+ *  	companyWebsite (String): Website of the company
  */
-
 exports.create = function (req, res) {
-
-	var domain = req.body.companyDomain,
+	var domain = req.body.companyWebsite,
 		company = new Company({
 			name: req.body.companyName,
 			domain: domain
@@ -162,27 +168,29 @@ exports.create = function (req, res) {
 		});
 }
 
-/**
-* get /api/users
-* get current user
-*/
+/*
+ * GET /api/users
+ *
+ * Get current user
+ */
 exports.get = function(req, res, next){
 	return res.send(req.user.stripInfo());
 }
 
-/**
-* PUT /api/users
-* query strings:
-*/
+/*
+ * PUT /api/users
+ *
+ * Edit the user specified
+ *
+ * Query vars:
+ */
 exports.update = function(req, res, next){
-
 	var user = req.user;
 	var body = req.body;
 
-	if(body.tutorial) user.tutorial = JSON.stringify(body.tutorial);
-	if(body.name) user.name = body.name;
-	if(body.password) user.password = body.password;
-
+	if (body.tutorial) user.tutorial = JSON.stringify(body.tutorial);
+	if (body.name) user.name = body.name;
+	if (body.password) user.password = body.password;
 
 	req.user.save(function(err, user){
 		if(err) return next(err);
@@ -191,6 +199,7 @@ exports.update = function(req, res, next){
 	});
 };
 
+// Cache the app and passport
 module.exports = function(exportedApp, exportedPassport) {
 	app = exportedApp;
 	passport = exportedPassport;

@@ -11,6 +11,9 @@ define("pages/forgot_password",
     			$.ajax({
     				type: 'POST',
     				url: '/api/users/'+email+'/forgot_password',
+    				data:{
+    					email: email
+    				},
     				success: function(d) {
     					$('.form-step-wrapper').addClass('success');
     				},
