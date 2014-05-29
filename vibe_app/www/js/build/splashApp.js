@@ -36,6 +36,11 @@ define("splashApp",
     		return false;
     	});
 
+    	$('.cancel-request-access').on('click', function() {
+    		showIntroPage();
+    		return false;
+    	});
+
     	$('.get-beta-access').on('click', function() {
     		showRequestAccessForm();
     		return false;

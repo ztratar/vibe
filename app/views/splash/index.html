@@ -35,15 +35,15 @@
 						<p>
 							We are currently working closely with a select few companies. Want the invite sooner? Email us at <a href="mailto:access@getvibe.org">access@getvibe.org</a>.
 						</p>
-						<form id="requestAccessForm" action="/api/access/request" role="form">
+						<form id="requestAccessForm" action="/api/access/request" role="form" class="max-400">
 							<div class="alert alert-danger hide error-field"></div>
 							<div class="form-group">
 								<label>Email address</label>
-								<input type="email" name="email" placeholder="example@email.com">
+								<input type="email" class="form-control input-lg" name="email" placeholder="example@email.com">
 							</div>
 							<div class="form-group">
 								<label>Company Name</label>
-								<input type="text" name="company_name" placeholder="Example, Inc">
+								<input type="text" class="form-control input-lg" name="company_name" placeholder="Example, Inc">
 							</div>
 							<button type="submit" class="btn btn-default btn-success">Submit Request</button>
 						</form>

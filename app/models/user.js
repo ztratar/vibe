@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , bcrypt = require('bcrypt')
   , _ = require('underscore')
+  , helpers = require('../helpers')
   , authTypes = ['github', 'twitter', 'facebook', 'google']
 
 /**
@@ -14,18 +15,23 @@ var mongoose = require('mongoose')
  */
 
 var UserSchema = new Schema({
+
   name: String,
   email: { type: String, lowercase: true, trim: true },
-  company: { type: Schema.Types.ObjectId, ref: 'Company' },
   isAdmin: Boolean,
+  company: { type: Schema.Types.ObjectId, ref: 'Company' },
+
   provider: String,
-  hashed_password: String,
-  tutorial: { type: String, default: "{}" },
+
   salt: String,
+  hashed_password: String,
   facebook: {},
   twitter: {},
   github: {},
-  google: {}
+  google: {},
+
+  tutorial: { type: String, default: "{}" },
+  reset_password_hash: String
 })
 
 /**
@@ -62,6 +68,10 @@ UserSchema.path('email').validate(function (email) {
   if (authTypes.indexOf(this.provider) !== -1) return true
   return email.length
 }, 'Email cannot be blank')
+
+UserSchema.path('email').validate(function (email) {
+  return helpers.isValidEmail(email);
+}, 'That email doesnt work');
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   // if you are authenticating by any of the oauth strategies, don't validate
@@ -133,7 +143,12 @@ UserSchema.methods = {
   encryptPassword: function(password) {
     if (!password) return ''
     return bcrypt.hashSync(password, this.salt);
+  },
+
+  generatePasswordHash: function() {
+
   }
+
 }
 
 mongoose.model('User', UserSchema)

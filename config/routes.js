@@ -1,99 +1,69 @@
+var _ = require('underscore');
+
 module.exports = function (app, passport) {
-  // user routes
-  var users = require('../app/controllers/users');
-  app.get('/login', users.login);
-  app.get('/signup', users.signup);
-  app.get('/logout', users.logout);
-  app.post('/users', users.create);
-  app.post('/users/session', 
-    function(req, res, next){
-      req.body.email = req.body.email.toLowerCase();
+	var i,
+		routes = {},
+		c = controllers = {},
+		controllerNames = [
+			'users',
+			'meta_questions',
+			'questions',
+			'answers',
+			'surveys',
+			'access',
+			'email',
+			'page'
+		];
 
-      next();
-    }, passport.authenticate('local', {
-      failureRedirect: '/login',
-      failureFlash: 'Invalid email or password.'
-    }),
-    users.session);
+	_.each(controllerNames, function(name) {
+		controllers[name] = require('../app/controllers/' + name)(app, passport);
+	});
 
-  app.get('/api/users', users.get);
-  app.put('/api/users', users.update);
+	//
+	// API ENDPOINTS
+	//
+	app.get('/api/users', c.users.get);
+	app.get('/api/meta_questions', c.meta_questions.index);
+	app.get('/api/meta_questions/:meta_question', c.meta_questions.get);
+	app.get('/api/questions', c.questions.index);
+	app.get('/api/questions/:question', c.questions.get);
+	app.get('/api/questions/:question/comments', c.questions.getComments);
+	app.get('/api/answers', c.answers.index);
+	app.get('/api/answers/:answer', c.answers.get);
+	app.get('/api/surveys', c.surveys.index);
+	app.get('/api/survey', c.surveys.lastSurvey);
+	app.get('/api/surveys/:survey', c.surveys.get);
 
-  var metaQuestions = require('../app/controllers/meta_questions');
-  var questions = require('../app/controllers/questions');
-  var answers = require('../app/controllers/answers');
-  var surveys = require('../app/controllers/surveys');
-  var access = require('../app/controllers/access')(app);
+	app.post('/api/login', c.users.login);
+	app.post('/api/logout', c.users.logout);
+	app.post('/api/users', c.users.create);
+	app.post('/api/users/:email/forgot_password', c.users.forgot_password_api);
+	app.post('/api/access/request', c.access.request);
+	app.post('/api/meta_questions', c.meta_questions.create);
+	app.post('/api/questions', c.questions.create);
+	app.post('/api/questions/:question/comments', c.questions.newComment);
+	app.post('/api/answers/question/:question/survey/:survey', c.answers.create);
+	app.post('/api/surveys', c.surveys.create);
 
-  app.param('meta_question', metaQuestions.loadMetaQuestion);
-  app.param('question', questions.loadQuestion);
-  app.param('survey', surveys.loadSurvey);
-  app.param('answer', answers.loadAnswer);
+	app.put('/api/users', c.users.update);
+	app.put('/api/questions/:question', c.questions.update);
+	app.put('/api/surveys/:survey/question/:question', c.surveys.addQuestion);
 
+	app.param('meta_question', c.meta_questions.loadMetaQuestion);
+	app.param('question', c.questions.loadQuestion);
+	app.param('survey', c.surveys.loadSurvey);
+	app.param('answer', c.answers.loadAnswer);
 
-  app.post('/api/access/request', access.request);
+	app.delete('/api/questions/:question', c.questions.delete);
+	app.delete('/api/surveys/:survey', c.surveys.delete);
 
-  app.get('/api/meta_questions', metaQuestions.index);
-  app.get('/api/meta_questions/:meta_question', metaQuestions.get);
-  app.post('/api/meta_questions', metaQuestions.create);
-  app.delete('/api/meta_questions/:meta_question', metaQuestions.delete);
-
-  app.get('/api/questions', questions.index);
-  app.get('/api/questions/:question', questions.get);
-  app.post('/api/questions', questions.create);
-  app.put('/api/questions/:question', questions.update);
-  app.delete('/api/questions/:question', questions.delete);
-
-  app.get('/api/questions/:question/comments', questions.getComments);
-  app.post('/api/questions/:question/comments', questions.newComment);
-
-  app.get('/api/answers', answers.index);
-  app.get('/api/answers/:answer', answers.get);
-  app.post('/api/answers/question/:question/survey/:survey', answers.create);
-  app.delete('/api/answers/:answer', answers.delete);
-
-
-  app.get('/api/surveys', surveys.index);
-  app.get('/api/survey', surveys.lastSurvey);
-  app.get('/api/surveys/:survey', surveys.get);
-  app.post('/api/surveys', surveys.create);
-  app.put('/api/surveys/:survey/question/:question', surveys.addQuestion);
-  // app.delete('/api/surveys/:id/:questionId', surveys.deleteQuestion);
-  app.delete('/api/surveys/:survey', surveys.delete);
-
-
-  // app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin);
-  // app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback);
-  // app.get('/auth/github', passport.authenticate('github', { failureRedirect: '/login' }), users.signin);
-  // app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), users.authCallback);
-  // app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/login' }), users.signin);
-  // app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), users.authCallback);
-  // app.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
-  // app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/' })); 
-
-  // app.get('/', function(req, res){
-  //   if(req.isAuthenticated()){
-  //     res.render('home/index');
-  //   } else {
-  //     res.render('splash/index');
-  //   }
-  // });
-
-  app.get('/privacy.html', function(req, res) {
-    res.render('splash/privacy');
-  });
-
-  app.get('/terms.html', function(req, res) {
-    res.render('splash/terms');
-  });
-
-  app.get('*', function(req, res){
-    if(req.isAuthenticated()){
-      console.log(req.user);
-      res.render('home/index');
-    } else {
-      res.render('splash/index');
-    }
-  });
-
+	//
+	// PAGES
+	//
+	app.get('/login', c.page.login);
+	app.get('/signup', c.page.signup);
+	app.get('/forgot_password', c.page.forgot_password);
+	app.get('/privacy.html', c.page.privacy);
+	app.get('/terms.html', c.page.terms);
+	app.get('*', c.page.index);
 };

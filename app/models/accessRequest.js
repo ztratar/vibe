@@ -5,7 +5,8 @@
 
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
-  , _ = require('underscore');
+  , _ = require('underscore')
+  , helpers = require('../helpers');
 
 /**
  * AccessRequest Schema
@@ -21,9 +22,7 @@ AccessRequestSchema.path('email').validate(function (email) {
 }, 'Email cannot be blank');
 
 AccessRequestSchema.path('email').validate(function (email) {
-  var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  return emailRegex.test(email);
+  return helpers.isValidEmail(email);
 }, 'That email doesnt work');
-
 
 mongoose.model('AccessRequest', AccessRequestSchema);

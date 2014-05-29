@@ -1,23 +1,19 @@
-{% extends 'auth.html' %}
+{% extends '../layouts/page-centered.html' %}
 
-{% block main %}
-	<h2 class="sub-header">Log in</h2>
-{% endblock %}
+{% block content %}
 
-{% block auth %}
-  <form action="/users/session" method="post" class="login form-horizontal">
-    <div class="control-group">
-      <div class="controls">
-        <input id="email" type="text" name="email" placeholder="Email">
-      </div>
-    </div>
-    <div class="control-group">
-      <div class="controls">
-        <input id="password" type="password" name="password" placeholder="Password">
-      </div>
-    </div>
-    <div class="form-actions">
-      <button type="submit" class="btn btn-success">Login</button>
-    </div>
-  </form>
+<h1 class="sub-header no-top-margin">Log in</h2>
+<form action="/api/login" method="post" class="login form-horizontal max-400">
+	<div class="alert alert-block alert-error"></div>
+	<div class="form-group form-group-lg">
+		<input class="form-control input-lg" id="email" type="text" name="email" placeholder="Email">
+	</div>
+	<div class="form-group form-group-lg">
+		<input class="form-control input-lg" id="password" type="password" name="password" placeholder="Password">
+	</div>
+	<div class="form-actions form-actions-lg">
+		<button type="submit" class="btn btn-lg btn-success">Login</button>
+	</div>
+</form>
+
 {% endblock %}

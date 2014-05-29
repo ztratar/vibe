@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 			'ios7-font': {
 				expand: true,
 				cwd: 'public/less/icon-font/fonts/',
-				src: '**',	
+				src: '**',
 				dest: 'public/css/fonts/',
 				filter: 'isFile'
 			},
@@ -85,11 +85,9 @@ module.exports = function(grunt) {
 			main: {
 				files: {
 					'public/css/all.css': [
-						'bower_components/bootstrap/less/bootstrap.less',
 						'public/less/all.less'
 					],
 					'public/css/splash.css': [
-						'bower_components/bootstrap/less/bootstrap.less',
 						'public/less/splash.less'
 					],
 					'public/css/email.css': [

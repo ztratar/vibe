@@ -1,0 +1,44 @@
+body.survey-show .survey-notif {
+	height: 80px;
+
+	a {
+		-webkit-animation: bounceInUp 0.42s linear 0s forwards;
+		animation: bounceInUp 0.42s linear 0s forwards;
+	}
+}
+
+.survey-notif {
+	height: 0;	
+	.transition(all .42s ease-out);
+
+	a {
+		position: fixed;
+		z-index: 400;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba(18, 171, 151, 0.86);
+		color: white;
+		height: 100px;
+		text-align: left;
+		font-size: 18px;
+		font-weight: 600;
+		padding: 29px 7px 22px 15px;
+		opacity: 0;
+		.translate3d(0, 100px, 0);
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		i.icon {
+			margin-top: -5px;
+			margin-right: 7px;
+		}
+
+		i.icon.due {
+			margin: -5px 11px 0px 0;
+			float: left;
+		}
+	}
+}

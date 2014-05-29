@@ -1,0 +1,43 @@
+.btn {
+	padding: (@padding-base-vertical - 1px) @padding-base-horizontal (@padding-base-vertical + 1px);
+
+	i {
+		display: inline-block;
+		height: @font-size-base;
+		vertical-align: top;
+		margin-top: -1px;
+	}
+
+	&.btn-lg {
+		padding: (@padding-large-vertical - 1px) @padding-large-horizontal (@padding-large-vertical + 1px);
+
+		i {
+			height: @font-size-large;
+		}
+	}
+}
+
+.btn-default {
+	color: rgba(255,255,255,.92);
+	border: 1px solid rgba(255,255,255,.37);
+	background: transparent;
+
+	&:hover {
+		color: rgba(255,255,255,1);
+		border: 1px solid rgba(255,255,255,.44);
+		background: transparent;
+	}
+}
+
+.btn-success {
+	background: #2ecc71;
+
+	&:hover {
+		background: lighten(#2ecc71, 4%);
+	}
+}
+
+.btn-link:hover {
+	color: white;
+	text-decoration: none;
+}

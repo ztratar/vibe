@@ -1,23 +1,19 @@
+// Module dependencies.
+var mongoose = require('mongoose'),
+	Async = require('async'),
+	AccessRequest = mongoose.model('AccessRequest'),
+	email = require('./email'),
+	app;
 
-/**
- * Module dependencies.
+/*
+ * POST /access/request
+ *
+ * User requests beta access
+ *
+ * query vars:
+ * 		company_name (String)
+ *	 	email (String)
  */
-
-var mongoose = require('mongoose')
-	, env = process.env.NODE_ENV || 'development'
-	, config = require('../../config/config')[env]
-	, Async = require('async')
-	, AccessRequest = mongoose.model('AccessRequest')
-	, sendgrid = require('sendgrid')('getvibe', 'ivREB7QmZuusFMX7')
-	, app;
-
-/**
-* POST /access/request
-* User requests beta access
-* query strings:
-*	 company_name
-*	 email
-*/
 exports.request = function(req, res, next){
 	var findQuery = AccessRequest.find({
 		email: req.body.email
@@ -45,24 +41,13 @@ exports.request = function(req, res, next){
 					}
 				}
 
-				var emailSubject = 'We\'ve received your beta request!';
-
-				app.render('emails/access_requested', {
-					subject: emailSubject,
-					static_path: config.static_path
-				}, function(err, html) {
-					sendgrid.send({
-						to: req.body.email,
-						from: 'info@getvibe.org',
-						subject: emailSubject,
-						html: html
-					}, function(err, json) {
-						console.log(json);
-						if (err) console.log(err);
-					});
+				email.send({
+					to: req.body.email,
+					subject: 'We\'ve received your beta request!',
+					templateName: 'access_requested'
 				});
 
-				return res.send({
+				return res.send(200, {
 					status: 'success',
 					request: model
 				});
@@ -71,9 +56,8 @@ exports.request = function(req, res, next){
 	});
 };
 
+// Cache app object upon first call
 module.exports = function(exportedApp) {
-	app = exportedApp;
-
+	if (exportedApp) app = exportedApp;
 	return exports;
 };
-

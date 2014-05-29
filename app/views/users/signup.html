@@ -1,40 +1,41 @@
-{% extends 'auth.html' %}
+{% extends '../layouts/page-centered.html' %}
 
 {% block auth %}
-  <form action="/users" method="post" class="signup form-horizontal">
-    <div class="control-group">
-      <label for="name" class="control-label">Full name</label>
-      <div class="controls">
-        <input id="name" type="text" name="name" placeholder="Full name" value="{{user.name}}">
-      </div>
-    </div>
-    <div class="control-group">
-      <label for="email" class="control-label">Email</label>
-      <div class="controls">
-        <input id="email" type="text" name="email" placeholder="Email" value="{{user.email}}">
-      </div>
-    </div>
-    <div class="control-group">
-      <label for="password" class="control-label">Password</label>
-      <div class="controls">
-        <input id="password" type="password" name="password" placeholder="Password">
-      </div>
-    </div>
-    <div class="control-group">
-      <label for="companyName" class="control-label">Company Name</label>
-      <div class="controls">
-        <input id="companyName" type="text" name="companyName" placeholder="Company Name">
-      </div>
-    </div>
-    <div class="control-group">
-      <label for="companyDomain" class="control-label">Company Domain</label>
-      <div class="controls">
-        <input id="companyDomain" type="text" name="companyDomain" placeholder="Ex: vibeapp.org">
-      </div>
-    </div>
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Sign up</button>&nbsp;
-      or&nbsp;<a href="/login" class="show-login">login</a>
-    </div>
-  </form>
+	<form action="/api/users" method="post" class="signup form-horizontal">
+	<div class="alert alert-block alert-error"></div>
+		<div class="input-group">
+			<label for="name" class="control-label">Full name</label>
+			<div class="controls">
+				<input id="name" type="text" name="name" placeholder="Full name" value="{{user.name}}">
+			</div>
+		</div>
+		<div class="input-group">
+			<label for="email" class="control-label">Email</label>
+			<div class="controls">
+				<input id="email" type="text" name="email" placeholder="Email" value="{{user.email}}">
+			</div>
+		</div>
+		<div class="input-group">
+			<label for="password" class="control-label">Password</label>
+			<div class="controls">
+				<input id="password" type="password" name="password" placeholder="Password">
+			</div>
+		</div>
+		<div class="input-group">
+			<label for="companyName" class="control-label">Company Name</label>
+			<div class="controls">
+				<input id="companyName" type="text" name="companyName" placeholder="Company Name">
+			</div>
+		</div>
+		<div class="input-group">
+			<label for="companyDomain" class="control-label">Company Domain</label>
+			<div class="controls">
+				<input id="companyDomain" type="text" name="companyDomain" placeholder="Ex: vibeapp.org">
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Sign up</button>&nbsp;
+			or&nbsp;<a href="/login" class="show-login">login</a>
+		</div>
+	</form>
 {% endblock %}

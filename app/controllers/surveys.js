@@ -1,15 +1,11 @@
-
-/**
- * Module dependencies.
- */
-
-var mongoose = require('mongoose')
-  , Async = require('async')
-  , User = mongoose.model('User')
-  , Question = mongoose.model('Question')
-  , Survey = mongoose.model('Survey')
-  , Company = mongoose.model('Company')
-  , Answer = mongoose.model('Answer');
+// Module dependencies.
+var mongoose = require('mongoose'),
+	Async = require('async'),
+	User = mongoose.model('User'),
+	Question = mongoose.model('Question'),
+	Survey = mongoose.model('Survey'),
+	Company = mongoose.model('Company'),
+	Answer = mongoose.model('Answer');
 
 
 /**
@@ -140,9 +136,8 @@ exports.loadSurvey = function(req, res, next, id){
   });
 };
 
-
-
-
-
-
-
+// Cache app object upon first call
+module.exports = function(exportedApp) {
+	if (exportedApp) app = exportedApp;
+	return exports;
+};

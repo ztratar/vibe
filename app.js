@@ -2,20 +2,15 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , fs = require('fs')
-  , passport = require('passport');
-
-/**
- * Main application entry file.
- * Please note that the order of loading is important.
- */
+var express = require('express'),
+	fs = require('fs'),
+	passport = require('passport');
 
 // Load configurations
 // if test env, load example file
-var env = process.env.NODE_ENV || 'development'
-  , config = require('./config/config')[env]
-  , mongoose = require('mongoose');
+var env = process.env.NODE_ENV || 'development',
+	config = require('./config/config')[env],
+	mongoose = require('mongoose');
 
 // Bootstrap db connection
 mongoose.connect(config.db);
