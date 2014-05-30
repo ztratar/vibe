@@ -50,22 +50,15 @@ UserSchema
 /**
  * Validations
  */
-
 var validatePresenceOf = function (value) {
   return value && value.length
 }
 
-// the below 4 validations only apply if you are signing up traditionally
-
 UserSchema.path('name').validate(function (name) {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true
   return name.length
 }, 'Name cannot be blank')
 
 UserSchema.path('email').validate(function (email) {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true
   return email.length
 }, 'Email cannot be blank')
 
@@ -74,16 +67,19 @@ UserSchema.path('email').validate(function (email) {
 }, 'That email doesnt work');
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true
-  return hashed_password.length
+	if (this._password) {
+		if (typeof this._password !== 'string' || this._password.length < 8) {
+			this.invalidate('password', 'Password must be at least 8 characters long');
+		} else if (this._password.length > 30) {
+			this.invalidate('password', 'Password must be less than 30 characters long');
+		}
+	}
+	return hashed_password.length
 }, 'Password cannot be blank')
-
 
 /**
  * Pre-save hook
  */
-
 UserSchema.pre('save', function(next) {
   if (!this.isNew) return next()
 
@@ -143,10 +139,6 @@ UserSchema.methods = {
   encryptPassword: function(password) {
     if (!password) return ''
     return bcrypt.hashSync(password, this.salt);
-  },
-
-  generatePasswordHash: function() {
-
   }
 
 }

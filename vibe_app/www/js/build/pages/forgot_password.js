@@ -5,23 +5,30 @@ define("pages/forgot_password",
 
     $(function() {
     	$('form.forgot_password').on('submit', function() {
-    		var email = $(this).find('input[name="email"]').val();
+    		var email = $(this).find('input[name="email"]').val(),
+    			$error = $(this).find('.alert-danger');
 
-    		if (email.length) {
-    			$.ajax({
-    				type: 'POST',
-    				url: '/api/users/'+email+'/forgot_password',
-    				data:{
-    					email: email
-    				},
-    				success: function(d) {
-    					$('.form-step-wrapper').addClass('success');
-    				},
-    				error: function(d) {
-    					console.log('err', d);
-    				}
-    			});
+    		$error.html('').hide();
+
+    		if (!email.length) {
+    			$error.html('Please enter an email').show();
+    			return false;
     		}
+
+    		$.ajax({
+    			type: 'POST',
+    			url: '/api/users/'+email+'/forgot_password',
+    			data:{
+    				email: email
+    			},
+    			success: function(d) {
+    				if (d.error) {
+    					$error.html(d.error).show();
+    					return;
+    				}
+    				$('.form-step-wrapper').addClass('success');
+    			}
+    		});
 
     		return false;
     	});

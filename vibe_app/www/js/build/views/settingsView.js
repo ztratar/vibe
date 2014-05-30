@@ -61,7 +61,7 @@ define("views/settingsView",
 
     	logOut: function() {
     		$.post('/api/logout', function(data) {
-    			window.reload();
+    			window.location.reload();
     		});
 
     		return false;

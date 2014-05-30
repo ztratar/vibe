@@ -1,19 +1,22 @@
 {% extends '../layouts/page-centered.html' %}
 
 {% block content %}
+	<h1 class="sub-header no-top-margin">Log in</h2>
+	<form action="/api/login" method="post" class="login form-horizontal max-400">
+		<div class="alert alert-block alert-danger"></div>
+		<div class="form-group form-group-lg">
+			<input class="form-control input-lg" id="email" type="text" name="email" placeholder="Email">
+		</div>
+		<div class="form-group form-group-lg">
+			<input class="form-control input-lg" id="password" type="password" name="password" placeholder="Password">
+		</div>
+		<div class="form-actions form-actions-lg">
+			<button type="submit" class="btn btn-lg btn-success">Login</button>
+		</div>
+	</form>
 
-<h1 class="sub-header no-top-margin">Log in</h2>
-<form action="/api/login" method="post" class="login form-horizontal max-400">
-	<div class="alert alert-block alert-error"></div>
-	<div class="form-group form-group-lg">
-		<input class="form-control input-lg" id="email" type="text" name="email" placeholder="Email">
-	</div>
-	<div class="form-group form-group-lg">
-		<input class="form-control input-lg" id="password" type="password" name="password" placeholder="Password">
-	</div>
-	<div class="form-actions form-actions-lg">
-		<button type="submit" class="btn btn-lg btn-success">Login</button>
-	</div>
-</form>
-
+	<script>
+		window.pageName = 'login';
+	</script>
+	<script data-main="js/build/start-page" src="/js/libs/require.js"></script>
 {% endblock %}

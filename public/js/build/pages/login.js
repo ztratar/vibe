@@ -1,11 +1,12 @@
-define("pages/forgot_password", 
+define("pages/login", 
   ["jquery"],
   function(__dependency1__) {
     "use strict";
 
     $(function() {
-    	$('form.forgot_password').on('submit', function() {
+    	$('form.login').on('submit', function() {
     		var email = $(this).find('input[name="email"]').val(),
+    			password = $(this).find('input[name="password"]').val(),
     			$error = $(this).find('.alert-danger');
 
     		$error.html('').hide();
@@ -15,18 +16,25 @@ define("pages/forgot_password",
     			return false;
     		}
 
+    		if (!password.length) {
+    			$error.html('Please enter a password').show();
+    			return false;
+    		}
+
     		$.ajax({
     			type: 'POST',
-    			url: '/api/users/'+email+'/forgot_password',
+    			url: '/api/login',
     			data:{
-    				email: email
+    				email: email,
+    				password: password
     			},
     			success: function(d) {
     				if (d.error) {
     					$error.html(d.error).show();
-    					return;
+    					return false;
     				}
-    				$('.form-step-wrapper').addClass('success');
+
+    				window.location.reload();
     			}
     		});
 

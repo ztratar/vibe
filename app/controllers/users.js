@@ -1,10 +1,11 @@
 // Module dependencies.
 var mongoose = require('mongoose'),
+	_ = require('underscore'),
 	User = mongoose.model('User'),
 	Company = mongoose.model('Company'),
 	Async = require('async'),
 	crypto = require('crypto'),
-	email = require('./email'),
+	email = require('./email')(),
 	helpers = require('../helpers'),
 	app,
 	passport;
@@ -22,10 +23,22 @@ var mongoose = require('mongoose'),
  */
 exports.login = function (req, res) {
 	req.body.email = req.body.email.toLowerCase();
-	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/login',
-		failureFlash: 'Invalid email or password.'
+	passport.authenticate('local', function(err, user, info) {
+		if (err || !user) {
+			return res.send({
+				error: 'Invalid email or password'
+			});
+		}
+		req.logIn(user, function(err) {
+			if (err || !user) {
+				return res.send({
+					error: 'Invalid email or password'
+				});
+			}
+			return res.send({
+				message: 'success'
+			});
+		});
 	})(req, res);
 };
 
@@ -37,58 +50,6 @@ exports.login = function (req, res) {
 exports.logout = function (req, res) {
 	req.logout();
 	res.redirect('/login');
-};
-
-/*
- * POST /api/users/:email/forgot_password
- *
- * Called on the forgot password page. User inputs
- * their email and we start the forgot password
- * process by sending them an email, which directs
- * to the rest password flow.
- *
- * Query vars:
- * 		email (String)
- */
-exports.forgot_password = function(req, res) {
-	var findQuery;
-
-	// Check if valid email
-	if (!helpers.isValidEmail(req.body.email)) {
-		return res.send({
-			error: 'That email doesn\'t work'
-		});
-	}
-
-	User.findOne({
-		email: req.body.email
-	}, function(err, user) {
-		// Check if user exists
-		if (err || !user.length) {
-			console.log('finding', err, user);
-			res.send({
-				error: 'No account with that email found'
-			});
-		}
-
-		// Generate unique token for password reset
-		var uniqueHash = crypto.randomBytes(20).toString('hex');
-
-		// Store hash as part of user object
-		user.reset_password_hash = uniqueHash;
-		user.save();
-
-		email.send({
-			to: req.body.email,
-			subject: 'Vibe - Request to reset your password',
-			templateName: 'reset_password',
-			templateData: {
-				uniqueHash: uniqueHash
-			}
-		});
-
-		res.send(200, { message: 'success' });
-	});
 };
 
 /*
@@ -199,9 +160,108 @@ exports.update = function(req, res, next){
 	});
 };
 
+/*
+ * POST /api/users/:email/forgot_password
+ *
+ * Called on the forgot password page. User inputs
+ * their email and we start the forgot password
+ * process by sending them an email, which directs
+ * to the rest password flow.
+ *
+ * Query vars:
+ * 		email (String)
+ */
+exports.forgot_password = function(req, res) {
+	// Check if valid email
+	if (!helpers.isValidEmail(req.body.email)) {
+		return res.send({
+			error: 'That email doesn\'t work'
+		});
+	}
+
+	User.findOne({
+		email: req.body.email
+	}, function(err, user) {
+		// Check if user exists
+		if (err || !user) {
+			return res.send({
+				error: 'No account with that email found'
+			});
+		}
+
+		// Generate unique token for password reset
+		var uniqueHash = crypto.randomBytes(20).toString('hex');
+
+		console.log(uniqueHash);
+
+		// Store hash as part of user object
+		user.reset_password_hash = uniqueHash;
+		user.save();
+
+		console.log('user saved');
+
+		email.send({
+			to: req.body.email,
+			subject: 'Vibe - Request to reset your password',
+			templateName: 'reset_password',
+			templateData: {
+				uniqueHash: uniqueHash,
+				userEmail: req.body.email
+			}
+		});
+
+		res.send({ message: 'success' });
+	});
+};
+
+/*
+ * POST /api/users/:email/reset_password
+ *
+ * Called on the reset password page, which users
+ * get to by following a link in an email sent.
+ * Uses a private, user-unique hash for security.
+ *
+ * Query vars:
+ * 		email (String)
+ * 		password (String)
+ * 		hash (String)
+ */
+exports.reset_password = function(req, res) {
+	// Check if valid email
+	if (!helpers.isValidEmail(req.body.email)) {
+		return res.send({
+			error: 'That email doesn\'t work'
+		});
+	}
+
+	User.findOne({
+		email: req.body.email
+	}, function(err, user) {
+		if (user.reset_password_hash !== req.body.hash) {
+			return res.send({
+				error: 'We cannot change your password at this time. Please go to the <a href="/forgot_password">forgot password page</a> to try again.'
+			});
+		}
+
+		user.password = req.body.password;
+		user.reset_password_hash = '';
+		user.save(function(err) {
+			if (err && _.keys(err.errors).length) {
+				return res.send({
+					error: err.errors[_.keys(err.errors)[0]].message
+				});
+			}
+
+			return res.send(200, {
+				message: 'success'
+			});
+		});
+	});
+};
+
 // Cache the app and passport
 module.exports = function(exportedApp, exportedPassport) {
-	app = exportedApp;
-	passport = exportedPassport;
+	if (exportedApp) app = exportedApp;
+	if (exportedPassport) passport = exportedPassport;
 	return exports;
 };

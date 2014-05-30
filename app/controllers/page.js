@@ -41,6 +41,14 @@ exports.forgot_password = function(req, res) {
 };
 
 /*
+ * STATIC PAGE LOAD - Forgot Password Page
+ */
+exports.reset_password = function(req, res) {
+	res.render('users/reset_password');
+};
+
+
+/*
  * STATIC PAGE LOAD - Privacy Policy Page
  */
 exports.privacy = function(req, res) {
