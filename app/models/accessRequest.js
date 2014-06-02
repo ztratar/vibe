@@ -14,7 +14,8 @@ var mongoose = require('mongoose')
 
 var AccessRequestSchema = new Schema({
   company_name: { type: String, trim: true, default: '' },
-  email: { type: String, lowercase: true, trim: true, index: true }
+  email: { type: String, lowercase: true, trim: true, index: true },
+  invited: { type: Boolean, default: false }
 });
 
 AccessRequestSchema.path('email').validate(function (email) {

@@ -40,6 +40,7 @@ module.exports = function (app, passport) {
 	app.post('/api/users/:email/forgot_password', c.users.forgot_password);
 	app.post('/api/users/:email/reset_password', c.users.reset_password);
 	app.post('/api/access/request', c.access.request);
+	app.post('/api/access/invite', c.access.invite);
 	app.post('/api/meta_questions', c.meta_questions.create);
 	app.post('/api/questions', c.questions.create);
 	app.post('/api/questions/:question/comments', c.questions.newComment);
@@ -62,10 +63,13 @@ module.exports = function (app, passport) {
 	// PAGES
 	//
 	app.get('/login', c.page.login);
-	app.get('/signup', c.page.signup);
+	app.get('/register', c.page.register);
 	app.get('/forgot_password', c.page.forgot_password);
 	app.get('/reset_password', c.page.reset_password);
 	app.get('/privacy.html', c.page.privacy);
 	app.get('/terms.html', c.page.terms);
+
+	app.get('/admin/invite_company', c.page.admin_invite_company);
+
 	app.get('*', c.page.index);
 };

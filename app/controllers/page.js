@@ -26,11 +26,8 @@ exports.login = function (req, res) {
 /*
  * STATIC PAGE LOAD - Company/Admin Registration Page
  */
-exports.signup = function (req, res) {
-	res.render('users/signup', {
-		title: 'Sign up',
-		user: new User()
-	});
+exports.register = function (req, res) {
+	res.render('users/register');
 };
 
 /*
@@ -41,12 +38,22 @@ exports.forgot_password = function(req, res) {
 };
 
 /*
- * STATIC PAGE LOAD - Forgot Password Page
+ * STATIC PAGE LOAD - Reset Password Page
  */
 exports.reset_password = function(req, res) {
 	res.render('users/reset_password');
 };
 
+/*
+ * STATIC PAGE LOAD - Forgot Password Page
+ */
+exports.admin_invite_company = function(req, res) {
+	if (req.user && req.user.email === 'zach@getvibe.org') {
+		res.render('admin/invite_company');
+	} else {
+		res.redirect('/');
+	}
+};
 
 /*
  * STATIC PAGE LOAD - Privacy Policy Page

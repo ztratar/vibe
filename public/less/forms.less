@@ -74,6 +74,11 @@ form > .alert {
 	}
 }
 
+label.input-lg {
+	line-height: 2.2;
+	padding: 0;
+}
+
 .form-actions {
 	margin: @line-height-computed 0 0 0;
 
@@ -127,6 +132,47 @@ form > .alert {
 			pointer-events: auto;
 			opacity: 1;
 			.translate3d(0, 0, 0);
+		}
+	}
+}
+
+form {
+	.alert-danger {
+		display: none;
+	}
+
+	&.step-1, &.step-2, &.step-3 {
+		position: absolute;
+		top: 150px;
+		left: 0;
+		right: 0;
+		padding: 0 0 40px;
+		.translate3d(40px,0,0);
+		.transition(all 0.22s ease-in-out);
+
+		&.active {
+			pointer-events: auto;
+			opacity: 1;
+			visibility: visible;
+			.translate3d(0,0,0);
+		}
+
+		&.old {
+			pointer-events: none;
+			opacity: 0;
+			visibility: hidden;
+			.translate3d(-40px,0,0);
+		}
+	}
+
+	&.step-2, &.step-3 {
+		.transition(all 0.22s ease-in-out 0.18s);
+		pointer-events: none;
+		visibility: hidden;
+		opacity: 0;
+
+		&.active {
+			.transition(all 0.22s ease-in-out 0s);
 		}
 	}
 }

@@ -1,0 +1,43 @@
+{% extends '../layouts/default.html' %}
+
+{% block content %}
+	<div class="page-header">
+		<a href="/login" class="btn btn-default btn-lg back"><i class="icon">&#61760</i><span> Log in</span></a>
+	</div>
+	<div class="form-step-wrapper full-height">
+		<div class="form max-400 v-centered fixed">
+			<div>
+				<h1 class="sub-header">Invite a company to vibe</h1>
+				<form action="/" method="post" class="invite_company form-horizontal">
+					<div class="alert alert-block alert-danger"></div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">Email</span>
+						<input class="form-control" id="email" type="text" name="email" placeholder="example@email.com">
+					</div>
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon">Company Name</span>
+						<input class="form-control" id="company_name" type="text" name="company_name" placeholder="Ex: Vibe, Inc">
+					</div>
+					<div>
+						<span class="help-block">This name will be used if they did not already request access with a different name.</span>
+					</div>
+					<div class="form-actions form-actions-lg">
+						<button type="submit" class="btn btn-success btn-lg">Send</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="form-success v-centered fixed">
+			<div>
+				<h1 class="sub-header">Invite a company to vibe</h1>
+				<h2 class="big">Sent!</h2>
+				<p>They will receive an email soon.</p>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		window.pageName = 'admin_invite_company';
+	</script>
+	<script data-main="/js/build/start-page" src="/js/libs/require.js"></script>
+{% endblock %}

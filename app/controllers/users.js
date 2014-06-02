@@ -192,13 +192,9 @@ exports.forgot_password = function(req, res) {
 		// Generate unique token for password reset
 		var uniqueHash = crypto.randomBytes(20).toString('hex');
 
-		console.log(uniqueHash);
-
 		// Store hash as part of user object
 		user.reset_password_hash = uniqueHash;
 		user.save();
-
-		console.log('user saved');
 
 		email.send({
 			to: req.body.email,

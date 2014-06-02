@@ -1,0 +1,89 @@
+{% extends '../layouts/default.html' %}
+
+{% block content %}
+	<div class="container">
+		<ul class="steps clearfix">
+			<li class="step-1 col-xs-4 active">
+				<div class="num-wrap">
+					<i>1</i>
+				</div>
+				<span>Info</span>
+			</li>
+			<li class="step-2 col-xs-4">
+				<div class="num-wrap">
+					<i>2</i>
+				</div>
+				<span>Questions</span>
+			</li>
+			<li class="step-3 col-xs-4">
+				<div class="num-wrap">
+					<i>3</i>
+				</div>
+				<span>Team</span>
+			</li>
+		</ul>
+	</div>
+	<form class="form-horizontal step-1 active">
+		<div class="container max-600">
+			<h1 class="sub-header margin-vertical-large">Let's get set up!</h1>
+			<div class="alert alert-block alert-danger"></div>
+			<div class="avatar-picker">
+				<img class="avatar-img" src="">
+				<input type="file" name="avatar" id="avatar-input">
+			</div>
+			<div class="form-group">
+				<label for="inputName" class="col-xs-4 control-label input-lg">Full Name</label>
+				<div class="col-xs-8">
+					<input type="text" name="name" class="form-control input-lg" id="inputName" placeholder="Ex: John Doe">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail" class="col-xs-4 control-label input-lg">Email</label>
+				<div class="col-xs-8">
+					<input type="text" name="email" class="form-control input-lg" id="inputEmail" placeholder="Ex: your@email.com">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputCompanyName" class="col-xs-4 control-label input-lg">Company Name</label>
+				<div class="col-xs-8">
+					<input type="text" name="company_name" class="form-control input-lg" id="inputCompanyName" placeholder="Ex: Vibe, Inc">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputCompanyWebsite" class="col-xs-4 control-label input-lg">Company Website</label>
+				<div class="col-xs-8">
+					<input type="text" name="company_website" class="form-control input-lg" id="inputCompanyWebsite" placeholder="Ex: getvibe.com">
+				</div>
+			</div>
+			<div class="form-actions form-actions-lg">
+				<button type="submit" class="btn btn-success btn-lg">Next</button>
+			</div>
+		</div>
+	</form>
+	<form class="form-horizontal step-2">
+		<div class="container max-600">
+			<h1 class="sub-header margin-vertical-large">A couple polls get the ball rolling!</h1>
+			<p>Vibe allows your team to submit feedback and occassionally sends out polls of your choosing. They can be changed at any time.</p>
+			<p>All polls have the same answers: Great, Good, Poor, &amp; Terrible.</p>
+			<div class="alert alert-block alert-danger"></div>
+			<div class="poll-picker-container"></div>
+			<div class="form-actions form-actions-lg">
+				<button type="submit" class="btn btn-success btn-lg">Next</button>
+			</div>
+		</div>
+	</form>
+	<form class="form-horizontal step-3">
+		<div class="container max-600">
+			<h1 class="sub-header margin-vertical-large">Invite your team.</h1>
+			<div class="alert alert-block alert-danger"></div>
+			<div class="team-picker-container"></div>
+			<div class="form-actions form-actions-lg">
+				<button type="submit" class="btn btn-success btn-lg">Done!</button>
+			</div>
+		</div>
+	</form>
+	<script>
+		window.pageName = 'register';
+	</script>
+	<script data-main="js/build/start-page" src="/js/libs/require.js"></script>
+{% endblock %}
