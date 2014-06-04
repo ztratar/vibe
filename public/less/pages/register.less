@@ -1,6 +1,9 @@
+@import '../widgets/question-picker';
+@import '../widgets/team-picker';
+
 .avatar-picker {
 	text-align: center;
-	padding: 0 0 24px 0;
+	padding: 0 0 34px 0;
 	position: relative;
 
 	img {
@@ -14,13 +17,27 @@
 	input {
 		position: absolute;
 		width: 120px;
-		height: 120px;
-		border-radius: 120px;
+		height: 134px;
+		border-radius: 120px 120px 70px 70px;
 		top: 0;
 		left: 50%;
 		margin-left: -60px;
 		cursor: pointer;
 		opacity: 0;
-		z-index: 100;
+		z-index: 130;
+	}
+
+	a {
+		content: 'Edit Avatar';
+		padding: 6px;
+		background: rgba(12, 29, 46, 0.8);
+		position: absolute;
+		bottom: 23px;
+		left: 50%;
+		width: 90px;
+		text-align: center;
+		font-size: 12px;
+		border-radius: 30px;
+		margin-left: -45px;
 	}
 }

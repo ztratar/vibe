@@ -5,13 +5,10 @@ define("start-page",
     require.config({
     	baseUrl: '/js/build',
     	paths: {
+    		text: '../libs/text',
     		jquery: '../libs/jquery',
-    		underscore: '../libs/underscore'
-    	},
-    	shim: {
-    		d3: {
-    			exports: 'd3'
-    		}
+    		underscore: '../libs/underscore',
+    		backbone: '../libs/backbone'
     	}
     });
 

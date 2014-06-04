@@ -1,84 +1,110 @@
 {% extends '../layouts/default.html' %}
 
 {% block content %}
-	<div class="container">
-		<ul class="steps clearfix">
-			<li class="step-1 col-xs-4 active">
-				<div class="num-wrap">
-					<i>1</i>
-				</div>
-				<span>Info</span>
-			</li>
-			<li class="step-2 col-xs-4">
-				<div class="num-wrap">
-					<i>2</i>
-				</div>
-				<span>Questions</span>
-			</li>
-			<li class="step-3 col-xs-4">
-				<div class="num-wrap">
-					<i>3</i>
-				</div>
-				<span>Team</span>
-			</li>
-		</ul>
+	<div class="steps-wrapper">
+		<div class="container">
+			<ul class="steps clearfix">
+				<li class="step-1 col-xs-4 active">
+					<div class="num-wrap">
+						<i>1</i>
+					</div>
+					<span>Info</span>
+				</li>
+				<li class="step-2 col-xs-4">
+					<div class="num-wrap">
+						<i>2</i>
+					</div>
+					<span>Questions</span>
+				</li>
+				<li class="step-3 col-xs-4">
+					<div class="num-wrap">
+						<i>3</i>
+					</div>
+					<span>Team</span>
+				</li>
+			</ul>
+		</div>
 	</div>
-	<form class="form-horizontal step-1 active">
-		<div class="container max-600">
-			<h1 class="sub-header margin-vertical-large">Let's get set up!</h1>
-			<div class="alert alert-block alert-danger"></div>
-			<div class="avatar-picker">
-				<img class="avatar-img" src="">
-				<input type="file" name="avatar" id="avatar-input">
-			</div>
-			<div class="form-group">
-				<label for="inputName" class="col-xs-4 control-label input-lg">Full Name</label>
-				<div class="col-xs-8">
-					<input type="text" name="name" class="form-control input-lg" id="inputName" placeholder="Ex: John Doe">
+	<form class="form-horizontal step-1 active v-centered">
+		<div>
+			<div class="container max-600">
+				<h1 class="sub-header margin-vertical-large no-top-margin">Let's get set up!</h1>
+				<div class="alert alert-block alert-danger"></div>
+				<div class="avatar-picker">
+					<img class="avatar-img" src="/img/default_avatar.png">
+					<a href="#">Upload avatar</a>
+					<input type="file" name="avatar" id="avatar-input">
+					<input type="text" name="avatar_base64" class="hidden" value="">
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputEmail" class="col-xs-4 control-label input-lg">Email</label>
-				<div class="col-xs-8">
-					<input type="text" name="email" class="form-control input-lg" id="inputEmail" placeholder="Ex: your@email.com">
+				<div class="form-group">
+					<label for="inputName" class="col-xs-4 control-label input-lg">Full Name</label>
+					<div class="col-xs-8">
+						<input type="text" name="name" class="form-control input-lg" id="inputName" placeholder="Ex: Albus Dumbledore">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputCompanyName" class="col-xs-4 control-label input-lg">Company Name</label>
-				<div class="col-xs-8">
-					<input type="text" name="company_name" class="form-control input-lg" id="inputCompanyName" placeholder="Ex: Vibe, Inc">
+				<div class="form-group">
+					<label for="inputEmail" class="col-xs-4 control-label input-lg">Email</label>
+					<div class="col-xs-8">
+						<input type="text" name="email" class="form-control input-lg" id="inputEmail" placeholder="Ex: your@email.com">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputCompanyWebsite" class="col-xs-4 control-label input-lg">Company Website</label>
-				<div class="col-xs-8">
-					<input type="text" name="company_website" class="form-control input-lg" id="inputCompanyWebsite" placeholder="Ex: getvibe.com">
+				<div class="form-group">
+					<label for="inputCompanyName" class="col-xs-4 control-label input-lg">Company Name</label>
+					<div class="col-xs-8">
+						<input type="text" name="company_name" class="form-control input-lg" id="inputCompanyName" placeholder="Ex: Vibe, Inc">
+					</div>
 				</div>
-			</div>
-			<div class="form-actions form-actions-lg">
-				<button type="submit" class="btn btn-success btn-lg">Next</button>
+				<div class="form-actions form-actions-lg">
+					<button type="submit" class="btn btn-success btn-lg">Next</button>
+				</div>
 			</div>
 		</div>
 	</form>
-	<form class="form-horizontal step-2">
-		<div class="container max-600">
-			<h1 class="sub-header margin-vertical-large">A couple polls get the ball rolling!</h1>
-			<p>Vibe allows your team to submit feedback and occassionally sends out polls of your choosing. They can be changed at any time.</p>
-			<p>All polls have the same answers: Great, Good, Poor, &amp; Terrible.</p>
-			<div class="alert alert-block alert-danger"></div>
-			<div class="poll-picker-container"></div>
-			<div class="form-actions form-actions-lg">
-				<button type="submit" class="btn btn-success btn-lg">Next</button>
+	<form class="form-horizontal step-2 v-centered">
+		<div>
+			<div class="container max-600">
+				<h1 class="sub-header margin-vertical-large no-top-margin">A couple polls get the ball rolling!</h1>
+				<p class="descript">These can be changed at any time. Polls are sent out every week and have the answers: Great, Good, Poor, &amp; Terrible.</p>
+				<div class="alert alert-block alert-danger"></div>
+				<div class="question-picker-container"></div>
+				<div class="form-actions form-actions-lg">
+					<button type="submit" class="btn btn-success btn-lg">Next</button>
+				</div>
 			</div>
 		</div>
 	</form>
-	<form class="form-horizontal step-3">
-		<div class="container max-600">
-			<h1 class="sub-header margin-vertical-large">Invite your team.</h1>
-			<div class="alert alert-block alert-danger"></div>
-			<div class="team-picker-container"></div>
-			<div class="form-actions form-actions-lg">
-				<button type="submit" class="btn btn-success btn-lg">Done!</button>
+	<form class="form-horizontal step-3 v-centered">
+		<div>
+			<div class="container max-600">
+				<h1 class="sub-header margin-vertical-large no-top-margin">Invite your team.</h1>
+				<div class="alert alert-block alert-danger"></div>
+				<div class="team-picker-container">
+					<div class="team-picker">
+						<div class="key">
+							<span class="email">Email</span>
+							<span class="admin">Admin?</span>
+						</div>
+						<ul class="team">
+							<li>
+								<span>ztratar@gmail.com</span>
+								<div class="checkbox">
+									<input type="checkbox" value="" id="checkbox1">
+									<label for="checkbox1"></label>
+								</div>
+							</li>
+							<li>
+								<input type="text" name="custom_team" class="form-control" placeholder="Add new via email...">
+								<div class="checkbox">
+									<input type="checkbox" value="" id="checkbox1">
+									<label for="checkbox1"></label>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="form-actions form-actions-lg">
+					<button type="submit" class="btn btn-success btn-lg">All Done!</button>
+				</div>
 			</div>
 		</div>
 	</form>

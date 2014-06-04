@@ -1,3 +1,10 @@
+.steps-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
 .steps {
 	list-style: none;
 	padding: 40px 0;
@@ -40,7 +47,7 @@
 				border-radius: 100px;
 				opacity: 0;
 				.scale(.92);
-				.transition(all .32s ease-out .64s);
+				.transition(all .28s ease-out .54s);
 			}
 		}
 
@@ -70,7 +77,8 @@
 			z-index: 110;
 			margin: 0 0px 0 50px;
 			opacity: 0;
-			.transition(all 0.64s ease-in-out);
+			.translate3d(0,0,0);
+			.transition(all 0.54s ease-in-out);
 		}
 
 		&:last-child:after {

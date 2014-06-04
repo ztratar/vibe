@@ -1,0 +1,61 @@
+.team-picker {
+
+	.key {
+		text-align: left;
+		text-transform: uppercase;
+		font-size: 16px;
+		color: @vibe-lighter;
+		margin: 0 0 11px 0;
+		font-weight: 600;
+		position: relative;
+
+		.email {
+			width: calc(~"100% - 105px");
+			display: inline-block;
+		}
+
+		.admin {
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 70px;
+			display: inline-block;
+		}
+	}
+
+	ul.team {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		text-align: left;
+		font-size: 16px;
+
+		li {
+			display: block;
+			padding: 10px 0;
+			height: 60px;
+			position: relative;
+
+			span, input.form-control {
+				width: calc(~"100% - 105px");
+				font-size: 18px;
+			}
+
+			span {
+				margin-top: 7px;
+				display: inline-block;
+			}
+
+			input.form-control {
+				padding-left: 8px;
+			}
+
+			div.checkbox {
+				position: absolute;
+				right: 43px;
+				top: 16px;
+			}
+		}
+	}
+
+}
