@@ -47,7 +47,6 @@ define("pages/register",
     	}
     	$('input[name="name"]').focus();
 
-    	// Load page logic
     	var questionPicker = new QuestionPickerView();
     	$('.question-picker-container').html(questionPicker.$el);
     	questionPicker.render();

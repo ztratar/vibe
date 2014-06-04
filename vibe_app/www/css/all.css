@@ -7223,13 +7223,13 @@ html {
   top: 6px;
   right: 0;
 }
-.question-picker ul.questions li a.unselect {
+.question-picker ul.questions li a.deselect {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
   color: rgba(255, 255, 255, 0.3);
 }
-.question-picker ul.questions li a.unselect:hover {
+.question-picker ul.questions li a.deselect:hover {
   color: rgba(255, 255, 255, 0.8);
 }
 .question-picker ul.questions li a.select {
