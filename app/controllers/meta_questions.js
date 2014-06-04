@@ -98,6 +98,24 @@ exports.create = function (req, res, next) {
 	});
 };
 
+/*
+ * GET /api/meta_questions/suggested
+ *
+ * Return suggested meta questions for company
+ * use
+ */
+exports.suggested = function(req, res, next) {
+	MetaQuestion.find({
+		suggested: true
+	}, function(err, questions) {
+		if (err) return next(err);
+		if (!questions.length) {
+			return next(new Error('No Questions Found'));
+		}
+		return res.send(questions);
+	});
+};
+
 // Cache app object upon first call
 module.exports = function(exportedApp) {
 	if (exportedApp) app = exportedApp;

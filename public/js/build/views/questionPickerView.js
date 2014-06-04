@@ -23,6 +23,10 @@ define("views/questionPickerView",
 
     		this.suggestedQuestions.on('all', this.render, this);
     		this.selectedQuestions.on('all', this.render, this);
+
+    		this.suggestedQuestions.fetch({
+    			url: '/api/meta_questions/suggested'
+    		});
     	},
     	render: function() {
     		this.$el.html(this.template({

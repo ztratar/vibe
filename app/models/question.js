@@ -15,8 +15,8 @@ var mongoose = require('mongoose')
  * MetaQuestion Schema
  */
 var MetaQuestionSchema = new Schema({
-  title: String,
   body: String,
+  suggested: { type: Boolean, default: false },
   creator: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
@@ -29,7 +29,6 @@ mongoose.model('MetaQuestion', MetaQuestionSchema);
  */
 var QuestionSchema = new Schema({
   metaQuestion: { type: Schema.Types.ObjectId, ref: 'MetaQuestion'},
-  title: String,
   body: String,
   active: { type: Boolean, default: true },
   audience: { type: String, default: 'all' },

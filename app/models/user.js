@@ -15,10 +15,10 @@ var mongoose = require('mongoose')
  */
 
 var UserSchema = new Schema({
-
   name: String,
   email: { type: String, lowercase: true, trim: true },
   isAdmin: Boolean,
+  isSuperAdmin: { type: Boolean, default: false },
   company: { type: Schema.Types.ObjectId, ref: 'Company' },
 
   provider: String,

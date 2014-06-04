@@ -23,6 +23,10 @@ define("views/questionPickerView",
 
     		this.suggestedQuestions.on('all', this.render, this);
     		this.selectedQuestions.on('all', this.render, this);
+
+    		this.suggestedQuestions.fetch({
+    			url: '/api/meta_questions/suggested'
+    		});
     	},
     	render: function() {
     		this.$el.html(this.template({
@@ -66,7 +70,7 @@ define("views/questionPickerView",
     			question = this.selectedQuestions.get(questionId);
 
     		if (question.get('suggested')) {
-    			this.suggestedQuestionsQuestions.add(question, {
+    			this.suggestedQuestions.add(question, {
     				silent: true
     			});
     		}
