@@ -173,6 +173,15 @@ exports.createFromAccessRequest = function (req, res, next) {
 		function(company, cb) {
 			newUser.save(function(err){
 				if (err) return sendStandardError();
+				email.send({
+					to: newUser.email,
+					subject: 'An intro to Vibe',
+					templateName: 'admin_welcome',
+					templateData: {
+						company_name: company.name,
+						name: newUser.name
+					}
+				});
 				return cb(null, company, newUser);
 			});
 		}], function(err, company, user) {
