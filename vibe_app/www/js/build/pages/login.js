@@ -11,6 +11,9 @@ define("pages/login",
 
     		$error.html('').hide();
 
+    		debugger;
+    		$('input[name="email"]').focus();
+
     		if (!email.length) {
     			$error.html('Please enter an email').show();
     			return false;

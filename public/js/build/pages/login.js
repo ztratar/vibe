@@ -4,6 +4,7 @@ define("pages/login",
     "use strict";
 
     $(function() {
+    	$('input[name="email"]').focus();
     	$('form.login').on('submit', function() {
     		var email = $(this).find('input[name="email"]').val(),
     			password = $(this).find('input[name="password"]').val(),

@@ -7,7 +7,7 @@ define("pages/register_from_invite",
     var avatarInputHelper = __dependency3__["default"];
 
     $(function() {
-    	var email = /email=(.+)/.exec(window.location.search),
+    	var email = /email=([^&]+)/.exec(window.location.search),
     	email = _.isArray(email) ? email[1] : null;
 
     	if (email && email.length) {
