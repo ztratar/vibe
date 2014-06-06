@@ -7345,6 +7345,13 @@ html {
   border-radius: 30px;
   margin-left: -45px;
 }
+.bottom-links {
+  font-size: 14px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 32px;
+  color: rgba(255, 255, 255, 0.7);
+}
 .steps-wrapper {
   position: absolute;
   top: 0;

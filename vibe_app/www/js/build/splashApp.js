@@ -24,6 +24,8 @@ define("splashApp",
     			$('#requestAccessForm .error-field').html(error).removeClass('hide');
     		};
 
+    	console.log(window.location);
+
     	$('.learn-more').on('click', function() {
     		var $body = $('body'),
     			scrollPos = $body.scrollTop(),

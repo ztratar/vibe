@@ -4,15 +4,13 @@ define("pages/login",
     "use strict";
 
     $(function() {
+    	$('input[name="email"]').focus();
     	$('form.login').on('submit', function() {
     		var email = $(this).find('input[name="email"]').val(),
     			password = $(this).find('input[name="password"]').val(),
     			$error = $(this).find('.alert-danger');
 
     		$error.html('').hide();
-
-    		debugger;
-    		$('input[name="email"]').focus();
 
     		if (!email.length) {
     			$error.html('Please enter an email').show();
