@@ -20,7 +20,7 @@ var UserSchema = new Schema({
   email: { type: String, lowercase: true, trim: true },
   avatar: { type: String, default: '' },
 
-  isAdmin: Boolean,
+  isAdmin: { type: Boolean, default: false },
   isSuperAdmin: { type: Boolean, default: false },
   company: { type: Schema.Types.ObjectId, ref: 'Company' },
   provider: String,

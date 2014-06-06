@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Company = mongoose.model('Company'),
 	AccessRequest = mongoose.model('AccessRequest'),
+	UserInvite = mongoose.model('UserInvite'),
 	Async = require('async'),
 	crypto = require('crypto'),
 	email = require('./email')(),
@@ -56,6 +57,39 @@ exports.logout = function (req, res) {
 /*
  * POST /api/users
  *
+ * Create a user from AccessRequest (with new company)
+ * or from a UserInvite (existing company)
+ *
+ * Query vars:
+ * 		name (String): Full name of the user
+ * 		email (String): User's email
+ * 		password (String): User's password
+ * 		avatar (base64): Img for the user's account
+ *
+ * 		Non-user vars:
+ * 		companyName (String): Name of their company
+ * 		companyWebsite (String): Website/domain of the company
+ * 		companyInviteHash: The AccessRequest ID object from the companies invite
+ *
+ * 		OR
+ *
+ * 		userInviteHash: The UserInvite ID
+ */
+exports.create = function (req, res, next) {
+	if (req.body.companyInviteHash) {
+		return exports.createFromAccessRequest(req, res, next);
+	}
+	if (req.body.userInviteHash) {
+		return exports.createFromUserInvite(req, res, next);
+	}
+	return res.send({
+		error: 'Cannot create user'
+	});
+}
+
+/*
+ * INTERNAL
+ *
  * Create a user and new company. Only available currently
  * to those invited with AccessRequest objects.
  *
@@ -70,7 +104,7 @@ exports.logout = function (req, res) {
  * 		companyWebsite (String): Website/domain of the company
  * 		companyInviteHash: The AccessRequest ID object from the companies invite
  */
-exports.create = function (req, res, next) {
+exports.createFromAccessRequest = function (req, res, next) {
 	var domain = req.body.companyWebsite,
 		company = new Company({
 			name: req.body.companyName,
@@ -108,7 +142,9 @@ exports.create = function (req, res, next) {
 			});
 		},
 		function(cb) {
-			User.findOne({email: newUser.email},function(err, user){
+			User.findOne({
+				email: newUser.email
+			},function(err, user){
 				if (err) return sendStandardError();
 				if (user) {
 					return cb("Email already registered.");
@@ -150,13 +186,95 @@ exports.create = function (req, res, next) {
 }
 
 /*
+ * INTERNAL
+ *
+ * Create a user from an invite and assign them
+ * to the company.
+ *
+ * Query vars:
+ * 		name (String): Full name of the user
+ * 		email (String): User's email
+ * 		password (String): User's password
+ * 		avatar (base64): Img for the user's account
+ *
+ * 		Non-user vars:
+ * 		userInviteHash: The UserInvite ID
+ */
+exports.createFromUserInvite = function(req, res, next) {
+	var sendStandardError = function() {
+		return res.send({
+			error: "There was an error. Please contact support at access@getvibe.org for help."
+		});
+	};
+
+	Async.waterfall([function(cb) {
+		// Load & Validate Invite
+		UserInvite.findById(req.body.userInviteHash, function(err, userInvite) {
+			if (err) return sendStandardError();
+			if (!userInvite) {
+				return cb("Your invite code is invalid. Email access@getvibe.org for help.");
+			}
+			cb(null, userInvite);
+		});
+	}, function(userInvite, cb) {
+		// Load company
+		Company.findById(userInvite.company, function(err, company) {
+			if (err) return sendStandardError();
+			if (!company) {
+				return cb("Company for the given invite not found.");
+			}
+			cb(null, userInvite, company);
+		});
+	}, function(userInvite, company, cb) {
+		User.findOne({
+			email: req.body.email
+		}, function(err, user){
+			if (err) return sendStandardError();
+			if (user) {
+				return cb("Email already registered.");
+			}
+			return cb(null, userInvite, company);
+		});
+	}, function(userInvite, company, cb) {
+		// Create User
+		User.create({
+			name: req.body.name,
+			email: req.body.email,
+			password: req.body.password,
+			avatar: req.body.avatar,
+			company: company._id,
+			provider: 'local'
+		}, function(err, user) {
+			if (err) return sendStandardError();
+			if (!user) {
+				return cb("User could not be created");
+			}
+			cb(null, userInvite, user);
+		});
+	}, function(userInvite, user, cb) {
+		userInvite.registered = true;
+		userInvite.save(function(err, userInvite) {
+			if (err) return sendStandardError();
+			cb(null, user);
+		});
+	}], function(err, user) {
+		if (err) return sendStandardError();
+
+		req.logIn(user, function(err) {
+			if (err) return sendStandardError();
+			return res.send(user.stripInfo());
+		});
+	});
+};
+
+/*
  * GET /api/users
  *
  * Get current user
  */
 exports.get = function(req, res, next){
 	return res.send(req.user.stripInfo());
-}
+};
 
 /*
  * PUT /api/users
@@ -177,6 +295,63 @@ exports.update = function(req, res, next){
 		if(err) return next(err);
 
 		return res.send(user.stripInfo());
+	});
+};
+
+/*
+ * POST /api/users/invite
+ *
+ * Bulk invite users based on their email.
+ * Used in part 3 of the admin registration process.
+ *
+ * Query vars:
+ * 		users (Array of):
+ * 			email (String) email of the users
+ * 			isAdmin (Boolean) admin status
+ */
+exports.batchInvite = function(req, res) {
+	var users = req.body.users,
+		userInvite;
+
+	if (!_.isArray(users) || !users.length) {
+		return helpers.sendError(res, "Input incorrectly formatted");
+	}
+
+	for (var i = 0; i < users.length; i++) {
+		if (!helpers.isValidEmail(users[i].email)) {
+			return helpers.sendError(res, "This email doesn't work: " + users[i].email);
+		}
+	}
+
+	Company.findById(req.user.company, function(err, company) {
+		for (i = 0; i < users.length; i++) {
+			UserInvite.create({
+				inviter: req.user._id,
+				company: req.user.company,
+				invitee: {
+					email: users[i].email,
+					isAdmin: users[i].isAdmin
+				}
+			}, function(err, userInvite) {
+				if (userInvite) {
+					email.send({
+						to: userInvite.invitee.email,
+						subject: req.user.name + ' invited you to join '+company.name+'\'s Vibe!',
+						templateName: 'invite_user',
+						templateData: {
+							inviter_name: req.user.name,
+							company_name: company.name,
+							uniqueHash: userInvite._id.toString(),
+							email: userInvite.invitee.email
+						}
+					});
+				}
+			});
+		}
+	});
+
+	res.send({
+		status: 'success'
 	});
 };
 

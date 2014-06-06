@@ -1,0 +1,57 @@
+{% extends '../layouts/default.html' %}
+
+{% block content %}
+	<div class="form-step-wrapper full-height">
+		<div class="form max-500 v-centered fixed">
+			<div>
+				<h1 class="sub-header">Sign up</h1>
+				<p class="descript">
+					You'll have access to {{ company_name }}'s Vibe in no time!
+				</p>
+				<form action="/" method="post" class="register_from_invite form-horizontal">
+					<div class="alert alert-block alert-danger"></div>
+					<div class="avatar-picker">
+						<img class="avatar-img" src="/img/default_avatar.png">
+						<a href="#">Upload avatar</a>
+						<input type="file" name="avatar" id="avatar-input">
+						<input type="text" name="avatar_base64" class="hidden" value="">
+					</div>
+					<div class="form-group">
+						<label for="inputEmail" class="col-xs-4 control-label input-lg">Email</label>
+						<div class="col-xs-8">
+							<input type="text" name="email" class="form-control input-lg" id="inputEmail" placeholder="Ex: your@email.com" disabled>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputName" class="col-xs-4 control-label input-lg">Full Name</label>
+						<div class="col-xs-8">
+							<input type="text" name="name" class="form-control input-lg" id="inputName" placeholder="Ex: Albus Dumbledore">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword" class="col-xs-4 control-label input-lg">Password</label>
+						<div class="col-xs-8">
+							<input type="password" name="password" class="form-control input-lg" id="inputEmail" placeholder="Make it good!">
+						</div>
+					</div>
+					<div class="form-actions form-actions-lg">
+						<button type="submit" class="btn btn-success btn-lg">Done!</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="form-success v-centered fixed">
+			<div>
+				<h1 class="sub-header">Forgot Password</h1>
+				<h2 class="big">Great!</h2>
+				<p>We're sending you and email to reset your password</p>
+				<a href="/login" class="btn btn-default"><i class="icon">&#61760</i>Back to log in</a>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		window.pageName = 'register_from_invite';
+	</script>
+	<script data-main="js/build/start-page" src="/js/libs/require.js"></script>
+{% endblock %}

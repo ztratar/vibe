@@ -4,6 +4,9 @@ import 'backbone';
 
 import User from 'models/user';
 import QuestionPickerView from 'views/questionPickerView';
+import UserListInviteView from 'views/userListInviteView';
+
+import avatarInputHelper from 'helpers/avatarInputHelper';
 
 $(function() {
 	var $steps = $('ul.steps li'),
@@ -41,7 +44,7 @@ $(function() {
 		},
 		company_name = /company_name=(.+)&/.exec(window.location.search),
 		email = /email=(.+)/.exec(window.location.search),
-		user;
+		user = new User();
 
 	company_name = _.isArray(company_name) ? company_name[1] : null;
 	email = _.isArray(email) ? email[1] : null;
@@ -57,55 +60,7 @@ $(function() {
 	}
 	$('input[name="name"]').focus();
 
-	// Avatar Upload
-	// Uses filereader, which is supported in most modern browsers.
-	$("#avatar-input").change(function(){
-		if (this.files && this.files[0]) {
-			var FR = new FileReader();
-
-			FR.onload = function(e) {
-				var tempImg = new Image();
-
-				tempImg.src = e.target.result;
-				tempImg.onload = function() {
-					var SQUARE_WIDTH = 120;
-					var tempW = tempImg.width;
-					var tempH = tempImg.height;
-					var startX = 0;
-					var startY = 0;
-
-					if (tempW > tempH) {
-						tempW = tempH;
-						//tempW *= SQUARE_WIDTH / tempH;
-
-						startX = (tempImg.width - tempImg.height) / 2;
-					} else {
-						tempH = tempW;
-						//tempW = SQUARE_WIDTH;
-						//tempH *= SQUARE_WIDTH / tempW;
-
-						startY = (tempImg.height - tempImg.width) / 2;
-					}
-
-					var canvas = document.createElement('canvas');
-					canvas.width = tempW;
-					canvas.height = tempH;
-
-					var ctx = canvas.getContext("2d");
-					ctx.drawImage(this, startX, startY, tempW, tempH, 0, 0, tempW, tempH);
-					ctx.scale(SQUARE_WIDTH / tempW, SQUARE_WIDTH / tempH);
-
-					var dataURL = canvas.toDataURL("image/jpeg");
-					$('img.avatar-img').attr("src", dataURL);
-					$('input[name="avatar_base64"]').val(dataURL);
-				};
-			};
-			FR.readAsDataURL(this.files[0]);
-		}
-	});
-
-	nextStep();
-	nextStep();
+	avatarInputHelper('#avatar-input', 'img.avatar-img', 'input[name="avatar_base64"]');
 
 	// Form logic
 	$('form.step-1').on('submit', function() {
@@ -149,7 +104,7 @@ $(function() {
 
 		markCurrentStepAsLoading();
 
-		user = new User({
+		user.set({
 			name: name,
 			email: email,
 			avatar: avatar_base64
@@ -184,8 +139,44 @@ $(function() {
 		return false;
 	});
 
+	var userListInviteView = new UserListInviteView({
+		currentUser: user
+	});
+	$('.user-list-invite-container').html(userListInviteView.$el);
+	userListInviteView.render();
+
 	$('form.step-3').on('submit', function() {
-		window.location.href = '/';
+		var inviteData = [],
+			$inviteEmails = $(this).find('input[name="invite_email"]'),
+			$inviteAdmins = $(this).find('input[name="invite_admin"]');
+
+		$inviteEmails.each(function(i, emailItem) {
+			var email = $(emailItem).val(),
+				admin = $inviteAdmins.eq(i).is(':checked');
+
+			if (email && email.length) {
+				inviteData.push({
+					email: email,
+					isAdmin: admin
+				});
+			}
+		});
+
+		if (!inviteData.length) {
+			window.location.href = '/';
+		} else {
+			$.ajax({
+				url: '/api/users/invite',
+				type: 'POST',
+				data: {
+					users: inviteData
+				},
+				success: function() {
+					window.location.href = '/';
+				}
+			});
+		}
+
 		return false;
 	});
 });

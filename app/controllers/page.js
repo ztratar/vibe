@@ -31,6 +31,23 @@ exports.register = function (req, res) {
 };
 
 /*
+ * STATIC PAGE LOAD - User Registration Page
+ */
+exports.registerFromInvite = function (req, res) {
+	var company_name = /company_name=([^&]+)/.exec(req._parsedUrl.query);
+
+	if (company_name && company_name.length) {
+		company_name = company_name[1].replace('+', ' ');
+	} else {
+		return res.redirect('/');
+	}
+
+	res.render('users/registerFromInvite', {
+		company_name: company_name
+	});
+};
+
+/*
  * STATIC PAGE LOAD - Forgot Password Page
  */
 exports.forgot_password = function(req, res) {

@@ -6297,6 +6297,9 @@ div.checkbox input[type=checkbox]:checked + label:after {
   -ms-transform: rotate(-45deg) scale(1, 1);
   transform: rotate(-45deg) scale(1, 1);
 }
+div.checkbox input[disabled] + label:after {
+  opacity: 0.4 !important;
+}
 .icon {
   font-size: 24px;
 }
@@ -7255,7 +7258,7 @@ html {
 .question-picker ul.questions li a:hover {
   text-decoration: none;
 }
-.team-picker .key {
+.user-list-invite-view .key {
   text-align: left;
   text-transform: uppercase;
   font-size: 16px;
@@ -7264,43 +7267,43 @@ html {
   font-weight: 600;
   position: relative;
 }
-.team-picker .key .email {
+.user-list-invite-view .key .email {
   width: calc(100% - 105px);
   display: inline-block;
 }
-.team-picker .key .admin {
+.user-list-invite-view .key .admin {
   position: absolute;
   right: 0;
   top: 0;
   width: 70px;
   display: inline-block;
 }
-.team-picker ul.team {
+.user-list-invite-view ul.user-list {
   list-style: none;
   margin: 0;
   padding: 0;
   text-align: left;
   font-size: 16px;
 }
-.team-picker ul.team li {
+.user-list-invite-view ul.user-list li {
   display: block;
   padding: 10px 0;
   height: 60px;
   position: relative;
 }
-.team-picker ul.team li span,
-.team-picker ul.team li input.form-control {
+.user-list-invite-view ul.user-list li span,
+.user-list-invite-view ul.user-list li input.form-control {
   width: calc(100% - 105px);
   font-size: 18px;
 }
-.team-picker ul.team li span {
+.user-list-invite-view ul.user-list li span {
   margin-top: 7px;
   display: inline-block;
 }
-.team-picker ul.team li input.form-control {
+.user-list-invite-view ul.user-list li input.form-control {
   padding-left: 8px;
 }
-.team-picker ul.team li div.checkbox {
+.user-list-invite-view ul.user-list li div.checkbox {
   position: absolute;
   right: 43px;
   top: 16px;
