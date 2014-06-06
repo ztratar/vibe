@@ -249,6 +249,15 @@ exports.createFromUserInvite = function(req, res, next) {
 			if (!user) {
 				return cb("User could not be created");
 			}
+			email.send({
+				to: user.email,
+				subject: 'An intro to Vibe',
+				templateName: 'user_welcome',
+				templateData: {
+					company_name: company.name,
+					name: user.name
+				}
+			});
 			cb(null, userInvite, user);
 		});
 	}, function(userInvite, user, cb) {
