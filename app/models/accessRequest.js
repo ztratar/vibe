@@ -15,11 +15,12 @@ var mongoose = require('mongoose')
 var AccessRequestSchema = new Schema({
   company_name: { type: String, trim: true, default: '' },
   email: { type: String, lowercase: true, trim: true, index: true },
-  invited: { type: Boolean, default: false }
+  invited: { type: Boolean, default: false },
+  registered: { type: Boolean, default: false }
 });
 
 AccessRequestSchema.path('email').validate(function (email) {
-  return email && email.length
+  return email && email.length;
 }, 'Email cannot be blank');
 
 AccessRequestSchema.path('email').validate(function (email) {

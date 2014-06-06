@@ -57,9 +57,6 @@ module.exports = function (app, passport) {
 	app.param('survey', c.surveys.loadSurvey);
 	app.param('answer', c.answers.loadAnswer);
 
-	app.delete('/api/questions/:question', c.questions.delete);
-	app.delete('/api/surveys/:survey', c.surveys.delete);
-
 	//
 	// PAGES
 	//

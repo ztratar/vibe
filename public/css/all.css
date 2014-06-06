@@ -6082,6 +6082,13 @@ form > .alert.show {
   background: #1d3956;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 0 20px 1px rgba(255, 255, 255, 0.02);
 }
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  border: 2px solid #1a344e;
+  background: #1a344e;
+  opacity: .4;
+}
 .form-horizontal .form-group {
   margin-left: 0;
   margin-right: 0;
@@ -6187,6 +6194,7 @@ form.step-3 .container {
   -webkit-transition: opacity 0.26s ease-in-out, -webkit-transform 0.26s ease-in-out;
   height: 0;
   overflow: hidden;
+  padding: 20px 0;
 }
 form.step-1.v-centered > div,
 form.step-2.v-centered > div,
@@ -6329,6 +6337,14 @@ div.checkbox input[type=checkbox]:checked + label:after {
 .btn-link:hover {
   color: white;
   text-decoration: none;
+}
+.btn-info {
+  background: #5388be;
+  border-color: #5388be;
+}
+.btn-info:hover {
+  background: #6997c6;
+  background-color: #6997c6;
 }
 .header-view {
   background: #2f557c;
@@ -7190,10 +7206,12 @@ html {
 .question-picker .custom-picker input {
   width: 80%;
   float: left;
+  padding-left: 8px;
 }
 .question-picker .custom-picker button {
   width: 18%;
   float: right;
+  padding: 8px;
 }
 .question-picker ul.questions {
   list-style: none;
@@ -7203,7 +7221,6 @@ html {
 }
 .question-picker ul.questions li {
   display: block;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 10px 0;
   position: relative;
 }
@@ -7220,7 +7237,7 @@ html {
 }
 .question-picker ul.questions li a {
   position: absolute;
-  top: 6px;
+  top: 5px;
   right: 0;
 }
 .question-picker ul.questions li a.deselect {
@@ -7399,7 +7416,7 @@ html {
   top: 31px;
   height: 4px;
   z-index: 110;
-  margin: 0 0px 0 50px;
+  margin: 0 0px 0 20px;
   opacity: 0;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);

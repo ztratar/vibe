@@ -34,6 +34,14 @@ form > .alert {
 	}
 }
 
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+	border: 2px solid @vibe-muted;
+	background: @vibe-muted;
+	opacity: .4;
+}
+
 
 // Groupings & macro
 
@@ -153,6 +161,7 @@ form {
 			-webkit-transition: opacity 0.26s ease-in-out, -webkit-transform 0.26s ease-in-out;
 			height: 0;
 			overflow: hidden;
+			padding: 20px 0;
 		}
 
 		&.v-centered > div {

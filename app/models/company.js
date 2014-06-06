@@ -26,8 +26,17 @@ var CompanySchema = new Schema({
 /**
  * Validations
  */
+CompanySchema.path('name').validate(function (name) {
+	return name && name.length;
+}, 'Company name cannot be blank');
 
+CompanySchema.path('domain').validate(function (website) {
+	return website && website.length;
+}, 'Company website cannot be blank');
 
+CompanySchema.path('domain').validate(function (website) {
+	return /^(?:[a-zA-Z0-9]+(?:\-*[a-zA-Z0-9])*\.)+[a-zA-Z]{2,6}$/.test(website);
+}, 'Please format the website like yourdomain.com');
 
 /**
  * Pre-save hook

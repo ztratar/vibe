@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
 	Question = mongoose.model('Question'),
 	Comment = mongoose.model('Comment'),
 	Company = mongoose.model('Company'),
-	Answer = mongoose.model('Answer');
+	Answer = mongoose.model('Answer'),
+	helpers = require('../helpers');
 
 /*
  * PARAM LOAD - Question
@@ -92,55 +93,78 @@ exports.get = function (req, res, next) {
 /*
  * POST /questions
  *
- * Create a new question
+ * Create a new question, either from
+ * scratch or from a given metaQuestion
  *
  * Query params:
- *		metaId: _id of the meta_question to copy
+ *		metaQuestion: _id of the meta question to copy
+ *		body: body text
  */
 exports.create = function (req, res, next) {
-	var metaId = req.body['metaId'];
+	if (!req.user.isAdmin) {
+		return helpers.sendError(res, "You dont have privileges to do that");
+	}
 
-	MetaQuestion.findById(metaId, function(err,metaQ){
-		if (err)		return next(err);
-		if (!metaQ) return next(new Error("can't find question"));
+	if (req.body.metaQuestion) {
+		MetaQuestion.findById(req.body.metaQuestion, function(err, metaQuestion) {
+			if (err) return helpers.sendError(res, err);
+			if (!metaQuestion) return helpers.sendError(res, "Meta Question not found");
 
-		Question.create({
-			metaQuestion: metaQ._id,
-			body: metaQ.body,
-			creator: req.user._id,
-			company: req.user.company
-		}, function(err, question){
-			if(err || !question) return next(new Error("can't create question"));
-
-			return res.send(question);
+			Question.findOne({
+				metaQuestion: metaQuestion._id,
+				company: req.user.company
+			}, function(err, question) {
+				if (err) return helpers.sendError(res, err);
+				if (question) {
+					question.active = true;
+					question.save(function(err, question) {
+						if (err) return helpers.sendError(res, err);
+						return res.send(question);
+					});
+				} else {
+					Question.create({
+						metaQuestion: metaQuestion._id,
+						body: metaQuestion.body,
+						creator: req.user._id,
+						company: req.user.company
+					}, function(err, question) {
+						if (err) return helpers.sendError(res, err);
+						return res.send(question);
+					});
+				}
+			});
 		});
-	});
+	} else {
+		// Create from scratch!
+		MetaQuestion.create({
+			body: req.body.body,
+			creator: req.user._id
+		}, function(err, metaQuestion) {
+			if (err || !metaQuestion) return helpers.sendError(res, err);
+			Question.create({
+				metaQuestion: metaQuestion._id,
+				body: req.body.body,
+				creator: req.user._id,
+				company: req.user.company
+			}, function(err, question) {
+				if (err) return helpers.sendError(res, err);
+				return res.send(question);
+			});
+		});
+	}
 };
 
 /*
  * PUT /questions/:question
  *
- * Update a question
+ * Update a question, usually used to make
+ * inactive.
  */
 exports.update = function (req, res, next) {
-	if(req.body.active) req.question.active = req.body.active;
+	if (req.body.active !== undefined) req.question.active = req.body.active;
 
 	req.question.save(function(err, question){
 		if (err) return next(err);
-
-		return res.send(question);
-	})
-
-};
-
-/*
- * DELETE /questions/:question
- *
- * Retrieve a question
- */
-exports.delete = function (req, res, next) {
-	req.question.remove(function(err, question){
-		if(err) return next(err);
 		return res.send(question);
 	});
 };
@@ -190,7 +214,6 @@ exports.newComment = function(req, res, next){
 		if(err) return next(err);
 		return res.send(comment);
 	});
-
 };
 
 // Cache app object upon first call

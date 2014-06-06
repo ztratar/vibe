@@ -5,7 +5,9 @@ define("models/questions",
     var Question = __dependency2__["default"];
 
     var Questions = Backbone.Collection.extend({
+
     	model: Question
+
     });
 
     __exports__["default"] = Questions;

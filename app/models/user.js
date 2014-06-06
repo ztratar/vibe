@@ -6,6 +6,7 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , bcrypt = require('bcrypt')
+  , crypto = require('crypto')
   , _ = require('underscore')
   , helpers = require('../helpers')
   , authTypes = ['github', 'twitter', 'facebook', 'google']
@@ -17,10 +18,11 @@ var mongoose = require('mongoose')
 var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true, trim: true },
+  avatar: { type: String, default: '' },
+
   isAdmin: Boolean,
   isSuperAdmin: { type: Boolean, default: false },
   company: { type: Schema.Types.ObjectId, ref: 'Company' },
-
   provider: String,
 
   salt: String,

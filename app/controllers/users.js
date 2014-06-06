@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 	_ = require('underscore'),
 	User = mongoose.model('User'),
 	Company = mongoose.model('Company'),
+	AccessRequest = mongoose.model('AccessRequest'),
 	Async = require('async'),
 	crypto = require('crypto'),
 	email = require('./email')(),
@@ -55,16 +56,21 @@ exports.logout = function (req, res) {
 /*
  * POST /api/users
  *
- * Create a user and new company.
+ * Create a user and new company. Only available currently
+ * to those invited with AccessRequest objects.
  *
  * Query vars:
  * 		name (String): Full name of the user
  * 		email (String): User's email
  * 		password (String): User's password
+ * 		avatar (base64): Img for the user's account
+ *
+ * 		Non-user vars:
  * 		companyName (String): Name of their company
- *  	companyWebsite (String): Website of the company
+ * 		companyWebsite (String): Website/domain of the company
+ * 		companyInviteHash: The AccessRequest ID object from the companies invite
  */
-exports.create = function (req, res) {
+exports.create = function (req, res, next) {
 	var domain = req.body.companyWebsite,
 		company = new Company({
 			name: req.body.companyName,
@@ -72,6 +78,7 @@ exports.create = function (req, res) {
 		}),
 		newUser = new User({
 			name: req.body.name,
+			avatar: req.body.avatar,
 			email: req.body.email,
 			password: req.body.password,
 			isAdmin: true,
@@ -79,22 +86,42 @@ exports.create = function (req, res) {
 			company: company._id
 		});
 
+	var sendStandardError = function() {
+		return res.send({
+			error: "There was an error. Please contact support at access@getvibe.org for help."
+		});
+	};
+
 	Async.waterfall([
 		function(cb) {
+			// Check hash first
+			AccessRequest.findById(req.body.companyInviteHash, function(err, accessRequest) {
+				if (err) return cb(err);
+				if (!accessRequest || !accessRequest.invited) {
+					return cb("Your invite is invalid. Please contact support at access@getvibe.org for help.");
+				}
+				accessRequest.registered = true;
+				accessRequest.save(function(err) {
+					if (err) return cb(err);
+					return cb(null);
+				});
+			});
+		},
+		function(cb) {
 			User.findOne({email: newUser.email},function(err, user){
-				if(err) return cb(err);
-				if(user){
-					return res.render('users/signup', { errors: [{"message":"email already registered"}], user:newUser });
+				if (err) return sendStandardError();
+				if (user) {
+					return cb("Email already registered.");
 				}
 				return cb(null);
 			});
 		},
 		// try to create the company
 		function(cb) {
-			Company.findOne({domain: domain}, function(err, company){
-				if(err) return cb(err);
-				if(company){
-					return res.render('users/signup', { errors: [{"message":"Company already exists"}], user:newUser });
+			Company.findOne({ domain: domain }, function(err, company){
+				if (err) return sendStandardError();
+				if (company) {
+					return cb("Your company has already been created. Please contact support at access@getvibe.org for help.");
 				}
 				return cb(null);
 			});
@@ -102,29 +129,22 @@ exports.create = function (req, res) {
 		// create the company
 		function(cb) {
 			company.save(function(err){
-				if (err) { console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
+				if (err) return sendStandardError();
 				return cb(null, company);
 			});
 		},
 		// save user
 		function(company, cb) {
 			newUser.save(function(err){
-				if (err) { console.log(err); return res.render('users/signup', { errors: err.errors, user:newUser }); } 
+				if (err) return sendStandardError();
 				return cb(null, company, newUser);
 			});
 		}], function(err, company, user) {
-			if(err){
-				console.error("splat");
-				console.error(err.stack);
-				return res.send(500, {error: "splat"});
-			}
-			//log the user in
+			if (err) return sendStandardError();
+
 			req.logIn(user, function(err) {
-				if (err){
-					console.error(err.stack);
-					return res.send(500, {error: "splat"});
-				}
-				return res.redirect('/');
+				if (err) return sendStandardError();
+				return res.send(user.stripInfo());
 			});
 		});
 }

@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  * Questions for master list of questions
@@ -23,12 +22,11 @@ var MetaQuestionSchema = new Schema({
 mongoose.model('MetaQuestion', MetaQuestionSchema);
 
 
-
 /**
  * Question Schema
  */
 var QuestionSchema = new Schema({
-  metaQuestion: { type: Schema.Types.ObjectId, ref: 'MetaQuestion'},
+  metaQuestion: { type: Schema.Types.ObjectId, ref: 'MetaQuestion' },
   body: String,
   active: { type: Boolean, default: true },
   audience: { type: String, default: 'all' },

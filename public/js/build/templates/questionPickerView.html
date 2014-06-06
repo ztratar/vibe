@@ -11,7 +11,7 @@
 	<% this.selectedQuestions.each(function(question) { %>
 	<li>
 		<h3><%- question.get('body') %></h3>
-		<a class="icon deselect" data-metaquestion-id="<%= question.get('_id') %>" href="#">&#61943;</a>
+		<a class="icon deselect" data-question-id="<%= question.get('_id') %>" href="#">&#61943;</a>
 	</li>
 	<% }); %>
 	<% if (this.suggestedQuestions.length) { %>

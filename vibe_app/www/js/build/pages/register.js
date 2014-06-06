@@ -1,9 +1,10 @@
 define("pages/register", 
-  ["jquery","underscore","backbone","views/questionPickerView"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__) {
+  ["jquery","underscore","backbone","models/user","views/questionPickerView"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__) {
     "use strict";
 
-    var QuestionPickerView = __dependency4__["default"];
+    var User = __dependency4__["default"];
+    var QuestionPickerView = __dependency5__["default"];
 
     $(function() {
     	var $steps = $('ul.steps li'),
@@ -29,6 +30,16 @@ define("pages/register",
     			$prevForm.removeClass('old');
     			$prevStep.removeClass('old');
     		},
+    		markCurrentStepAsLoading = function() {
+    			var $activeForm = $('form.active:not(.old)');
+    			$activeForm.addClass('loading');
+    			$activeForm.find('input, button').prop('disabled', true);
+    		},
+    		unmarkCurrentStepAsLoading = function() {
+    			var $activeForm = $('form.active:not(.old)');
+    			$activeForm.addClass('loading');
+    			$activeForm.find('input, button').prop('disabled', false);
+    		},
     		company_name = /company_name=(.+)&/.exec(window.location.search),
     		email = /email=(.+)/.exec(window.location.search),
     		user;
@@ -46,10 +57,6 @@ define("pages/register",
     		$('input[name="email"]').val(email.replace('+', ' '));
     	}
     	$('input[name="name"]').focus();
-
-    	var questionPicker = new QuestionPickerView();
-    	$('.question-picker-container').html(questionPicker.$el);
-    	questionPicker.render();
 
     	// Avatar Upload
     	// Uses filereader, which is supported in most modern browsers.
@@ -98,22 +105,30 @@ define("pages/register",
     		}
     	});
 
+    	nextStep();
+
     	// Form logic
     	$('form.step-1').on('submit', function() {
-
-    		nextStep();
-    		return false;
     		var name = $(this).find('input[name="name"]').val(),
     			email = $(this).find('input[name="email"]').val(),
+    			password = $(this).find('input[name="password"]').val(),
     			avatar_base64 = $(this).find('input[name="avatar_base64"]').val(),
     			company_name = $(this).find('input[name="company_name"]').val(),
-    			hash = /hash=(.+)&/.exec(window.location.search)[1],
+    			company_website = $(this).find('input[name="company_website"]').val(),
+    			hash = /hash=([^&]+)/.exec(window.location.search),
     			$error = $(this).find('.alert-danger');
+
+    		hash = _.isArray(hash) ? hash[1] : undefined;
 
     		$error.html('').hide();
 
     		if (!email.length) {
     			$error.html('Please enter an email').show();
+    			return false;
+    		}
+
+    		if (!password.length) {
+    			$error.html('Please enter a password').show();
     			return false;
     		}
 
@@ -127,27 +142,42 @@ define("pages/register",
     			return false;
     		}
 
-    		$.ajax({
-    			type: 'POST',
-    			url: '/api/users',
-    			data:{
-    				email: email,
-    				name: name,
-    				company_name: company_name,
-    				avatar: avatar_base64,
-    				hash: hash
-    			},
-    			success: function(d) {
+    		if (!company_website.length) {
+    			$error.html('Please enter your company website').show();
+    			return false;
+    		}
+
+    		markCurrentStepAsLoading();
+
+    		user = new User({
+    			name: name,
+    			email: email,
+    			avatar: avatar_base64
+    		});
+
+    		user.save({
+    			password: password,
+    			companyName: company_name,
+    			companyWebsite: company_website,
+    			companyInviteHash: hash
+    		}, {
+    			success: function(model, d) {
     				if (d.error) {
+    					unmarkCurrentStepAsLoading();
     					$error.html(d.error).show();
-    					return;
+    				} else {
+    					nextStep();
     				}
-    				$('.form-step-wrapper').addClass('success');
     			}
     		});
 
     		return false;
     	});
+
+    	// Step 2
+    	var questionPicker = new QuestionPickerView();
+    	$('.question-picker-container').html(questionPicker.$el);
+    	questionPicker.render();
 
     	$('form.step-2').on('submit', function() {
     		nextStep();

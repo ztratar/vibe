@@ -1,17 +1,15 @@
 import BaseModel from 'models/baseModel';
 
 var MetaQuestion = BaseModel.extend({
+
+	urlRoot: '/api/meta_questions',
+
 	defaults: {
-		_id: '_20398402938402834098',
-		body: '<strong>Team Productivity</strong> is going...',
+		_id: '',
+		body: '',
 		questionSelected: false
-	},
-	select: function() {
-		this.set('questionSelected', true);
-	},
-	deselect: function() {
-		this.set('questionSelected', false);
 	}
+
 });
 
 export default = MetaQuestion;
