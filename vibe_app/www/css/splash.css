@@ -207,11 +207,6 @@ html {
   max-width: 390px;
   opacity: .7;
 }
-.splash-page .section.intro-section .splash-request-access > div label {
-  width: 120px;
-  text-align: right;
-  margin-right: 13px;
-}
 .splash-page .section.intro-section .splash-request-access > div button {
   background: transparent;
   text-transform: uppercase;

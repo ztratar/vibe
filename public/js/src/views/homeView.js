@@ -21,9 +21,9 @@ var HomeView = Backbone.View.extend({
 			user: window.Vibe.user.toJSON()	
 		}));
 		this.$('.charts-container').html(this.chartsView.$el);
-		this.questions.reset([{}, {
-			title: 'Design Deliverables',
-			answerData: {
+		this.questions.reset([{
+			body: 'Design Deliverables seem...',
+			answer_data: {
 				0: 3.7,
 				1: 3.2,
 				2: 3.6,
@@ -36,23 +36,8 @@ var HomeView = Backbone.View.extend({
 				9: 2.7
 			}
 		}, {
-			title: 'Productivity',
-			answerData: {
-				0: 3.7,
-				1: 3.2,
-				2: 3.6,
-				3: 2.7,
-				4: 2.1,
-				5: 3.2,
-				6: 3.8,
-				7: 2,
-				8: 1.8,
-				9: 2.7
-			}
-		}, {
-			title: 'Goal Breakdown',
-			body: '<strong>Productivity</strong> is going...',
-			answerData: {
+			body: 'Productivity is going...',
+			answer_data: {
 				0: 3.2,
 				1: 1.4,
 				2: 3.1,
@@ -65,9 +50,8 @@ var HomeView = Backbone.View.extend({
 				9: 2
 			}
 		}, {
-			title: 'Focus On Goals',
-			body: 'We <strong>focus</strong> on our <strong>goals</strong>...',
-			answerData: {
+			body: 'We focus on our goals...',
+			answer_data: {
 				0: 3.7,
 				1: 3.2,
 				2: 3.6,
@@ -80,8 +64,8 @@ var HomeView = Backbone.View.extend({
 				9: 2.7
 			}
 		}, {
-			title: 'Vibe',
-			answerData: {
+			body: 'Vibe is going...',
+			answer_data: {
 				0: 4.0,
 				1: 3.8,
 				2: 3.7,

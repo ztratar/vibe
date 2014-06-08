@@ -27,6 +27,7 @@ exports.login = function (req, res) {
  * STATIC PAGE LOAD - Company/Admin Registration Page
  */
 exports.register = function (req, res) {
+	if (req.isAuthenticated()) res.redirect('/');
 	res.render('users/register');
 };
 
@@ -34,6 +35,8 @@ exports.register = function (req, res) {
  * STATIC PAGE LOAD - User Registration Page
  */
 exports.registerFromInvite = function (req, res) {
+	if (req.isAuthenticated()) res.redirect('/');
+
 	var company_name = /company_name=([^&]+)/.exec(req._parsedUrl.query);
 
 	if (company_name && company_name.length) {
@@ -51,6 +54,7 @@ exports.registerFromInvite = function (req, res) {
  * STATIC PAGE LOAD - Forgot Password Page
  */
 exports.forgot_password = function(req, res) {
+	if (req.isAuthenticated()) res.redirect('/');
 	res.render('users/forgot_password');
 };
 
@@ -58,6 +62,7 @@ exports.forgot_password = function(req, res) {
  * STATIC PAGE LOAD - Reset Password Page
  */
 exports.reset_password = function(req, res) {
+	if (req.isAuthenticated()) res.redirect('/');
 	res.render('users/reset_password');
 };
 
@@ -65,7 +70,7 @@ exports.reset_password = function(req, res) {
  * STATIC PAGE LOAD - Forgot Password Page
  */
 exports.admin_invite_company = function(req, res) {
-	if (req.user && req.user.email === 'zach@getvibe.org') {
+	if (req.isAuthenticated() && req.user.isSuperAdmin) {
 		res.render('admin/invite_company');
 	} else {
 		res.redirect('/');

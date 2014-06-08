@@ -24,7 +24,9 @@ define("splashApp",
     			$('#requestAccessForm .error-field').html(error).removeClass('hide');
     		};
 
-    	console.log(window.location);
+    	if (window.location.hash === '#access') {
+    		showRequestAccessForm();
+    	}
 
     	$('.learn-more').on('click', function() {
     		var $body = $('body'),

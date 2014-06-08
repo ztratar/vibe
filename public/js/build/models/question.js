@@ -19,7 +19,7 @@ define("models/question",
     		to: {
     			name: 'everyone'
     		},
-    		answer_data: undefined
+    		answer_data: {}
     	},
 
     	deselect: function() {

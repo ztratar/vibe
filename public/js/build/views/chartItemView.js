@@ -47,7 +47,7 @@ define("views/chartItemView",
     	},
 
     	drawChart: function() {
-    		var answerData = this.model.get('answerData'),
+    		var answerData = this.model.get('answer_data'),
     			answerKeys = Object.keys(answerData);
 
     		this.initChart();
@@ -73,7 +73,7 @@ define("views/chartItemView",
     			// Change chart width
     			this.svg
     				.attr("width", this.currentWidth);
-    			
+
     			// Draw Objects
     			if (point1) {
     				this.drawLine(this.numPoints, point1, point2);
