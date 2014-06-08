@@ -42,6 +42,7 @@ var avatarInputHelper = function(fileInput, imgElem, textInput) {
 					var dataURL = canvas.toDataURL("image/jpeg");
 					$(imgElem).attr("src", dataURL);
 					$(textInput).val(dataURL);
+					$(fileInput).trigger('avatar-helper-done');
 				};
 			};
 			FR.readAsDataURL(this.files[0]);

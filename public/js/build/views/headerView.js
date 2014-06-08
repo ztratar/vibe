@@ -18,13 +18,15 @@ define("views/headerView",
     			animate: false
     		};
     		_.extend(this.data, this.initialData, opts);
+    		this.$el.append('<div class="container"></div>');
+    		this.$container = this.$('.container');
     	},
 
     	render: function() {
     		if (this.oldComponents) this.removeOldComponents();
     		this.oldComponents = this.$('.header-components');
     		this.newComponents = $('<div class="header-components new"></div>');
-    		this.$el.append(this.newComponents);
+    		this.$container.append(this.newComponents);
     		this.newComponents.html(_.template(template, this.data));
     		this.bindButtonActions();
     	},

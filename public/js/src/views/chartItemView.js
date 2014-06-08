@@ -248,8 +248,8 @@ var ChartItemView = Backbone.View.extend({
 			'discuss/' + this.model.get('id'),
 			'pushLeft',
 			{
-				trigger: true	
-			}	
+				trigger: true
+			}
 		);
 		return false;
 	}

@@ -7,7 +7,24 @@ var User = BaseModel.extend({
 	defaults: {
 		name: '',
 		email: '',
-		avatar: '/img/default_avatar.png'
+		avatar: '/img/default_avatar.png',
+		company: {
+			name: ''
+		}
+	},
+
+	initialize: function(opts) {
+		if (opts.avatar === '') {
+			this.setAvatar();
+		}
+	},
+
+	setAvatar: function() {
+		if (this.get('avatar') === '') {
+			this.set('avatar', this.defaults.avatar, {
+				silent: true
+			});
+		}
 	}
 
 });

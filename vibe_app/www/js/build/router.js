@@ -1,6 +1,6 @@
 define("router", 
-  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","views/discussView","views/settingsView","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __exports__) {
+  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","views/discussView","views/settingsView","views/settingsEditFieldView","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __exports__) {
     "use strict";
 
     var ScreenRouter = __dependency4__["default"];
@@ -13,7 +13,9 @@ define("router",
     var SurveyView = __dependency9__["default"];
     var SurveyDoneView = __dependency10__["default"];
     var DiscussView = __dependency11__["default"];
+
     var SettingsView = __dependency12__["default"];
+    var SettingsEditFieldView = __dependency13__["default"];
 
     var Router = Backbone.Router.extend({
 
@@ -27,6 +29,8 @@ define("router",
     		'': 'index',
     		'/': 'index',
     		'settings': 'settings',
+    		'settings/name': 'settingsName',
+    		'settings/email': 'settingsEmail',
     		'welcome/:step': 'welcome',
     		'discuss/:id': 'discuss',
     		'survey/:tag': 'survey',
@@ -58,7 +62,7 @@ define("router",
     		});
 
     		this.homeView = this.homeView || new HomeView();
-    		this.screenRouter.currentScreen.html(this.homeView.$el);
+    		this.screenRouter.currentScreenContainer.html(this.homeView.$el);
 
     		this.homeView.render();
 
@@ -69,7 +73,7 @@ define("router",
     		var welcomeView = new WelcomeView();
 
     		this.screenRouter.currentScreen.addClass('full');
-    		this.screenRouter.currentScreen.html(welcomeView.$el);
+    		this.screenRouter.currentScreenContainer.html(welcomeView.$el);
     		welcomeView.render();
 
     		if (step === '2') {
@@ -81,7 +85,9 @@ define("router",
 
     	settings: function() {
     		var that = this,
-    			settingsView = new SettingsView();
+    			settingsView = new SettingsView({
+    				user: window.Vibe.user
+    			});
 
     		window.Vibe.appView.headerView.setButtons({
     			title: 'settings',
@@ -97,8 +103,84 @@ define("router",
     			}
     		});
 
-    		this.screenRouter.currentScreen.html(settingsView.$el);
+    		this.screenRouter.currentScreenContainer.html(settingsView.$el);
     		settingsView.render();
+
+    		this.trigger('loaded');
+    	},
+
+    	settingsName: function() {
+    		var that = this,
+    			settingsEditFieldView = new SettingsEditFieldView({
+    				title: 'Name',
+    				model: window.Vibe.user,
+    				attributeName: 'name',
+    				placeholder: 'Full Name',
+    				confirm: false,
+    				helperText: 'Please enter your full name. Your identity is only visible in chat.'
+    			});
+
+    		window.Vibe.appView.headerView.setButtons({
+    			title: 'Name',
+    			leftAction: {
+    				icon: '',
+    				title: 'Cancel',
+    				click: function(ev) {
+    					that.navigateWithAnimation('/settings', 'pushRight', {
+    						trigger: true
+    					});
+    					return false;
+    				}
+    			},
+    			rightAction: {
+    				title: 'Save',
+    				click: function() {
+    					settingsEditFieldView.saveField();
+    					return false;
+    				}
+    			}
+    		});
+
+    		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+    		settingsEditFieldView.render();
+
+    		this.trigger('loaded');
+    	},
+
+    	settingsEmail: function() {
+    		var that = this,
+    			settingsEditFieldView = new SettingsEditFieldView({
+    				title: 'Email',
+    				model: window.Vibe.user,
+    				attributeName: 'email',
+    				placeholder: 'Ex: your@email.com',
+    				confirm: false,
+    				helperText: 'After clicking save, we will send you a confirmation email to complete the change.'
+    			});
+
+    		window.Vibe.appView.headerView.setButtons({
+    			title: 'Email',
+    			leftAction: {
+    				icon: '',
+    				title: 'Cancel',
+    				click: function(ev) {
+    					that.navigateWithAnimation('/settings', 'pushRight', {
+    						trigger: true
+    					});
+    					return false;
+    				}
+    			},
+    			rightAction: {
+    				title: 'Save',
+    				click: function() {
+    					settingsEditFieldView.saveField();
+    					return false;
+    				}
+    			}
+    		});
+
+    		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+    		settingsEditFieldView.render();
 
     		this.trigger('loaded');
     	},
@@ -137,7 +219,7 @@ define("router",
     			}
     		});
 
-    		this.screenRouter.currentScreen.html(discussView.$el);
+    		this.screenRouter.currentScreenContainer.html(discussView.$el);
     		discussView.render();
 
     		this.trigger('loaded');
@@ -161,7 +243,7 @@ define("router",
     			model: survey
     		});
 
-    		this.screenRouter.currentScreen.html(surveyView.$el);
+    		this.screenRouter.currentScreenContainer.html(surveyView.$el);
     		surveyView.render();
 
     		this.trigger('loaded');
@@ -187,7 +269,7 @@ define("router",
     			}
     		});
 
-    		this.screenRouter.currentScreen.html(surveyDoneView.$el);
+    		this.screenRouter.currentScreenContainer.html(surveyDoneView.$el);
     		surveyDoneView.render();
 
     		this.trigger('loaded');

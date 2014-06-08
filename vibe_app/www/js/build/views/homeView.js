@@ -24,7 +24,7 @@ define("views/homeView",
     			user: window.Vibe.user.toJSON()	
     		}));
     		this.$('.charts-container').html(this.chartsView.$el);
-    		this.questions.reset([{}, {
+    		this.questions.reset([{
     			body: 'Design Deliverables seem...',
     			answer_data: {
     				0: 3.7,

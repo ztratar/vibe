@@ -3,6 +3,11 @@
 {% block content %}
 	<script>
 		window.staticRoute = '/';
+
+		window.Vibe = window.Vibe || {};
+		window.Vibe._data_ = {};
+
+		window.Vibe._data_.currentUser = {{ JSON.stringify(currentUser.stripInfo()) }};
 	</script>
 	<script data-main="js/build/start" src="/js/libs/require.js"></script>
 {% endblock %}

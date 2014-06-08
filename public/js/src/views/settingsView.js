@@ -1,8 +1,7 @@
 import 'backbone';
 import 'underscore';
 
-import MetaQuestions from 'models/metaQuestions';
-import MetaQuestionSelectView from 'views/metaQuestionSelectView';
+import avatarInputHelper from 'helpers/avatarInputHelper';
 
 module template from 'text!templates/settingsView.html';
 
@@ -13,49 +12,63 @@ var SettingsView = Backbone.View.extend({
 	template: _.template(template),
 
 	events: {
-		'click a.trigger-survey': 'triggerSurvey',
+		'click a.name': 'editNamePage',
+		'click a.email': 'editEmailPage',
+		'click a.password': 'editPasswordPage',
+		'click a.manage-team': 'manageTeamPage',
+		'click a.manage-polls': 'managePollsPage',
 		'click a.log-out': 'logOut'
 	},
 
-	initialize: function() {
-		this.metaQuestions = new MetaQuestions([{
-			title: 'Scrum Process'
-		}, {
-			questionSelected: true
-		}, {
-			title: 'Design Deliverables'
-		}]);
-		this.metaQuestions.on('add', this.addOne, this);
-		this.metaQuestions.on('reset', this.addAll, this);
+	initialize: function(opts) {
+		this.user = opts.user;
+		this.user.on('change', this.render, this);
 	},
 
 	render: function() {
 		this.$el.html(this.template());
-		this.$metaContainer = this.$('.metaquestions');
-		this.addAll();
+		this.applyAvatarBindings();
 		return this;
 	},
 
-	addOne: function(metaQuestion) {
-		var metaQuestionView = new MetaQuestionSelectView({
-			model: metaQuestion	
-		});	
-		this.$metaContainer.append(metaQuestionView.$el);
-		metaQuestionView.render();
+
+	applyAvatarBindings: function() {
+		var $avatarInput = this.$('#avatar-input'),
+			$avatarText = this.$('input[name="avatar_base64"]');
+
+		avatarInputHelper($avatarInput, this.$('avatar-img'), $avatarText);
+
+		$avatarInput.on('avatar-helper-done', _.bind(function() {
+			var avatarVal = $avatarText.val();
+
+			this.user.save({
+				avatar: avatarVal
+			});
+		}, this));
 	},
 
-	addAll: function() {
-		this.$metaContainer.empty();
-		this.metaQuestions.each(_.bind(this.addOne, this));
-	},
-
-	triggerSurvey: function() {
-		_.delay(function() {
-			window.Vibe.appView.checkForNewSurvey();
-		}, 2800);
-
+	editNamePage: function() {
+		window.Vibe.appRouter.navigateWithAnimation(
+			'settings/name',
+			'pushLeft',
+			{
+				trigger: true
+			}
+		);
 		return false;
 	},
+
+	editEmailPage: function() {
+		window.Vibe.appRouter.navigateWithAnimation(
+			'settings/email',
+			'pushLeft',
+			{
+				trigger: true
+			}
+		);
+		return false;
+	},
+
 
 	logOut: function() {
 		$.post('/api/logout', function(data) {

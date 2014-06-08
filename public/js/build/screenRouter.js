@@ -16,6 +16,11 @@ define("screenRouter",
     	],
     	initCurrentScreen: function() {
     		this.currentScreen = $('.screen.current');
+    		this.setScreenContainer();
+    	},
+    	setScreenContainer: function() {
+    		this.currentScreenContainer = $('<div class="container"></div>');
+    		this.currentScreen.html(this.currentScreenContainer);
     	},
     	createNewScreen: function(screenSize) {
     		// If a screen has current when the animation
@@ -31,6 +36,7 @@ define("screenRouter",
 
     		this.currentScreen = $('<div class="screen new '+this.screenSize+'"></div>');
     		this.currentScreen.appendTo($('body'));
+    		this.setScreenContainer();
 
     		this.animateScreens('');
 

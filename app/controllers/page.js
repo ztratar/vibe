@@ -3,7 +3,9 @@
  */
 exports.index = function(req, res) {
 	if (req.isAuthenticated()) {
-		res.render('home/index');
+		res.render('home/index', {
+			currentUser: req.user
+		});
 	} else {
 		res.render('splash/index');
 	}

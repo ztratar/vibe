@@ -12,7 +12,9 @@ import WelcomeView from 'views/welcomeView';
 import SurveyView from 'views/surveyView';
 import SurveyDoneView from 'views/surveyDoneView';
 import DiscussView from 'views/discussView';
+
 import SettingsView from 'views/settingsView';
+import SettingsEditFieldView from 'views/settingsEditFieldView';
 
 var Router = Backbone.Router.extend({
 
@@ -26,6 +28,8 @@ var Router = Backbone.Router.extend({
 		'': 'index',
 		'/': 'index',
 		'settings': 'settings',
+		'settings/name': 'settingsName',
+		'settings/email': 'settingsEmail',
 		'welcome/:step': 'welcome',
 		'discuss/:id': 'discuss',
 		'survey/:tag': 'survey',
@@ -57,7 +61,7 @@ var Router = Backbone.Router.extend({
 		});
 
 		this.homeView = this.homeView || new HomeView();
-		this.screenRouter.currentScreen.html(this.homeView.$el);
+		this.screenRouter.currentScreenContainer.html(this.homeView.$el);
 
 		this.homeView.render();
 
@@ -68,7 +72,7 @@ var Router = Backbone.Router.extend({
 		var welcomeView = new WelcomeView();
 
 		this.screenRouter.currentScreen.addClass('full');
-		this.screenRouter.currentScreen.html(welcomeView.$el);
+		this.screenRouter.currentScreenContainer.html(welcomeView.$el);
 		welcomeView.render();
 
 		if (step === '2') {
@@ -80,7 +84,9 @@ var Router = Backbone.Router.extend({
 
 	settings: function() {
 		var that = this,
-			settingsView = new SettingsView();
+			settingsView = new SettingsView({
+				user: window.Vibe.user
+			});
 
 		window.Vibe.appView.headerView.setButtons({
 			title: 'settings',
@@ -96,8 +102,84 @@ var Router = Backbone.Router.extend({
 			}
 		});
 
-		this.screenRouter.currentScreen.html(settingsView.$el);
+		this.screenRouter.currentScreenContainer.html(settingsView.$el);
 		settingsView.render();
+
+		this.trigger('loaded');
+	},
+
+	settingsName: function() {
+		var that = this,
+			settingsEditFieldView = new SettingsEditFieldView({
+				title: 'Name',
+				model: window.Vibe.user,
+				attributeName: 'name',
+				placeholder: 'Full Name',
+				confirm: false,
+				helperText: 'Please enter your full name. Your identity is only visible in chat.'
+			});
+
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Name',
+			leftAction: {
+				icon: '',
+				title: 'Cancel',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			},
+			rightAction: {
+				title: 'Save',
+				click: function() {
+					settingsEditFieldView.saveField();
+					return false;
+				}
+			}
+		});
+
+		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+		settingsEditFieldView.render();
+
+		this.trigger('loaded');
+	},
+
+	settingsEmail: function() {
+		var that = this,
+			settingsEditFieldView = new SettingsEditFieldView({
+				title: 'Email',
+				model: window.Vibe.user,
+				attributeName: 'email',
+				placeholder: 'Ex: your@email.com',
+				confirm: false,
+				helperText: 'After clicking save, we will send you a confirmation email to complete the change.'
+			});
+
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Email',
+			leftAction: {
+				icon: '',
+				title: 'Cancel',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			},
+			rightAction: {
+				title: 'Save',
+				click: function() {
+					settingsEditFieldView.saveField();
+					return false;
+				}
+			}
+		});
+
+		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+		settingsEditFieldView.render();
 
 		this.trigger('loaded');
 	},
@@ -136,7 +218,7 @@ var Router = Backbone.Router.extend({
 			}
 		});
 
-		this.screenRouter.currentScreen.html(discussView.$el);
+		this.screenRouter.currentScreenContainer.html(discussView.$el);
 		discussView.render();
 
 		this.trigger('loaded');
@@ -160,7 +242,7 @@ var Router = Backbone.Router.extend({
 			model: survey
 		});
 
-		this.screenRouter.currentScreen.html(surveyView.$el);
+		this.screenRouter.currentScreenContainer.html(surveyView.$el);
 		surveyView.render();
 
 		this.trigger('loaded');
@@ -186,7 +268,7 @@ var Router = Backbone.Router.extend({
 			}
 		});
 
-		this.screenRouter.currentScreen.html(surveyDoneView.$el);
+		this.screenRouter.currentScreenContainer.html(surveyDoneView.$el);
 		surveyDoneView.render();
 
 		this.trigger('loaded');

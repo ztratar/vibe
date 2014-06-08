@@ -8,6 +8,11 @@
 	right: 0;
 	box-shadow: 0 1px 10px rgba(0, 23, 44, 0.08);
 
+	.container {
+		position: relative;
+		padding: 0;
+	}
+
 	.header-components {
 		padding: 22px 0 10px;
 		height: 64px;
@@ -127,7 +132,11 @@
 			}
 
 			&.left-action {
-				left: 0px;
+				left: 15px;
+
+				@media (max-width: @screen-xs) {
+					left: 0;
+				}
 
 				i {
 					float: left;
@@ -136,7 +145,11 @@
 			}
 
 			&.right-action {
-				right: 0px;
+				right: 15px;
+
+				@media (max-width: @screen-xs) {
+					right: 0;
+				}
 
 				i {
 					float: right;

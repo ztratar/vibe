@@ -6359,6 +6359,10 @@ div.checkbox input[disabled] + label:after {
   right: 0;
   box-shadow: 0 1px 10px rgba(0, 23, 44, 0.08);
 }
+.header-view .container {
+  position: relative;
+  padding: 0;
+}
 .header-view .header-components {
   padding: 22px 0 10px;
   height: 64px;
@@ -6461,14 +6465,24 @@ div.checkbox input[disabled] + label:after {
   font-size: 24px;
 }
 .header-view .header-components a.left-action {
-  left: 0px;
+  left: 15px;
+}
+@media (max-width: 480px) {
+  .header-view .header-components a.left-action {
+    left: 0;
+  }
 }
 .header-view .header-components a.left-action i {
   float: left;
   margin-right: 8px;
 }
 .header-view .header-components a.right-action {
-  right: 0px;
+  right: 15px;
+}
+@media (max-width: 480px) {
+  .header-view .header-components a.right-action {
+    right: 0;
+  }
 }
 .header-view .header-components a.right-action i {
   float: right;
@@ -6591,7 +6605,7 @@ html {
 }
 .charts-view li {
   height: 318px;
-  margin: 0 15px 15px 15px;
+  margin: 0 0 15px;
   border-radius: 7px;
   background: #122b43;
   display: block;
@@ -7146,16 +7160,27 @@ html {
   font-weight: 600;
   margin-bottom: 15px;
 }
+.settings-view .settings-group.with-avatar {
+  position: relative;
+}
+.settings-view .settings-group.with-avatar .avatar-picker {
+  position: absolute;
+  top: 18px;
+  left: 0px;
+}
+.settings-view .settings-group.with-avatar .form-groups-right {
+  padding-left: 106px;
+}
 .settings-view a.settings-item-row {
   cursor: pointer;
 }
 .settings-view .settings-item-row {
   position: relative;
   display: block;
-  padding: 15px 0;
+  padding: 13px 0;
   margin-right: -15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: white;
 }
 .settings-view .settings-item-row:hover {
@@ -7165,15 +7190,10 @@ html {
   border-top: none;
 }
 .settings-view .settings-item-row i.icon.pull-right {
-  opacity: 0;
   position: absolute;
   right: 15px;
   top: 9px;
-  -webkit-transition: all 0.14s ease-out;
-  transition: all 0.14s ease-out;
-}
-.settings-view .settings-item-row i.icon.pull-right.selected {
-  opacity: 1;
+  opacity: 0.5;
 }
 .settings-view .input-group label {
   font-weight: 600;
@@ -7190,6 +7210,15 @@ html {
   padding: 15px 0;
   font-weight: 300;
   opacity: 0.8;
+}
+.settings-edit-field-view .form-horizontal {
+  padding: 30px 0;
+}
+.settings-edit-field-view .form-horizontal label {
+  text-align: right !important;
+}
+.settings-edit-field-view .form-horizontal .input-col {
+  padding: 0 0 0 15px;
 }
 .question-picker .custom-picker:before,
 .question-picker .custom-picker:after {
@@ -7346,6 +7375,18 @@ html {
   border-radius: 30px;
   margin-left: -45px;
 }
+.avatar-picker.small img {
+  width: 90px;
+  height: 90px;
+  border-radius: 90px;
+}
+.avatar-picker.small input {
+  width: 90px;
+  height: 113px;
+}
+.avatar-picker.small a {
+  bottom: 12px;
+}
 .bottom-links {
   font-size: 14px;
   padding: 12px 0;
@@ -7450,7 +7491,7 @@ html {
 .welcome {
   margin: 0 auto;
   text-align: left;
-  padding: 32px 15px 32px 79px;
+  padding: 32px 0 32px 64px;
   position: relative;
 }
 .welcome img {
@@ -7459,7 +7500,7 @@ html {
   width: 48px;
   height: 48px;
   top: 32px;
-  left: 15px;
+  left: 0;
 }
 .welcome h2 {
   font-weight: 500;

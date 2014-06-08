@@ -250,8 +250,8 @@ define("views/chartItemView",
     			'discuss/' + this.model.get('id'),
     			'pushLeft',
     			{
-    				trigger: true	
-    			}	
+    				trigger: true
+    			}
     		);
     		return false;
     	}

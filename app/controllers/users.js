@@ -308,6 +308,7 @@ exports.update = function(req, res, next){
 	if (body.tutorial) user.tutorial = JSON.stringify(body.tutorial);
 	if (body.name) user.name = body.name;
 	if (body.password) user.password = body.password;
+	if (body.avatar) user.avatar = body.avatar;
 
 	req.user.save(function(err, user){
 		if(err) return next(err);
