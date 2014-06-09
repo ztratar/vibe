@@ -23,6 +23,7 @@ module.exports = function (app, passport) {
 	// API ENDPOINTS
 	//
 	app.get('/api/users', c.users.get);
+	app.get('/api/users/pending', c.users.getPending);
 	app.get('/api/meta_questions', c.meta_questions.index);
 	app.get('/api/meta_questions/suggested', c.meta_questions.suggested);
 	app.get('/api/meta_questions/:meta_question', c.meta_questions.get);
@@ -38,9 +39,10 @@ module.exports = function (app, passport) {
 	app.post('/api/login', c.users.login);
 	app.post('/api/logout', c.users.logout);
 	app.post('/api/users', c.users.create);
-	app.post('/api/users/invite', c.users.batchInvite);
 	app.post('/api/users/:email/forgot_password', c.users.forgot_password);
 	app.post('/api/users/:email/reset_password', c.users.reset_password);
+	app.post('/api/userinvites', c.users.invite);
+	app.post('/api/userinvites/batch_invite', c.users.batchInvite);
 	app.post('/api/access/request', c.access.request);
 	app.post('/api/access/invite', c.access.invite);
 	app.post('/api/meta_questions', c.meta_questions.create);
@@ -49,7 +51,7 @@ module.exports = function (app, passport) {
 	app.post('/api/answers/question/:question/survey/:survey', c.answers.create);
 	app.post('/api/surveys', c.surveys.create);
 
-	app.put('/api/users/:email', c.users.update);
+	app.put('/api/users/:id', c.users.update);
 	app.put('/api/questions/:question', c.questions.update);
 	app.put('/api/surveys/:survey/question/:question', c.surveys.addQuestion);
 
@@ -57,6 +59,9 @@ module.exports = function (app, passport) {
 	app.param('question', c.questions.loadQuestion);
 	app.param('survey', c.surveys.loadSurvey);
 	app.param('answer', c.answers.loadAnswer);
+
+	app.delete('/api/users/:id', c.users.delete);
+	app.delete('/api/userinvites/:id', c.users.uninvite);
 
 	//
 	// PAGES

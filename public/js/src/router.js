@@ -15,6 +15,7 @@ import DiscussView from 'views/discussView';
 
 import SettingsView from 'views/settingsView';
 import SettingsEditFieldView from 'views/settingsEditFieldView';
+import ManageTeamView from 'views/manageTeamView';
 
 var Router = Backbone.Router.extend({
 
@@ -31,6 +32,8 @@ var Router = Backbone.Router.extend({
 		'settings/name': 'settingsName',
 		'settings/email': 'settingsEmail',
 		'settings/password': 'settingsPassword',
+		'settings/admin/team': 'manageTeam',
+		'settings/admin/polls': 'managePolls',
 		'welcome/:step': 'welcome',
 		'discuss/:id': 'discuss',
 		'survey/:tag': 'survey',
@@ -193,6 +196,7 @@ var Router = Backbone.Router.extend({
 				attributeName: 'password',
 				placeholder: 'Make it great!',
 				confirm: true,
+				askForCurrent: true,
 				fieldType: 'password',
 				helperText: 'After clicking save, we will send you a confirmation email to complete the change.'
 			});
@@ -224,6 +228,29 @@ var Router = Backbone.Router.extend({
 		this.trigger('loaded');
 	},
 
+	manageTeam: function() {
+		var that = this,
+			manageTeamView = new ManageTeamView();
+
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Team',
+			leftAction: {
+				icon: '#61903',
+				title: '',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			}
+		});
+
+		this.screenRouter.currentScreenContainer.html(manageTeamView.$el);
+		manageTeamView.render();
+
+		this.trigger('loaded');
+	},
 
 	discuss: function(questionId) {
 		var that = this,

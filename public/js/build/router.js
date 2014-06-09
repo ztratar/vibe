@@ -1,6 +1,6 @@
 define("router", 
-  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","views/discussView","views/settingsView","views/settingsEditFieldView","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __exports__) {
+  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","views/discussView","views/settingsView","views/settingsEditFieldView","views/manageTeamView","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __exports__) {
     "use strict";
 
     var ScreenRouter = __dependency4__["default"];
@@ -16,6 +16,7 @@ define("router",
 
     var SettingsView = __dependency12__["default"];
     var SettingsEditFieldView = __dependency13__["default"];
+    var ManageTeamView = __dependency14__["default"];
 
     var Router = Backbone.Router.extend({
 
@@ -32,6 +33,8 @@ define("router",
     		'settings/name': 'settingsName',
     		'settings/email': 'settingsEmail',
     		'settings/password': 'settingsPassword',
+    		'settings/admin/team': 'manageTeam',
+    		'settings/admin/polls': 'managePolls',
     		'welcome/:step': 'welcome',
     		'discuss/:id': 'discuss',
     		'survey/:tag': 'survey',
@@ -194,6 +197,7 @@ define("router",
     				attributeName: 'password',
     				placeholder: 'Make it great!',
     				confirm: true,
+    				askForCurrent: true,
     				fieldType: 'password',
     				helperText: 'After clicking save, we will send you a confirmation email to complete the change.'
     			});
@@ -225,6 +229,29 @@ define("router",
     		this.trigger('loaded');
     	},
 
+    	manageTeam: function() {
+    		var that = this,
+    			manageTeamView = new ManageTeamView();
+
+    		window.Vibe.appView.headerView.setButtons({
+    			title: 'Team',
+    			leftAction: {
+    				icon: '#61903',
+    				title: '',
+    				click: function(ev) {
+    					that.navigateWithAnimation('/settings', 'pushRight', {
+    						trigger: true
+    					});
+    					return false;
+    				}
+    			}
+    		});
+
+    		this.screenRouter.currentScreenContainer.html(manageTeamView.$el);
+    		manageTeamView.render();
+
+    		this.trigger('loaded');
+    	},
 
     	discuss: function(questionId) {
     		var that = this,

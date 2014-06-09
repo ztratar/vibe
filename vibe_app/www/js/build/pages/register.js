@@ -167,7 +167,7 @@ define("pages/register",
     			window.location.href = '/';
     		} else {
     			$.ajax({
-    				url: '/api/users/invite',
+    				url: '/api/userinvites/batch_invite',
     				type: 'POST',
     				data: {
     					users: inviteData

@@ -1,5 +1,4 @@
 // Module dependencies.
-
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	_ = require('underscore'),
@@ -25,5 +24,16 @@ UserInviteSchema.path('invitee.email').validate(function (email) {
 UserInviteSchema.path('invitee.email').validate(function (email) {
   return helpers.isValidEmail(email);
 }, 'That email doesnt work');
+
+UserInviteSchema.methods = {
+
+	asUser: function() {
+		return _.extend(this.toObject().invitee, {
+			_id: this._id.toString(),
+			time_invited: this.timeCreated
+		});
+	}
+
+};
 
 mongoose.model('UserInvite', UserInviteSchema);

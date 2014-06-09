@@ -80,6 +80,27 @@ var SettingsView = Backbone.View.extend({
 		return false;
 	},
 
+	manageTeamPage: function() {
+		window.Vibe.appRouter.navigateWithAnimation(
+			'settings/admin/team',
+			'pushLeft',
+			{
+				trigger: true
+			}
+		);
+		return false;
+	},
+
+	managePollsPage: function() {
+		window.Vibe.appRouter.navigateWithAnimation(
+			'settings/admin/polls',
+			'pushLeft',
+			{
+				trigger: true
+			}
+		);
+		return false;
+	},
 
 	logOut: function() {
 		$.post('/api/logout', function(data) {

@@ -31,6 +31,13 @@ exports.login = function (req, res) {
 				error: 'Invalid email or password'
 			});
 		}
+
+		if (user.active === false) {
+			return res.send({
+				error: 'This account has been disabled'
+			});
+		}
+
 		req.logIn(user, function(err) {
 			if (err || !user) {
 				return res.send({
@@ -288,10 +295,44 @@ exports.createFromUserInvite = function(req, res, next) {
 /*
  * GET /api/users
  *
- * Get current user
+ * Get all users in your company
  */
 exports.get = function(req, res, next){
-	return res.send(req.user.stripInfo());
+	User.find({
+		company: req.user.company,
+		active: true
+	}, function(err, users) {
+		if (err) return helpers.sendError(res, "Couldn't find any users");
+		if (!users) return res.send([]);
+
+		res.send(_.map(users, function(user) {
+			return user.stripInfo();
+		}));
+	});
+};
+
+/*
+ * GET /api/users/pending
+ *
+ * Get pending invites sent from admins. This
+ * is shown on the settings manage team page.
+ */
+exports.getPending = function(req, res) {
+	if (!req.user.isAdmin) {
+		return helpers.sendError(res, "Only admins can do this");
+	}
+
+	UserInvite.find({
+		company: req.user.company,
+		registered: false
+	}, function(err, userInvites) {
+		if (err) return helpers.sendError(res, "Couldn't find invites");
+		if (!userInvites.length) res.send([]);
+
+		res.send(_.map(userInvites, function(userInvite) {
+			return userInvite.asUser()
+		}));
+	});
 };
 
 /*
@@ -302,22 +343,53 @@ exports.get = function(req, res, next){
  * Query vars:
  */
 exports.update = function(req, res, next){
-	var user = req.user;
-	var body = req.body;
+	if (!req.params.id) {
+		return res.send({ error: 'No id specified' });
+	}
 
-	if (body.tutorial) user.tutorial = JSON.stringify(body.tutorial);
-	if (body.name) user.name = body.name;
-	if (body.password) user.password = body.password;
-	if (body.avatar) user.avatar = body.avatar;
-
-	req.user.save(function(err, user){
+	Async.waterfall([function(cb) {
+		if (req.params.id !== req.user._id.toString()) {
+			// Editing other user... check to see if permissions are good
+			User.findById(req.params.id, function(err, user) {
+				if (user.company.toString() === req.user.company._id.toString() && req.user.isAdmin) {
+					cb(null, user);
+				} else {
+					return cb("You don't have permission to do this");
+				}
+			});
+		} else {
+			cb(null, req.user);
+		}
+	}], function(err, user) {
 		if (err) return helpers.sendError(res, err);
-		return res.send(user.stripInfo());
+
+		var body = req.body;
+
+		if (body.tutorial) user.tutorial = JSON.stringify(body.tutorial);
+		if (body.name) user.name = body.name;
+		if (body.avatar) user.avatar = body.avatar;
+		if (body.isAdmin !== undefined) user.isAdmin = body.isAdmin;
+
+		// Ensure current user for password changes
+		if (body.password && user._id.toString() === req.user._id.toString()) {
+			// confirm old password
+			if (user.authenticate(body.password_current)) {
+				// Cool - change the password
+				user.password = body.password;
+			} else {
+				return res.send({ error: "Invalid current password" });
+			}
+		}
+
+		user.save(function(err, user){
+			if (err) return helpers.sendError(res, err);
+			return res.send(user.stripInfo());
+		});
 	});
 };
 
 /*
- * POST /api/users/invite
+ * POST /api/userinvites/batch_invite
  *
  * Bulk invite users based on their email.
  * Used in part 3 of the admin registration process.
@@ -331,6 +403,10 @@ exports.batchInvite = function(req, res) {
 	var users = req.body.users,
 		userInvite;
 
+	if (!req.user.isAdmin) {
+		return helpers.sendError(res, "Only admins can do this");
+	}
+
 	if (!_.isArray(users) || !users.length) {
 		return helpers.sendError(res, "Input incorrectly formatted");
 	}
@@ -343,33 +419,77 @@ exports.batchInvite = function(req, res) {
 
 	Company.findById(req.user.company, function(err, company) {
 		for (i = 0; i < users.length; i++) {
-			UserInvite.create({
-				inviter: req.user._id,
-				company: req.user.company,
-				invitee: {
-					email: users[i].email,
-					isAdmin: users[i].isAdmin
-				}
-			}, function(err, userInvite) {
-				if (userInvite) {
-					email.send({
-						to: userInvite.invitee.email,
-						subject: req.user.name + ' invited you to join '+company.name+'\'s Vibe!',
-						templateName: 'invite_user',
-						templateData: {
-							inviter_name: req.user.name,
-							company_name: company.name,
-							uniqueHash: userInvite._id.toString(),
-							email: userInvite.invitee.email
-						}
-					});
-				}
+			exports.inviteUser(req, res, company, {
+				email: users[i].email,
+				isAdmin: users[i].isAdmin
 			});
 		}
 	});
 
 	res.send({
 		status: 'success'
+	});
+};
+
+/*
+ * POST /api/userinvites
+ *
+ * Invite a single user via an email, return
+ * as user object
+ *
+ * Query vars:
+ *  	email (String): email of user to invite
+ */
+exports.invite = function(req, res) {
+	if (!req.user.isAdmin) {
+		return helpers.sendError(res, "Only admins can do this");
+	}
+
+	if (!helpers.isValidEmail(req.body.email)) {
+		return helpers.sendError(res, "That email doesn't work");
+	}
+
+	Company.findById(req.user.company, function(err, company) {
+		exports.inviteUser(req, res, company, {
+			email: req.body.email,
+			isAdmin: req.body.isAdmin
+		}, true);
+	});
+};
+
+/*
+ * INTERNAL
+ *
+ * Invite this user to the company
+ */
+exports.inviteUser = function(req, res, company, userToInvite, returnResponse) {
+	UserInvite.create({
+		inviter: req.user._id,
+		company: req.user.company,
+		invitee: {
+			email: userToInvite.email,
+			isAdmin: userToInvite.isAdmin
+		}
+	}, function(err, userInvite) {
+		if (err) return;
+
+		if (userInvite) {
+			email.send({
+				to: userInvite.invitee.email,
+				subject: req.user.name + ' invited you to join '+company.name+'\'s Vibe!',
+				templateName: 'invite_user',
+				templateData: {
+					inviter_name: req.user.name,
+					company_name: company.name,
+					uniqueHash: userInvite._id.toString(),
+					email: userInvite.invitee.email
+				}
+			});
+
+			if (returnResponse) {
+				res.send(userInvite.asUser());
+			}
+		}
 	});
 };
 
@@ -455,16 +575,48 @@ exports.reset_password = function(req, res) {
 		user.password = req.body.password;
 		user.reset_password_hash = '';
 		user.save(function(err) {
-			if (err && _.keys(err.errors).length) {
-				return res.send({
-					error: err.errors[_.keys(err.errors)[0]].message
-				});
-			}
+			if (err) return helpers.sendError(res, err);
 
 			return res.send(200, {
 				message: 'success'
 			});
 		});
+	});
+};
+
+/*
+ * DELETE /api/users/:id
+ *
+ * Delete the current user from the company
+ * by marking as inactve.
+ */
+exports.delete = function(req, res) {
+	User.findById(req.params.id, function(err, user) {
+		if (err) return helpers.sendError(res, err);
+		if (!user) return helpers.sendError(res, "No user found");
+
+		user.active = false;
+		user.save();
+
+		res.send(200);
+	});
+};
+
+/*
+ * DELETE /api/userinvites/:id
+ *
+ * Invalidates an invite previous sent by deleting
+ * the invite object
+ *
+ */
+exports.uninvite = function(req, res) {
+	UserInvite.findById(req.params.id, function(err, userInvite) {
+		if (err) return helpers.sendError(res, err);
+		if (!userInvite) return helpers.sendError(res, "No invite found");
+
+		userInvite.remove();
+
+		res.send(200);
 	});
 };
 

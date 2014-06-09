@@ -22,8 +22,10 @@ var UserSchema = new Schema({
 
   isAdmin: { type: Boolean, default: false },
   isSuperAdmin: { type: Boolean, default: false },
+
   company: { type: Schema.Types.ObjectId, ref: 'Company' },
   provider: String,
+  active: { type: Boolean, default: true },
 
   salt: String,
   hashed_password: String,

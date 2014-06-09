@@ -3,6 +3,11 @@
  */
 exports.index = function(req, res) {
 	if (req.isAuthenticated()) {
+		if (req.user.active === false) {
+			req.logout();
+			res.redirect('/login');
+		}
+
 		res.render('home/index', {
 			currentUser: req.user
 		});

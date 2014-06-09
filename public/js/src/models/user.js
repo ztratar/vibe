@@ -14,7 +14,7 @@ var User = BaseModel.extend({
 	},
 
 	initialize: function(opts) {
-		if (opts.avatar === '') {
+		if (opts && opts.avatar === '') {
 			this.setAvatar();
 		}
 	},
@@ -25,6 +25,18 @@ var User = BaseModel.extend({
 				silent: true
 			});
 		}
+	},
+
+	makeAdmin: function() {
+		this.save({
+			isAdmin: true
+		});
+	},
+
+	removeAdmin: function() {
+		this.save({
+			isAdmin: false
+		});
 	}
 
 });

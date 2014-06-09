@@ -19,6 +19,7 @@ var SettingsEditFieldView = Backbone.View.extend({
 			title: '',
 			attributeName: '',
 			placeholder: '',
+			askForCurrent: false,
 			confirm: false,
 			helperText: '',
 			fieldType: 'text'
@@ -30,6 +31,7 @@ var SettingsEditFieldView = Backbone.View.extend({
 			title: this.title,
 			attributeName: this.attributeName,
 			confirm: this.confirm,
+			askForCurrent: this.askForCurrent,
 			placeholder: this.placeholder,
 			helperText: this.helperText,
 			fieldType: this.fieldType,
@@ -47,7 +49,10 @@ var SettingsEditFieldView = Backbone.View.extend({
 
 	saveField: function(cb) {
 		var that = this,
-			inputVal = this.getFieldInputValue();
+			inputVal = this.getFieldInputValue(),
+			saveObj = {};
+
+		saveObj[this.attributeName] = inputVal;
 
 		this.$error.html('').hide();
 
@@ -61,14 +66,31 @@ var SettingsEditFieldView = Backbone.View.extend({
 			return false;
 		}
 
+		if (this.askForCurrent) {
+			if (!this.getCurrentFieldInputValue()) {
+				this.$error.html('Enter your current' + this.title).show();
+				return false;
+			}
+
+			saveObj[this.attributeName + '_current'] = this.getCurrentFieldInputValue();
+		}
+
 		this.setLoading(true);
 
-		this.model.save(this.attributeName, inputVal, {
+		this.model.save(saveObj, {
 			success: function(model, data) {
 				if (data.error) {
 					that.setLoading(false);
 					that.$error.html(data.error).show();
 					return false;
+				}
+				if (that.attributeName === 'password') {
+					// Set password to undefined
+					// to future PUT operations don't
+					// mistkanly try and set a new one
+					model.set('password', undefined, {
+						silent: true
+					});
 				}
 				if (cb && typeof cb === 'function') {
 					cb(model, data);
@@ -88,6 +110,10 @@ var SettingsEditFieldView = Backbone.View.extend({
 
 	getConfirmFieldInputValue: function() {
 		return this.$('input[name="'+this.attributeName+'_confirm"]').val();
+	},
+
+	getCurrentFieldInputValue: function() {
+		return this.$('input[name="'+this.attributeName+'_current"]').val();
 	},
 
 	setLoading: function(setToLoading) {

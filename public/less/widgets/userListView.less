@@ -1,0 +1,75 @@
+.user-list-view {
+	list-style: none;
+	padding: 0;
+	margin-top: -12px;
+
+	li {
+		display: block;
+		text-align: left;
+		padding: 12px 0;
+		position: relative;
+
+		img {
+			width: 80px;
+			height: 80px;
+			border-radius: 120px;
+			margin-right: 18px !important;
+		}
+
+		h4 {
+			font-weight: 600;
+			font-size: @font-size-large;
+			margin: 17px 0 0 0;
+		}
+
+		span {
+			color: @vibe-lighter;
+			font-size: @font-size-base;
+		}
+
+		.buttons {
+			position: absolute;
+			right: 0;
+			top: 36px;
+		}
+
+		a.button {
+			i {
+				font-size: 32px;
+			}
+
+			&.x-icon {
+				margin: 2px -2px -2px 0;
+				vertical-align: bottom;
+			}
+		}
+	}
+
+	@media (max-width: @screen-xs) {
+		margin-top: -9px;
+
+		li {
+			padding: 9px 0;
+
+			img {
+				width: 48px;
+				height: 48px;
+				margin-right: 12px !important;
+			}
+
+			h4 {
+				margin: 0px 0 0 0;
+			}
+
+			.buttons {
+				top: 16px;
+			}
+
+			a.button {
+				i {
+					font-size: 26px;
+				}
+			}
+		}
+	}
+}

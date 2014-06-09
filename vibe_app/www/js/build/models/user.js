@@ -18,7 +18,7 @@ define("models/user",
     	},
 
     	initialize: function(opts) {
-    		if (opts.avatar === '') {
+    		if (opts && opts.avatar === '') {
     			this.setAvatar();
     		}
     	},
@@ -29,6 +29,18 @@ define("models/user",
     				silent: true
     			});
     		}
+    	},
+
+    	makeAdmin: function() {
+    		this.save({
+    			isAdmin: true
+    		});
+    	},
+
+    	removeAdmin: function() {
+    		this.save({
+    			isAdmin: false
+    		});
     	}
 
     });

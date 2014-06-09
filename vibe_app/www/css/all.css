@@ -6349,6 +6349,17 @@ div.checkbox input[disabled] + label:after {
   background: #6997c6;
   background-color: #6997c6;
 }
+.x-icon {
+  color: rgba(255, 255, 255, 0.3);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.x-icon:hover {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
 .header-view {
   background: #2f557c;
   padding: 0;
@@ -7147,30 +7158,6 @@ html {
   text-align: left;
   padding: 15px;
 }
-.settings-view .settings-group {
-  margin: 23px 0 42px 0;
-}
-.settings-view .settings-group h3 {
-  font-size: 22px;
-  font-weight: 600;
-  margin: 0 0 17px 0;
-  color: #12ab97;
-}
-.settings-view .settings-group > h4 {
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-.settings-view .settings-group.with-avatar {
-  position: relative;
-}
-.settings-view .settings-group.with-avatar .avatar-picker {
-  position: absolute;
-  top: 18px;
-  left: 0px;
-}
-.settings-view .settings-group.with-avatar .form-groups-right {
-  padding-left: 106px;
-}
 .settings-view a.settings-item-row {
   cursor: pointer;
 }
@@ -7210,6 +7197,30 @@ html {
   padding: 15px 0;
   font-weight: 300;
   opacity: 0.8;
+}
+.settings-group {
+  margin: 23px 0 42px 0;
+}
+.settings-group h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 17px 0;
+  color: #12ab97;
+}
+.settings-group > h4 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.settings-group.with-avatar {
+  position: relative;
+}
+.settings-group.with-avatar .avatar-picker {
+  position: absolute;
+  top: 18px;
+  left: 0px;
+}
+.settings-group.with-avatar .form-groups-right {
+  padding-left: 106px;
 }
 .settings-edit-field-view .form-horizontal {
   padding: 30px 0;
@@ -7394,6 +7405,117 @@ html {
   margin-top: 32px;
   color: rgba(255, 255, 255, 0.7);
 }
+form.invite-user {
+  width: 100%;
+  position: relative;
+  background: #2f557c;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 30px 0 50px 0;
+}
+form.invite-user .form-group {
+  width: calc(100% - 105px);
+  margin: 0 10px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+form.invite-user .form-group input {
+  width: 100%;
+}
+form.invite-user button.btn {
+  width: 90px;
+}
+@media (max-width: 480px) {
+  form.invite-user {
+    margin: 15px 0 0 0;
+    padding: 8px;
+  }
+  form.invite-user .form-group {
+    width: calc(100% - 70px);
+    margin: 0 6px 0 0;
+  }
+  form.invite-user .form-group input {
+    height: 33px;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px;
+  }
+  selectform.invite-user .form-group input {
+    height: 33px;
+    line-height: 33px;
+  }
+  textareaform.invite-user .form-group input,
+  select[multiple]form.invite-user .form-group input {
+    height: auto;
+  }
+  form.invite-user button.btn.btn-lg {
+    height: 33px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px;
+    width: 60px;
+    padding: 5px 10px;
+  }
+  selectform.invite-user button.btn.btn-lg {
+    height: 33px;
+    line-height: 33px;
+  }
+  textareaform.invite-user button.btn.btn-lg,
+  select[multiple]form.invite-user button.btn.btn-lg {
+    height: auto;
+  }
+}
+.manage-team-view .settings-group {
+  text-align: left;
+}
+@media (max-width: 480px) {
+  .manage-team-view .settings-group {
+    margin-bottom: 27px;
+  }
+}
+.manage-team-view ul.user-invite-list {
+  list-style: none;
+  padding: 0;
+}
+.manage-team-view ul.user-invite-list li {
+  padding: 4px 0;
+  position: relative;
+}
+.manage-team-view ul.user-invite-list span {
+  vertical-align: bottom;
+}
+.manage-team-view ul.user-invite-list span.email {
+  width: calc(100% - 180px);
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.manage-team-view ul.user-invite-list span.invited {
+  color: #5388be;
+  font-size: 14px;
+  margin-right: 30px;
+}
+.manage-team-view ul.user-invite-list a.uninvite {
+  position: absolute;
+  font-size: 24px;
+  top: 0;
+  right: 0;
+  color: rgba(255, 255, 255, 0.3);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  display: inline-block;
+}
+.manage-team-view ul.user-invite-list a.uninvite:hover {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
+.manage-team-view ul.user-list-view .media {
+  width: calc(100% - 115px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .steps-wrapper {
   position: absolute;
   top: 0;
@@ -7560,6 +7682,66 @@ body.survey-show .survey-notif a {
 .survey-notif a i.icon.due {
   margin: -5px 11px 0px 0;
   float: left;
+}
+.user-list-view {
+  list-style: none;
+  padding: 0;
+  margin-top: -12px;
+}
+.user-list-view li {
+  display: block;
+  text-align: left;
+  padding: 12px 0;
+  position: relative;
+}
+.user-list-view li img {
+  width: 80px;
+  height: 80px;
+  border-radius: 120px;
+  margin-right: 18px !important;
+}
+.user-list-view li h4 {
+  font-weight: 600;
+  font-size: 20px;
+  margin: 17px 0 0 0;
+}
+.user-list-view li span {
+  color: #5388be;
+  font-size: 16px;
+}
+.user-list-view li .buttons {
+  position: absolute;
+  right: 0;
+  top: 36px;
+}
+.user-list-view li a.button i {
+  font-size: 32px;
+}
+.user-list-view li a.button.x-icon {
+  margin: 2px -2px -2px 0;
+  vertical-align: bottom;
+}
+@media (max-width: 480px) {
+  .user-list-view {
+    margin-top: -9px;
+  }
+  .user-list-view li {
+    padding: 9px 0;
+  }
+  .user-list-view li img {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px !important;
+  }
+  .user-list-view li h4 {
+    margin: 0px 0 0 0;
+  }
+  .user-list-view li .buttons {
+    top: 16px;
+  }
+  .user-list-view li a.button i {
+    font-size: 26px;
+  }
 }
 html,
 body {

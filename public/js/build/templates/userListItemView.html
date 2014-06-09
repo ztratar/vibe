@@ -1,0 +1,28 @@
+<div class="media">
+	<img class="pull-left media-object" src="<%- model.avatar %>">
+	<div class="media-body">
+		<h4><%- model.name %></h4>
+		<span><%- model.email %></span>
+	</div>
+</div>
+<% if (buttons && buttons.length) { %>
+	<div class="buttons">
+	<% for (var i = 0; i < buttons.length; i++) { %>
+		<% if (typeof buttons[i].className === 'function') { %>
+		<a class="button <%= buttons[i].className(model) %>" href="#">
+		<% } else { %>
+		<a class="button <%= buttons[i].className %>" href="#">
+		<% } %>
+			<% if (buttons[i].icon) { %>
+			<i class="icon"><%= buttons[i].icon %></i>
+			<% } else { %>
+				<% if (typeof buttons[i].text === 'function') { %>
+					<%= buttons[i].text(model) %>
+				<% } else { %>
+					<%= buttons[i].text %>
+				<% } %>
+			<% } %>
+		</a>
+	<% } %>
+	</div>
+<% } %>
