@@ -56,7 +56,7 @@ var SettingsEditFieldView = Backbone.View.extend({
 			return false;
 		}
 
-		if (inputVal !== this.getConfirmFieldInputValue()) {
+		if (this.confirm && (inputVal !== this.getConfirmFieldInputValue())) {
 			this.$error.html('Fields don\'t match').show();
 			return false;
 		}
