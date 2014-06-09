@@ -20,7 +20,8 @@ var SettingsEditFieldView = Backbone.View.extend({
 			attributeName: '',
 			placeholder: '',
 			confirm: false,
-			helperText: ''
+			helperText: '',
+			fieldType: 'text'
 		}, opts);
 	},
 
@@ -31,6 +32,7 @@ var SettingsEditFieldView = Backbone.View.extend({
 			confirm: this.confirm,
 			placeholder: this.placeholder,
 			helperText: this.helperText,
+			fieldType: this.fieldType,
 			currentValue: this.model.get(this.attributeName)
 		}));
 		this.$form = this.$('.form');
@@ -51,6 +53,11 @@ var SettingsEditFieldView = Backbone.View.extend({
 
 		if (!inputVal) {
 			this.$error.html('This can\'t be blank').show();
+			return false;
+		}
+
+		if (inputVal !== this.getConfirmFieldInputValue()) {
+			this.$error.html('Fields don\'t match').show();
 			return false;
 		}
 
@@ -77,6 +84,10 @@ var SettingsEditFieldView = Backbone.View.extend({
 
 	getFieldInputValue: function() {
 		return this.$('input[name="'+this.attributeName+'"]').val();
+	},
+
+	getConfirmFieldInputValue: function() {
+		return this.$('input[name="'+this.attributeName+'_confirm"]').val();
 	},
 
 	setLoading: function(setToLoading) {

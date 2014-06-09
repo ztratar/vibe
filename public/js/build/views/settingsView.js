@@ -71,6 +71,17 @@ define("views/settingsView",
     		return false;
     	},
 
+    	editPasswordPage: function() {
+    		window.Vibe.appRouter.navigateWithAnimation(
+    			'settings/password',
+    			'pushLeft',
+    			{
+    				trigger: true
+    			}
+    		);
+    		return false;
+    	},
+
 
     	logOut: function() {
     		$.post('/api/logout', function(data) {

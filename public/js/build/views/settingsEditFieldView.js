@@ -22,7 +22,8 @@ define("views/settingsEditFieldView",
     			attributeName: '',
     			placeholder: '',
     			confirm: false,
-    			helperText: ''
+    			helperText: '',
+    			fieldType: 'text'
     		}, opts);
     	},
 
@@ -33,6 +34,7 @@ define("views/settingsEditFieldView",
     			confirm: this.confirm,
     			placeholder: this.placeholder,
     			helperText: this.helperText,
+    			fieldType: this.fieldType,
     			currentValue: this.model.get(this.attributeName)
     		}));
     		this.$form = this.$('.form');
@@ -53,6 +55,11 @@ define("views/settingsEditFieldView",
 
     		if (!inputVal) {
     			this.$error.html('This can\'t be blank').show();
+    			return false;
+    		}
+
+    		if (inputVal !== this.getConfirmFieldInputValue()) {
+    			this.$error.html('Fields don\'t match').show();
     			return false;
     		}
 
@@ -79,6 +86,10 @@ define("views/settingsEditFieldView",
 
     	getFieldInputValue: function() {
     		return this.$('input[name="'+this.attributeName+'"]').val();
+    	},
+
+    	getConfirmFieldInputValue: function() {
+    		return this.$('input[name="'+this.attributeName+'_confirm"]').val();
     	},
 
     	setLoading: function(setToLoading) {

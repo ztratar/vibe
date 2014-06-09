@@ -311,8 +311,7 @@ exports.update = function(req, res, next){
 	if (body.avatar) user.avatar = body.avatar;
 
 	req.user.save(function(err, user){
-		if(err) return next(err);
-
+		if (err) return helpers.sendError(res, err);
 		return res.send(user.stripInfo());
 	});
 };

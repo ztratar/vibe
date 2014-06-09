@@ -30,6 +30,7 @@ var Router = Backbone.Router.extend({
 		'settings': 'settings',
 		'settings/name': 'settingsName',
 		'settings/email': 'settingsEmail',
+		'settings/password': 'settingsPassword',
 		'welcome/:step': 'welcome',
 		'discuss/:id': 'discuss',
 		'survey/:tag': 'survey',
@@ -183,6 +184,46 @@ var Router = Backbone.Router.extend({
 
 		this.trigger('loaded');
 	},
+
+	settingsPassword: function() {
+		var that = this,
+			settingsEditFieldView = new SettingsEditFieldView({
+				title: 'Password',
+				model: window.Vibe.user,
+				attributeName: 'password',
+				placeholder: 'Make it great!',
+				confirm: true,
+				fieldType: 'password',
+				helperText: 'After clicking save, we will send you a confirmation email to complete the change.'
+			});
+
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Password',
+			leftAction: {
+				icon: '',
+				title: 'Cancel',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			},
+			rightAction: {
+				title: 'Save',
+				click: function() {
+					settingsEditFieldView.saveField();
+					return false;
+				}
+			}
+		});
+
+		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+		settingsEditFieldView.render();
+
+		this.trigger('loaded');
+	},
+
 
 	discuss: function(questionId) {
 		var that = this,

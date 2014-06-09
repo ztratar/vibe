@@ -16,7 +16,7 @@ helpers.sendError = function(res, error) {
 		if (error.errors) {
 			for (var errorField in error.errors) {
 				return res.send({
-					error: error.errors[errorField]
+					error: error.errors[errorField].message
 				});
 			}
 		} else {

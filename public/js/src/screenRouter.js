@@ -10,7 +10,7 @@ _.extend(ScreenRouter.prototype, {
 		'pushRight',
 		'slideUp',
 		'slideDown',
-		'fade'	
+		'fade'
 	],
 	initCurrentScreen: function() {
 		this.currentScreen = $('.screen.current');
@@ -23,7 +23,7 @@ _.extend(ScreenRouter.prototype, {
 	createNewScreen: function(screenSize) {
 		// If a screen has current when the animation
 		// is called, it should be entering the screen.
-		// Else, it is leaving the screen.	
+		// Else, it is leaving the screen.
 		if (this.currentScreen) {
 			this.removeOldScreen();
 			this.oldScreen = this.currentScreen;
