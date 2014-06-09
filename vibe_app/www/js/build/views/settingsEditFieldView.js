@@ -86,6 +86,14 @@ define("views/settingsEditFieldView",
     					that.$error.html(data.error).show();
     					return false;
     				}
+    				if (that.attributeName === 'password') {
+    					// Set password to undefined
+    					// to future PUT operations don't
+    					// mistkanly try and set a new one
+    					model.set('password', undefined, {
+    						silent: true
+    					});
+    				}
     				if (cb && typeof cb === 'function') {
     					cb(model, data);
     				}

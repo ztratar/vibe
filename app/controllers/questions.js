@@ -1,5 +1,6 @@
 // Module dependencies.
 var mongoose = require('mongoose'),
+	_ = require('underscore'),
 	Async = require('async'),
 	User = mongoose.model('User'),
 	MetaQuestion = mongoose.model('MetaQuestion'),
@@ -82,6 +83,26 @@ exports.index = function(req, res, next){
 };
 
 /*
+ * GET /api/questions/suggested
+ *
+ * Return suggested meta questions for company
+ * use, transformed into questions
+ */
+exports.suggested = function(req, res, next) {
+	MetaQuestion.find({
+		suggested: true
+	}, function(err, meta_questions) {
+		if (err) return helpers.sendError(res, err);
+		if (!meta_questions.length) {
+			return helpers.sendError(res, "No questions found");
+		}
+		return res.send(_.map(meta_questions, function(mQ) {
+			return mQ.asQuestion();
+		}));
+	});
+};
+
+/*
  * GET /questions/:question
  *
  * Retrieve a question
@@ -94,10 +115,10 @@ exports.get = function (req, res, next) {
  * POST /questions
  *
  * Create a new question, either from
- * scratch or from a given metaQuestion
+ * scratch or from a given meta_question
  *
  * Query params:
- *		metaQuestion: _id of the meta question to copy
+ *		meta_question: _id of the meta question to copy
  *		body: body text
  */
 exports.create = function (req, res, next) {
@@ -105,13 +126,13 @@ exports.create = function (req, res, next) {
 		return helpers.sendError(res, "You dont have privileges to do that");
 	}
 
-	if (req.body.metaQuestion) {
-		MetaQuestion.findById(req.body.metaQuestion, function(err, metaQuestion) {
+	if (req.body.meta_question) {
+		MetaQuestion.findById(req.body.meta_question, function(err, metaQuestion) {
 			if (err) return helpers.sendError(res, err);
 			if (!metaQuestion) return helpers.sendError(res, "Meta Question not found");
 
 			Question.findOne({
-				metaQuestion: metaQuestion._id,
+				meta_question: metaQuestion._id,
 				company: req.user.company
 			}, function(err, question) {
 				if (err) return helpers.sendError(res, err);
@@ -123,7 +144,7 @@ exports.create = function (req, res, next) {
 					});
 				} else {
 					Question.create({
-						metaQuestion: metaQuestion._id,
+						meta_question: metaQuestion._id,
 						body: metaQuestion.body,
 						creator: req.user._id,
 						company: req.user.company
@@ -142,7 +163,7 @@ exports.create = function (req, res, next) {
 		}, function(err, metaQuestion) {
 			if (err || !metaQuestion) return helpers.sendError(res, err);
 			Question.create({
-				metaQuestion: metaQuestion._id,
+				meta_question: metaQuestion._id,
 				body: req.body.body,
 				creator: req.user._id,
 				company: req.user.company

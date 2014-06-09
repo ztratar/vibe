@@ -6300,6 +6300,71 @@ div.checkbox input[type=checkbox]:checked + label:after {
 div.checkbox input[disabled] + label:after {
   opacity: 0.4 !important;
 }
+form.form-horizontal-top {
+  width: 100%;
+  position: relative;
+  background: #2f557c;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 30px 0 50px 0;
+}
+form.form-horizontal-top .form-group {
+  width: calc(100% - 105px);
+  margin: 0 10px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+form.form-horizontal-top .form-group input {
+  width: 100%;
+}
+form.form-horizontal-top button.btn {
+  width: 90px;
+}
+@media (max-width: 480px) {
+  form.form-horizontal-top {
+    margin: 0px -15px 0;
+    padding: 8px;
+    position: absolute;
+    top: 0;
+    border-radius: 0;
+    background: rgba(47, 85, 124, 0.64);
+  }
+  form.form-horizontal-top .form-group {
+    width: calc(100% - 70px);
+    margin: 0 6px 0 0;
+  }
+  form.form-horizontal-top .form-group input {
+    height: 33px;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px;
+  }
+  selectform.form-horizontal-top .form-group input {
+    height: 33px;
+    line-height: 33px;
+  }
+  textareaform.form-horizontal-top .form-group input,
+  select[multiple]form.form-horizontal-top .form-group input {
+    height: auto;
+  }
+  form.form-horizontal-top button.btn.btn-lg {
+    height: 33px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px;
+    width: 60px;
+    padding: 5px 10px;
+  }
+  selectform.form-horizontal-top button.btn.btn-lg {
+    height: 33px;
+    line-height: 33px;
+  }
+  textareaform.form-horizontal-top button.btn.btn-lg,
+  select[multiple]form.form-horizontal-top button.btn.btn-lg {
+    height: auto;
+  }
+}
 .icon {
   font-size: 24px;
 }
@@ -6359,6 +6424,22 @@ div.checkbox input[disabled] + label:after {
 .x-icon:hover {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
+}
+.list-header {
+  padding: 10px 15px;
+  background: #122b43;
+  text-align: left;
+}
+.list-header h4 {
+  font-size: 16px;
+  color: #2f557c;
+  text-transform: uppercase;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .list-header {
+    margin: 0 -15px;
+  }
 }
 .header-view {
   background: #2f557c;
@@ -7405,67 +7486,6 @@ html {
   margin-top: 32px;
   color: rgba(255, 255, 255, 0.7);
 }
-form.invite-user {
-  width: 100%;
-  position: relative;
-  background: #2f557c;
-  border-radius: 6px;
-  padding: 15px;
-  margin: 30px 0 50px 0;
-}
-form.invite-user .form-group {
-  width: calc(100% - 105px);
-  margin: 0 10px 0 0;
-  display: inline-block;
-  vertical-align: middle;
-}
-form.invite-user .form-group input {
-  width: 100%;
-}
-form.invite-user button.btn {
-  width: 90px;
-}
-@media (max-width: 480px) {
-  form.invite-user {
-    margin: 15px 0 0 0;
-    padding: 8px;
-  }
-  form.invite-user .form-group {
-    width: calc(100% - 70px);
-    margin: 0 6px 0 0;
-  }
-  form.invite-user .form-group input {
-    height: 33px;
-    padding: 5px 10px;
-    font-size: 14px;
-    line-height: 1.5;
-    border-radius: 3px;
-  }
-  selectform.invite-user .form-group input {
-    height: 33px;
-    line-height: 33px;
-  }
-  textareaform.invite-user .form-group input,
-  select[multiple]form.invite-user .form-group input {
-    height: auto;
-  }
-  form.invite-user button.btn.btn-lg {
-    height: 33px;
-    font-size: 14px;
-    line-height: 1.5;
-    border-radius: 3px;
-    width: 60px;
-    padding: 5px 10px;
-  }
-  selectform.invite-user button.btn.btn-lg {
-    height: 33px;
-    line-height: 33px;
-  }
-  textareaform.invite-user button.btn.btn-lg,
-  select[multiple]form.invite-user button.btn.btn-lg {
-    height: auto;
-  }
-}
 .manage-team-view .settings-group {
   text-align: left;
 }
@@ -7515,6 +7535,16 @@ form.invite-user button.btn {
   width: calc(100% - 115px);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+@media (max-width: 480px) {
+  .manage-team-view {
+    padding-top: 43px;
+  }
+}
+@media (max-width: 480px) {
+  .manage-polls-view {
+    padding-top: 50px;
+  }
 }
 .steps-wrapper {
   position: absolute;

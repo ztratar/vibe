@@ -6,7 +6,7 @@ var Question = BaseModel.extend({
 
 	defaults: {
 		_id: undefined,
-		metaQuestion: undefined,
+		meta_question: undefined,
 		body: '',
 		active: true,
 		from: {

@@ -43,7 +43,7 @@ exports.index = function(req, res, next){
 						Async.detect(
 							questions,
 							function(question, done2){
-								return done2(meta_question._id.equals(question.metaQuestion));
+								return done2(meta_question._id.equals(question.meta_question));
 							},
 							function(question){
 								if(question){
@@ -75,7 +75,6 @@ exports.index = function(req, res, next){
 exports.get = function (req, res, next) {
 	return res.send(req.meta_question);
 };
-
 
 /*
  * POST /meta_questions

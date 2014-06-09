@@ -269,3 +269,51 @@ div.checkbox {
 		opacity: 0.4 !important;
 	}
 }
+
+form.form-horizontal-top {
+	width: 100%;
+	position: relative;
+	background: @vibe-light;
+	border-radius: @border-radius-large;
+	padding: 15px;
+	margin: 30px 0 50px 0;
+
+	.form-group {
+		width: calc(~"100% - 105px");
+		margin: 0 10px 0 0;
+		display: inline-block;
+		vertical-align: middle;
+
+		input {
+			width: 100%;
+		}
+	}
+
+	button.btn {
+		width: 90px;
+	}
+
+	@media (max-width: @screen-xs) {
+		margin: 0px -15px 0;
+		padding: 8px;
+		position: absolute;
+		top: 0;
+		border-radius: 0;
+		background: rgba(47, 85, 124, 0.64);
+
+		.form-group {
+			width: calc(~"100% - 70px");
+			margin: 0 6px 0 0;
+
+			input {
+				.input-sm;
+			}
+		}
+
+		button.btn.btn-lg {
+			.input-sm;
+			width: 60px;
+			padding: 5px 10px;
+		}
+	}
+}

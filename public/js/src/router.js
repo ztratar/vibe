@@ -16,6 +16,7 @@ import DiscussView from 'views/discussView';
 import SettingsView from 'views/settingsView';
 import SettingsEditFieldView from 'views/settingsEditFieldView';
 import ManageTeamView from 'views/manageTeamView';
+import ManagePollsView from 'views/managePollsView';
 
 var Router = Backbone.Router.extend({
 
@@ -248,6 +249,30 @@ var Router = Backbone.Router.extend({
 
 		this.screenRouter.currentScreenContainer.html(manageTeamView.$el);
 		manageTeamView.render();
+
+		this.trigger('loaded');
+	},
+
+	managePolls: function() {
+		var that = this,
+			managePollsView = new ManagePollsView();
+
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Polls',
+			leftAction: {
+				icon: '#61903',
+				title: '',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			}
+		});
+
+		this.screenRouter.currentScreenContainer.html(managePollsView.$el);
+		managePollsView.render();
 
 		this.trigger('loaded');
 	},

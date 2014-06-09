@@ -28,6 +28,7 @@ module.exports = function (app, passport) {
 	app.get('/api/meta_questions/suggested', c.meta_questions.suggested);
 	app.get('/api/meta_questions/:meta_question', c.meta_questions.get);
 	app.get('/api/questions', c.questions.index);
+	app.get('/api/questions/suggested', c.questions.suggested);
 	app.get('/api/questions/:question', c.questions.get);
 	app.get('/api/questions/:question/comments', c.questions.getComments);
 	app.get('/api/answers', c.answers.index);

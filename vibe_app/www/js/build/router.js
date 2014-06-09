@@ -1,6 +1,6 @@
 define("router", 
-  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","views/discussView","views/settingsView","views/settingsEditFieldView","views/manageTeamView","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __exports__) {
+  ["jquery","underscore","backbone","screenRouter","models/survey","models/question","views/homeView","views/welcomeView","views/surveyView","views/surveyDoneView","views/discussView","views/settingsView","views/settingsEditFieldView","views/manageTeamView","views/managePollsView","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __exports__) {
     "use strict";
 
     var ScreenRouter = __dependency4__["default"];
@@ -17,6 +17,7 @@ define("router",
     var SettingsView = __dependency12__["default"];
     var SettingsEditFieldView = __dependency13__["default"];
     var ManageTeamView = __dependency14__["default"];
+    var ManagePollsView = __dependency15__["default"];
 
     var Router = Backbone.Router.extend({
 
@@ -249,6 +250,30 @@ define("router",
 
     		this.screenRouter.currentScreenContainer.html(manageTeamView.$el);
     		manageTeamView.render();
+
+    		this.trigger('loaded');
+    	},
+
+    	managePolls: function() {
+    		var that = this,
+    			managePollsView = new ManagePollsView();
+
+    		window.Vibe.appView.headerView.setButtons({
+    			title: 'Polls',
+    			leftAction: {
+    				icon: '#61903',
+    				title: '',
+    				click: function(ev) {
+    					that.navigateWithAnimation('/settings', 'pushRight', {
+    						trigger: true
+    					});
+    					return false;
+    				}
+    			}
+    		});
+
+    		this.screenRouter.currentScreenContainer.html(managePollsView.$el);
+    		managePollsView.render();
 
     		this.trigger('loaded');
     	},

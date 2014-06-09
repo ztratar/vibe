@@ -19,6 +19,18 @@ var MetaQuestionSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
+MetaQuestionSchema.methods = {
+
+	asQuestion: function() {
+		var retObj = this.toObject();
+		return {
+			meta_question: retObj._id,
+			body: retObj.body
+		};
+	}
+
+};
+
 mongoose.model('MetaQuestion', MetaQuestionSchema);
 
 
@@ -26,7 +38,7 @@ mongoose.model('MetaQuestion', MetaQuestionSchema);
  * Question Schema
  */
 var QuestionSchema = new Schema({
-  metaQuestion: { type: Schema.Types.ObjectId, ref: 'MetaQuestion' },
+  meta_question: { type: Schema.Types.ObjectId, ref: 'MetaQuestion' },
   body: String,
   active: { type: Boolean, default: true },
   audience: { type: String, default: 'all' },

@@ -20,10 +20,7 @@ var QuestionPickerView = Backbone.View.extend({
 	},
 
 	initialize: function() {
-		this.suggestedQuestions = new MetaQuestions([{
-			body: 'Hey?',
-			suggested: true
-		}]);
+		this.suggestedQuestions = new MetaQuestions();
 		this.selectedQuestions = new Questions();
 
 		this.suggestedQuestions.on('all', this.render, this);
@@ -71,7 +68,7 @@ var QuestionPickerView = Backbone.View.extend({
 		}
 
 		question = new Question({
-			metaQuestion: questionId,
+			meta_question: questionId,
 			suggested: true
 		});
 		question.save();
@@ -89,7 +86,7 @@ var QuestionPickerView = Backbone.View.extend({
 
 		if (question.get('suggested')) {
 			this.suggestedQuestions.add({
-				_id: question.get('metaQuestion'),
+				_id: question.get('meta_question'),
 				body: question.get('body')
 			}, {
 				silent: true
