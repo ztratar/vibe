@@ -14,8 +14,7 @@ var QuestionListView = Backbone.View.extend({
 		this.questions = opts.questions;
 		this.button = opts.button;
 
-		this.questions.on('reset', this.render, this);
-		this.questions.on('add', this.addOne, this);
+		this.questions.on('all', this.render, this);
 	},
 
 	render: function() {

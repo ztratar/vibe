@@ -39,7 +39,10 @@ exports.loadQuestion = function(req, res, next, id){
  */
 exports.index = function(req, res, next){
 	Question
-		.find({company: req.user.company})
+		.find({
+			company: req.user.company,
+			active: true
+		})
 		.exec(function(err, questions){
 			if(err) return next(err);
 
@@ -89,16 +92,26 @@ exports.index = function(req, res, next){
  * use, transformed into questions
  */
 exports.suggested = function(req, res, next) {
-	MetaQuestion.find({
-		suggested: true
-	}, function(err, meta_questions) {
+	Question.find({
+		company: req.user.company,
+		active: true
+	}, function(err, questions) {
 		if (err) return helpers.sendError(res, err);
-		if (!meta_questions.length) {
-			return helpers.sendError(res, "No questions found");
-		}
-		return res.send(_.map(meta_questions, function(mQ) {
-			return mQ.asQuestion();
-		}));
+
+		var metaQuestionIds = _.pluck(questions, 'meta_question');
+
+		MetaQuestion.find({
+			suggested: true,
+			_id: { $nin: metaQuestionIds }
+		}, function(err, meta_questions) {
+			if (err) return helpers.sendError(res, err);
+			if (!meta_questions.length) {
+				return res.send([]);
+			}
+			return res.send(_.map(meta_questions, function(mQ) {
+				return mQ.asQuestion();
+			}));
+		});
 	});
 };
 

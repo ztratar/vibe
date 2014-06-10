@@ -7773,6 +7773,31 @@ body.survey-show .survey-notif a {
     font-size: 26px;
   }
 }
+.question-list-view {
+  list-style: none;
+  text-align: left;
+  padding: 10px 0;
+  margin: 0;
+}
+.question-list-view li {
+  display: block;
+  padding: 10px 0;
+  position: relative;
+}
+.question-list-view li h3 {
+  font-size: 18px;
+  margin: 0 40px 0 15px;
+}
+@media (max-width: 480px) {
+  .question-list-view li h3 {
+    margin: 0 40px 0 0;
+  }
+}
+.question-list-view li a {
+  position: absolute;
+  top: 6px;
+  right: 0;
+}
 html,
 body {
   text-align: center;
