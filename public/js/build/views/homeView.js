@@ -1,28 +1,42 @@
 define("views/homeView", 
-  ["backbone","models/questions","views/chartsView","text!templates/homeView.html","text!templates/newChartsLocked.html","text!templates/surveySummaryCard.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
+  ["backbone","models/questions","views/chartsView","views/postOverlayView","text!templates/homeView.html","text!templates/newChartsLocked.html","text!templates/surveySummaryCard.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
     "use strict";
+
     var Questions = __dependency2__["default"];
     var ChartsView = __dependency3__["default"];
-    var template = __dependency4__;
-    var newChartsLockedTemplate = __dependency5__;
 
-    var surveySummaryCardTemplate = __dependency6__;
+    var PostOverlayView = __dependency4__["default"];
+
+    var template = __dependency5__;
+    var newChartsLockedTemplate = __dependency6__;
+    var surveySummaryCardTemplate = __dependency7__;
 
     var HomeView = Backbone.View.extend({
+
     	className: 'home-view',
+
     	template: _.template(template),
+
+    	events: {
+    		'click a.new-post': 'newPost'
+    	},
+
     	initialize: function() {
     		this.questions = new Questions();
     		this.chartsView = new ChartsView({
-    			collection: this.questions	
-    		});	
+    			collection: this.questions
+    		});
     		this.surveyTaken = false;
     	},
+
     	render: function() {
     		this.$el.html(this.template({
-    			user: window.Vibe.user.toJSON()	
+    			user: window.Vibe.user.toJSON()
     		}));
+
+    		this.$newPostButton = this.$('a.new-post');
+
     		this.$('.charts-container').html(this.chartsView.$el);
     		this.questions.reset([{
     			body: 'Design Deliverables seem...',
@@ -109,7 +123,24 @@ define("views/homeView",
     		}
 
     		return this;
+    	},
+
+    	newPost: function() {
+    		var postOverlayView = new PostOverlayView();
+
+    		this.$('.post-overlay-container').html(postOverlayView.$el);
+    		postOverlayView.render();
+
+    		this.$newPostButton.addClass('fadeOut');
+    		postOverlayView.animateIn();
+
+    		postOverlayView.on('remove', _.bind(function() {
+    			this.$newPostButton.removeClass('fadeOut');
+    		}, this));
+
+    		return false;
     	}
+
     });
 
     __exports__["default"] = HomeView;

@@ -1,25 +1,39 @@
 import 'backbone';
+
 import Questions from 'models/questions';
 import ChartsView from 'views/chartsView';
+
+import PostOverlayView from 'views/postOverlayView';
+
 module template from 'text!templates/homeView.html';
 module newChartsLockedTemplate from 'text!templates/newChartsLocked.html';
-
 module surveySummaryCardTemplate from 'text!templates/surveySummaryCard.html';
 
 var HomeView = Backbone.View.extend({
+
 	className: 'home-view',
+
 	template: _.template(template),
+
+	events: {
+		'click a.new-post': 'newPost'
+	},
+
 	initialize: function() {
 		this.questions = new Questions();
 		this.chartsView = new ChartsView({
-			collection: this.questions	
-		});	
+			collection: this.questions
+		});
 		this.surveyTaken = false;
 	},
+
 	render: function() {
 		this.$el.html(this.template({
-			user: window.Vibe.user.toJSON()	
+			user: window.Vibe.user.toJSON()
 		}));
+
+		this.$newPostButton = this.$('a.new-post');
+
 		this.$('.charts-container').html(this.chartsView.$el);
 		this.questions.reset([{
 			body: 'Design Deliverables seem...',
@@ -106,7 +120,24 @@ var HomeView = Backbone.View.extend({
 		}
 
 		return this;
+	},
+
+	newPost: function() {
+		var postOverlayView = new PostOverlayView();
+
+		this.$('.post-overlay-container').html(postOverlayView.$el);
+		postOverlayView.render();
+
+		this.$newPostButton.addClass('fadeOut');
+		postOverlayView.animateIn();
+
+		postOverlayView.on('remove', _.bind(function() {
+			this.$newPostButton.removeClass('fadeOut');
+		}, this));
+
+		return false;
 	}
+
 });
 
 export default = HomeView;

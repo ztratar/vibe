@@ -56,8 +56,8 @@ define("views/managePollsView",
     			}
     		});
 
-    		this.selectedQuestions.on('change', this.determineSelectedListHeaderDisplay, this);
-    		this.suggestedQuestions.on('change', this.determineSuggestedListHeaderDisplay, this);
+    		this.selectedQuestions.on('all', this.determineSelectedListHeaderDisplay, this);
+    		this.suggestedQuestions.on('all', this.determineSuggestedListHeaderDisplay, this);
     	},
 
     	render: function() {

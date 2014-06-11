@@ -62,6 +62,12 @@ _.extend(ScreenRouter.prototype, {
 			this.oldScreen.remove();
 			delete this.oldScreen;
 		}
+	},
+	disableScreenScroll: function() {
+		this.currentScreen.addClass('disabledScroll');
+	},
+	enableScreenScroll: function() {
+		this.currentScreen.removeClass('disabledScroll');
 	}
 });
 

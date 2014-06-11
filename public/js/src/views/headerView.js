@@ -79,9 +79,9 @@ var HeaderView = Backbone.View.extend({
 		}
 
 		if (this.data.animate === false) {
-			this.$('a').addClass('now');	
+			this.$('a').addClass('now');
 		}
-		this.$('a').addClass('flyIn');	
+		this.$('a').addClass('flyIn');
 	}
 
 });
