@@ -34,7 +34,7 @@ exports.pending = function(req, res) {
 		if (req.user.isAdmin) {
 			Feedback.find({
 				company: req.user.company._id,
-				approved: false
+				status: 'pending'
 			}, function(err, feedbacks) {
 				cb(err, feedbacks);
 			});
@@ -42,7 +42,7 @@ exports.pending = function(req, res) {
 			Feedback.find({
 				creator: req.user._id,
 				company: req.user.company._id,
-				approved: false
+				status: 'pending'
 			}, function(err, feedbacks) {
 				cb(err, feedbacks);
 			});
@@ -94,7 +94,11 @@ exports.create = function(req, res, next) {
  *  	approved (Boolean): The feedback should be approved
  */
 exports.update = function(req, res, next) {
-	helpers.requireLogin(req, res);
+	if (!req.isAuthenticated()) {
+		return res.send({
+			error: 'You must be logged in to do this'
+		});
+	}
 
 	if (!req.user.isAdmin) {
 		return res.send({
@@ -102,16 +106,19 @@ exports.update = function(req, res, next) {
 		});
 	}
 
-	if (req.body.approved !== undefined) {
-		if (req.body.approved === true) {
+	if (req.body.status !== undefined
+			&& req.body.status !== req.feedback.status) {
+		if (req.body.status === 'approved') {
 			exports.approve(req, res, next);
-		} else if (req.body.approved === false) {
+		} else if (req.body.status === 'rejected') {
 			exports.disapprove(req, res, next);
 		} else {
 			res.send({
-				error: 'Approval must be true or false'
+				error: 'Approval must be rejected or approved'
 			});
 		}
+	} else {
+		res.send(req.feedback.stripInfo());
 	}
 };
 
@@ -129,9 +136,9 @@ exports.approve = function(req, res, next) {
 		});
 	}
 
-	req.feedback.approved = true;
-	req.feedback.approved_by = req.user._id;
-	req.feedback.time_approved = Date.now();
+	req.feedback.status = 'approved';
+	req.feedback.status_changed_by = req.user._id;
+	req.feedback.time_status_changed = Date.now();
 
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
@@ -149,7 +156,20 @@ exports.approve = function(req, res, next) {
  * calls disabled.
  */
 exports.disapprove = function(req, res, next) {
+	if (!req.user.isAdmin) {
+		return res.send({
+			error: 'You must be an admin to do this'
+		});
+	}
 
+	req.feedback.status = 'rejected';
+	req.feedback.status_changed_by = req.user._id;
+	req.feedback.time_status_changed = Date.now();
+
+	req.feedback.save(function(err, feedback) {
+		if (err) return helpers.sendError(res, err);
+		res.send(feedback.stripInfo());
+	});
 };
 
 // Cache app object upon first call

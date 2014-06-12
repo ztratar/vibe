@@ -26,9 +26,14 @@ define("views/feedbackApprovalView",
     	},
 
     	render: function() {
-    		this.$el.html(this.template());
-    		this.$pendingFeedback = this.$('.pending-feedback');
-    		this.addAll();
+    		if (!this.feedback.length ) {
+    			this.$el.hide();
+    		} else {
+    			this.$el.show();
+    			this.$el.html(this.template());
+    			this.$pendingFeedback = this.$('.pending-feedback');
+    			this.addAll();
+    		}
 
     		return this;
     	},
@@ -39,7 +44,8 @@ define("views/feedbackApprovalView",
 
     	addOne: function(feedback) {
     		var feedbackApprovalItem = new FeedbackApprovalItemView({
-    			model: feedback
+    			model: feedback,
+    			feedbacks: this.feedback
     		});
 
     		this.$pendingFeedback.append(feedbackApprovalItem.$el);

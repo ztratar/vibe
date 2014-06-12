@@ -6,9 +6,21 @@ var Feedback = BaseModel.extend({
 
 	defaults: {
 		time_created: new Date(),
-		approved: undefined,
+		status: '',
 		body: '',
 		num_votes: 0
+	},
+
+	approve: function() {
+		this.save({
+			status: 'approved'
+		});
+	},
+
+	reject: function() {
+		this.save({
+			status: 'rejected'
+		});
 	}
 
 });

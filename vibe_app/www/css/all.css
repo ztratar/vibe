@@ -6542,6 +6542,7 @@ form.form-horizontal-top button.btn {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 30;
   box-shadow: 0 1px 10px rgba(0, 23, 44, 0.08);
 }
 .header-view .container {
@@ -8169,6 +8170,11 @@ html {
   position: relative;
   padding: 10px 230px 10px 0;
 }
+@media (max-width: 768px) {
+  .feedback-approval-view ul li {
+    padding: 10px 0;
+  }
+}
 .feedback-approval-view ul li h4 {
   margin: 0;
   font-size: 18px;
@@ -8185,6 +8191,13 @@ html {
 }
 .feedback-approval-view ul li a.disapprove {
   right: 0px;
+}
+@media (max-width: 768px) {
+  .feedback-approval-view ul li a {
+    position: static;
+    width: auto;
+    margin: 0 10px 0 0;
+  }
 }
 html,
 body {
