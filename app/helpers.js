@@ -27,5 +27,13 @@ helpers.sendError = function(res, error) {
 	}
 };
 
+helpers.requireLogin = function(res, req) {
+	if (!req.isAuthenticated()) {
+		res.send({
+			error: 'You must be logged in to do this'
+		});
+	}
+};
+
 exports = module.exports = helpers;
 

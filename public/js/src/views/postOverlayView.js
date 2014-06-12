@@ -1,4 +1,7 @@
 import 'backbone';
+import 'autosize';
+
+import Feedback from 'models/feedback';
 
 module template from 'text!templates/postOverlayView.html';
 
@@ -8,7 +11,7 @@ var PostOverlayView = Backbone.View.extend({
 
 	template: _.template(template),
 
-	MAX_TEXT_LENGTH: 240,
+	MAX_TEXT_LENGTH: 140,
 
 	events: {
 		'keydown textarea': 'changeLengthMarker',
@@ -25,6 +28,7 @@ var PostOverlayView = Backbone.View.extend({
 			rightAction: {
 				title: 'Post',
 				click: function(ev) {
+					that.submitNewFeedback();
 					return false;
 				}
 			},
@@ -44,6 +48,8 @@ var PostOverlayView = Backbone.View.extend({
 
 		this.$textarea = this.$('textarea');
 		this.$lengthMarker = this.$('.length-marker');
+
+		this.$textarea.autosize();
 
 		return this;
 	},
@@ -73,8 +79,9 @@ var PostOverlayView = Backbone.View.extend({
 			return true;
 		}
 
-		if (inputVal.length > this.MAX_TEXT_LENGTH
-				&& ev.keyCode !== 8) {
+		if ((inputVal.length > this.MAX_TEXT_LENGTH
+				&& ev.keyCode !== 8)
+				|| ev.keyCode === 13) {
 			return false;
 		}
 
@@ -88,6 +95,30 @@ var PostOverlayView = Backbone.View.extend({
 			this.$textarea.focus();
 			return false;
 		}
+	},
+
+	submitNewFeedback: function() {
+		var that = this,
+			inputVal = this.$textarea.val(),
+			feedback = new Feedback();
+
+		if (!inputVal.length) {
+			window.Vibe.appView.showNotif('Feedback can\'t be blank', 2000, 'danger');
+			return false;
+		}
+
+		feedback.save({
+			body: inputVal
+		}, {
+			success: function(model, data) {
+				if (data.error) {
+					window.Vibe.appView.showNotif(data.error, 2000, 'danger');
+					return;
+				}
+				window.Vibe.appView.showNotif('Feedback sent!');
+				that.remove();
+			}
+		});
 	},
 
 	remove: function() {

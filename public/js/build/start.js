@@ -10,7 +10,8 @@ define("start",
     		underscore: '../libs/underscore',
     		backbone: '../libs/backbone',
     		d3: '../libs/d3',
-    		moment: '../libs/moment'
+    		moment: '../libs/moment',
+    		autosize: '../libs/jquery.autosize'
     	},
     	shim: {
     		d3: {

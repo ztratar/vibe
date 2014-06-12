@@ -1,0 +1,47 @@
+.notif-holder {
+	position: fixed;
+	bottom: -100px;
+	left: 0;
+	right: 0;
+	top: -100px;
+	z-index: 400;
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+	background: rgba(6, 11, 29, 0.73);
+
+	.v-centered {
+		text-align: center;
+	}
+
+	.notif-text {
+		display: inline-block;
+		color: white;
+		text-align: center;
+		font-size: 18px;
+		font-weight: 600;
+		background: @vibe-green;
+		border-radius: 10px;
+		padding: 24px 40px;
+	}
+
+	.transition(all 0.22s ease-out);
+	.translate3d(0, 80px, 0);
+
+	&.show-notif {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		.transition(all 0.42s ease-out);
+		.translate3d(0, 0, 0);
+
+		&.with-anim {
+			-webkit-animation: bounceInUp 0.42s linear 0s forwards;
+			animation: bounceInUp 0.42s linear 0s forwards;
+		}
+	}
+
+	&.danger .notif-text {
+		background: @btn-danger-bg;
+	}
+}

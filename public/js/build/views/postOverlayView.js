@@ -1,9 +1,11 @@
 define("views/postOverlayView", 
-  ["backbone","text!templates/postOverlayView.html","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+  ["backbone","autosize","models/feedback","text!templates/postOverlayView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
 
-    var template = __dependency2__;
+    var Feedback = __dependency3__["default"];
+
+    var template = __dependency4__;
 
     var PostOverlayView = Backbone.View.extend({
 
@@ -11,7 +13,7 @@ define("views/postOverlayView",
 
     	template: _.template(template),
 
-    	MAX_TEXT_LENGTH: 240,
+    	MAX_TEXT_LENGTH: 140,
 
     	events: {
     		'keydown textarea': 'changeLengthMarker',
@@ -28,6 +30,7 @@ define("views/postOverlayView",
     			rightAction: {
     				title: 'Post',
     				click: function(ev) {
+    					that.submitNewFeedback();
     					return false;
     				}
     			},
@@ -47,6 +50,8 @@ define("views/postOverlayView",
 
     		this.$textarea = this.$('textarea');
     		this.$lengthMarker = this.$('.length-marker');
+
+    		this.$textarea.autosize();
 
     		return this;
     	},
@@ -76,8 +81,9 @@ define("views/postOverlayView",
     			return true;
     		}
 
-    		if (inputVal.length > this.MAX_TEXT_LENGTH
-    				&& ev.keyCode !== 8) {
+    		if ((inputVal.length > this.MAX_TEXT_LENGTH
+    				&& ev.keyCode !== 8)
+    				|| ev.keyCode === 13) {
     			return false;
     		}
 
@@ -91,6 +97,30 @@ define("views/postOverlayView",
     			this.$textarea.focus();
     			return false;
     		}
+    	},
+
+    	submitNewFeedback: function() {
+    		var that = this,
+    			inputVal = this.$textarea.val(),
+    			feedback = new Feedback();
+
+    		if (!inputVal.length) {
+    			window.Vibe.appView.showNotif('Feedback can\'t be blank', 2000, 'danger');
+    			return false;
+    		}
+
+    		feedback.save({
+    			body: inputVal
+    		}, {
+    			success: function(model, data) {
+    				if (data.error) {
+    					window.Vibe.appView.showNotif(data.error, 2000, 'danger');
+    					return;
+    				}
+    				window.Vibe.appView.showNotif('Feedback sent!');
+    				that.remove();
+    			}
+    		});
     	},
 
     	remove: function() {

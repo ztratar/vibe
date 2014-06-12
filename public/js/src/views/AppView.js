@@ -19,6 +19,9 @@ var AppView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(template);
 		this.$('.app-header').html(this.headerView.$el);
+
+		this.$notifHolder = this.$('.notif-holder');
+		this.$notifText = this.$('.notif-text');
 	},
 
 	overrideLinks: function() {
@@ -36,44 +39,34 @@ var AppView = Backbone.View.extend({
 		});
 	},
 
-	checkForNewSurvey: function() {
+	showNotif: function(text, timeToRead, addClass) {
 		var that = this;
 
-		this.survey = new Survey();
-		this.survey.fetchNewSurvey({
-			success: function(model, data) {
-				if (!data._id) return;
-				window.Vibe.modelCache.set('survey-' + model.get('_id'), model.toJSON());
-				that.renderAndShowSurveyNotification();
-			}
-		});
-	},
+		timeToRead = timeToRead || 2100;
+		addClass = addClass || '';
 
-	renderAndShowSurveyNotification: function() {
-		var msTimeDiff = (new Date()).getTime() - this.survey.get('timeDue').getTime(),
-			daysTime = Math.floor(msTimeDiff / (1000 * 60 * 60 * 24)),
-			dueString = 'Take Survey - Due in ' + daysTime + ' days',
-			that = this;
+		this.$notifText.html(text);
 
-		if (daysTime === 0) {
-			dueString = 'Take Survey - Due Now!';
+		this.$notifHolder
+			.addClass('with-anim')
+			.addClass('show-notif');
+
+		if (addClass) {
+			this.$notifHolder.addClass(addClass);
 		}
 
-		this.$('.survey-notif').html(_.template(surveyTemplate, {
-			dueString: dueString
-		}));
+		_.delay(function() {
+			that.$notifHolder.removeClass('with-anim');
+		}, 500);
 
-		this.$el.addClass('survey-show');
-
-		this.$('.survey-notif').off('click touchstart').on('click touchstart', _.bind(function() {
-			window.Vibe.appRouter.navigateWithAnimation('/survey/' + that.survey.get('_id'), 'slideUp', {
-				trigger: true,
-				screenSize: 'full'
-			});	
-			this.$el.removeClass('survey-show');
-
-			return false;
-		}, this));
+		_.delay(function() {
+			that.$notifHolder.removeClass('show-notif');
+			if (addClass) {
+				_.delay(function() {
+					that.$notifHolder.removeClass(addClass);
+				}, 420);
+			}
+		}, timeToRead);
 	}
 
 });

@@ -100,7 +100,7 @@ UserSchema.pre('save', function(next) {
 
 UserSchema.methods = {
 
-  stripInfo: function(){
+  stripInfo: function() {
     var user = this.toObject();
     user.hashed_password = undefined;
     user.salt = undefined;

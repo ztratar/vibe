@@ -12,7 +12,8 @@ module.exports = function (app, passport) {
 			'surveys',
 			'access',
 			'email',
-			'page'
+			'page',
+			'feedback'
 		];
 
 	_.each(controllerNames, function(name) {
@@ -51,11 +52,14 @@ module.exports = function (app, passport) {
 	app.post('/api/questions/:question/comments', c.questions.newComment);
 	app.post('/api/answers/question/:question/survey/:survey', c.answers.create);
 	app.post('/api/surveys', c.surveys.create);
+	app.post('/api/feedback', c.feedback.create);
 
 	app.put('/api/users/:id', c.users.update);
 	app.put('/api/questions/:question', c.questions.update);
 	app.put('/api/surveys/:survey/question/:question', c.surveys.addQuestion);
+	app.put('/api/feedback/:feedback', c.feedback.update);
 
+	app.param('feedback', c.feedback.loadFeedback);
 	app.param('meta_question', c.meta_questions.loadMetaQuestion);
 	app.param('question', c.questions.loadQuestion);
 	app.param('survey', c.surveys.loadSurvey);
