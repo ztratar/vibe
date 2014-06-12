@@ -1,5 +1,6 @@
 // Module dependencies.
 var mongoose = require('mongoose'),
+	Async = require('async'),
 	_ = require('underscore'),
 	Feedback = mongoose.model('Feedback'),
 	helpers = require('../helpers'),
@@ -24,11 +25,35 @@ exports.loadFeedback = function(req, res, next, id) {
 /*
  * GET /api/feedback/pending
  *
- * Admin call to get feedback pending
- * approval.
+ * If admin, get all feedbacks pending
+ * approval. If not admin, return your own pending
+ * feedbacks.
  */
 exports.pending = function(req, res) {
+	Async.waterfall([function(cb) {
+		if (req.user.isAdmin) {
+			Feedback.find({
+				company: req.user.company._id,
+				approved: false
+			}, function(err, feedbacks) {
+				cb(err, feedbacks);
+			});
+		} else {
+			Feedback.find({
+				creator: req.user._id,
+				company: req.user.company._id,
+				approved: false
+			}, function(err, feedbacks) {
+				cb(err, feedbacks);
+			});
+		}
+	}], function(err, feedbacks) {
+		if (err) return helpers.sendError(res, err);
 
+		res.send(_.map(feedbacks, function(feedback) {
+			return feedback.stripInfo();
+		}));
+	});
 };
 
 /*
@@ -98,7 +123,20 @@ exports.update = function(req, res, next) {
  * to the associated post feeds of the users.
  */
 exports.approve = function(req, res, next) {
+	if (!req.user.isAdmin) {
+		return res.send({
+			error: 'You must be an admin to do this'
+		});
+	}
 
+	req.feedback.approved = true;
+	req.feedback.approved_by = req.user._id;
+	req.feedback.time_approved = Date.now();
+
+	req.feedback.save(function(err, feedback) {
+		if (err) return helpers.sendError(res, err);
+		res.send(feedback.stripInfo());
+	});
 };
 
 /*

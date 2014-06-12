@@ -37,6 +37,7 @@ module.exports = function (app, passport) {
 	app.get('/api/surveys', c.surveys.index);
 	app.get('/api/survey', c.surveys.lastSurvey);
 	app.get('/api/surveys/:survey', c.surveys.get);
+	app.get('/api/feedback/pending', c.feedback.pending);
 
 	app.post('/api/login', c.users.login);
 	app.post('/api/logout', c.users.logout);

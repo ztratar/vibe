@@ -1,0 +1,55 @@
+.feedback-approval-view {
+	text-align: left;
+	background: @vibe-light;
+	border-radius: @border-radius-base;
+	padding: 15px;
+	margin: 15px 0 0 0;
+
+	h3 {
+		.std-heading;
+		color: white;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		li {
+			display: block;
+			position: relative;
+			padding: 10px 230px 10px 0;
+
+			@media (max-width: @screen-sm) {
+				padding: 10px 0;
+			}
+
+			h4 {
+				margin: 0;
+				font-size: 18px;
+				color: white;
+			}
+
+			span {
+				color: @vibe-lighter;
+			}
+
+			a {
+				position: absolute;
+				right: 110px;
+				top: 14px;
+				width: 100px;
+
+				&.disapprove {
+					right: 0px;
+				}
+
+				@media (max-width: @screen-sm) {
+					position: static;
+					width: auto;
+					margin: 0 10px 0 0;
+				}
+			}
+		}
+	}
+}

@@ -81,11 +81,9 @@ define("views/postOverlayView",
     			return true;
     		}
 
-    		console.log(ev.keyCode);
-
     		if ((inputVal.length > this.MAX_TEXT_LENGTH
     				&& ev.keyCode !== 8)
-    				|| ev.keyCode === 32) {
+    				|| ev.keyCode === 13) {
     			return false;
     		}
 

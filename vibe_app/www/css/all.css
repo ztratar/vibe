@@ -6082,6 +6082,12 @@ p.descript {
   font-size: 16px;
   opacity: 0.9;
 }
+.std-heading {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 17px 0;
+  color: #12ab97;
+}
 .container {
   max-width: 750px;
 }
@@ -6779,6 +6785,14 @@ html {
 @media (max-width: 480px) {
   .page-content .col {
     padding: 0 20px !important;
+  }
+}
+.home-view {
+  padding-top: 70px;
+}
+@media (max-width: 480px) {
+  .home-view {
+    padding-top: 60px;
   }
 }
 .post-wrapper {
@@ -8130,6 +8144,47 @@ html {
 .post-overlay-view.remove .new-post {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
+}
+.feedback-approval-view {
+  text-align: left;
+  background: #2f557c;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 15px 0 0 0;
+}
+.feedback-approval-view h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 17px 0;
+  color: #12ab97;
+  color: white;
+}
+.feedback-approval-view ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.feedback-approval-view ul li {
+  display: block;
+  position: relative;
+  padding: 10px 230px 10px 0;
+}
+.feedback-approval-view ul li h4 {
+  margin: 0;
+  font-size: 18px;
+  color: white;
+}
+.feedback-approval-view ul li span {
+  color: #5388be;
+}
+.feedback-approval-view ul li a {
+  position: absolute;
+  right: 110px;
+  top: 14px;
+  width: 100px;
+}
+.feedback-approval-view ul li a.disapprove {
+  right: 0px;
 }
 html,
 body {

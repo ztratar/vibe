@@ -4,6 +4,7 @@ import Questions from 'models/questions';
 import ChartsView from 'views/chartsView';
 
 import PostOverlayView from 'views/postOverlayView';
+import FeedbackApprovalView from 'views/feedbackApprovalView';
 
 module template from 'text!templates/homeView.html';
 module newChartsLockedTemplate from 'text!templates/newChartsLocked.html';
@@ -33,6 +34,7 @@ var HomeView = Backbone.View.extend({
 		}));
 
 		this.$newPostButton = this.$('a.new-post');
+		this.$feedbackApproval = this.$('.feedback-approval-container');
 
 		this.$('.charts-container').html(this.chartsView.$el);
 		this.questions.reset([{
@@ -119,7 +121,17 @@ var HomeView = Backbone.View.extend({
 			}));
 		}
 
+		this.renderFeedbackApproval();
+
 		return this;
+	},
+
+	renderFeedbackApproval: function() {
+		if (window.Vibe.user.get('isAdmin')) {
+			var feedbackApprovalView = new FeedbackApprovalView();
+			this.$feedbackApproval.html(feedbackApprovalView.$el);
+			feedbackApprovalView.render();
+		}
 	},
 
 	newPost: function() {

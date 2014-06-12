@@ -1,16 +1,17 @@
 define("views/homeView", 
-  ["backbone","models/questions","views/chartsView","views/postOverlayView","text!templates/homeView.html","text!templates/newChartsLocked.html","text!templates/surveySummaryCard.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
+  ["backbone","models/questions","views/chartsView","views/postOverlayView","views/feedbackApprovalView","text!templates/homeView.html","text!templates/newChartsLocked.html","text!templates/surveySummaryCard.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
     "use strict";
 
     var Questions = __dependency2__["default"];
     var ChartsView = __dependency3__["default"];
 
     var PostOverlayView = __dependency4__["default"];
+    var FeedbackApprovalView = __dependency5__["default"];
 
-    var template = __dependency5__;
-    var newChartsLockedTemplate = __dependency6__;
-    var surveySummaryCardTemplate = __dependency7__;
+    var template = __dependency6__;
+    var newChartsLockedTemplate = __dependency7__;
+    var surveySummaryCardTemplate = __dependency8__;
 
     var HomeView = Backbone.View.extend({
 
@@ -36,6 +37,7 @@ define("views/homeView",
     		}));
 
     		this.$newPostButton = this.$('a.new-post');
+    		this.$feedbackApproval = this.$('.feedback-approval-container');
 
     		this.$('.charts-container').html(this.chartsView.$el);
     		this.questions.reset([{
@@ -122,7 +124,17 @@ define("views/homeView",
     			}));
     		}
 
+    		this.renderFeedbackApproval();
+
     		return this;
+    	},
+
+    	renderFeedbackApproval: function() {
+    		if (window.Vibe.user.get('isAdmin')) {
+    			var feedbackApprovalView = new FeedbackApprovalView();
+    			this.$feedbackApproval.html(feedbackApprovalView.$el);
+    			feedbackApprovalView.render();
+    		}
     	},
 
     	newPost: function() {
