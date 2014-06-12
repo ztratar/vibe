@@ -48,6 +48,8 @@ CompanySchema.path('domain').validate(function (website) {
  * Methods
  */
 
+CompanySchema.methods = {
 
+};
 
 mongoose.model('Company', CompanySchema);

@@ -6,9 +6,11 @@ var mongoose = require('mongoose'),
 // Post Schema
 var PostSchema = new Schema({
 	time_created: { type: Date, default: Date.now() },
+	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	for_user: { type: Schema.Types.ObjectId, ref: 'User' },
 	content_type: { type: String, enum: ['feedback', 'question'] },
-	content: { type: Schema.Types.ObjectId }
+	feedback: { type: Schema.Types.ObjectId, ref: 'Feedback', default: null },
+	question: { type: Schema.Types.ObjectId, ref: 'Question', default: null }
 });
 
 // Validations
@@ -19,10 +21,6 @@ PostSchema.path('for_user').validate(function(userId) {
 PostSchema.path('content_type').validate(function(contentType) {
 	return contentType && contentType.length;
 }, 'Content type is required');
-
-PostSchema.path('content').validate(function(content) {
-	return content && content.length;
-}, 'Content _id is required');
 
 mongoose.model('Post', PostSchema);
 

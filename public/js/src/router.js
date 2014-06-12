@@ -75,6 +75,9 @@ var Router = Backbone.Router.extend({
 
 		this.homeView.render();
 
+		this.homeView.posts.url = '/api/posts';
+		this.homeView.posts.fetch();
+
 		this.trigger('loaded');
 	},
 

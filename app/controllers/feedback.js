@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 	Async = require('async'),
 	_ = require('underscore'),
 	Feedback = mongoose.model('Feedback'),
+	postsController = require('./posts')(),
 	helpers = require('../helpers'),
 	app;
 
@@ -143,6 +144,8 @@ exports.approve = function(req, res, next) {
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
 		res.send(feedback.stripInfo());
+
+		postsController.createPostsFromFeedback(res, feedback);
 	});
 };
 

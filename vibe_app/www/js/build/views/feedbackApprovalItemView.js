@@ -12,6 +12,11 @@ define("views/feedbackApprovalItemView",
 
     	template: _.template(template),
 
+    	events: {
+    		'click a.approve': 'approve',
+    		'click a.disapprove': 'reject'
+    	},
+
     	initialize: function(opts) {
     		this.model = opts.model;
     		this.feedbacks = opts.feedbacks;

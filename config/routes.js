@@ -13,7 +13,8 @@ module.exports = function (app, passport) {
 			'access',
 			'email',
 			'page',
-			'feedback'
+			'feedback',
+			'posts'
 		];
 
 	_.each(controllerNames, function(name) {
@@ -38,6 +39,7 @@ module.exports = function (app, passport) {
 	app.get('/api/survey', c.surveys.lastSurvey);
 	app.get('/api/surveys/:survey', c.surveys.get);
 	app.get('/api/feedback/pending', c.feedback.pending);
+	app.get('/api/posts', c.posts.index);
 
 	app.post('/api/login', c.users.login);
 	app.post('/api/logout', c.users.logout);
