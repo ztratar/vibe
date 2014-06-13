@@ -42,7 +42,7 @@ var PostOverlayView = Backbone.View.extend({
 				}
 			});
 			window.Vibe.appView.headerView.animateToNewComponents('slideDown');
-		}, 240);
+		}, 200);
 
 		this.$el.html(this.template({
 			maxTextLength: this.MAX_TEXT_LENGTH

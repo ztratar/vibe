@@ -65,11 +65,7 @@ var Router = Backbone.Router.extend({
 			}
 		});
 
-		if (this.homeView) {
-			this.homeView.delegateEvents();
-		} else {
-			this.homeView = new HomeView();
-		}
+		this.homeView = new HomeView();
 
 		this.screenRouter.currentScreenContainer.html(this.homeView.$el);
 

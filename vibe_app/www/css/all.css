@@ -7947,8 +7947,8 @@ html {
   bottom: 0;
   z-index: 200;
   opacity: 1;
-  -webkit-transition: background 0.18s ease-out;
-  transition: background 0.18s ease-out;
+  -webkit-transition: background 0.16s ease-out;
+  transition: background 0.16s ease-out;
 }
 .post-overlay-view .post-wrapper {
   z-index: 200;
@@ -7960,8 +7960,8 @@ html {
   height: 100%;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.26s ease-in-out;
+  transition: all 0.26s ease-in-out;
 }
 .post-overlay-view .post-wrapper .new-post {
   position: absolute;
@@ -7972,8 +7972,8 @@ html {
   height: 48px;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  -webkit-transition: all 0.3s ease-out, box-shadow 0.24s ease-out 0.4s;
-  transition: all 0.3s ease-out, box-shadow 0.24s ease-out 0.4s;
+  -webkit-transition: all 0.26s ease-out, box-shadow 0.24s ease-out 0.36s;
+  transition: all 0.26s ease-out, box-shadow 0.24s ease-out 0.36s;
 }
 .post-overlay-view .post-wrapper .new-post:hover {
   background: #5388be;
@@ -8085,8 +8085,8 @@ html {
 .post-overlay-view.expand .post-wrapper .new-post {
   height: 560px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  -webkit-animation: bounceDownUp 0.46s linear 0s forwards;
-  animation: bounceDownUp 0.46s linear 0s forwards;
+  -webkit-animation: bounceDownUp 0.39s linear 0s forwards;
+  animation: bounceDownUp 0.39s linear 0s forwards;
 }
 @media (max-height: 720px) {
   .post-overlay-view.expand .post-wrapper .new-post {
@@ -8107,8 +8107,8 @@ html {
   .post-overlay-view.expand .post-wrapper .new-post {
     height: 220px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    -webkit-animation: bounceDownUpSmall 0.46s linear 0s forwards;
-    animation: bounceDownUpSmall 0.46s linear 0s forwards;
+    -webkit-animation: bounceDownUpSmall 0.39s linear 0s forwards;
+    animation: bounceDownUpSmall 0.39s linear 0s forwards;
   }
 }
 .post-overlay-view.expand .post-wrapper .new-post .initButtonText {

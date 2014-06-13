@@ -44,7 +44,7 @@ define("views/postOverlayView",
     				}
     			});
     			window.Vibe.appView.headerView.animateToNewComponents('slideDown');
-    		}, 260);
+    		}, 240);
 
     		this.$el.html(this.template({
     			maxTextLength: this.MAX_TEXT_LENGTH
