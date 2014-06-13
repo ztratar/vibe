@@ -131,7 +131,7 @@ exports.update = function(req, res, next) {
  */
 exports.agree = function(req, res, next) {
 	if (req.feedback.didUserVote(req.user._id)) {
-		return res.send({
+		return res.send(500, {
 			error: "You've already agreed with this"
 		});
 	}
@@ -160,7 +160,7 @@ exports.agree = function(req, res, next) {
  */
 exports.undoAgree = function(req, res, next) {
 	if (!req.feedback.didUserVote(req.user._id)) {
-		return res.send({
+		return res.send(500, {
 			error: "You already don't agree with this"
 		});
 	}

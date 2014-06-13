@@ -34,6 +34,13 @@
 				color: @vibe-lighter;
 			}
 
+			.btns {
+				@media (max-width: @screen-sm) {
+					margin-top: 10px;
+					.clearfix;
+				}
+			}
+
 			a {
 				position: absolute;
 				right: 110px;
@@ -46,8 +53,12 @@
 
 				@media (max-width: @screen-sm) {
 					position: static;
-					width: auto;
-					margin: 0 10px 0 0;
+					width: 49%;
+					float: left;
+
+					&.disapprove {
+						float:right;
+					}
 				}
 			}
 		}

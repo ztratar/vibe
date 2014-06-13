@@ -25,24 +25,26 @@ define("views/postOverlayView",
     		var that = this;
 
     		window.Vibe.appRouter.screenRouter.disableScreenScroll();
-    		window.Vibe.appView.headerView.setButtons({
-    			title: '',
-    			rightAction: {
-    				title: 'Post',
-    				click: function(ev) {
-    					that.submitNewFeedback();
-    					return false;
+    		setTimeout(function() {
+    			window.Vibe.appView.headerView.setButtons({
+    				title: '',
+    				rightAction: {
+    					title: 'Post',
+    					click: function(ev) {
+    						that.submitNewFeedback();
+    						return false;
+    					}
+    				},
+    				leftAction: {
+    					title: 'Cancel',
+    					click: function(ev) {
+    						that.remove();
+    						return false;
+    					}
     				}
-    			},
-    			leftAction: {
-    				title: 'Cancel',
-    				click: function(ev) {
-    					that.remove();
-    					return false;
-    				}
-    			}
-    		});
-    		window.Vibe.appView.headerView.animateToNewComponents('slideDown');
+    			});
+    			window.Vibe.appView.headerView.animateToNewComponents('slideDown');
+    		}, 260);
 
     		this.$el.html(this.template({
     			maxTextLength: this.MAX_TEXT_LENGTH

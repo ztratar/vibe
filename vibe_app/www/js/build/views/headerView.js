@@ -50,7 +50,7 @@ define("views/headerView",
     		var removeComponents = this.oldComponents;
     		if (removeComponents) {
     			_.delay(_.bind(function() {
-    				removeComponents.remove();	
+    				removeComponents.remove();
     			}, this), 600);
     		}
     	},

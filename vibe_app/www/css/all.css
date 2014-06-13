@@ -6599,13 +6599,13 @@ form.form-horizontal-top button.btn {
 }
 .header-view .header-components.animate-slideDown.old h2 {
   opacity: 0;
-  -webkit-transition: all 0s;
-  transition: all 0s;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
 }
 .header-view .header-components.animate-slideDown.old a {
   opacity: 0;
-  -webkit-transition: all 0s;
-  transition: all 0s;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
 }
 .header-view .header-components.new h2,
 .header-view .header-components.new a {
@@ -8167,6 +8167,27 @@ html {
 .feedback-approval-view ul li span {
   color: #5388be;
 }
+@media (max-width: 768px) {
+  .feedback-approval-view ul li .btns {
+    margin-top: 10px;
+  }
+  .feedback-approval-view ul li .btns:before,
+  .feedback-approval-view ul li .btns:after {
+    content: " ";
+    display: table;
+  }
+  .feedback-approval-view ul li .btns:after {
+    clear: both;
+  }
+  .feedback-approval-view ul li .btns:before,
+  .feedback-approval-view ul li .btns:after {
+    content: " ";
+    display: table;
+  }
+  .feedback-approval-view ul li .btns:after {
+    clear: both;
+  }
+}
 .feedback-approval-view ul li a {
   position: absolute;
   right: 110px;
@@ -8179,8 +8200,11 @@ html {
 @media (max-width: 768px) {
   .feedback-approval-view ul li a {
     position: static;
-    width: auto;
-    margin: 0 10px 0 0;
+    width: 49%;
+    float: left;
+  }
+  .feedback-approval-view ul li a.disapprove {
+    float: right;
   }
 }
 @keyframes popZoom {
@@ -8307,12 +8331,12 @@ html {
 .posts-view li.feedback-item-view h4 {
   font-size: 28px;
   font-weight: 600;
-  padding: 40px 60px;
+  padding: 40px 60px 24px;
 }
 @media (max-width: 480px) {
   .posts-view li.feedback-item-view h4 {
     font-size: 18px;
-    padding: 24px 32px;
+    padding: 24px 32px 18px;
   }
 }
 .posts-view li.feedback-item-view .score {
