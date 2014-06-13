@@ -18,9 +18,10 @@ var Feedback = BaseModel.extend({
 		});
 	},
 
-	reject: function() {
+	reject: function(reasonVal) {
 		this.save({
-			status: 'rejected'
+			status: 'rejected',
+			status_change_reason: reasonVal
 		});
 	},
 
@@ -50,7 +51,7 @@ var Feedback = BaseModel.extend({
 		});
 	},
 
-	pullDown: function() {
+	pullDown: function(reasonVal) {
 		this.destroy();
 	}
 

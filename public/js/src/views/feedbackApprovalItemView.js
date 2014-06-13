@@ -1,6 +1,8 @@
 import 'backbone';
 module moment from 'moment';
 
+import ConfirmDialogView from 'views/confirmDialogView';
+
 module template from 'text!templates/feedbackApprovalItemView.html';
 
 var FeedbackApprovalItemView = Backbone.View.extend({
@@ -39,7 +41,18 @@ var FeedbackApprovalItemView = Backbone.View.extend({
 	},
 
 	reject: function() {
-		this.model.reject();
+		var that = this,
+			confirmDialog = new ConfirmDialogView({
+				title: 'Please give a reason',
+				body: 'We will forward it on!',
+				textarea: true,
+				onConfirm: function(reasonVal) {
+					that.model.reject(reasonVal);
+				}
+			});
+
+		window.Vibe.appView.showOverlay(confirmDialog);
+
 		return false;
 	}
 

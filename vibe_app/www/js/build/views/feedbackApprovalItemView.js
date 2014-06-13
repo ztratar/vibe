@@ -1,10 +1,12 @@
 define("views/feedbackApprovalItemView", 
-  ["backbone","moment","text!templates/feedbackApprovalItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
+  ["backbone","moment","views/confirmDialogView","text!templates/feedbackApprovalItemView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
     var moment = __dependency2__;
 
-    var template = __dependency3__;
+    var ConfirmDialogView = __dependency3__["default"];
+
+    var template = __dependency4__;
 
     var FeedbackApprovalItemView = Backbone.View.extend({
 
@@ -42,7 +44,18 @@ define("views/feedbackApprovalItemView",
     	},
 
     	reject: function() {
-    		this.model.reject();
+    		var that = this,
+    			confirmDialog = new ConfirmDialogView({
+    				title: 'Please give a reason',
+    				body: 'We will forward it on!',
+    				textarea: true,
+    				onConfirm: function(reasonVal) {
+    					that.model.reject(reasonVal);
+    				}
+    			});
+
+    		window.Vibe.appView.showOverlay(confirmDialog);
+
     		return false;
     	}
 

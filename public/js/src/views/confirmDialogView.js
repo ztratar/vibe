@@ -17,6 +17,7 @@ var ConfirmDialogView = Backbone.View.extend({
 		_.extend(this, {
 			title: '',
 			body: '',
+			textarea: false,
 			confirmText: 'Confirm',
 			cancelText: 'Cancel',
 			onConfirm: function() {},
@@ -28,9 +29,18 @@ var ConfirmDialogView = Backbone.View.extend({
 		this.$el.html(this.template({
 			title: this.title,
 			body: this.body,
+			textarea: this.textarea,
 			cancelText: this.cancelText,
 			confirmText: this.confirmText
 		}));
+
+		this.$textarea = this.$('textarea');
+
+		if (this.$textarea) {
+			_.delay(_.bind(function() {
+				this.$textarea.focus();
+			}, this), 200);
+		}
 	},
 
 	cancel: function() {
@@ -40,7 +50,9 @@ var ConfirmDialogView = Backbone.View.extend({
 	},
 
 	confirm: function() {
-		this.onConfirm();
+		var textVal = this.$textarea ? this.$textarea.val() : undefined;
+
+		this.onConfirm(textVal);
 		this.remove();
 		return false;
 	},

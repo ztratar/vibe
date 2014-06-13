@@ -22,9 +22,10 @@ define("models/feedback",
     		});
     	},
 
-    	reject: function() {
+    	reject: function(reasonVal) {
     		this.save({
-    			status: 'rejected'
+    			status: 'rejected',
+    			status_change_reason: reasonVal
     		});
     	},
 
@@ -54,7 +55,7 @@ define("models/feedback",
     		});
     	},
 
-    	pullDown: function() {
+    	pullDown: function(reasonVal) {
     		this.destroy();
     	}
 

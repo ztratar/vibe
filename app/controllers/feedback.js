@@ -265,6 +265,7 @@ exports.disapprove = function(req, res, next) {
 	}
 
 	req.feedback.status = 'rejected';
+	req.feedback.status_change_reason = req.body.status_change_reason;
 	req.feedback.status_changed_by = req.user._id;
 	req.feedback.time_status_changed = Date.now();
 
