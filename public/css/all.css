@@ -7384,9 +7384,12 @@ html {
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: white;
+  -webkit-transition: background 0.12s ease-out;
+  transition: background 0.12s ease-out;
 }
 .settings-view .settings-item-row:hover {
   text-decoration: none;
+  background: rgba(255, 255, 255, 0.03);
 }
 .settings-view .settings-item-row + .settings-item-row {
   border-top: none;
