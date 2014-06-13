@@ -1,12 +1,17 @@
 import 'backbone';
+import 'underscore';
 
 import FeedbackItemView from 'views/feedbackItemView';
+
+module loaderTemplate from 'text!templates/loader.html';
 
 var PostsView = Backbone.View.extend({
 
 	tagName: 'ul',
 
 	className: 'posts-view',
+
+	loaderTemplate: _.template(loaderTemplate),
 
 	initialize: function(opts) {
 		var that = this;
@@ -17,6 +22,9 @@ var PostsView = Backbone.View.extend({
 
 		this.posts.on('reset', this.addAll, this);
 		this.posts.on('add', this.addOne, this);
+
+		this.posts.on('currentlyFetching', this.showLoader, this);
+		this.posts.on('fetchingDone', this.removeLoader, this);
 	},
 
 	render: function() {
@@ -47,6 +55,16 @@ var PostsView = Backbone.View.extend({
 			this.$el.append(itemView.$el);
 		}
 		itemView.render();
+	},
+
+	showLoader: function() {
+		this.$el.append(
+			'<li class="loader-container">' + this.loaderTemplate({ useDark: true }) + '</li>'
+		);
+	},
+
+	removeLoader: function() {
+		this.$('.loader-container').remove();
 	}
 
 });

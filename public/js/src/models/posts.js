@@ -18,11 +18,13 @@ var Posts = Backbone.Collection.extend({
 		}
 
 		this.currentlyFetching = true;
+		this.trigger('currentlyFetching');
 		this.fetch({
 			url: this.url + '?afterId=' + mostRecentModel.get('_id'),
 			remove: false,
 			success: function() {
 				that.currentlyFetching = false;
+				that.trigger('fetchingDone');
 			}
 		});
 	},
@@ -34,11 +36,13 @@ var Posts = Backbone.Collection.extend({
 		if (!lastModel) return false;
 
 		this.currentlyFetching = true;
+		this.trigger('currentlyFetching');
 		this.fetch({
 			url: this.url + '?beforeId=' + lastModel.get('_id'),
 			remove: false,
 			success: function(model, data) {
 				that.currentlyFetching = false;
+				that.trigger('fetchingDone');
 				if (!data.length) that.atLastItem = true
 			}
 		});

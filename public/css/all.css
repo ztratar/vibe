@@ -6788,6 +6788,13 @@ html {
     padding: 0 20px !important;
   }
 }
+.loader-container {
+  box-shadow: none !important;
+  padding: 40px 0 60px !important;
+}
+.loader {
+  text-align: center;
+}
 .home-view {
   padding-top: 92px;
 }

@@ -1,15 +1,19 @@
 define("views/postsView", 
-  ["backbone","views/feedbackItemView","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+  ["backbone","underscore","views/feedbackItemView","text!templates/loader.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
 
-    var FeedbackItemView = __dependency2__["default"];
+    var FeedbackItemView = __dependency3__["default"];
+
+    var loaderTemplate = __dependency4__;
 
     var PostsView = Backbone.View.extend({
 
     	tagName: 'ul',
 
     	className: 'posts-view',
+
+    	loaderTemplate: _.template(loaderTemplate),
 
     	initialize: function(opts) {
     		var that = this;
@@ -20,6 +24,9 @@ define("views/postsView",
 
     		this.posts.on('reset', this.addAll, this);
     		this.posts.on('add', this.addOne, this);
+
+    		this.posts.on('currentlyFetching', this.showLoader, this);
+    		this.posts.on('fetchingDone', this.removeLoader, this);
     	},
 
     	render: function() {
@@ -50,6 +57,16 @@ define("views/postsView",
     			this.$el.append(itemView.$el);
     		}
     		itemView.render();
+    	},
+
+    	showLoader: function() {
+    		this.$el.append(
+    			'<li class="loader-container">' + this.loaderTemplate({ useDark: true }) + '</li>'
+    		);
+    	},
+
+    	removeLoader: function() {
+    		this.$('.loader-container').remove();
     	}
 
     });
