@@ -6089,7 +6089,7 @@ p.descript {
   color: #12ab97;
 }
 .container {
-  max-width: 750px;
+  max-width: 680px;
 }
 .v-centered {
   display: table;
@@ -6829,12 +6829,14 @@ html {
 }
 .post-wrapper .new-post i {
   margin-top: -4px;
+  font-weight: 400;
 }
 .post-wrapper .new-post.fadeOut {
   opacity: 0;
 }
 .post-wrapper a.new-post {
   width: 100%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 .charts-container {
   margin-top: 96px;
