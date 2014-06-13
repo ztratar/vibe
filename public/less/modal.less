@@ -9,17 +9,34 @@
 			transform: translate3d(0, 0, 0) scale(0.96, 0.96);
 	.transition(all 0.24s ease-out);
 
+	@media (max-width: @screen-xs) {
+		margin: 0 15px;
+	}
+
 	.vibe-modal-content {
 		padding: 24px 24px 20px;
+
+		@media (max-width: @screen-xs) {
+			padding: 18px 18px 14px;
+		}
 
 		h3 {
 			margin: 0 0 18px 0;
 			font-weight: 600;
+
+			@media (max-width: @screen-xs) {
+				margin: 0 0 12px 0;
+				font-size: 24px;
+			}
 		}
 
 		p {
 			color: rgba(255,255,255,0.9);
 			font-size: 18px;
+
+			@media (max-width: @screen-xs) {
+				font-size: 16px;
+			}
 		}
 
 		textarea {
@@ -34,6 +51,12 @@
 			font-size: 18px;
 			padding: 18px;
 			outline: none;
+
+			@media (max-width: @screen-xs) {
+				margin: 10px 0 0 0;
+				padding: 12px;
+				height: 80px;
+			}
 		}
 	}
 
