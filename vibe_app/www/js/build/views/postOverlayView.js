@@ -58,15 +58,6 @@ define("views/postOverlayView",
     		return this;
     	},
 
-    	animateIn: function() {
-    		_.defer(_.bind(function() {
-    			this.$el.addClass('expand');
-    			_.delay(_.bind(function() {
-    				this.$textarea.focus();
-    			}, this), 200);
-    		}, this));
-    	},
-
     	changeLengthMarker: function(ev) {
     		var inputVal = this.$textarea.val(),
     			markerText = inputVal.length + '/' + this.MAX_TEXT_LENGTH;

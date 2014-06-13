@@ -45,7 +45,7 @@ define("models/posts",
     			remove: false,
     			success: function(model, data) {
     				that.currentlyFetching = false;
-    				//that.trigger('fetchingDone');
+    				that.trigger('fetchingDone');
     				if (!data.length) that.atLastItem = true
     			}
     		});

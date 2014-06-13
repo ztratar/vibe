@@ -22,6 +22,7 @@ define("views/AppView",
     		this.$el.html(template);
     		this.$('.app-header').html(this.headerView.$el);
 
+    		this.$overlayContainer = this.$('.overlay-container');
     		this.$notifHolder = this.$('.notif-holder');
     		this.$notifText = this.$('.notif-text');
     	},
@@ -38,6 +39,38 @@ define("views/AppView",
     				});
     				return false;
     			}
+    		});
+    	},
+
+    	showOverlay: function(view, opts) {
+    		if (!view) return;
+
+    		var that = this;
+
+    		this.$overlayContainer.html(view.$el);
+    		view.render();
+
+    		_.defer(function() {
+    			if (opts.showTopBar) {
+    				that.$overlayContainer.addClass('show-top-bar');
+    			}
+
+    			that.$overlayContainer.addClass('expand');
+
+    			_.delay(function() {
+    				if (opts.afterAnimate && typeof opts.afterAnimate === 'function') {
+    					opts.afterAnimate();
+    				}
+    			}, 200);
+    		});
+
+    		view.on('remove', function() {
+    			that.$overlayContainer.addClass('remove');
+    			_.delay(function() {
+    				that.$overlayContainer
+    					.html('')
+    					.attr('class', 'overlay-container');
+    			}, 360);
     		});
     	},
 

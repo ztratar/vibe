@@ -56,11 +56,14 @@ var HomeView = Backbone.View.extend({
 	newPost: function() {
 		var postOverlayView = new PostOverlayView();
 
-		this.$('.post-overlay-container').html(postOverlayView.$el);
-		postOverlayView.render();
-
 		this.$newPostButton.addClass('fadeOut');
-		postOverlayView.animateIn();
+
+		window.Vibe.appView.showOverlay(postOverlayView, {
+			showTopBar: true,
+			afterAnimate: function() {
+				postOverlayView.$textarea.focus();
+			}
+		});
 
 		postOverlayView.on('remove', _.bind(function() {
 			this.$newPostButton.removeClass('fadeOut');
