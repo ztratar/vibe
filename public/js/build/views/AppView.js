@@ -43,9 +43,11 @@ define("views/AppView",
     	},
 
     	showOverlay: function(view, opts) {
-    		if (!view) return;
-
     		var that = this;
+
+    		opts = opts || {};
+
+    		if (!view) return;
 
     		this.$overlayContainer.html(view.$el);
     		view.render();

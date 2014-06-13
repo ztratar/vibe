@@ -1,0 +1,20 @@
+<div class="v-centered">
+	<div>
+		<div class="vibe-modal container">
+			<div class="vibe-modal-content">
+				<% if (title.length) { %>
+					<h3><%- title %></h3>
+				<% } %>
+				<% if (body.length) { %>
+					<p>
+					<%- body %>
+					</p>
+				<% } %>
+			</div>
+			<div class="action-bar">
+				<a href="#" class="btn cancel"><%- cancelText %></a>
+				<a href="#" class="btn confirm"><%- confirmText %></a>
+			</div>
+		</div>
+	</div>
+</div>

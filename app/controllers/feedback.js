@@ -2,6 +2,7 @@
 var mongoose = require('mongoose'),
 	Async = require('async'),
 	_ = require('underscore'),
+	Post = mongoose.model('Post'),
 	Feedback = mongoose.model('Feedback'),
 	postsController = require('./posts')(),
 	helpers = require('../helpers'),
@@ -178,6 +179,45 @@ exports.undoAgree = function(req, res, next) {
 		if (err) helpers.sendError(res, err);
 		Feedback.findById(req.feedback._id, function(err, feedback) {
 			res.send(feedback.stripInfo(req.user));
+		});
+	});
+};
+
+/*
+ * DELETE /api/feedback/:feedback
+ *
+ * If admin, delete this feedback and its
+ * associated posts/chats.
+ */
+exports.delete = function(req, res) {
+	if (!req.user.isAdmin) {
+		return res.send(500, {
+			error: "You must be an admin to do this"
+		});
+	}
+
+	if (req.user.company._id.toString() !== req.feedback.company.toString()) {
+		return res.send(500, {
+			error: "You don't have permission to do this"
+		});
+	}
+
+	req.feedback.status = 'rejected';
+	req.feedback.status_change_reason = 'pulled';
+	req.feedback.status_changed_by = req.user._id;
+	req.feedback.time_status_changed = Date.now();
+
+	req.feedback.save(function(err, feedback) {
+		if (err) return helpers.sendError(res, err);
+
+		Post.remove({
+			feedback: feedback._id
+		}, function(err) {
+			if (err) return helpers.sendError(res, err);
+
+			// TODO: Remove chats
+
+			return res.send(200);
 		});
 	});
 };

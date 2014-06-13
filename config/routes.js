@@ -72,6 +72,7 @@ module.exports = function (app, passport) {
 
 	app.delete('/api/users/:id', c.users.delete);
 	app.delete('/api/userinvites/:id', c.users.uninvite);
+	app.delete('/api/feedback/:feedback', c.feedback.delete);
 
 	//
 	// PAGES

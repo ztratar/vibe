@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 // Post Schema
 var PostSchema = new Schema({
 	time_created: { type: Date, default: Date.now() },
+	active: { type: Boolean, default: true },
 	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	for_user: { type: Schema.Types.ObjectId, ref: 'User' },
 	content_type: { type: String, enum: ['feedback', 'question'] },

@@ -48,6 +48,10 @@ var Feedback = BaseModel.extend({
 		this.save({}, {
 			url: this.url() + '/undo_agree'
 		});
+	},
+
+	pullDown: function() {
+		this.destroy();
 	}
 
 });

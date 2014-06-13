@@ -52,6 +52,10 @@ define("models/feedback",
     		this.save({}, {
     			url: this.url() + '/undo_agree'
     		});
+    	},
+
+    	pullDown: function() {
+    		this.destroy();
     	}
 
     });

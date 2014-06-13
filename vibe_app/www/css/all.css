@@ -6824,11 +6824,79 @@ html {
 }
 .overlay-container.remove {
   opacity: 0;
-  -webkit-transition: all 0.24s ease-out 0.12s;
-  transition: all 0.24s ease-out 0.12s;
+  -webkit-transition: all 0.24s ease-out 0.08s;
+  transition: all 0.24s ease-out 0.08s;
 }
 .overlay-container.remove > div {
   opacity: 0;
+}
+.vibe-modal {
+  padding: 0;
+  background: #31373d;
+  border-radius: 6px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  -webkit-transform: translate3d(0, 0, 0) scale(0.96, 0.96);
+  transform: translate3d(0, 0, 0) scale(0.96, 0.96);
+  -webkit-transition: all 0.24s ease-out;
+  transition: all 0.24s ease-out;
+}
+.vibe-modal .vibe-modal-content {
+  padding: 24px 24px 20px;
+}
+.vibe-modal .vibe-modal-content h3 {
+  margin: 0 0 18px 0;
+  font-weight: 600;
+}
+.vibe-modal .vibe-modal-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+}
+.vibe-modal .action-bar {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  background: #383e44;
+  border-radius: 0 0 6px 6px;
+}
+.vibe-modal .action-bar:before,
+.vibe-modal .action-bar:after {
+  content: " ";
+  display: table;
+}
+.vibe-modal .action-bar:after {
+  clear: both;
+}
+.vibe-modal .action-bar:before,
+.vibe-modal .action-bar:after {
+  content: " ";
+  display: table;
+}
+.vibe-modal .action-bar:after {
+  clear: both;
+}
+.vibe-modal .action-bar .btn {
+  width: 50%;
+  padding: 18px 18px;
+  float: left;
+  color: white;
+  font-size: 18px;
+}
+.vibe-modal .action-bar .btn:hover {
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+.vibe-modal .action-bar .btn.cancel {
+  color: rgba(255, 255, 255, 0.65);
+  border-radius: 0 0 0 6px;
+}
+.vibe-modal .action-bar .btn.confirm {
+  float: right;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 6px 0px;
+}
+.overlay-container.expand .vibe-modal {
+  opacity: 1;
+  -webkit-transform: translate3d(0, -10px, 0) scale(1, 1);
+  transform: translate3d(0, -10px, 0) scale(1, 1);
 }
 .home-view {
   padding-top: 92px;
@@ -8351,6 +8419,22 @@ html {
     padding: 24px 32px 18px;
   }
 }
+.posts-view li.feedback-item-view a.pull-down {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #232529;
+  color: white;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+.posts-view li.feedback-item-view a.pull-down i {
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 0 -2px;
+}
 .posts-view li.feedback-item-view .score {
   position: absolute;
   left: -14px;
@@ -8507,6 +8591,13 @@ html {
     padding: 8px 14px;
     font-size: 18px;
   }
+}
+.confirm-dialog-view {
+  height: 100%;
+  width: 100%;
+}
+.confirm-dialog-view .vibe-modal {
+  max-width: 520px;
 }
 html,
 body {

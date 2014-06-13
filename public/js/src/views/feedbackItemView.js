@@ -1,6 +1,8 @@
 import 'underscore';
 import 'backbone';
 
+import ConfirmDialogView from 'views/confirmDialogView';
+
 module template from 'text!templates/feedbackItemView.html';
 
 var FeedbackItemView = Backbone.View.extend({
@@ -13,7 +15,8 @@ var FeedbackItemView = Backbone.View.extend({
 
 	events: {
 		'click a.agree': 'agree',
-		'click a.agreed': 'undoAgree'
+		'click a.agreed': 'undoAgree',
+		'click a.pull-down': 'adminPullDown'
 	},
 
 	initialize: function(opts) {
@@ -21,6 +24,8 @@ var FeedbackItemView = Backbone.View.extend({
 
 		this.model.on('change', this.render, this);
 		this.model.get('feedback').on('change', this.render, this);
+
+		this.model.on('destroy', this.remove, this);
 	},
 
 	render: function() {
@@ -61,6 +66,22 @@ var FeedbackItemView = Backbone.View.extend({
 		setTimeout(function() {
 			that.$score.removeClass('pop-reverse');
 		}, 500);
+
+		return false;
+	},
+
+	adminPullDown: function() {
+		var that = this,
+			confirmView = new ConfirmDialogView({
+				title: 'Are you sure?',
+				body: 'As an admin, you can remove this piece of feedback instantly by clicking confirm. This will also delete all relevant discussion.',
+				onConfirm: function() {
+					that.model.trigger('destroy');
+					that.model.get('feedback').pullDown();
+				}
+			});
+
+		window.Vibe.appView.showOverlay(confirmView);
 
 		return false;
 	}
