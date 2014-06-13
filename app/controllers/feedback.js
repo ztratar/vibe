@@ -52,7 +52,7 @@ exports.pending = function(req, res) {
 		if (err) return helpers.sendError(res, err);
 
 		res.send(_.map(feedbacks, function(feedback) {
-			return feedback.stripInfo();
+			return feedback.stripInfo(req.user);
 		}));
 	});
 };
@@ -81,7 +81,7 @@ exports.create = function(req, res, next) {
 		votes: [req.user._id]
 	}, function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
-		return res.send(feedback.stripInfo());
+		return res.send(feedback.stripInfo(req.user));
 	});
 };
 
@@ -119,8 +119,67 @@ exports.update = function(req, res, next) {
 			});
 		}
 	} else {
-		res.send(req.feedback.stripInfo());
+		res.send(req.feedback.stripInfo(req.user));
 	}
+};
+
+/*
+ * PUT /api/feedback/:feedback/agree
+ *
+ * Agree with this feedback, which increments 
+ * the score.
+ */
+exports.agree = function(req, res, next) {
+	if (req.feedback.didUserVote(req.user._id)) {
+		return res.send({
+			error: "You've already agreed with this"
+		});
+	}
+
+	req.feedback.update({
+		$inc: {
+			num_votes: 1
+		},
+		$push: {
+			votes: req.user._id
+		}
+	}, {
+		w: 1
+	}, function(err, feedback) {
+		if (err) helpers.sendError(res, err);
+		Feedback.findById(req.feedback._id, function(err, feedback) {
+			res.send(feedback.stripInfo(req.user));
+		});
+	});
+};
+
+/*
+ * PUT /api/feedback/:feedback/undo_agree
+ *
+ * Reverse your decision to agree with feedback.
+ */
+exports.undoAgree = function(req, res, next) {
+	if (!req.feedback.didUserVote(req.user._id)) {
+		return res.send({
+			error: "You already don't agree with this"
+		});
+	}
+
+	req.feedback.update({
+		$inc: {
+			num_votes: -1
+		},
+		$pull: {
+			votes: req.user._id
+		}
+	}, {
+		w: 1
+	}, function(err, feedback, test, z) {
+		if (err) helpers.sendError(res, err);
+		Feedback.findById(req.feedback._id, function(err, feedback) {
+			res.send(feedback.stripInfo(req.user));
+		});
+	});
 };
 
 /*
@@ -143,7 +202,7 @@ exports.approve = function(req, res, next) {
 
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
-		res.send(feedback.stripInfo());
+		res.send(feedback.stripInfo(req.user));
 
 		postsController.createPostsFromFeedback(res, feedback);
 	});
@@ -171,7 +230,7 @@ exports.disapprove = function(req, res, next) {
 
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
-		res.send(feedback.stripInfo());
+		res.send(feedback.stripInfo(req.user));
 	});
 };
 

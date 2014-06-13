@@ -14,12 +14,24 @@ var mongoose = require('mongoose'),
  * Get your post stream
  */
 exports.index = function(req, res) {
-	Post
-		.find({
+	var afterId = /afterId=([^&]+)/.exec(req.url),
+		beforeId = /beforeId=([^&]+)/.exec(req.url),
+		queryObj = {
 			for_user: req.user._id
-		})
+		};
+
+	if (afterId && afterId.length) {
+		queryObj._id = { $gt: mongoose.Types.ObjectId(afterId[1]) };
+	} else if (beforeId && beforeId.length) {
+		queryObj._id = { $lt: mongoose.Types.ObjectId(beforeId[1]) };
+	}
+
+	Post
+		.find(queryObj)
 		.populate('feedback')
 		.populate('question')
+		.sort({ _id: -1 })
+		.limit(10)
 		.exec(function(err, posts) {
 			if (err) return helpers.sendError(res, err);
 			if (!posts.length) return res.send([]);
@@ -27,7 +39,7 @@ exports.index = function(req, res) {
 			// Ensure feedback is stripped of personal
 			// info.
 			_.each(posts, function(post, ind) {
-				posts[ind].feedback = post.feedback.stripInfo();
+				posts[ind] = posts[ind].withStrippedFeedback(req.user);
 			});
 
 			res.send(posts);

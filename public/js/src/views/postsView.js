@@ -9,6 +9,8 @@ var PostsView = Backbone.View.extend({
 	className: 'posts-view',
 
 	initialize: function(opts) {
+		var that = this;
+
 		if (!opts || !opts.posts) return false;
 
 		this.posts = opts.posts;
@@ -19,6 +21,7 @@ var PostsView = Backbone.View.extend({
 
 	render: function() {
 		this.addAll();
+
 		return this;
 	},
 
@@ -38,7 +41,11 @@ var PostsView = Backbone.View.extend({
 			// Must be question
 		}
 
-		this.$el.append(itemView.$el);
+		if (this.posts.indexOf(post) === 0) {
+			this.$el.prepend(itemView.$el);
+		} else {
+			this.$el.append(itemView.$el);
+		}
 		itemView.render();
 	}
 

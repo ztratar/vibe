@@ -12,6 +12,8 @@ define("views/postsView",
     	className: 'posts-view',
 
     	initialize: function(opts) {
+    		var that = this;
+
     		if (!opts || !opts.posts) return false;
 
     		this.posts = opts.posts;
@@ -22,6 +24,7 @@ define("views/postsView",
 
     	render: function() {
     		this.addAll();
+
     		return this;
     	},
 
@@ -41,7 +44,11 @@ define("views/postsView",
     			// Must be question
     		}
 
-    		this.$el.append(itemView.$el);
+    		if (this.posts.indexOf(post) === 0) {
+    			this.$el.prepend(itemView.$el);
+    		} else {
+    			this.$el.append(itemView.$el);
+    		}
     		itemView.render();
     	}
 

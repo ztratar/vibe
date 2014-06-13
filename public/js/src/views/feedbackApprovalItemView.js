@@ -23,6 +23,7 @@ var FeedbackApprovalItemView = Backbone.View.extend({
 	render: function() {
 		if (this.model.get('status') !== 'pending') {
 			this.feedbacks.remove(this.model);
+			this.remove();
 		} else {
 			this.$el.html(this.template({
 				model: this.model.toJSON(),

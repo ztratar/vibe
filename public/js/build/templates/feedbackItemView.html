@@ -1,6 +1,23 @@
+<span class="score"><%- model.feedback.get('num_votes') %></span>
 <div class="v-centered">
 	<div>
-		<h4><%- model.feedback.body %></h4>
+		<h4><%- model.feedback.get('body') %></h4>
 	</div>
 </div>
-<div class="voting-bar-container"></div>
+<div class="action-bar clearfix">
+	<% if (model.feedback.get('current_user_agreed')) { %>
+	<a href="#" class="btn agreed">
+		<i class="icon">&#61845;</i>
+		Agreed!
+	</a>
+	<% } else { %>
+	<a href="#" class="btn agree">
+		<i class="icon">&#61845;</i>
+		Agree
+	</a>
+	<% } %>
+	<a href="#" class="btn discuss">
+		<i class="icon">&#61704;</i>
+		Discuss
+	</a>
+</div>

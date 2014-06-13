@@ -15,22 +15,29 @@ var FeedbackApprovalView = Backbone.View.extend({
 		this.feedback = new Feedbacks();
 		this.feedback.url = '/api/feedback/pending';
 
-		this.feedback.on('all', this.render, this);
+		this.feedback.on('reset', this.render, this);
+		this.feedback.on('add', this.addOne, this);
+		this.feedback.on('all', this.determineVisibility, this);
 
 		_.defer(_.bind(function() {
-			this.feedback.fetch();
+			this.feedback.fetch({
+				reset: true
+			});
 		}, this));
 	},
 
-	render: function() {
-		if (!this.feedback.length ) {
+	determineVisibility: function() {
+		if (!this.feedback.where({ status: 'pending' }).length) {
 			this.$el.hide();
 		} else {
 			this.$el.show();
-			this.$el.html(this.template());
-			this.$pendingFeedback = this.$('.pending-feedback');
-			this.addAll();
 		}
+	},
+
+	render: function() {
+		this.$el.html(this.template());
+		this.$pendingFeedback = this.$('.pending-feedback');
+		this.addAll();
 
 		return this;
 	},

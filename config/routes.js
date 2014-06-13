@@ -61,6 +61,8 @@ module.exports = function (app, passport) {
 	app.put('/api/questions/:question', c.questions.update);
 	app.put('/api/surveys/:survey/question/:question', c.surveys.addQuestion);
 	app.put('/api/feedback/:feedback', c.feedback.update);
+	app.put('/api/feedback/:feedback/agree', c.feedback.agree);
+	app.put('/api/feedback/:feedback/undo_agree', c.feedback.undoAgree);
 
 	app.param('feedback', c.feedback.loadFeedback);
 	app.param('meta_question', c.meta_questions.loadMetaQuestion);

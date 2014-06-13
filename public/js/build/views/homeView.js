@@ -43,6 +43,8 @@ define("views/homeView",
     		this.$postsContainer.html(this.postsView.$el);
     		this.postsView.render();
 
+    		this.infScrollHandler();
+
     		return this;
     	},
 
@@ -68,6 +70,26 @@ define("views/homeView",
     		}, this));
 
     		return false;
+    	},
+
+    	infScrollHandler: function() {
+    		var that = this,
+    			$currentScreen = $(window.Vibe.appRouter.screenRouter.currentScreen),
+    			currentScreenHeight = $currentScreen.height(),
+    			verticalOffset = 300;
+
+    		$currentScreen
+    			.off('scroll.postsInfScroll')
+    			.on('scroll.postsInfScroll', _.throttle(function() {
+    				var targetScroll = $currentScreen[0].scrollHeight - currentScreenHeight - verticalOffset,
+    					currentScroll = $currentScreen.scrollTop();
+
+    				if (currentScroll >= targetScroll
+    						&& !that.posts.currentlyFetching
+    						&& !that.posts.atLastItem) {
+    					that.posts.getMore();
+    				}
+    			}, 16));
     	}
 
     });

@@ -29,8 +29,15 @@ FeedbackSchema.path('body').validate(function(body) {
 // Methods
 FeedbackSchema.methods = {
 
-	stripInfo: function() {
+	stripInfo: function(currentUser) {
 		var feedback = this.toObject();
+
+		if (currentUser
+				&& this.didUserVote(currentUser._id)) {
+			feedback.current_user_agreed = true;
+		} else {
+			feedback.current_user_agreed = false;
+		}
 
 		feedback.votes = undefined;
 		feedback.creator = undefined;
@@ -40,6 +47,12 @@ FeedbackSchema.methods = {
 		feedback.company = undefined;
 
 		return feedback;
+	},
+
+	didUserVote: function(userId) {
+		return _.contains(_.map(this.votes, function(vote) {
+			return vote.toString();
+		}), userId.toString());
 	}
 
 }

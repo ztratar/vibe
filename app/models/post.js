@@ -22,5 +22,18 @@ PostSchema.path('content_type').validate(function(contentType) {
 	return contentType && contentType.length;
 }, 'Content type is required');
 
+PostSchema.methods = {
+
+	withStrippedFeedback: function(currentUser) {
+		var strippedFeedback = this.feedback.stripInfo(currentUser),
+			retObj = this.toObject();
+
+		retObj.feedback = strippedFeedback;
+
+		return retObj;
+	}
+
+};
+
 mongoose.model('Post', PostSchema);
 

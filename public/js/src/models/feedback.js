@@ -8,7 +8,8 @@ var Feedback = BaseModel.extend({
 		time_created: new Date(),
 		status: '',
 		body: '',
-		num_votes: 0
+		num_votes: 0,
+		current_user_agreed: false
 	},
 
 	approve: function() {
@@ -20,6 +21,32 @@ var Feedback = BaseModel.extend({
 	reject: function() {
 		this.save({
 			status: 'rejected'
+		});
+	},
+
+	agree: function() {
+		var currentVotes = this.get('num_votes');
+
+		this.set({
+			'current_user_agreed': true,
+			'num_votes': currentVotes+1
+		});
+
+		this.save({}, {
+			url: this.url() + '/agree'
+		});
+	},
+
+	undoAgree: function() {
+		var currentVotes = this.get('num_votes');
+
+		this.set({
+			'current_user_agreed': false,
+			'num_votes': currentVotes-1
+		});
+
+		this.save({}, {
+			url: this.url() + '/undo_agree'
 		});
 	}
 
