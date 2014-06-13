@@ -1,9 +1,9 @@
 define("views/postsView", 
-  ["backbone","views/postItemView","exports"],
+  ["backbone","views/feedbackItemView","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
 
-    var PostItemView = __dependency2__["default"];
+    var FeedbackItemView = __dependency2__["default"];
 
     var PostsView = Backbone.View.extend({
 
@@ -31,12 +31,18 @@ define("views/postsView",
     	},
 
     	addOne: function(post) {
-    		var postItemView = new PostItemView({
+    		var itemView;
+
+    		if (post.get('content_type') === 'feedback') {
+    			itemView = new FeedbackItemView({
     				model: post
     			});
+    		} else {
+    			// Must be question
+    		}
 
-    		this.$el.append(postItemView.$el);
-    		postItemView.render();
+    		this.$el.append(itemView.$el);
+    		itemView.render();
     	}
 
     });

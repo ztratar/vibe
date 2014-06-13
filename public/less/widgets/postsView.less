@@ -1,0 +1,40 @@
+.posts-view {
+	list-style: none;
+	padding: 15px 0 0 0;
+
+	li {
+		display: block;
+		position: relative;
+		border-radius: @border-radius-large;
+		margin: 0 0 15px 0;
+
+		&.feedback-item-view {
+			background: @vibe-lighter;
+
+			.v-centered {
+				height: auto;
+				min-height: 320px;
+
+				@media (max-width: @screen-xs) {
+					min-height: 200px;
+				}
+			}
+
+			h4 {
+				font-size: 28px;
+				font-weight: 600;
+				padding: 40px 60px;
+
+				@media (max-width: @screen-xs) {
+					font-size: 18px;
+					padding: 24px 32px;
+				}
+			}
+
+			.voting-bar {
+				background: rgba(65, 113, 163, 1);
+				border-radius: 0 0 @border-radius-large @border-radius-large;
+			}
+		}
+	}
+}

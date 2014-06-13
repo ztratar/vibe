@@ -1,0 +1,91 @@
+.voting-bar {
+	text-align: right;
+	padding: 15px;
+	position: relative;
+
+	@media (max-width: @screen-xs) {
+		padding: 10px;
+	}
+
+	span.num-votes {
+		position: absolute;
+		text-align: right;
+		width: 38px;
+		font-size: 42px;
+		line-height: 57px;
+		font-weight: bold;
+		left: 15px;
+
+		@media (max-width: @screen-xs) {
+			width: 24px;
+			font-size: 28px;
+			line-height: 40px;
+			left: 10px;
+		}
+	}
+
+	span.num-votes.doubleDigit {
+		width: 52px;
+
+		@media (max-width: @screen-xs) {
+			width: 34px;
+		}
+
+		& + ul.votes {
+			left: 80px;
+
+			@media (max-width: @screen-xs) {
+				left: 50px;
+			}
+		}
+	}
+
+	ul.votes {
+		padding: 0 0 0 0;
+		position: absolute;
+		left: 68px;
+
+		li {
+			padding: 0;
+			vertical-align: middle;
+			line-height: 72px;
+
+			i.icon {
+				font-size: 34px;
+			}
+		}
+
+		@media (max-width: @screen-xs) {
+			left: 42px;
+
+			li {
+				line-height: 48px;
+
+				i.icon {
+					font-size: 24px;
+				}
+			}
+		}
+	}
+
+	a.discuss {
+		padding: 13px 8px 15px 24px;
+		margin: 0 0 0 6px;
+
+		@media (max-width: @screen-xs) {
+			padding: 8px 8px 8px 14px;
+
+			i {
+				font-size: 18px;
+				line-height: 29px;
+			}
+		}
+	}
+
+	a.btn {
+		@media (max-width: @screen-xs) {
+			padding: 8px 14px;
+			font-size: 18px;
+		}
+	}
+}

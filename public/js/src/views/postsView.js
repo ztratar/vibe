@@ -1,6 +1,6 @@
 import 'backbone';
 
-import PostItemView from 'views/postItemView';
+import FeedbackItemView from 'views/feedbackItemView';
 
 var PostsView = Backbone.View.extend({
 
@@ -28,12 +28,18 @@ var PostsView = Backbone.View.extend({
 	},
 
 	addOne: function(post) {
-		var postItemView = new PostItemView({
+		var itemView;
+
+		if (post.get('content_type') === 'feedback') {
+			itemView = new FeedbackItemView({
 				model: post
 			});
+		} else {
+			// Must be question
+		}
 
-		this.$el.append(postItemView.$el);
-		postItemView.render();
+		this.$el.append(itemView.$el);
+		itemView.render();
 	}
 
 });

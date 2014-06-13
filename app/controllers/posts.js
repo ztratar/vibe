@@ -24,6 +24,12 @@ exports.index = function(req, res) {
 			if (err) return helpers.sendError(res, err);
 			if (!posts.length) return res.send([]);
 
+			// Ensure feedback is stripped of personal
+			// info.
+			_.each(posts, function(post, ind) {
+				posts[ind].feedback = post.feedback.stripInfo();
+			});
+
 			res.send(posts);
 		});
 };

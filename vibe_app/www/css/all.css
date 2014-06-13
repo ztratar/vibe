@@ -6789,7 +6789,7 @@ html {
   }
 }
 .home-view {
-  padding-top: 70px;
+  padding-top: 72px;
 }
 @media (max-width: 480px) {
   .home-view {
@@ -6988,27 +6988,6 @@ html {
 }
 .charts-view li text {
   fill: rgba(255, 255, 255, 0.6);
-}
-.charts-view li a.discuss {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 15px 15px 9px 0;
-  margin: 0 0 0 15px;
-  font-size: 18px;
-  font-weight: 300;
-  color: white;
-  line-height: 29px;
-}
-.charts-view li a.discuss:hover {
-  text-decoration: none;
-}
-.charts-view li a.discuss i {
-  float: right;
-  margin-bottom: 2px;
 }
 @keyframes bounceHit {
   0% {
@@ -8198,6 +8177,78 @@ html {
     width: auto;
     margin: 0 10px 0 0;
   }
+}
+.posts-view {
+  list-style: none;
+  padding: 15px 0 0 0;
+}
+.posts-view li {
+  display: block;
+  position: relative;
+  border-radius: 6px;
+  margin: 0 0 15px 0;
+}
+.posts-view li a.discuss {
+  display: block;
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 15px 15px 9px 0;
+  margin: 0 0 0 15px;
+  font-size: 18px;
+  font-weight: 300;
+  color: white;
+  line-height: 29px;
+}
+.posts-view li a.discuss:hover {
+  text-decoration: none;
+}
+.posts-view li a.discuss i {
+  float: right;
+  margin-bottom: 2px;
+}
+.posts-view li.feedback-item-view {
+  background: #2f557c;
+  padding: 0 0 65px 0;
+}
+.posts-view li.feedback-item-view .v-centered {
+  height: auto;
+  min-height: 320px;
+}
+.posts-view li.feedback-item-view h4 {
+  font-size: 28px;
+  font-weight: 600;
+  padding: 40px 60px;
+}
+.voting-bar {
+  text-align: right;
+  padding: 15px;
+  position: relative;
+}
+.voting-bar span.num-votes {
+  position: absolute;
+  text-align: right;
+  width: 52px;
+  font-size: 42px;
+  line-height: 57px;
+  font-weight: bold;
+  left: 15px;
+}
+.voting-bar ul.votes {
+  padding: 0 0 0 0;
+  position: absolute;
+  left: 80px;
+}
+.voting-bar ul.votes li {
+  padding: 0;
+  vertical-align: middle;
+  line-height: 72px;
+}
+.voting-bar ul.votes li i.icon {
+  font-size: 34px;
 }
 html,
 body {
