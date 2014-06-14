@@ -56,9 +56,7 @@ define("models/feedback",
     	},
 
     	pullDown: function(reasonVal) {
-    		this.destroy({
-    			status_change_reason: reasonVal
-    		});
+    		this.destroy();
     	}
 
     });

@@ -6841,16 +6841,37 @@ html {
   -webkit-transition: all 0.24s ease-out;
   transition: all 0.24s ease-out;
 }
+@media (max-width: 480px) {
+  .vibe-modal {
+    margin: 0 15px;
+  }
+}
 .vibe-modal .vibe-modal-content {
   padding: 24px 24px 20px;
+}
+@media (max-width: 480px) {
+  .vibe-modal .vibe-modal-content {
+    padding: 18px 18px 14px;
+  }
 }
 .vibe-modal .vibe-modal-content h3 {
   margin: 0 0 18px 0;
   font-weight: 600;
 }
+@media (max-width: 480px) {
+  .vibe-modal .vibe-modal-content h3 {
+    margin: 0 0 12px 0;
+    font-size: 24px;
+  }
+}
 .vibe-modal .vibe-modal-content p {
   color: rgba(255, 255, 255, 0.9);
   font-size: 18px;
+}
+@media (max-width: 480px) {
+  .vibe-modal .vibe-modal-content p {
+    font-size: 16px;
+  }
 }
 .vibe-modal .vibe-modal-content textarea {
   width: 100%;
@@ -6864,6 +6885,13 @@ html {
   font-size: 18px;
   padding: 18px;
   outline: none;
+}
+@media (max-width: 480px) {
+  .vibe-modal .vibe-modal-content textarea {
+    margin: 10px 0 0 0;
+    padding: 12px;
+    height: 80px;
+  }
 }
 .vibe-modal .action-bar {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
@@ -6945,6 +6973,9 @@ html {
   -webkit-transition: opacity 0.18s ease-out;
   transition: opacity 0.18s ease-out;
 }
+.post-wrapper .new-post span.short-v {
+  display: none;
+}
 @media (max-width: 480px) {
   .post-wrapper .new-post {
     padding: 8px;
@@ -6956,6 +6987,40 @@ html {
 }
 .post-wrapper .new-post.fadeOut {
   opacity: 0;
+}
+.post-wrapper .new-post.with-polls {
+  width: calc(100% - 130px);
+}
+@media (max-width: 480px) {
+  .post-wrapper .new-post.with-polls {
+    width: calc(100% - 53px);
+  }
+  .post-wrapper .new-post.with-polls span {
+    display: none;
+  }
+  .post-wrapper .new-post.with-polls span.short-v {
+    display: inline;
+  }
+}
+.post-wrapper .polls {
+  background: #e69d30;
+  font-weight: 600;
+  margin-left: 10px;
+  padding: 12px 22px;
+}
+@media (max-width: 480px) {
+  .post-wrapper .polls {
+    padding: 8px 5px 8px 10px;
+    margin-left: 6px;
+  }
+  .post-wrapper .polls span {
+    display: none;
+  }
+}
+.post-wrapper .polls i {
+  font-weight: 400;
+  margin: -4px 6px 0 0;
+  font-size: 20px;
 }
 .post-wrapper a.new-post {
   width: 100%;

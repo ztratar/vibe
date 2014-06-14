@@ -29,6 +29,10 @@
 		opacity: 1;
 		.transition(opacity 0.18s ease-out);
 
+		span.short-v {
+			display: none;
+		}
+
 		@media (max-width: @screen-xs) {
 			padding: 8px;
 		}
@@ -40,6 +44,44 @@
 
 		&.fadeOut {
 			opacity: 0;
+		}
+
+		&.with-polls {
+			width: calc(~"100% - 130px");
+
+			@media (max-width: @screen-xs) {
+				width: calc(~"100% - 53px");
+
+				span {
+					display: none;
+				}
+
+				span.short-v {
+					display: inline;
+				}
+			}
+		}
+	}
+
+	.polls {
+		background: @vibe-orange;
+		font-weight: 600;
+		margin-left: 10px;
+		padding: 12px 22px;
+
+		@media (max-width: @screen-xs) {
+			padding: 8px 5px 8px 10px;
+			margin-left: 6px;
+
+			span {
+				display: none;
+			}
+		}
+
+		i {
+			font-weight: 400;
+			margin: -4px 6px 0 0;
+			font-size: 20px;
 		}
 	}
 

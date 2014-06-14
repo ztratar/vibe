@@ -6973,6 +6973,9 @@ html {
   -webkit-transition: opacity 0.18s ease-out;
   transition: opacity 0.18s ease-out;
 }
+.post-wrapper .new-post span.short-v {
+  display: none;
+}
 @media (max-width: 480px) {
   .post-wrapper .new-post {
     padding: 8px;
@@ -6984,6 +6987,40 @@ html {
 }
 .post-wrapper .new-post.fadeOut {
   opacity: 0;
+}
+.post-wrapper .new-post.with-polls {
+  width: calc(100% - 130px);
+}
+@media (max-width: 480px) {
+  .post-wrapper .new-post.with-polls {
+    width: calc(100% - 53px);
+  }
+  .post-wrapper .new-post.with-polls span {
+    display: none;
+  }
+  .post-wrapper .new-post.with-polls span.short-v {
+    display: inline;
+  }
+}
+.post-wrapper .polls {
+  background: #e69d30;
+  font-weight: 600;
+  margin-left: 10px;
+  padding: 12px 22px;
+}
+@media (max-width: 480px) {
+  .post-wrapper .polls {
+    padding: 8px 5px 8px 10px;
+    margin-left: 6px;
+  }
+  .post-wrapper .polls span {
+    display: none;
+  }
+}
+.post-wrapper .polls i {
+  font-weight: 400;
+  margin: -4px 6px 0 0;
+  font-size: 20px;
 }
 .post-wrapper a.new-post {
   width: 100%;
