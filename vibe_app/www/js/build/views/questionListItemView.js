@@ -12,13 +12,16 @@ define("views/questionListItemView",
     	template: _.template(template),
 
     	events: {
-    		'click a': 'actionTriggered'
+    		'click a.action': 'actionTriggered',
+    		'click ul.days a': 'dayClicked',
+    		'click a.send-now': 'sendNow'
     	},
 
     	initialize: function(opts) {
     		opts = opts || {};
 
     		this.button = opts.button || {};
+    		this.question_type = opts.question_type || '';
 
     		this.model.on('change', this.render, this);
     		this.model.on('destroy', this.remove, this);
@@ -27,10 +30,17 @@ define("views/questionListItemView",
     	render: function() {
     		var that = this;
 
+    		if (this.question_type === 'selected'
+    				&& !this.model.get('active')) {
+    			this.remove();
+    			return;
+    		}
+
     		this.$el.html(this.template({
     			model: this.model.toJSON(),
     			className: this.button.className,
-    			icon: this.button.icon
+    			icon: this.button.icon,
+    			question_type: this.question_type
     		}));
 
     		return this;
@@ -42,6 +52,36 @@ define("views/questionListItemView",
     		}
 
     		return false;
+    	},
+
+    	dayClicked: function(ev) {
+    		var $target = $(ev.currentTarget),
+    			day = $target.attr('data-day'),
+    			dayMap = {
+    				'monday': 0,
+    				'tuesday': 1,
+    				'wednesday': 2,
+    				'thursday': 3,
+    				'friday': 4
+    			},
+    			days = _.clone(this.model.get('send_on_days'));
+
+    		if (days[dayMap[day]] > 1) {
+    			days[dayMap[day]] = 0;
+    		} else {
+    			days[dayMap[day]]++;
+    		}
+
+    		this.model.save({
+    			send_on_days: days
+    		});
+    		this.model.trigger('change');
+
+    		return false;
+    	},
+
+    	sendNow: function() {
+
     	}
 
     });

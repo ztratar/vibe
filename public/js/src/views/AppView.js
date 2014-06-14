@@ -2,7 +2,9 @@ import 'backbone';
 import 'jquery';
 import Survey from 'models/survey';
 import HeaderView from 'views/headerView';
+
 module template from 'text!templates/AppView.html';
+module overlayTemplate from 'text!templates/modalOverlay.html';
 module surveyTemplate from 'text!templates/surveyNotification.html';
 
 var AppView = Backbone.View.extend({
@@ -10,6 +12,8 @@ var AppView = Backbone.View.extend({
 	el: 'body',
 
 	className: 'vibe-app app-view',
+
+	overlayTemplate: _.template(overlayTemplate),
 
 	initialize: function() {
 		this.headerView = new HeaderView();
@@ -21,6 +25,9 @@ var AppView = Backbone.View.extend({
 		this.$('.app-header').html(this.headerView.$el);
 
 		this.$overlayContainer = this.$('.overlay-container');
+		this.$overlayContainer.html(this.overlayTemplate());
+
+		this.$overlayViewContainer = this.$('.overlay-view-container');
 		this.$notifHolder = this.$('.notif-holder');
 		this.$notifText = this.$('.notif-text');
 	},
@@ -47,7 +54,7 @@ var AppView = Backbone.View.extend({
 
 		if (!view) return;
 
-		this.$overlayContainer.html(view.$el);
+		this.$overlayViewContainer.html(view.$el);
 		view.render();
 
 		_.defer(function() {
@@ -65,13 +72,18 @@ var AppView = Backbone.View.extend({
 		});
 
 		view.on('remove', function() {
-			that.$overlayContainer.addClass('remove');
-			_.delay(function() {
-				that.$overlayContainer
-					.html('')
-					.attr('class', 'overlay-container');
-			}, 360);
+			that.closeOverlay();
 		});
+	},
+
+	closeOverlay: function() {
+		that.$overlayContainer.addClass('remove');
+
+		// Wait for the animation
+		_.delay(function() {
+			that.$overlayContainer.attr('class', 'overlay-container');
+			that.$overlayViewContainer.html('');
+		}, 360);
 	},
 
 	showNotif: function(text, timeToRead, addClass) {

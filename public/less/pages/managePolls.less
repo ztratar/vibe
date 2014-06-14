@@ -6,4 +6,61 @@
 	.form-inline.add-poll {
 		margin-bottom: 30px;
 	}
+
+	&.as-modal {
+		.container;
+		.stdBoxShadow();
+
+		background: @vibe-grey-dark;
+		border-radius: @border-radius-large;
+
+		.vibe-modal-header {
+			text-align: left;
+			padding: 0 9px;
+
+			h3 {
+				font-weight: 600;
+			}
+
+			p {
+				opacity: 0.9;
+			}
+		}
+
+		.add-poll {
+			background: desaturate(lighten(@vibe-grey-dark, 4%), 3%);
+			.stdBoxShadow();
+			border-radius: 0;
+			margin: 20px -15px 0;
+			width: auto;
+
+			input {
+				background: darken(@vibe-grey-dark, 8%);
+				border-color: darken(@vibe-grey-dark, 8%);
+				.placeholderTextColor(#444);
+			}
+		}
+
+		.list-header {
+			background: desaturate(lighten(@vibe-grey-dark, 4%), 3%);
+			border-radius: 0;
+			.stdBoxShadow();
+			margin: 0 -15px;
+			padding: 10px 24px;
+
+			h4 {
+				color: rgba(255, 255, 255, 0.3);
+			}
+		}
+
+		.question-list-view {
+			margin: 0 -15px;
+			padding: 0;
+
+			&> li {
+				border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+				padding: 14px 24px;
+			}
+		}
+	}
 }

@@ -1,6 +1,38 @@
-<h3><%- model.body %></h3>
-<a href="#" class="<%- className %>">
-	<i class="icon">
-		<%= icon %>
-	</i>
+<div class="question-col">
+	<h3><%- model.body %></h3>
+</div>
+<% if (question_type === 'suggested') { %>
+<div class="save-col">
+	<a href="#" class="btn btn-info action save-question">
+		<i class="icon">&#61943;</i>
+		Save to my polls
+	</a>
+</div>
+<% } else { %>
+<a href="#" class="x-action action">
+	<i class="icon x-icon">&#61943;</i>
 </a>
+<div class="send-now-col">
+	<a href="#" class="btn btn-success send-now">Send now</a>
+</div>
+<div class="send-later-col">
+	<h4>Send later:</h4>
+	<ul class="days">
+		<li>
+			<a href="#" data-day="monday" class="state-<%- model.send_on_days[0] %>">M</a>
+		</li>
+		<li>
+			<a href="#" data-day="tuesday" class="state-<%- model.send_on_days[1] %>">T</a>
+		</li>
+		<li>
+			<a href="#" data-day="wednesday" class="state-<%- model.send_on_days[2] %>">W</a>
+		</li>
+		<li>
+			<a href="#" data-day="thursday" class="state-<%- model.send_on_days[3] %>">Th</a>
+		</li>
+		<li>
+			<a href="#" data-day="friday" class="state-<%- model.send_on_days[4] %>">F</a>
+		</li>
+	</ul>
+</div>
+<% } %>

@@ -16,24 +16,26 @@ define("views/questionListView",
 
     		this.questions = opts.questions;
     		this.button = opts.button;
+    		this.question_type = opts.question_type;
 
     		this.questions.on('all', this.render, this);
     	},
 
     	render: function() {
-    		this.$el.html('');
     		this.addQuestions();
     		return this;
     	},
 
     	addQuestions: function() {
+    		this.$el.html('');
     		this.questions.each(this.addOne, this);
     	},
 
     	addOne: function(question) {
     		var questionListItemView = new QuestionListItemView({
     				model: question,
-    				button: this.button
+    				button: this.button,
+    				question_type: this.question_type
     			});
 
     		this.$el.append(questionListItemView.$el);

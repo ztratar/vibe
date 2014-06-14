@@ -28,9 +28,8 @@ var ManagePollsView = Backbone.View.extend({
 
 		this.selectedQuestionsList = new QuestionListView({
 			questions: this.selectedQuestions,
+			question_type: 'selected',
 			button: {
-				icon: '&#61943;',
-				className: 'x-icon',
 				click: function(model) {
 					model.save({
 						active: false
@@ -44,6 +43,7 @@ var ManagePollsView = Backbone.View.extend({
 		});
 		this.suggestedQuestionsList = new QuestionListView({
 			questions: this.suggestedQuestions,
+			question_type: 'suggested',
 			button: {
 				icon: '&#61943;',
 				click: function(model) {

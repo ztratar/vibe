@@ -1,6 +1,6 @@
 define("views/homeView", 
-  ["backbone","models/posts","views/postsView","views/postOverlayView","views/feedbackApprovalView","text!templates/homeView.html","text!templates/newChartsLocked.html","text!templates/surveySummaryCard.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
+  ["backbone","models/posts","views/postsView","views/postOverlayView","views/feedbackApprovalView","views/managePollsView","text!templates/homeView.html","text!templates/newChartsLocked.html","text!templates/surveySummaryCard.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __exports__) {
     "use strict";
 
     var Posts = __dependency2__["default"];
@@ -9,9 +9,11 @@ define("views/homeView",
     var PostOverlayView = __dependency4__["default"];
     var FeedbackApprovalView = __dependency5__["default"];
 
-    var template = __dependency6__;
-    var newChartsLockedTemplate = __dependency7__;
-    var surveySummaryCardTemplate = __dependency8__;
+    var ManagePollsView = __dependency6__["default"];
+
+    var template = __dependency7__;
+    var newChartsLockedTemplate = __dependency8__;
+    var surveySummaryCardTemplate = __dependency9__;
 
     var HomeView = Backbone.View.extend({
 
@@ -20,7 +22,8 @@ define("views/homeView",
     	template: _.template(template),
 
     	events: {
-    		'click a.new-post': 'newPost'
+    		'click a.new-post': 'newPost',
+    		'click a.manage-polls': 'managePolls'
     	},
 
     	initialize: function() {
@@ -71,6 +74,17 @@ define("views/homeView",
     		postOverlayView.on('remove', _.bind(function() {
     			this.$newPostButton.removeClass('fadeOut');
     		}, this));
+
+    		return false;
+    	},
+
+    	managePolls: function() {
+    		var managePollsView = new ManagePollsView();
+
+    		window.Vibe.appView.showOverlay(managePollsView);
+
+    		managePollsView.$el.addClass('as-modal');
+    		managePollsView.render();
 
     		return false;
     	},

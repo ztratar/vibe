@@ -9,6 +9,7 @@ var Question = BaseModel.extend({
 		meta_question: undefined,
 		body: '',
 		active: true,
+		send_on_days: [0, 0, 0, 0, 0],
 		from: {
 			name: 'anonymous'
 		},

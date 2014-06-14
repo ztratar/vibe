@@ -16,7 +16,6 @@ define("views/questionsListView",
     	},
 
     	render: function() {
-    		this.$el.html('');
     		this.addQuestions();
     		return this;
     	},

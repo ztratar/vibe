@@ -1,17 +1,21 @@
 define("views/AppView", 
-  ["backbone","jquery","models/survey","views/headerView","text!templates/AppView.html","text!templates/surveyNotification.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
+  ["backbone","jquery","models/survey","views/headerView","text!templates/AppView.html","text!templates/modalOverlay.html","text!templates/surveyNotification.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
     "use strict";
     var Survey = __dependency3__["default"];
     var HeaderView = __dependency4__["default"];
+
     var template = __dependency5__;
-    var surveyTemplate = __dependency6__;
+    var overlayTemplate = __dependency6__;
+    var surveyTemplate = __dependency7__;
 
     var AppView = Backbone.View.extend({
 
     	el: 'body',
 
     	className: 'vibe-app app-view',
+
+    	overlayTemplate: _.template(overlayTemplate),
 
     	initialize: function() {
     		this.headerView = new HeaderView();
@@ -23,6 +27,9 @@ define("views/AppView",
     		this.$('.app-header').html(this.headerView.$el);
 
     		this.$overlayContainer = this.$('.overlay-container');
+    		this.$overlayContainer.html(this.overlayTemplate());
+
+    		this.$overlayViewContainer = this.$('.overlay-view-container');
     		this.$notifHolder = this.$('.notif-holder');
     		this.$notifText = this.$('.notif-text');
     	},
@@ -49,7 +56,7 @@ define("views/AppView",
 
     		if (!view) return;
 
-    		this.$overlayContainer.html(view.$el);
+    		this.$overlayViewContainer.html(view.$el);
     		view.render();
 
     		_.defer(function() {
@@ -67,13 +74,18 @@ define("views/AppView",
     		});
 
     		view.on('remove', function() {
-    			that.$overlayContainer.addClass('remove');
-    			_.delay(function() {
-    				that.$overlayContainer
-    					.html('')
-    					.attr('class', 'overlay-container');
-    			}, 360);
+    			that.closeOverlay();
     		});
+    	},
+
+    	closeOverlay: function() {
+    		that.$overlayContainer.addClass('remove');
+
+    		// Wait for the animation
+    		_.delay(function() {
+    			that.$overlayContainer.attr('class', 'overlay-container');
+    			that.$overlayViewContainer.html('');
+    		}, 360);
     	},
 
     	showNotif: function(text, timeToRead, addClass) {

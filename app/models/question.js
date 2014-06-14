@@ -38,14 +38,28 @@ mongoose.model('MetaQuestion', MetaQuestionSchema);
  * Question Schema
  */
 var QuestionSchema = new Schema({
-  meta_question: { type: Schema.Types.ObjectId, ref: 'MetaQuestion' },
-  body: String,
-  active: { type: Boolean, default: true },
-  audience: { type: String, default: 'all' },
-  creator: { type: Schema.Types.ObjectId, ref: 'User' },
-  company:  { type: Schema.Types.ObjectId, ref: 'Company' },
-  timeCreated: { type: Date, default: Date.now() }
+	meta_question: { type: Schema.Types.ObjectId, ref: 'MetaQuestion' },
+	body: String,
+	active: { type: Boolean, default: true },
+	send_on_days: { type: Array, default: [0,0,0,0,0] },
+	audience: { type: String, default: 'all' },
+	creator: { type: Schema.Types.ObjectId, ref: 'User' },
+	company:  { type: Schema.Types.ObjectId, ref: 'Company' },
+	timeCreated: { type: Date, default: Date.now() }
 });
+
+QuestionSchema.path('send_on_days').validate(function (daysArray) {
+	var allNum = true;
+
+	for (var i = 0; i < daysArray; i++) {
+		if (typeof daysArray[i] !== 'number'
+				|| daysArray[i] > 2) {
+			allNum = false;
+		}
+	}
+
+	return allNum && daysArray.length === 5;
+}, 'Days array must hold values 0-2 for each and be of length 5');
 
 QuestionSchema.methods = {
   calculateData: function(cb){

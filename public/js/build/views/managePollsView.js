@@ -30,9 +30,8 @@ define("views/managePollsView",
 
     		this.selectedQuestionsList = new QuestionListView({
     			questions: this.selectedQuestions,
+    			question_type: 'selected',
     			button: {
-    				icon: '&#61943;',
-    				className: 'x-icon',
     				click: function(model) {
     					model.save({
     						active: false
@@ -46,6 +45,7 @@ define("views/managePollsView",
     		});
     		this.suggestedQuestionsList = new QuestionListView({
     			questions: this.suggestedQuestions,
+    			question_type: 'suggested',
     			button: {
     				icon: '&#61943;',
     				click: function(model) {

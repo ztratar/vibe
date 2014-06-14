@@ -6,6 +6,8 @@ import PostsView from 'views/postsView';
 import PostOverlayView from 'views/postOverlayView';
 import FeedbackApprovalView from 'views/feedbackApprovalView';
 
+import ManagePollsView from 'views/managePollsView';
+
 module template from 'text!templates/homeView.html';
 module newChartsLockedTemplate from 'text!templates/newChartsLocked.html';
 module surveySummaryCardTemplate from 'text!templates/surveySummaryCard.html';
@@ -17,7 +19,8 @@ var HomeView = Backbone.View.extend({
 	template: _.template(template),
 
 	events: {
-		'click a.new-post': 'newPost'
+		'click a.new-post': 'newPost',
+		'click a.manage-polls': 'managePolls'
 	},
 
 	initialize: function() {
@@ -68,6 +71,17 @@ var HomeView = Backbone.View.extend({
 		postOverlayView.on('remove', _.bind(function() {
 			this.$newPostButton.removeClass('fadeOut');
 		}, this));
+
+		return false;
+	},
+
+	managePolls: function() {
+		var managePollsView = new ManagePollsView();
+
+		window.Vibe.appView.showOverlay(managePollsView);
+
+		managePollsView.$el.addClass('as-modal');
+		managePollsView.render();
 
 		return false;
 	},
