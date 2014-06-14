@@ -40,6 +40,8 @@ var QuestionListItemView = Backbone.View.extend({
 			question_type: this.question_type
 		}));
 
+		this.$sendNowButton = this.$('.send-now');
+
 		return this;
 	},
 
@@ -78,7 +80,22 @@ var QuestionListItemView = Backbone.View.extend({
 	},
 
 	sendNow: function() {
+		var that = this;
 
+		this.$sendNowButton
+			.html('Sending...')
+			.prop('disabled', true);
+
+		$.ajax({
+			type: 'POST',
+			url: this.model.url() + '/send_now',
+			success: function(data) {
+				that.$sendNowButton.html('Sent!')
+				console.log(data);
+			}
+		});
+
+		return false;
 	}
 
 });

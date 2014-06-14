@@ -36,13 +36,36 @@ exports.index = function(req, res) {
 			if (err) return helpers.sendError(res, err);
 			if (!posts.length) return res.send([]);
 
+			var parallelFillFunctions = [];
+
 			// Ensure feedback is stripped of personal
 			// info.
 			_.each(posts, function(post, ind) {
-				posts[ind] = posts[ind].withStrippedFeedback(req.user);
+				if (post.content_type === 'feedback') {
+					posts[ind] = posts[ind].withStrippedFeedback(req.user);
+				} else if (post.content_type === 'question') {
+					(function(post, ind) {
+						parallelFillFunctions.push(function(cb) {
+							post.withFormattedQuestion(req.user, function(postObj) {
+								cb(null, {
+									ind: ind,
+									post: postObj
+								});
+							});
+						});
+					})(post, ind);
+				}
 			});
 
-			res.send(posts);
+			Async.parallel(parallelFillFunctions, function(err, results) {
+				console.log('results', err, results);
+
+				_.each(results, function(result) {
+					posts[result.ind] = result.post
+				});
+
+				res.send(posts);
+			});
 		});
 };
 
@@ -65,7 +88,6 @@ exports.createPostsFromFeedback = function(res, feedback, cb) {
 			postObjs.push({
 				for_user: user._id,
 				company: feedback.company,
-				body: feedback.body,
 				content_type: 'feedback',
 				feedback: feedback._id
 			});

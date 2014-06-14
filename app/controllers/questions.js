@@ -3,8 +3,10 @@ var mongoose = require('mongoose'),
 	_ = require('underscore'),
 	Async = require('async'),
 	User = mongoose.model('User'),
+	Post = mongoose.model('Post'),
 	MetaQuestion = mongoose.model('MetaQuestion'),
 	Question = mongoose.model('Question'),
+	QuestionInstance = mongoose.model('QuestionInstance'),
 	Comment = mongoose.model('Comment'),
 	Company = mongoose.model('Company'),
 	Answer = mongoose.model('Answer'),
@@ -248,6 +250,80 @@ exports.newComment = function(req, res, next){
 	comment.save(function(err, comment){
 		if(err) return next(err);
 		return res.send(comment);
+	});
+};
+
+/*
+ * POST /questions/:question/send_now
+ *
+ * Send the given question out to the company
+ * right now!
+ */
+exports.sendNow = function(req, res, next) {
+	return exports.send(req, res, null, function(posts) {
+		if (posts.length) {
+			res.send(200);
+		} else {
+			res.send(500, {
+				error: "No posts created"
+			});
+		}
+	});
+};
+
+/*
+ * INTERNAL
+ *
+ * Blast out a question to the company.
+ */
+exports.send = function(req, res, questionId, next) {
+	// Figure out which question to send
+	Async.waterfall([function(cb) {
+		if (questionId) {
+			Question.findById(function(err, question) {
+				if (err) return cb(err);
+				cb(null, question);
+			});
+		} else {
+			cb(null, req.question);
+		}
+	}, function(question, cb) {
+		// Get the users who should be sent the question
+		User.find({
+			company: question.company.toString()
+		}, function(err, users) {
+			if (err) return cb(err);
+			cb(null, question, users);
+		});
+	}], function(err, question, users) {
+		// Create QuestionInstance Object
+		QuestionInstance.create({
+			users_sent_to: _.pluck(users, '_id'),
+			question: question._id,
+			num_sent_to: users.length
+		}, function(err, questionInstance) {
+			// Create Posts for Question
+			var postObjs = [];
+			if (err) return helpers.sendError(res, err);
+
+			_.each(users, function(user) {
+				postObjs.push({
+					for_user: user._id,
+					company: question.company,
+					content_type: 'question',
+					question: question._id
+				});
+			});
+
+			Post.create(postObjs, function(err, posts) {
+				if (err) return helpers.sendError(res, err);
+
+				question.time_last_sent = Date.now();
+				question.save();
+
+				next(posts);
+			});
+		});
 	});
 };
 

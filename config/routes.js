@@ -53,6 +53,7 @@ module.exports = function (app, passport) {
 	app.post('/api/meta_questions', c.meta_questions.create);
 	app.post('/api/questions', c.questions.create);
 	app.post('/api/questions/:question/comments', c.questions.newComment);
+	app.post('/api/questions/:question/send_now', c.questions.sendNow);
 	app.post('/api/answers/question/:question/survey/:survey', c.answers.create);
 	app.post('/api/surveys', c.surveys.create);
 	app.post('/api/feedback', c.feedback.create);

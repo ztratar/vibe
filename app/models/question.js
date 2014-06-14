@@ -1,42 +1,12 @@
-/**
- * Module dependencies.
- * Questions for master list of questions
- */
+// Module dependencies.
+var mongoose = require('mongoose'),
+	Schema = mongoose.Schema,
+	Async = require('async'),
+	Answer = mongoose.model('Answer'),
+	QuestionInstance = mongoose.model('QuestionInstance'),
+	_ = require('underscore');
 
-var mongoose = require('mongoose')
-  , Schema = mongoose.Schema
-  , Async = require('async')
-  , Answer = mongoose.model('Answer')
-  , _ = require('underscore');
-
-
-/**
- * MetaQuestion Schema
- */
-var MetaQuestionSchema = new Schema({
-  body: String,
-  suggested: { type: Boolean, default: false },
-  creator: { type: Schema.Types.ObjectId, ref: 'User' }
-});
-
-MetaQuestionSchema.methods = {
-
-	asQuestion: function() {
-		var retObj = this.toObject();
-		return {
-			meta_question: retObj._id,
-			body: retObj.body
-		};
-	}
-
-};
-
-mongoose.model('MetaQuestion', MetaQuestionSchema);
-
-
-/**
- * Question Schema
- */
+// Question Schema
 var QuestionSchema = new Schema({
 	meta_question: { type: Schema.Types.ObjectId, ref: 'MetaQuestion' },
 	body: String,
@@ -44,10 +14,12 @@ var QuestionSchema = new Schema({
 	send_on_days: { type: Array, default: [0,0,0,0,0] },
 	audience: { type: String, default: 'all' },
 	creator: { type: Schema.Types.ObjectId, ref: 'User' },
-	company:  { type: Schema.Types.ObjectId, ref: 'Company' },
-	timeCreated: { type: Date, default: Date.now() }
+	company: { type: Schema.Types.ObjectId, ref: 'Company' },
+	timeCreated: { type: Date, default: Date.now() },
+	time_last_sent: { type: Date }
 });
 
+// Validations
 QuestionSchema.path('send_on_days').validate(function (daysArray) {
 	var allNum = true;
 
@@ -61,73 +33,30 @@ QuestionSchema.path('send_on_days').validate(function (daysArray) {
 	return allNum && daysArray.length === 5;
 }, 'Days array must hold values 0-2 for each and be of length 5');
 
+// Question Methods
 QuestionSchema.methods = {
-  calculateData: function(cb){
 
-    Answer.find({
-        question: this._id,
-        type: 'scale'
-      })
-      .sort('timeDue')
-      .lean()
-      .exec(function(err, answers){
-        if(err) return cb(err);
-        if(!answers.length){
-          return cb(null, []);
-        }
+	withAnswerData: function(currentUser, cb) {
+		var question = this.toObject();
 
-        var data = [];
-        var i;
-        var total = 0;
-        var count = 0;
-        var currDate = Math.floor(new Date(answers[0].timeDue).getTime()/1000);
+		QuestionInstance.find({
+			question: this._id
+		}, function(err, questionInstances) {
+			var lastInstance = _.last(questionInstances);
 
-        // All this is pretty slow... low hanging optimization fruit
-        for(i = 0; i < answers.length; i++){
-          if(typeof(answers[i].body) !== "number"){
-            answers[i].body = parseInt(answers[i].body, 10);
-          }
+			question.answer_data = _.map(questionInstances, function(instance) {
+				return {
+					time_sent: instance.time_sent,
+					avg: instance.getAvg(),
+					completion: instance.getPercentageCompleted()
+				};
+			});
+			question.current_user_voted = lastInstance.didUserAnswer(currentUser._id);
 
-
-          if(Math.floor(answers[i].timeDue.getTime()/1000) === currDate){
-            total += answers[i].body;
-            count += 1;
-          } else {
-
-            data.push(total/count);
-
-            total = 0;
-            count = 0;
-            currDate = Math.floor(new Date(answers[i].timeDue).getTime()/1000);
-          }
-        }
-
-        data.push(total/count);
-        return cb(null, data);
-      });
-  },
-
-  getAnswers: function(cb){
-    var _this = this;
-
-    Answer.find({question: _this._id})
-    .lean()
-    .exec(function(err, answers){
-      if(err) return cb(err);
-
-      return cb(null, answers)
-    });
-  }
-
+			cb(question);
+		});
+	}
 
 };
 
 mongoose.model('Question', QuestionSchema);
-
-
-
-
-
-
-
-

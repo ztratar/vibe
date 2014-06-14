@@ -4,7 +4,8 @@
 
 var express = require('express'),
 	fs = require('fs'),
-	passport = require('passport');
+	passport = require('passport'),
+	_ = require('underscore');
 
 // Load configurations
 // if test env, load example file
@@ -16,9 +17,24 @@ var env = process.env.NODE_ENV || 'development',
 mongoose.connect(config.db);
 
 // Bootstrap models
-var models_path = __dirname + '/app/models'
-fs.readdirSync(models_path).forEach(function (file) {
-  require(models_path+'/'+file);
+var models_path = __dirname + '/app/models',
+	models = [
+		'accessRequest',
+		'answer',
+		'comment',
+		'company',
+		'feedback',
+		'metaquestion',
+		'questionInstance',
+		'question',
+		'post',
+		'survey',
+		'user',
+		'userInvite'
+	];
+
+_.each(models, function(modelName) {
+	require(models_path + '/' + modelName);
 });
 
 // bootstrap passport config

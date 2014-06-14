@@ -32,6 +32,15 @@ PostSchema.methods = {
 		retObj.feedback = strippedFeedback;
 
 		return retObj;
+	},
+
+	withFormattedQuestion: function(currentUser, cb) {
+		var retObj = this.toObject();
+
+		this.question.withAnswerData(currentUser, function(questionObj) {
+			retObj.question = questionObj;
+			cb(retObj);
+		});
 	}
 
 };

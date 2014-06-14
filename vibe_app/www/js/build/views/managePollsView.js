@@ -123,7 +123,6 @@ define("views/managePollsView",
 
     	closeModal: function() {
     		this.trigger('remove');
-    		this.remove();
     	}
 
     });
