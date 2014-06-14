@@ -14,7 +14,8 @@ var ManagePollsView = Backbone.View.extend({
 	template: _.template(template),
 
 	events: {
-		'submit form': 'addPoll'
+		'submit form': 'addPoll',
+		'click a.close-modal': 'closeModal'
 	},
 
 	initialize: function(opts) {
@@ -116,6 +117,10 @@ var ManagePollsView = Backbone.View.extend({
 		} else {
 			this.$selectedHeader.show();
 		}
+	},
+
+	closeModal: function() {
+		this.trigger('remove');
 	}
 
 });

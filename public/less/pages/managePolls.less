@@ -7,10 +7,15 @@
 		margin-bottom: 30px;
 	}
 
+	.close-modal {
+		display: none;
+	}
+
 	&.as-modal {
 		.container;
 		.stdBoxShadow();
 
+		position: relative;
 		background: @vibe-grey-dark;
 		border-radius: @border-radius-large;
 
@@ -25,6 +30,11 @@
 			p {
 				opacity: 0.9;
 			}
+		}
+
+		.close-modal {
+			display: block;
+			.x-icon-wrap;
 		}
 
 		.add-poll {

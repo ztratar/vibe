@@ -16,7 +16,8 @@ define("views/managePollsView",
     	template: _.template(template),
 
     	events: {
-    		'submit form': 'addPoll'
+    		'submit form': 'addPoll',
+    		'click a.close-modal': 'closeModal'
     	},
 
     	initialize: function(opts) {
@@ -118,6 +119,11 @@ define("views/managePollsView",
     		} else {
     			this.$selectedHeader.show();
     		}
+    	},
+
+    	closeModal: function() {
+    		this.trigger('remove');
+    		this.remove();
     	}
 
     });

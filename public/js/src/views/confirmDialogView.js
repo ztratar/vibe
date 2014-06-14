@@ -4,7 +4,7 @@ module template from 'text!templates/confirmDialogView.html';
 
 var ConfirmDialogView = Backbone.View.extend({
 
-	className: 'confirm-dialog-view',
+	className: 'confirm-dialog-view close-modal',
 
 	template: _.template(template),
 

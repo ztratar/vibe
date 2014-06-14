@@ -15,6 +15,10 @@ var AppView = Backbone.View.extend({
 
 	overlayTemplate: _.template(overlayTemplate),
 
+	events: {
+		'click .overlay-view-container': 'clickedOverlayBg'
+	},
+
 	initialize: function() {
 		this.headerView = new HeaderView();
 		this.overrideLinks();
@@ -77,13 +81,25 @@ var AppView = Backbone.View.extend({
 	},
 
 	closeOverlay: function() {
-		that.$overlayContainer.addClass('remove');
+		var that = this;
+
+		this.$overlayContainer.addClass('remove');
 
 		// Wait for the animation
 		_.delay(function() {
 			that.$overlayContainer.attr('class', 'overlay-container');
 			that.$overlayViewContainer.html('');
 		}, 360);
+	},
+
+	clickedOverlayBg: function(ev) {
+		var $target = $(ev.target);
+
+		if ($target.hasClass('overlay-view-container')
+				|| $target.hasClass('close-modal')) {
+			this.closeOverlay();
+		}
+		return false;
 	},
 
 	showNotif: function(text, timeToRead, addClass) {

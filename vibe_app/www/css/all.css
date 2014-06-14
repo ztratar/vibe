@@ -6521,6 +6521,22 @@ form.form-horizontal-top button.btn {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
 }
+.x-icon-wrap {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #232529;
+  color: white;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+.x-icon-wrap i {
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 0 -2px;
+}
 .list-header {
   padding: 10px 15px;
   background: #122b43;
@@ -7877,6 +7893,9 @@ html {
 .manage-polls-view .form-inline.add-poll {
   margin-bottom: 30px;
 }
+.manage-polls-view .close-modal {
+  display: none;
+}
 .manage-polls-view.as-modal {
   margin-right: auto;
   margin-left: auto;
@@ -7884,6 +7903,7 @@ html {
   padding-right: 15px;
   max-width: 680px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
   background: #2b3035;
   border-radius: 6px;
 }
@@ -7923,6 +7943,23 @@ html {
 }
 .manage-polls-view.as-modal .vibe-modal-header p {
   opacity: 0.9;
+}
+.manage-polls-view.as-modal .close-modal {
+  display: block;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #232529;
+  color: white;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+.manage-polls-view.as-modal .close-modal i {
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 0 -2px;
 }
 .manage-polls-view.as-modal .add-poll {
   background: #363a3f;

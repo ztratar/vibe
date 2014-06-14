@@ -7,7 +7,7 @@ define("views/confirmDialogView",
 
     var ConfirmDialogView = Backbone.View.extend({
 
-    	className: 'confirm-dialog-view',
+    	className: 'confirm-dialog-view close-modal',
 
     	template: _.template(template),
 
