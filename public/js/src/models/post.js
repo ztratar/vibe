@@ -1,5 +1,6 @@
 import BaseModel from 'models/baseModel';
 import Feedback from 'models/feedback';
+import Question from 'models/question';
 
 var Post = BaseModel.extend({
 
@@ -16,12 +17,24 @@ var Post = BaseModel.extend({
 	initialize: function() {
 		this.on('change:feedback', this.convertFeedback, this);
 		this.convertFeedback();
+
+		this.on('change:question', this.convertQuestion, this);
+		this.convertQuestion();
 	},
 
 	convertFeedback: function() {
 		if (this.get('feedback')
 				&& !(this.get('feedback') instanceof Feedback)) {
 			this.set('feedback', new Feedback(this.get('feedback')), {
+				silent: true
+			});
+		}
+	},
+
+	convertQuestion: function() {
+		if (this.get('question')
+				&& !(this.get('question') instanceof Question)) {
+			this.set('question', new Question(this.get('question')), {
 				silent: true
 			});
 		}

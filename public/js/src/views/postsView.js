@@ -2,6 +2,7 @@ import 'backbone';
 import 'underscore';
 
 import FeedbackItemView from 'views/feedbackItemView';
+import PostQuestionItemView from 'views/postQuestionItemView';
 
 module loaderTemplate from 'text!templates/loader.html';
 
@@ -46,7 +47,9 @@ var PostsView = Backbone.View.extend({
 				model: post
 			});
 		} else {
-			// Must be question
+			itemView = new PostQuestionItemView({
+				model: post
+			});
 		}
 
 		if (this.posts.indexOf(post) === 0) {

@@ -89,8 +89,6 @@ define("views/questionListItemView",
     			.html('Sending...')
     			.prop('disabled', true);
 
-    		debugger;
-
     		$.ajax({
     			type: 'POST',
     			url: this.model.url() + '/send_now',

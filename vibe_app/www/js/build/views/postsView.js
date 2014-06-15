@@ -1,11 +1,12 @@
 define("views/postsView", 
-  ["backbone","underscore","views/feedbackItemView","text!templates/loader.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
+  ["backbone","underscore","views/feedbackItemView","views/postQuestionItemView","text!templates/loader.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
     "use strict";
 
     var FeedbackItemView = __dependency3__["default"];
+    var PostQuestionItemView = __dependency4__["default"];
 
-    var loaderTemplate = __dependency4__;
+    var loaderTemplate = __dependency5__;
 
     var PostsView = Backbone.View.extend({
 
@@ -48,7 +49,9 @@ define("views/postsView",
     				model: post
     			});
     		} else {
-    			// Must be question
+    			itemView = new PostQuestionItemView({
+    				model: post
+    			});
     		}
 
     		if (this.posts.indexOf(post) === 0) {

@@ -58,8 +58,6 @@ exports.index = function(req, res) {
 			});
 
 			Async.parallel(parallelFillFunctions, function(err, results) {
-				console.log('results', err, results);
-
 				_.each(results, function(result) {
 					posts[result.ind] = result.post
 				});
