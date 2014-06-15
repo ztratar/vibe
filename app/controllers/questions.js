@@ -261,7 +261,7 @@ exports.newComment = function(req, res, next){
  */
 exports.sendNow = function(req, res, next) {
 	return exports.send(req, res, null, function(posts) {
-		if (posts.length) {
+		if (posts !== null) {
 			res.send(200);
 		} else {
 			res.send(500, {

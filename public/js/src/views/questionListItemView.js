@@ -84,14 +84,13 @@ var QuestionListItemView = Backbone.View.extend({
 
 		this.$sendNowButton
 			.html('Sending...')
-			.prop('disabled', true);
+			.attr('disabled', 'disabled');
 
 		$.ajax({
 			type: 'POST',
 			url: this.model.url() + '/send_now',
 			success: function(data) {
 				that.$sendNowButton.html('Sent!')
-				console.log(data);
 			}
 		});
 

@@ -8214,6 +8214,7 @@ html {
 .question-list-view > li .send-now-col a {
   padding: 11px 18px 11px;
   font-weight: 600;
+  width: 116px;
 }
 .question-list-view > li .send-later-col {
   position: absolute;
@@ -8721,6 +8722,9 @@ html {
 }
 .post-question-item-view {
   background: #e69d30;
+}
+.post-question-item-view h4 {
+  margin-top: 0;
 }
 .post-question-item-view .vote-results-container {
   height: 280px;
