@@ -29,7 +29,7 @@ QuestionInstanceSchema.methods = {
 		if (!this.answers.length) return false;
 
 		for (i = 0; i < this.answers.length; i++) {
-			sum += this.answers;
+			sum += parseInt(this.answers[i], 10);
 		}
 
 		return sum / this.answers.length;

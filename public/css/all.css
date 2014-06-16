@@ -7056,116 +7056,10 @@ html {
     margin-top: 71px;
   }
 }
-.charts-view {
-  padding: 0;
-  margin: 0;
+.time-series-chart-view {
+  height: 260px;
 }
-.charts-view li {
-  height: 318px;
-  margin: 0 0 15px;
-  border-radius: 7px;
-  background: #122b43;
-  display: block;
-  position: relative;
-  text-align: left;
-  box-shadow: 0 1px 12px rgba(0, 24, 46, 0.14);
-}
-.charts-view li.locked-card {
-  background: rgba(0, 0, 0, 0.5) !important;
-  height: 76px;
-  padding: 20px 0;
-  font-size: 13px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.8);
-}
-.charts-view li.locked-card i {
-  margin-right: 7px;
-  font-size: 20px;
-  color: white;
-}
-.charts-view li.summary-card {
-  background: rgba(7, 17, 29, 0.33) !important;
-  height: auto;
-  padding: 0 0 20px 0;
-}
-.charts-view li.summary-card h2 {
-  text-align: center;
-  font-family: 'Arvo', serif;
-  font-style: italic;
-  font-size: 28px;
-  color: rgba(255, 255, 255, 0.07);
-  font-weight: 200;
-  padding: 20px 0 0;
-}
-.charts-view li.summary-card h2 span {
-  font-weight: 400;
-  color: white;
-}
-.charts-view li.summary-card table {
-  margin: 10px 11px;
-}
-.charts-view li.summary-card td {
-  padding: 4px;
-  color: rgba(255, 255, 255, 0.61);
-}
-.charts-view li.summary-card td.label {
-  font-weight: 600;
-  color: white;
-  font-size: 16px;
-  display: inline-block;
-  width: 75px;
-  text-align: left;
-}
-.charts-view li.summary-card .stat {
-  padding: 10px 15px 0;
-  vertical-align: bottom;
-  font-size: 22px;
-}
-.charts-view li.summary-card .stat i {
-  float: left;
-  font-size: 26px;
-  color: rgba(0, 0, 0, 0.5);
-}
-.charts-view li.summary-card .stat i.filled {
-  color: #12ab97;
-}
-.charts-view li.summary-card .stat strong {
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 32px;
-}
-.charts-view li:nth-child(3n-1) {
-  background: #973329;
-}
-.charts-view li:nth-child(3n-1) circle {
-  fill: #ca4030;
-}
-.charts-view li:nth-child(3n-1) line {
-  stroke: #b13b2d;
-}
-.charts-view li:nth-child(3n) {
-  background: #7f8c8d;
-}
-.charts-view li:nth-child(3n) circle {
-  fill: #ccc;
-}
-.charts-view li:nth-child(3n) line {
-  stroke: #b9b9b9;
-}
-.charts-view li h3 {
-  margin: 0 0 0 15px;
-  padding: 20px 0 0 0;
-  font-size: 18px;
-}
-.charts-view li .chart-scroller {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  margin-top: 15px;
-}
-.charts-view li .chart {
-  height: 176px;
-}
-.charts-view li .chart svg {
+.time-series-chart-view svg {
   display: block;
   margin: 0 auto;
   -webkit-transform: translate3d(0, 0, 0);
@@ -7173,37 +7067,37 @@ html {
   -webkit-transition: all 0.6s ease-out;
   transition: all 0.6s ease-out;
 }
-.charts-view li line {
+.time-series-chart-view line {
   fill: none;
-  stroke: #2f567c;
+  stroke: #F8BC65;
   stroke-width: 2px;
 }
-.charts-view li line.axis {
+.time-series-chart-view line.axis {
   opacity: 0.1;
   stroke: url(#axis-gradient);
 }
-.charts-view li line.anim {
+.time-series-chart-view line.anim {
   -webkit-transition: all 1.2s ease-in-out;
   transition: all 1.2s ease-in-out;
 }
-.charts-view li line.new {
+.time-series-chart-view line.new {
   -webkit-transition: all 0s ease-in-out;
   transition: all 0s ease-in-out;
   stroke: #eeee51 !important;
 }
-.charts-view li circle {
-  fill: #326599;
+.time-series-chart-view circle {
+  fill: #FFF;
 }
-.charts-view li circle.anim {
+.time-series-chart-view circle.anim {
   -webkit-transition: all 1.2s ease-in-out;
   transition: all 1.2s ease-in-out;
 }
-.charts-view li circle.new {
+.time-series-chart-view circle.new {
   -webkit-transition: all 0s ease-in-out;
   transition: all 0s ease-in-out;
   fill: #eeee51 !important;
 }
-.charts-view li text {
+.time-series-chart-view text {
   fill: rgba(255, 255, 255, 0.6);
 }
 @keyframes bounceHit {
@@ -8725,6 +8619,7 @@ html {
 }
 .post-question-item-view h4 {
   margin-top: 0;
+  margin-bottom: 32px;
 }
 .post-question-item-view ul.answers {
   margin: 0;
@@ -8817,7 +8712,6 @@ html {
   right: 24px;
   padding: 0;
   pointer-events: none;
-  background: red;
   -webkit-transform: scale(0.94, 0.94);
   -ms-transform: scale(0.94, 0.94);
   transform: scale(0.94, 0.94);

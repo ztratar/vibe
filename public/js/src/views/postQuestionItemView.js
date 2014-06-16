@@ -1,6 +1,7 @@
 import 'backbone';
 import 'underscore';
 import ConfirmDialogView from 'views/confirmDialogView';
+import TimeSeriesChartView from 'views/timeSeriesChartView';
 
 module template from 'text!templates/postQuestionItemView.html';
 
@@ -27,6 +28,18 @@ var PostQuestionItemView = Backbone.View.extend({
 		}));
 
 		this.$voteResultsContainer = this.$('.vote-results-container');
+		this.$chartContainer = this.$('.chart-container');
+
+		this.renderChart();
+	},
+
+	renderChart: function() {
+		this.chartView = new TimeSeriesChartView({
+			model: this.model.get('question')
+		});
+
+		this.$chartContainer.html(this.chartView.$el);
+		this.chartView.render();
 	},
 
 	vote: function(ev) {

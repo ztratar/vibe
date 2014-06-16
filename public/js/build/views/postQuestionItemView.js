@@ -1,10 +1,11 @@
 define("views/postQuestionItemView", 
-  ["backbone","underscore","views/confirmDialogView","text!templates/postQuestionItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
+  ["backbone","underscore","views/confirmDialogView","views/timeSeriesChartView","text!templates/postQuestionItemView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
     "use strict";
     var ConfirmDialogView = __dependency3__["default"];
+    var TimeSeriesChartView = __dependency4__["default"];
 
-    var template = __dependency4__;
+    var template = __dependency5__;
 
     var PostQuestionItemView = Backbone.View.extend({
 
@@ -29,6 +30,18 @@ define("views/postQuestionItemView",
     		}));
 
     		this.$voteResultsContainer = this.$('.vote-results-container');
+    		this.$chartContainer = this.$('.chart-container');
+
+    		this.renderChart();
+    	},
+
+    	renderChart: function() {
+    		this.chartView = new TimeSeriesChartView({
+    			model: this.model.get('question')
+    		});
+
+    		this.$chartContainer.html(this.chartView.$el);
+    		this.chartView.render();
     	},
 
     	vote: function(ev) {
