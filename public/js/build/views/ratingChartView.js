@@ -152,7 +152,7 @@ define("views/ratingChartView",
     					.attr('y', newBarCoords[ind].startY)
     					.duration(800);
     			});
-    		}, 280);
+    		}, 300);
     	}
 
     });

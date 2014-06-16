@@ -225,7 +225,7 @@ define("views/timeSeriesChartView",
     				.attr('x2', newPoint.x)
     				.attr('y2', newPoint.y)
     				.duration(800);
-    		}, 1300);
+    		}, 300);
     	}
 
     });
