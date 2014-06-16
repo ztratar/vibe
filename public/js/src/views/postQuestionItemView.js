@@ -13,8 +13,9 @@ var PostQuestionItemView = Backbone.View.extend({
 	template: _.template(template),
 
 	events: {
+		'click ul.answers a': 'vote',
 		'click a.discuss': 'discuss'
-	}
+	},
 
 	initialize: function(opts) {
 		this.model = opts.model;
@@ -24,6 +25,18 @@ var PostQuestionItemView = Backbone.View.extend({
 		this.$el.html(this.template({
 			model: this.model.toJSON()
 		}));
+
+		this.$voteResultsContainer = this.$('.vote-results-container');
+	},
+
+	vote: function(ev) {
+		var $target = $(ev.currentTarget),
+			answerBody = parseInt($target.attr('data-answer'), 10);
+
+		this.$voteResultsContainer.addClass('voted');
+		this.model.get('question').answer(answerBody);
+
+		return false;
 	},
 
 	discuss: function() {

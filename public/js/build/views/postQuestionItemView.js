@@ -1,9 +1,10 @@
 define("views/postQuestionItemView", 
-  ["backbone","underscore","text!templates/postQuestionItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
+  ["backbone","underscore","views/confirmDialogView","text!templates/postQuestionItemView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
+    var ConfirmDialogView = __dependency3__["default"];
 
-    var template = __dependency3__;
+    var template = __dependency4__;
 
     var PostQuestionItemView = Backbone.View.extend({
 
@@ -13,6 +14,11 @@ define("views/postQuestionItemView",
 
     	template: _.template(template),
 
+    	events: {
+    		'click ul.answers a': 'vote',
+    		'click a.discuss': 'discuss'
+    	},
+
     	initialize: function(opts) {
     		this.model = opts.model;
     	},
@@ -21,6 +27,23 @@ define("views/postQuestionItemView",
     		this.$el.html(this.template({
     			model: this.model.toJSON()
     		}));
+
+    		this.$voteResultsContainer = this.$('.vote-results-container');
+    	},
+
+    	vote: function(ev) {
+    		var $target = $(ev.currentTarget),
+    			answerBody = parseInt($target.attr('data-answer'), 10);
+
+    		this.$voteResultsContainer.addClass('voted');
+    		this.model.get('question').answer(answerBody);
+
+    		return false;
+    	},
+
+    	discuss: function() {
+
+    		return false;
     	}
 
     });

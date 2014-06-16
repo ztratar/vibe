@@ -191,6 +191,36 @@ exports.create = function (req, res, next) {
 };
 
 /*
+ * POST /api/questions/:question/answer
+ *
+ * User votes/ansers the given question
+ */
+exports.createAnswer = function(req, res) {
+	Async.waterfall([function(cb) {
+		// Check to make sure user hasn't already voted
+		// in the latest QuestionInstance of the Question
+		QuestionInstance
+			.findOne({
+				question: req.question._id
+			})
+			.sort({ _id: -1 })
+			.exec(function(err, questionInstance) {
+				if (err) return cb(err);
+				if (questionInstance.didUserAnswer(req.user._id)) {
+					return cb('You have already voted');
+				}
+				questionInstance.answer(req.user, req.body.body, function(err, answer) {
+					if (err) return helpers.sendError(res, err);
+					cb(null, answer);
+				});
+			});
+	}], function(err, answer) {
+		if (err) return helpers.sendError(res, err);
+		res.send(200, answer);
+	});
+};
+
+/*
  * PUT /questions/:question
  *
  * Update a question, usually used to make
@@ -260,7 +290,9 @@ exports.newComment = function(req, res, next){
  * right now!
  */
 exports.sendNow = function(req, res, next) {
-	return exports.send(req, res, null, function(posts) {
+	return exports.send(req, res, null, function(err, posts) {
+		if (err) return helpers.sendError(res, err);
+
 		if (posts !== null) {
 			res.send(200);
 		} else {
@@ -288,6 +320,12 @@ exports.send = function(req, res, questionId, next) {
 			cb(null, req.question);
 		}
 	}, function(question, cb) {
+		var oneday = 1000 * 60 * 60 * 24;
+		if (Date.now() - Date.parse(question.time_last_sent) < oneday) {
+			return cb('This question was already sent today. Please wait until tomorrow');
+		}
+		cb(null, question);
+	}, function(question, cb) {
 		// Get the users who should be sent the question
 		User.find({
 			company: question.company.toString()
@@ -296,6 +334,8 @@ exports.send = function(req, res, questionId, next) {
 			cb(null, question, users);
 		});
 	}], function(err, question, users) {
+		if (err) return next(err);
+
 		// Create QuestionInstance Object
 		QuestionInstance.create({
 			users_sent_to: _.pluck(users, '_id'),
@@ -315,14 +355,27 @@ exports.send = function(req, res, questionId, next) {
 				});
 			});
 
-			Post.create(postObjs, function(err, posts) {
+			Post.update({
+				question: question._id
+			}, {
+				$set: {
+					active: false
+				}
+			}, {
+				multi: true
+			}, function(err, numAffected) {
 				if (err) return helpers.sendError(res, err);
 
-				question.time_last_sent = Date.now();
-				question.save();
+				Post.create(postObjs, function(err, posts) {
+					if (err) return helpers.sendError(res, err);
 
-				next(posts);
+					question.time_last_sent = Date.now();
+					question.save();
+
+					next(null, posts);
+				});
 			});
+
 		});
 	});
 };

@@ -9,18 +9,18 @@ helpers.isValidEmail = function(email) {
 // and returns the error to the API endpoint
 helpers.sendError = function(res, error) {
 	if (typeof error === 'string') {
-		return res.send({
+		return res.send(500, {
 			error: error
 		});
 	} else {
 		if (error.errors) {
 			for (var errorField in error.errors) {
-				return res.send({
+				return res.send(500, {
 					error: error.errors[errorField].message
 				});
 			}
 		} else {
-			return res.send({
+			return res.send(500, {
 				error: 'An error occured'
 			});
 		}
@@ -29,7 +29,7 @@ helpers.sendError = function(res, error) {
 
 helpers.requireLogin = function(res, req) {
 	if (!req.isAuthenticated()) {
-		res.send({
+		res.send(500, {
 			error: 'You must be logged in to do this'
 		});
 	}

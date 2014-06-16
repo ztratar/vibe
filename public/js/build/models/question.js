@@ -1,8 +1,9 @@
 define("models/question", 
-  ["models/baseModel","exports"],
-  function(__dependency1__, __exports__) {
+  ["models/baseModel","models/answer","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
     var BaseModel = __dependency1__["default"];
+    var Answer = __dependency2__["default"];
 
     var Question = BaseModel.extend({
 
@@ -26,6 +27,15 @@ define("models/question",
     	deselect: function() {
     		this.set('active', false);
     		return this.save();
+    	},
+
+    	answer: function(answerBody) {
+    		var newAnswer = new Answer({
+    			body: answerBody,
+    			question: this.get('_id')
+    		});
+
+    		newAnswer.save();
     	}
 
     });

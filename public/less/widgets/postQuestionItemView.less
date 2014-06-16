@@ -5,11 +5,6 @@
 		margin-top: 0;
 	}
 
-	.vote-results-container {
-		height: 280px;
-		position: relative;
-	}
-
 	ul.answers {
 		margin: 0;
 		position: absolute;
@@ -19,6 +14,10 @@
 		right: 24px;
 		padding: 0;
 		list-style: none;
+		visibility: visible;
+		opacity: 1;
+		.scale(1, 1);
+		.transition(all 0.24s ease-in-out);
 
 		li {
 			position: absolute;
@@ -86,6 +85,43 @@
 						margin: 6px 0 0;
 					}
 				}
+			}
+		}
+	}
+
+	.chart-container {
+		visibility: hidden;
+		opacity: 0;
+		margin: 0;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 24px;
+		right: 24px;
+		padding: 0;
+		pointer-events: none;
+		background: red;
+		.scale(0.94, 0.94);
+		.transition(all 0.24s ease-in-out 0.20s);
+	}
+
+	.vote-results-container {
+		height: 280px;
+		position: relative;
+
+		&.voted {
+			ul.answers {
+				.scale(0.94, 0.94);
+				opacity: 0;
+				visibility: hidden;
+				pointer-events: none;
+			}
+
+			.chart-container {
+				.scale(1,1);
+				opacity: 1;
+				visibility: visible;
+				pointer-events: auto;
 			}
 		}
 	}

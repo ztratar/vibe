@@ -8726,10 +8726,6 @@ html {
 .post-question-item-view h4 {
   margin-top: 0;
 }
-.post-question-item-view .vote-results-container {
-  height: 280px;
-  position: relative;
-}
 .post-question-item-view ul.answers {
   margin: 0;
   position: absolute;
@@ -8739,6 +8735,13 @@ html {
   right: 24px;
   padding: 0;
   list-style: none;
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-transition: all 0.24s ease-in-out;
+  transition: all 0.24s ease-in-out;
 }
 .post-question-item-view ul.answers li {
   position: absolute;
@@ -8802,6 +8805,44 @@ html {
   font-weight: 500;
   color: white;
   margin: 6px 0 0;
+}
+.post-question-item-view .chart-container {
+  visibility: hidden;
+  opacity: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  right: 24px;
+  padding: 0;
+  pointer-events: none;
+  background: red;
+  -webkit-transform: scale(0.94, 0.94);
+  -ms-transform: scale(0.94, 0.94);
+  transform: scale(0.94, 0.94);
+  -webkit-transition: all 0.24s ease-in-out 0.2s;
+  transition: all 0.24s ease-in-out 0.2s;
+}
+.post-question-item-view .vote-results-container {
+  height: 280px;
+  position: relative;
+}
+.post-question-item-view .vote-results-container.voted ul.answers {
+  -webkit-transform: scale(0.94, 0.94);
+  -ms-transform: scale(0.94, 0.94);
+  transform: scale(0.94, 0.94);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.post-question-item-view .vote-results-container.voted .chart-container {
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 .post-question-item-view .action-bar {
   background: #fca626;

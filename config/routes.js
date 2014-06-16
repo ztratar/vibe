@@ -8,7 +8,6 @@ module.exports = function (app, passport) {
 			'users',
 			'meta_questions',
 			'questions',
-			'answers',
 			'surveys',
 			'access',
 			'email',
@@ -33,8 +32,6 @@ module.exports = function (app, passport) {
 	app.get('/api/questions/suggested', c.questions.suggested);
 	app.get('/api/questions/:question', c.questions.get);
 	app.get('/api/questions/:question/comments', c.questions.getComments);
-	app.get('/api/answers', c.answers.index);
-	app.get('/api/answers/:answer', c.answers.get);
 	app.get('/api/surveys', c.surveys.index);
 	app.get('/api/survey', c.surveys.lastSurvey);
 	app.get('/api/surveys/:survey', c.surveys.get);
@@ -54,7 +51,7 @@ module.exports = function (app, passport) {
 	app.post('/api/questions', c.questions.create);
 	app.post('/api/questions/:question/comments', c.questions.newComment);
 	app.post('/api/questions/:question/send_now', c.questions.sendNow);
-	app.post('/api/answers/question/:question/survey/:survey', c.answers.create);
+	app.post('/api/questions/:question/answers', c.questions.createAnswer);
 	app.post('/api/surveys', c.surveys.create);
 	app.post('/api/feedback', c.feedback.create);
 
@@ -69,7 +66,6 @@ module.exports = function (app, passport) {
 	app.param('meta_question', c.meta_questions.loadMetaQuestion);
 	app.param('question', c.questions.loadQuestion);
 	app.param('survey', c.surveys.loadSurvey);
-	app.param('answer', c.answers.loadAnswer);
 
 	app.delete('/api/users/:id', c.users.delete);
 	app.delete('/api/userinvites/:id', c.users.uninvite);

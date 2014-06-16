@@ -17,7 +17,8 @@ exports.index = function(req, res) {
 	var afterId = /afterId=([^&]+)/.exec(req.url),
 		beforeId = /beforeId=([^&]+)/.exec(req.url),
 		queryObj = {
-			for_user: req.user._id
+			for_user: req.user._id,
+			active: true
 		};
 
 	if (afterId && afterId.length) {

@@ -1,6 +1,7 @@
 // Module dependencies.
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
+	Answer = mongoose.model('Answer'),
 	_ = require('underscore');
 
 var QuestionInstanceSchema = new Schema({
@@ -42,8 +43,33 @@ QuestionInstanceSchema.methods = {
 		return _.contains(_.map(this.users_voted, function(vote) {
 			return vote.toString();
 		}), userId.toString());
-	}
+	},
 
+	answer: function(user, answerBody, cb) {
+		var qI = this;
+
+		this.update({
+			$inc: {
+				num_completed: 1
+			},
+			$push: {
+				users_voted: user._id,
+				answers: answerBody
+			}
+		}, function(err, numAffected) {
+			if (err) return cb(err);
+
+			Answer.create({
+				creator: user._id,
+				question: qI.question,
+				question_instance: qI._id,
+				body: answerBody
+			}, function(err, answer) {
+				if (err) return cb(err);
+				cb(null, answer);
+			});
+		});
+	}
 };
 
 mongoose.model('QuestionInstance', QuestionInstanceSchema);

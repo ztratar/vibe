@@ -1,4 +1,5 @@
 import BaseModel from 'models/baseModel';
+import Answer from 'models/answer';
 
 var Question = BaseModel.extend({
 
@@ -22,6 +23,15 @@ var Question = BaseModel.extend({
 	deselect: function() {
 		this.set('active', false);
 		return this.save();
+	},
+
+	answer: function(answerBody) {
+		var newAnswer = new Answer({
+			body: answerBody,
+			question: this.get('_id')
+		});
+
+		newAnswer.save();
 	}
 
 });

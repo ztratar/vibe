@@ -1,8 +1,8 @@
 <h4><%- model.question.get('body') %></h4>
-<div class="vote-results-container">
+<div class="vote-results-container <%- model.question.get('current_user_voted') ? 'voted' : '' %>">
 	<ul class="answers">
 		<li class="top-left">
-			<a href="#" class="answer-vwell">
+			<a href="#" data-answer="4">
 				<div>
 					<img src="<%= window.staticRoute %>img/lol-100.png">
 					<h3>Great!</h3>
@@ -10,7 +10,7 @@
 			</a>
 		</li>
 		<li class="top-right">
-			<a href="#" class="answer-vwell">
+			<a href="#" data-answer="3">
 				<div>
 					<img src="<%= window.staticRoute %>img/happy-100.png">
 					<h3>Good</h3>
@@ -18,7 +18,7 @@
 			</a>
 		</li>
 		<li class="bottom-left">
-			<a href="#" class="answer-vwell">
+			<a href="#" data-answer="2">
 				<div>
 					<img src="<%= window.staticRoute %>img/sad-100.png">
 					<h3>Bad</h3>
@@ -26,7 +26,7 @@
 			</a>
 		</li>
 		<li class="bottom-right">
-			<a href="#" class="answer-vwell">
+			<a href="#" data-answer="1">
 				<div>
 					<img src="<%= window.staticRoute %>img/cry-100.png">
 					<h3>Terrible</h3>
@@ -34,6 +34,7 @@
 			</a>
 		</li>
 	</ul>
+	<div class="chart-container"></div>
 </div>
 <div class="action-bar clearfix">
 	<a href="#" class="btn btn-full discuss">
