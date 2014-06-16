@@ -11,11 +11,14 @@ var TimeSeriesChartView = Backbone.View.extend({
 	chartSettings: {
 		chartMargin: 80,
 		chartBottomMargin: 24,
-		maxRating: 4
+		maxRating: 4,
+		minIntervalSpacing: 80
 	},
 
 	initialize: function(opts) {
 		this.model = opts.model;
+
+		this.model.on('newAnswer', this.addNewAnswer, this);
 	},
 
 	render: function() {
@@ -60,37 +63,19 @@ var TimeSeriesChartView = Backbone.View.extend({
 
 		this.numPoints++;
 
-		if (!animate) {
-			// Draw Objects
-			if (point1) {
-				this.drawLine(this.numPoints, point1, point2);
-				this.drawCircle(this.numPoints-1, point1.x, point1.y);
-			}
-			this.drawAxisMarker(this.numPoints, point2.x);
-			this.drawCircle(this.numPoints, point2.x, point2.y);
-		} else {
-			this.drawAxisMarker(this.numPoints, point2.x);
-
-			var line = this.drawLine(this.numPoints, point1, point2, 400),
-				circle = this.drawCircle(this.numPoints, point2.x, point2.y, 3);
-
+		// Draw Objects
+		if (point1) {
+			this.drawLine(this.numPoints, point1, point2);
 			this.drawCircle(this.numPoints-1, point1.x, point1.y);
+		}
+		this.drawAxisMarker(this.numPoints, point2.x);
+		this.drawCircle(this.numPoints, point2.x, point2.y);
 
-			line.attr('class', 'new anim');
-			circle.attr('class', 'new anim');
-
-			circle.transition()
-				.attr('r', 12)
-				.duration(400)
-				.delay(240)
-				.transition()
-				.attr('r', 10)
-				.duration(130);
-
-			_.delay(function() {
-				circle.attr('class', 'anim');
-				line.attr('class', 'anim');
-			}, 600);
+		if (pointData.avg === false) {
+			var lastCircle = _.last(this.circles),
+				lastLine = _.last(this.lines);
+			lastCircle.attr('class', 'new');
+			lastLine.attr('class', 'new');
 		}
 	},
 
@@ -100,46 +85,40 @@ var TimeSeriesChartView = Backbone.View.extend({
 			pointTime,
 			realChartHeight,
 			yPercentage,
-			xPercentage;
+			xPercentage,
+			coords;
 
 		if (!answerItem && !this.points[i]) {
 			return false;
 		}
 
-		if (answerItem) {
-			this.points[i] = answerItem;
+		if (!answerItem) {
+			return this.points[i];
 		} else {
-			answerItem = this.points[i];
+			realChartHeight = this.chartHeight - this.chartSettings.chartBottomMargin - 10 - topMargin,
+			yPercentage = (answerItem.avg/this.chartSettings.maxRating);
+
+			pointTime = Date.parse(answerItem.time_sent);
+			xPercentage = (pointTime - this.oldestTime) / this.totalGraphTimeDiff;
+
+			coords = {
+				x: (xPercentage * (this.chartWidth-(2*this.chartSettings.chartMargin))) + this.chartSettings.chartMargin,
+				y: topMargin + (realChartHeight * (1 - yPercentage))
+			};
+
+			this.points[i] = coords;
 		}
 
-		realChartHeight = this.chartHeight - this.chartSettings.chartBottomMargin - 10 - topMargin,
-		yPercentage = (answerItem.avg/this.chartSettings.maxRating);
-
-		pointTime = Date.parse(answerItem.time_sent);
-		xPercentage = (pointTime - this.oldestTime) / this.totalGraphTimeDiff;
-
-		return {
-			x: (xPercentage * (this.chartWidth-(2*this.chartSettings.chartMargin))) + this.chartSettings.chartMargin,
-			y: topMargin + (realChartHeight * (1 - yPercentage))
-		};
+		return coords;
 	},
 
-	drawLine: function(i, point1, point2, animationDuration) {
+	drawLine: function(i, point1, point2) {
 		var line = this.svg.append('line')
 				.attr('x1', point1.x)
 				.attr('y1', point1.y);
 
-		if (!animationDuration) {
-			line.attr('x2', point2.x)
-				.attr('y2', point2.y);
-		} else {
-			line.attr('x2', point1.x)
-				.attr('y2', point1.y)
-				.transition()
-				.attr('x2', point2.x)
-				.attr('y2', point2.y)
-				.duration(animationDuration);
-		}
+		line.attr('x2', point2.x)
+			.attr('y2', point2.y);
 
 		this.lines[i] = line;
 
@@ -211,18 +190,40 @@ var TimeSeriesChartView = Backbone.View.extend({
 		}
 	},
 
-	triggerAddNewPoint: function(trigPos) {
-		if (this.newPointAlreadyAdded) {
-			return false;
-		}
+	addNewAnswer: function(answerBody) {
+		var lastCircle = _.last(this.circles),
+			lastLine = _.last(this.lines),
+			lastData = _.last(this.answerData),
+			oldValTotal,
+			newValTotal,
+			newAvg,
+			newPoint;
 
-		var chartPos = this.$el.position().top;
+		oldValTotal = lastData.num_completed * lastData.avg;
+		newValTotal = oldValTotal + answerBody;
+		newAvg = newValTotal / (lastData.num_completed+1);
 
-		if (chartPos < trigPos) {
-			this.newPointAlreadyAdded = true;
-			this.addPoint(2+2*Math.random(), true);
-			this.renderAxisText();
-		}
+		this.answerData[this.answerData.length-1].avg = newAvg;
+		this.answerData[this.answerData.length-1].num_completed++;
+
+		lastData.avg = newAvg;
+		lastData.num_completed++;
+
+		newPoint = this.getPoint(this.numPoints, lastData);
+
+		_.delay(function() {
+			lastLine.attr('class', 'anim');
+			lastCircle.attr('class', 'anim');
+
+			lastCircle.transition()
+				.attr('cy', newPoint.y)
+				.duration(800)
+
+			lastLine.transition()
+				.attr('x2', newPoint.x)
+				.attr('y2', newPoint.y)
+				.duration(800);
+		}, 1300);
 	}
 
 });

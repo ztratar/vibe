@@ -7070,6 +7070,7 @@ html {
   fill: none;
   stroke: #F8BC65;
   stroke-width: 2px;
+  opacity: 1;
 }
 .time-series-chart-view line.axis {
   opacity: 0.1;
@@ -7080,24 +7081,33 @@ html {
   transition: all 1.2s ease-in-out;
 }
 .time-series-chart-view line.new {
-  -webkit-transition: all 0s ease-in-out;
-  transition: all 0s ease-in-out;
-  stroke: #eeee51 !important;
+  opacity: 0;
+  -webkit-transition: all 0s;
+  transition: all 0s;
 }
 .time-series-chart-view circle {
   fill: #FFF;
+  opacity: 1;
 }
 .time-series-chart-view circle.anim {
   -webkit-transition: all 1.2s ease-in-out;
   transition: all 1.2s ease-in-out;
 }
 .time-series-chart-view circle.new {
-  -webkit-transition: all 0s ease-in-out;
-  transition: all 0s ease-in-out;
-  fill: #eeee51 !important;
+  opacity: 0;
+  -webkit-transition: all 0s;
+  transition: all 0s;
 }
 .time-series-chart-view text {
   fill: rgba(255, 255, 255, 0.6);
+}
+.rating-chart-view rect {
+  fill: #F8EEDF;
+  -webkit-transition: all 0.8s ease-in-out;
+  transition: all 0.8s ease-in-out;
+}
+.rating-chart-view rect.zero {
+  fill: #F8B653;
 }
 @keyframes bounceHit {
   0% {
@@ -8729,6 +8739,9 @@ html {
   transform: scale(0.94, 0.94);
   -webkit-transition: all 0.24s ease-in-out 0.2s;
   transition: all 0.24s ease-in-out 0.2s;
+}
+.post-question-item-view .chart-container .rating-chart-view {
+  height: 100%;
 }
 .post-question-item-view .vote-results-container {
   height: 280px;

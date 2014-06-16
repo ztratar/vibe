@@ -39,33 +39,37 @@ QuestionSchema.methods = {
 	withAnswerData: function(currentUser, cb) {
 		var question = this.toObject();
 
-		QuestionInstance.find({
-			question: this._id
-		}, function(err, questionInstances) {
-			var lastInstance = _.last(questionInstances);
+		QuestionInstance
+			.find({
+				question: this._id
+			})
+			.sort({ _id: 1 })
+			.exec(function(err, questionInstances) {
+				var lastInstance = _.last(questionInstances);
 
-			question.answer_data = _.map(questionInstances, function(instance) {
-				var avg = instance.getAvg();
-				if (avg !== false) {
-					return {
-						time_sent: instance.time_sent,
-						avg: avg,
-						num_sent_to: instance.num_sent_to,
-						num_completed: instance.num_completed
-					};
-				} else {
-					return undefined;
-				}
+				question.answer_data = _.map(questionInstances, function(instance) {
+					var avg = instance.getAvg();
+					if (avg !== false || instance === lastInstance) {
+						return {
+							time_sent: instance.time_sent,
+							avg: avg,
+							num_sent_to: instance.num_sent_to,
+							num_completed: instance.num_completed,
+							answers: instance.answers
+						};
+					} else {
+						return undefined;
+					}
+				});
+
+				question.answer_data = _.reject(question.answer_data, function(data) {
+					return data === undefined;
+				});
+
+				question.current_user_voted = lastInstance.didUserAnswer(currentUser._id);
+
+				cb(question);
 			});
-
-			question.answer_data = _.reject(question.answer_data, function(data) {
-				return data === undefined;
-			});
-
-			question.current_user_voted = lastInstance.didUserAnswer(currentUser._id);
-
-			cb(question);
-		});
 	}
 
 };

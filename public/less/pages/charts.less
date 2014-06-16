@@ -12,6 +12,7 @@
 		fill: none;
 		stroke: #F8BC65;
 		stroke-width: 2px;
+		opacity: 1;
 
 		&.axis {
 			opacity: 0.1;
@@ -23,25 +24,37 @@
 		}
 
 		&.new {
-			.transition(all 0s ease-in-out);
-			stroke: rgb(238, 238, 81) !important;
+			opacity: 0;
+			.transition(all 0s);
 		}
 	}
 
 	circle {
 		fill: #FFF;
+		opacity: 1;
 
 		&.anim {
 			.transition(all 1.2s ease-in-out);
 		}
 
 		&.new {
-			.transition(all 0s ease-in-out);
-			fill: rgb(238, 238, 81) !important;
+			opacity: 0;
+			.transition(all 0s);
 		}
 	}
 
 	text {
 		fill: rgba(255, 255, 255, 0.6);
+	}
+}
+
+.rating-chart-view {
+	rect {
+		fill: #F8EEDF;
+		.transition(all 0.8s ease-in-out);
+
+		&.zero {
+			fill: #F8B653;
+		}
 	}
 }

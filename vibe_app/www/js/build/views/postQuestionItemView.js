@@ -1,11 +1,12 @@
 define("views/postQuestionItemView", 
-  ["backbone","underscore","views/confirmDialogView","views/timeSeriesChartView","text!templates/postQuestionItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
+  ["backbone","underscore","views/confirmDialogView","views/timeSeriesChartView","views/ratingChartView","text!templates/postQuestionItemView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
     "use strict";
     var ConfirmDialogView = __dependency3__["default"];
     var TimeSeriesChartView = __dependency4__["default"];
+    var RatingChartView = __dependency5__["default"];
 
-    var template = __dependency5__;
+    var template = __dependency6__;
 
     var PostQuestionItemView = Backbone.View.extend({
 
@@ -36,9 +37,17 @@ define("views/postQuestionItemView",
     	},
 
     	renderChart: function() {
-    		this.chartView = new TimeSeriesChartView({
-    			model: this.model.get('question')
-    		});
+    		var question = this.model.get('question');
+
+    		if (question.get('answer_data').length > 1) {
+    			this.chartView = new TimeSeriesChartView({
+    				model: this.model.get('question')
+    			});
+    		} else {
+    			this.chartView = new RatingChartView({
+    				model: this.model.get('question')
+    			});
+    		}
 
     		this.$chartContainer.html(this.chartView.$el);
     		this.chartView.render();

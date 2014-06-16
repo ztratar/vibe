@@ -21,7 +21,7 @@ define("models/question",
     		to: {
     			name: 'everyone'
     		},
-    		answer_data: {}
+    		answer_data: []
     	},
 
     	deselect: function() {
@@ -35,7 +35,9 @@ define("models/question",
     			question: this.get('_id')
     		});
 
-    		newAnswer.save();
+    		//newAnswer.save();
+
+    		this.trigger('newAnswer', answerBody);
     	}
 
     });

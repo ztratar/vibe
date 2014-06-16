@@ -17,7 +17,7 @@ var Question = BaseModel.extend({
 		to: {
 			name: 'everyone'
 		},
-		answer_data: {}
+		answer_data: []
 	},
 
 	deselect: function() {
@@ -32,6 +32,8 @@ var Question = BaseModel.extend({
 		});
 
 		newAnswer.save();
+
+		this.trigger('newAnswer', answerBody);
 	}
 
 });

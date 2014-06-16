@@ -89,7 +89,7 @@ define("views/managePollsView",
 
     	addPoll: function() {
     		var that = this,
-    			pollText = $addPollInput.val(),
+    			pollText = this.$addPollInput.val(),
     			question = new Question({
     				body: pollText
     			});
