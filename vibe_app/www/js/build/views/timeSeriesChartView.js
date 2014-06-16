@@ -120,8 +120,6 @@ define("views/timeSeriesChartView",
     		pointTime = Date.parse(answerItem.time_sent);
     		xPercentage = (pointTime - this.oldestTime) / this.totalGraphTimeDiff;
 
-    		console.log(pointTime, xPercentage);
-
     		return {
     			x: (xPercentage * (this.chartWidth-(2*this.chartSettings.chartMargin))) + this.chartSettings.chartMargin,
     			y: topMargin + (realChartHeight * (1 - yPercentage))
@@ -183,8 +181,8 @@ define("views/timeSeriesChartView",
     	getAxisText: function(i) {
     		var text = moment(this.answerData[i-1].time_sent).fromNow(true);
 
-    		text.replace('minutes', 'mins');
-    		text.replace('hours', 'hrs');
+    		text = text.replace(/minutes/gi, 'mins');
+    		text = text.replace(/hours/gi, 'hrs');
 
     		return text;
     	},

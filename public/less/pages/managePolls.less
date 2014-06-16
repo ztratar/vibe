@@ -1,4 +1,16 @@
+.overlay-container.expand .manage-polls-view {
+	opacity: 1;
+	-webkit-transform: translate3d(0, -10px, 0) scale(1, 1);
+			transform: translate3d(0, -10px, 0) scale(1, 1);
+}
+
 .manage-polls-view {
+	opacity: 0;
+	-webkit-transform: translate3d(0, 0, 0) scale(0.96, 0.96);
+			transform: translate3d(0, 0, 0) scale(0.96, 0.96);
+	transition: transform 0.24s ease-out, opacity 0.24s ease-out;
+	-webkit-transition: -webkit-transform 0.24s ease-out, opacity 0.24s ease-out;
+
 	@media (max-width: @screen-xs) {
 		padding-top: 50px;
 	}
@@ -18,6 +30,7 @@
 		position: relative;
 		background: @vibe-grey-dark;
 		border-radius: @border-radius-large;
+		max-width: 650px;
 
 		.vibe-modal-header {
 			text-align: left;

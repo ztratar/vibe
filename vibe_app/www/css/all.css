@@ -6988,7 +6988,6 @@ html {
   }
 }
 .post-wrapper .new-post {
-  width: 100%;
   padding: 12px;
   font-weight: 600;
   opacity: 1;
@@ -7710,6 +7709,18 @@ html {
     padding-top: 43px;
   }
 }
+.overlay-container.expand .manage-polls-view {
+  opacity: 1;
+  -webkit-transform: translate3d(0, -10px, 0) scale(1, 1);
+  transform: translate3d(0, -10px, 0) scale(1, 1);
+}
+.manage-polls-view {
+  opacity: 0;
+  -webkit-transform: translate3d(0, 0, 0) scale(0.96, 0.96);
+  transform: translate3d(0, 0, 0) scale(0.96, 0.96);
+  transition: transform 0.24s ease-out, opacity 0.24s ease-out;
+  -webkit-transition: -webkit-transform 0.24s ease-out, opacity 0.24s ease-out;
+}
 @media (max-width: 480px) {
   .manage-polls-view {
     padding-top: 50px;
@@ -7731,6 +7742,7 @@ html {
   position: relative;
   background: #2b3035;
   border-radius: 6px;
+  max-width: 650px;
 }
 @media (min-width: 768px) {
   .manage-polls-view.as-modal {

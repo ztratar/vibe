@@ -60,6 +60,8 @@ var ManagePollsView = Backbone.View.extend({
 	},
 
 	render: function() {
+		var that = this;
+
 		this.$el.html(this.template());
 
 		this.$selectedHeader = this.$('.list-header.selected');
@@ -74,13 +76,18 @@ var ManagePollsView = Backbone.View.extend({
 		this.selectedQuestions.fetch();
 		this.suggestedQuestions.fetch();
 
+		this.$addPollInput = this.$('.add-poll input');
+
+		_.delay(function() {
+			that.$addPollInput.focus();
+		}, 180);
+
 		return this;
 	},
 
 	addPoll: function() {
 		var that = this,
-			$input = this.$('.add-poll input'),
-			pollText = $input.val(),
+			pollText = this.$addPollInput.val(),
 			question = new Question({
 				body: pollText
 			});
@@ -94,8 +101,8 @@ var ManagePollsView = Backbone.View.extend({
 				if (data.error) {
 					return;
 				}
-				$input.val('');
-				$input.focus();
+				that.$addPollInput.val('');
+				that.$addPollInput.focus();
 				that.selectedQuestions.add(model);
 			}
 		});

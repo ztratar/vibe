@@ -120,8 +120,6 @@ define("views/timeSeriesChartView",
     		pointTime = Date.parse(answerItem.time_sent);
     		xPercentage = (pointTime - this.oldestTime) / this.totalGraphTimeDiff;
 
-    		console.log(pointTime, xPercentage);
-
     		return {
     			x: (xPercentage * (this.chartWidth-(2*this.chartSettings.chartMargin))) + this.chartSettings.chartMargin,
     			y: topMargin + (realChartHeight * (1 - yPercentage))
