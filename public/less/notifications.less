@@ -1,0 +1,61 @@
+.notifications-container {
+	background: rgba(6, 11, 29, 0);
+	position: fixed;
+	top: 64px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 190;
+	opacity: 1;
+	overflow-y: scroll;
+	visibility: hidden;
+	pointer-events: none;
+	.transition(background 0.16s ease-out);
+
+	&.expand {
+		pointer-events: auto;
+		visibility: visible;
+		background: rgba(6, 11, 29, 0.93);
+	}
+
+	.notifications-view {
+		ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		li {
+			display: block;
+
+			a {
+				display: block;
+				text-align: left;
+				padding: 24px 0;
+				border-bottom: 1px solid rgba(255, 255, 255, .12);
+				color: rgba(255,255,255,.88);
+				.transition(all 0.12s ease-out);
+
+				&:hover {
+					text-decoration: none;
+					background: rgba(255, 255, 255, 0.04);
+					box-shadow: 0 0 18px rgba(255, 255, 255, 0.06);
+				}
+
+				img {
+					width: 72px;
+					height: 72px;
+					border-radius: 100px;
+					margin-right: 24px;
+				}
+
+				strong {
+					color: white;
+				}
+
+				span {
+					color: rgba(255,255,255,.4);
+				}
+			}
+		}
+	}
+}

@@ -1,13 +1,14 @@
 define("views/AppView", 
-  ["backbone","jquery","models/survey","views/headerView","text!templates/AppView.html","text!templates/modalOverlay.html","text!templates/surveyNotification.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
+  ["backbone","jquery","models/survey","views/headerView","views/notificationsView","text!templates/AppView.html","text!templates/modalOverlay.html","text!templates/surveyNotification.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
     "use strict";
     var Survey = __dependency3__["default"];
     var HeaderView = __dependency4__["default"];
+    var NotificationsView = __dependency5__["default"];
 
-    var template = __dependency5__;
-    var overlayTemplate = __dependency6__;
-    var surveyTemplate = __dependency7__;
+    var template = __dependency6__;
+    var overlayTemplate = __dependency7__;
+    var surveyTemplate = __dependency8__;
 
     var AppView = Backbone.View.extend({
 
@@ -36,6 +37,8 @@ define("views/AppView",
     		this.$overlayViewContainer = this.$('.overlay-view-container');
     		this.$notifHolder = this.$('.notif-holder');
     		this.$notifText = this.$('.notif-text');
+
+    		this.$notificationsContainer = this.$('.notifications-container');
     	},
 
     	overrideLinks: function() {
@@ -102,6 +105,49 @@ define("views/AppView",
     			this.closeOverlay();
     		}
     		return false;
+    	},
+
+    	openNotifications: function() {
+    		this.$notificationsContainer.addClass('expand');
+    		this.headerView.setButtons({
+    			title: 'Notifications',
+    			leftAction: {
+    				icon: '#61943',
+    				iconClass: 'x-icon',
+    				click: function() {
+    					window.Vibe.appView.closeNotifications();
+    					return false;
+    				}
+    			}
+    		});
+    		this.headerView.animateToNewComponents('fade');
+    	},
+
+    	closeNotifications: function() {
+    		var that = this;
+
+    		this.$notificationsContainer.removeClass('expand');
+    		window.Vibe.appView.headerView.setButtons({
+    			title: 'vibe',
+    			leftAction: {
+    				icon: '#61804',
+    				click: function() {
+    					window.Vibe.appView.openNotifications();
+    					return false;
+    				}
+    			},
+    			rightAction: {
+    				title: '',
+    				icon: '#61886',
+    				click: function() {
+    					window.Vibe.appRouter.navigateWithAnimation('settings', 'pushLeft', {
+    						trigger: true
+    					});
+    					return false;
+    				}
+    			}
+    		});
+    		this.headerView.animateToNewComponents('fade');
     	},
 
     	showNotif: function(text, timeToRead, addClass) {

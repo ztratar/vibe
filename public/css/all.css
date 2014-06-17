@@ -6629,6 +6629,22 @@ form.form-horizontal-top button.btn {
   -webkit-transition: all 0.1s;
   transition: all 0.1s;
 }
+.header-view .header-components.animate-fade.new h2 {
+  opacity: 0;
+}
+.header-view .header-components.animate-fade.new a {
+  opacity: 0;
+}
+.header-view .header-components.animate-fade.old h2 {
+  opacity: 0;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+}
+.header-view .header-components.animate-fade.old a {
+  opacity: 0;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+}
 .header-view .header-components.new h2,
 .header-view .header-components.new a {
   opacity: 0;
@@ -6671,6 +6687,12 @@ form.form-horizontal-top button.btn {
 }
 .header-view .header-components a i {
   font-size: 24px;
+}
+.header-view .header-components a i.x-icon {
+  font-size: 28px;
+  color: white;
+  font-weight: 400;
+  margin-top: 1px;
 }
 .header-view .header-components a.left-action {
   left: 15px;
@@ -6846,7 +6868,7 @@ html {
 .overlay-container.expand {
   pointer-events: auto;
   visibility: visible;
-  background: rgba(6, 11, 29, 0.8);
+  background: rgba(6, 11, 29, 0.84);
 }
 .overlay-container.remove {
   opacity: 0;
@@ -6964,6 +6986,59 @@ html {
   opacity: 1;
   -webkit-transform: translate3d(0, -10px, 0) scale(1, 1);
   transform: translate3d(0, -10px, 0) scale(1, 1);
+}
+.notifications-container {
+  background: rgba(6, 11, 29, 0);
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 190;
+  opacity: 1;
+  overflow-y: scroll;
+  visibility: hidden;
+  pointer-events: none;
+  -webkit-transition: background 0.16s ease-out;
+  transition: background 0.16s ease-out;
+}
+.notifications-container.expand {
+  pointer-events: auto;
+  visibility: visible;
+  background: rgba(6, 11, 29, 0.93);
+}
+.notifications-container .notifications-view ul {
+  list-style: none;
+  padding: 0;
+}
+.notifications-container .notifications-view li {
+  display: block;
+}
+.notifications-container .notifications-view li a {
+  display: block;
+  text-align: left;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.88);
+  -webkit-transition: all 0.12s ease-out;
+  transition: all 0.12s ease-out;
+}
+.notifications-container .notifications-view li a:hover {
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.06);
+}
+.notifications-container .notifications-view li a img {
+  width: 72px;
+  height: 72px;
+  border-radius: 100px;
+  margin-right: 24px;
+}
+.notifications-container .notifications-view li a strong {
+  color: white;
+}
+.notifications-container .notifications-view li a span {
+  color: rgba(255, 255, 255, 0.4);
 }
 .home-view {
   padding-top: 92px;

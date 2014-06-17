@@ -52,11 +52,17 @@ var Router = Backbone.Router.extend({
 
 		window.Vibe.appView.headerView.setButtons({
 			title: 'vibe',
+			leftAction: {
+				icon: '#61804',
+				click: function() {
+					window.Vibe.appView.openNotifications();
+					return false;
+				}
+			},
 			rightAction: {
 				title: '',
 				icon: '#61886',
-				click: function(ev) {
-					var $target = $(ev.target);
+				click: function() {
 					that.navigateWithAnimation('settings', 'pushLeft', {
 						trigger: true
 					});

@@ -120,12 +120,18 @@ define("views/postOverlayView",
     		window.Vibe.appRouter.screenRouter.enableScreenScroll();
     		window.Vibe.appView.headerView.setButtons({
     			title: 'vibe',
+    			leftAction: {
+    				icon: '#61804',
+    				click: function() {
+    					window.Vibe.appView.openNotifications();
+    					return false;
+    				}
+    			},
     			rightAction: {
     				title: '',
     				icon: '#61886',
-    				click: function(ev) {
-    					var $target = $(ev.target);
-    					window.Vibe.appRouter.navigateWithAnimation('settings', 'pushLeft', {
+    				click: function() {
+    					that.navigateWithAnimation('settings', 'pushLeft', {
     						trigger: true
     					});
     					return false;
