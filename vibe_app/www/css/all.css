@@ -7056,7 +7056,12 @@ html {
   }
 }
 .time-series-chart-view {
-  height: 100%;
+  height: 260px;
+}
+@media (max-width: 550px) {
+  .time-series-chart-view {
+    height: 100%;
+  }
 }
 .time-series-chart-view svg {
   display: block;
@@ -8582,11 +8587,19 @@ html {
 .posts-view li h4 {
   font-size: 28px;
   font-weight: 600;
-  padding: 40px 60px 24px;
+  padding: 40px 60px;
 }
 @media (max-width: 480px) {
   .posts-view li h4 {
     font-size: 18px;
+    padding: 24px 32px;
+  }
+}
+.posts-view li.feedback-item-view h4 {
+  padding: 40px 60px 24px;
+}
+@media (max-width: 480px) {
+  .posts-view li.feedback-item-view h4 {
     padding: 24px 32px 18px;
   }
 }
@@ -8684,7 +8697,7 @@ html {
 }
 .post-question-item-view h4 {
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 .post-question-item-view ul.answers {
   margin: 0;

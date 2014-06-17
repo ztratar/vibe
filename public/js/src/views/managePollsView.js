@@ -86,6 +86,8 @@ var ManagePollsView = Backbone.View.extend({
 	},
 
 	addPoll: function() {
+		debugger;
+
 		var that = this,
 			pollText = this.$addPollInput.val(),
 			question = new Question({

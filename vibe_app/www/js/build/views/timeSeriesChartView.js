@@ -16,7 +16,7 @@ define("views/timeSeriesChartView",
 
     	chartSettings: {
     		chartMargin: 80,
-    		chartBottomMargin: 32,
+    		chartBottomMargin: 24,
     		maxRating: 4
     	},
 

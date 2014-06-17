@@ -75,6 +75,7 @@ define("views/ratingChartView",
     	drawBar: function(voteKey, voteData) {
     		var barYInfo = this.getBarCoords(voteData),
     			barHeight = barYInfo.height,
+    			startY = barYInfo.startY,
     			barXPos = this.chartSettings.chartMargin + (voteKey-1) * this.barCalcInterval,
     			imgMap = {
     				1: 'img/cry-100.png',
@@ -84,16 +85,18 @@ define("views/ratingChartView",
     			},
     			zerodValue = false;
 
-    		if (barHeight === 0) zerodValue = true;
-
-    		barHeight = Math.max(barHeight, 10);
+    		if (barHeight === 0) {
+    			zerodValue = true;
+    			barHeight = 10;
+    			startY -= 10;
+    		}
 
     		var rect = this.svg
     					.append('rect')
     					.attr('width', this.chartSettings.barWidth)
     					.attr('height', barHeight)
     					.attr('x', barXPos)
-    					.attr('y', barYInfo.startY);
+    					.attr('y', startY);
 
     		var img = this.svg
     					.append('svg:image')
@@ -137,11 +140,13 @@ define("views/ratingChartView",
 
     			// Animate new bar coords
     			_.each(that.bars, function(bar, ind) {
-    				var barHeight = newBarCoords[ind].height;
+    				var barHeight = newBarCoords[ind].height,
+    					startY = newBarCoords[ind].startY;
 
     				if (barHeight === 0) {
     					bar.attr('class', 'zero');
     					barHeight = Math.max(barHeight, 10);
+    					startY -= 10;
     				} else {
     					bar.attr('class', '');
     				};
@@ -149,7 +154,7 @@ define("views/ratingChartView",
     				bar.transition()
     					.attr('class', '')
     					.attr('height', barHeight)
-    					.attr('y', newBarCoords[ind].startY)
+    					.attr('y', startY)
     					.duration(800);
     			});
     		}, 300);

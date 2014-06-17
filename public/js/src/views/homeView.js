@@ -78,10 +78,8 @@ var HomeView = Backbone.View.extend({
 	managePolls: function() {
 		var managePollsView = new ManagePollsView();
 
-		window.Vibe.appView.showOverlay(managePollsView);
-
 		managePollsView.$el.addClass('as-modal');
-		managePollsView.render();
+		window.Vibe.appView.showOverlay(managePollsView);
 
 		return false;
 	},
