@@ -111,7 +111,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 
 	getPoint: function(i, answerItem) {
 		var chartWidth = this.chartWidth,
-			topMargin = 10,
+			topMargin = this.useSmallVersion() ? 10 : 14,
 			pointTime,
 			realChartHeight,
 			yPercentage,

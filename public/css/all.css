@@ -6826,10 +6826,14 @@ html {
   bottom: 0;
   z-index: 200;
   opacity: 1;
+  overflow-y: scroll;
   visibility: hidden;
   pointer-events: none;
   -webkit-transition: background 0.16s ease-out;
   transition: background 0.16s ease-out;
+}
+.overlay-container .overlay-view-container {
+  padding: 32px 0;
 }
 .overlay-container > div {
   opacity: 1;
@@ -7769,13 +7773,13 @@ html {
 }
 .overlay-container.expand .manage-polls-view {
   opacity: 1;
-  -webkit-transform: translate3d(0, -10px, 0) scale(1, 1);
-  transform: translate3d(0, -10px, 0) scale(1, 1);
+  -webkit-transform: translate3d(0, 0, 0) scale(1, 1);
+  transform: translate3d(0, 0, 0) scale(1, 1);
 }
 .manage-polls-view {
   opacity: 0;
-  -webkit-transform: translate3d(0, 0, 0) scale(0.96, 0.96);
-  transform: translate3d(0, 0, 0) scale(0.96, 0.96);
+  -webkit-transform: translate3d(0, -10px, 0) scale(0.96, 0.96);
+  transform: translate3d(0, -10px, 0) scale(0.96, 0.96);
   transition: transform 0.24s ease-out, opacity 0.24s ease-out;
   -webkit-transition: -webkit-transform 0.24s ease-out, opacity 0.24s ease-out;
 }

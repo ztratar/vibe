@@ -6826,10 +6826,14 @@ html {
   bottom: 0;
   z-index: 200;
   opacity: 1;
+  overflow-y: scroll;
   visibility: hidden;
   pointer-events: none;
   -webkit-transition: background 0.16s ease-out;
   transition: background 0.16s ease-out;
+}
+.overlay-container .overlay-view-container {
+  padding: 32px 0;
 }
 .overlay-container > div {
   opacity: 1;
@@ -8156,6 +8160,11 @@ html {
   margin: 0;
   font-size: 18px;
   line-height: 24px;
+}
+.question-list-view > li .question-col span.last-sent {
+  font-size: 13px;
+  font-style: italic;
+  opacity: 0.3;
 }
 .question-list-view > li .save-col {
   position: absolute;
