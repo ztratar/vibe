@@ -7109,6 +7109,43 @@ html {
 .rating-chart-view rect.zero {
   fill: #F8B653;
 }
+.percentage-tooltip {
+  position: absolute;
+  background: #f1c686;
+  color: #633E0A;
+  padding: 8px 0 10px;
+  width: 90px;
+  font-size: 24px;
+  font-weight: 600;
+  border-radius: 8px;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 10px, 0);
+  transform: translate3d(0, 10px, 0);
+  -webkit-transition: all 0.24s ease-in-out;
+  transition: all 0.24s ease-in-out;
+}
+.percentage-tooltip.fadeIn {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.percentage-tooltip span.voted-so-far {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 400;
+  opacity: .6;
+}
+.percentage-tooltip:after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  margin-left: -6px;
+  border-bottom: 6px solid #f1c686;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
 @keyframes bounceHit {
   0% {
     -webkit-transform: scale(1, 1);

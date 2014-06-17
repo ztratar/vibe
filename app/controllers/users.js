@@ -282,6 +282,10 @@ exports.createFromUserInvite = function(req, res, next) {
 			if (err) return sendStandardError();
 			cb(null, user);
 		});
+	}, function(user, cb) {
+		user.generateNewUserPostsFeed(function(err, posts) {
+			cb(null, user);
+		});
 	}], function(err, user) {
 		if (err) return sendStandardError();
 

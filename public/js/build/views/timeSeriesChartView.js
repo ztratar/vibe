@@ -1,14 +1,18 @@
 define("views/timeSeriesChartView", 
-  ["backbone","underscore","moment","d3","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
+  ["backbone","underscore","moment","d3","text!templates/percentageTooltipTemplate.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
     "use strict";
 
     var moment = __dependency3__;
     var d3 = __dependency4__;
 
+    var percentageTooltipTemplate = __dependency5__;
+
     var TimeSeriesChartView = Backbone.View.extend({
 
     	className: 'time-series-chart-view',
+
+    	percentageTooltipTemplate: _.template(percentageTooltipTemplate),
 
     	chartSettings: {
     		chartMargin: 80,
@@ -33,6 +37,7 @@ define("views/timeSeriesChartView",
     				this.addPoint(this.answerData[i]);
     			}
     			this.renderAxisText();
+    			this.renderCompletionPercentageTooltip();
     		}
     	},
 
@@ -196,6 +201,7 @@ define("views/timeSeriesChartView",
     		var lastCircle = _.last(this.circles),
     			lastLine = _.last(this.lines),
     			lastData = _.last(this.answerData),
+    			that = this,
     			oldValTotal,
     			newValTotal,
     			newAvg,
@@ -205,13 +211,14 @@ define("views/timeSeriesChartView",
     		newValTotal = oldValTotal + answerBody;
     		newAvg = newValTotal / (lastData.num_completed+1);
 
-    		this.answerData[this.answerData.length-1].avg = newAvg;
-    		this.answerData[this.answerData.length-1].num_completed++;
-
     		lastData.avg = newAvg;
     		lastData.num_completed++;
 
     		newPoint = this.getPoint(this.numPoints, lastData);
+
+    		if (this.$percentageTooltip) {
+    			this.$percentageTooltip.remove();
+    		}
 
     		_.delay(function() {
     			lastLine.attr('class', 'anim');
@@ -225,7 +232,42 @@ define("views/timeSeriesChartView",
     				.attr('x2', newPoint.x)
     				.attr('y2', newPoint.y)
     				.duration(800);
+
+    			_.delay(function() {
+    				that.renderCompletionPercentageTooltip();
+    			}, 800);
     		}, 300);
+    	},
+
+    	renderCompletionPercentageTooltip: function() {
+    		var lastCircle = _.last(this.circles)[0],
+    			$circleElem = $(lastCircle),
+    			circlePos = $circleElem.position(),
+    			circleHeight = $circleElem.height();
+
+    		if (this.$percentageTooltip) {
+    			this.$percentageTooltip.remove();
+    		}
+
+    		this.$el.append(this.percentageTooltipTemplate({
+    			percentage: Math.ceil(this.getLatestCompletionPercentage()*100)
+    		}));
+
+    		this.$percentageTooltip = this.$('.percentage-tooltip');
+    		this.$percentageTooltip.css({
+    			top: circlePos.top + circleHeight + 32,
+    			left: circlePos.left - 35
+    		});
+
+    		_.delay(_.bind(function() {
+    			this.$percentageTooltip.addClass('fadeIn');
+    		}, this), 100);
+    	},
+
+    	getLatestCompletionPercentage: function() {
+    		var lastData = _.last(this.answerData);
+
+    		return lastData.num_completed / lastData.num_sent_to;
     	}
 
     });
