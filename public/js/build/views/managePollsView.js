@@ -114,7 +114,7 @@ define("views/managePollsView",
     				}
     				that.$addPollInput.val('');
     				that.$addPollInput.focus();
-    				that.selectedQuestions.add(model);
+    				that.selectedQuestions.add(model, { at: 0 });
     			}
     		});
 

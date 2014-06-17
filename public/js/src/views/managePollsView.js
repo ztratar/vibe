@@ -112,7 +112,7 @@ var ManagePollsView = Backbone.View.extend({
 				}
 				that.$addPollInput.val('');
 				that.$addPollInput.focus();
-				that.selectedQuestions.add(model);
+				that.selectedQuestions.add(model, { at: 0 });
 			}
 		});
 

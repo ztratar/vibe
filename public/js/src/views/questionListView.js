@@ -35,7 +35,11 @@ var QuestionListView = Backbone.View.extend({
 				question_type: this.question_type
 			});
 
-		this.$el.append(questionListItemView.$el);
+		if (this.questions.indexOf(question) === 0) {
+			this.$el.prepend(questionListItemView.$el);
+		} else {
+			this.$el.append(questionListItemView.$el);
+		}
 		questionListItemView.render();
 	}
 
