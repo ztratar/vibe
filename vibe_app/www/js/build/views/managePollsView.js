@@ -94,7 +94,7 @@ define("views/managePollsView",
     	// trigger a submit action... not worth the time atm.
     	addPoll: function(ev) {
     		if (ev.type === 'keydown' && ev.keyCode !== 13) {
-    			return false;
+    			return;
     		}
 
     		var that = this,

@@ -13,7 +13,11 @@
 	<i class="icon x-icon">&#61943;</i>
 </a>
 <div class="send-now-col">
+	<% if (!sentInLastDay) { %>
 	<a href="#" class="btn btn-success send-now">Send now</a>
+	<% } else { %>
+	<a href="#" class="btn btn-success send-now" disabled="disabled">Sent!</a>
+	<% } %>
 </div>
 <div class="send-later-col">
 	<h4>Send later:</h4>

@@ -33,11 +33,14 @@ var QuestionListItemView = Backbone.View.extend({
 			return;
 		}
 
+		var sentInLastDay = (Date.now() - Date.parse(this.model.get('time_last_sent'))) < 1000 * 60 * 60 * 24;
+
 		this.$el.html(this.template({
 			model: this.model.toJSON(),
 			className: this.button.className,
 			icon: this.button.icon,
-			question_type: this.question_type
+			question_type: this.question_type,
+			sentInLastDay: sentInLastDay
 		}));
 
 		this.$sendNowButton = this.$('.send-now');

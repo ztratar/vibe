@@ -36,11 +36,16 @@ define("views/questionListItemView",
     			return;
     		}
 
+    		var sentInLastDay = (Date.parse(this.model.get('time_last_sent')) - Date.now()) < 1000 * 60 * 60 * 24;
+
+    		console.log(this.model.get('body'), Date.parse(this.model.get('time_last_sent')));
+
     		this.$el.html(this.template({
     			model: this.model.toJSON(),
     			className: this.button.className,
     			icon: this.button.icon,
-    			question_type: this.question_type
+    			question_type: this.question_type,
+    			sentInLastDay: sentInLastDay
     		}));
 
     		this.$sendNowButton = this.$('.send-now');
