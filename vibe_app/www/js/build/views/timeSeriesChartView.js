@@ -28,6 +28,10 @@ define("views/timeSeriesChartView",
 
     	smallChartWindowWidthBreakpoint: 550,
 
+    	useSmallVersion: function() {
+    		return this.windowWidth < this.smallChartWindowWidthBreakpoint;
+    	},
+
     	initialize: function(opts) {
     		var that = this;
 
@@ -154,7 +158,8 @@ define("views/timeSeriesChartView",
     	},
 
     	drawCircle: function(i, x, y, r) {
-    		r = r || 10;
+    		r = r || (this.useSmallVersion() ? 10 : 14);
+
     		var circle = this.svg.append('circle')
     			.attr('cx', x)
     			.attr('cy', y)
@@ -265,7 +270,8 @@ define("views/timeSeriesChartView",
     			$circleElem = $(lastCircle),
     			circlePos = $circleElem.position(),
     			circleHeight = $circleElem.height(),
-    			widthOffset;
+    			widthOffset,
+    			topOffset;
 
     		if (this.$percentageTooltip) {
     			this.$percentageTooltip.remove();
@@ -277,14 +283,16 @@ define("views/timeSeriesChartView",
 
     		this.$percentageTooltip = this.$('.percentage-tooltip');
 
-    		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+    		if (this.useSmallVersion()) {
     			widthOffset = 25;
+    			topOffset = 32;
     		} else {
-    			widthOffset = 35;
+    			widthOffset = 31;
+    			topOffset = 36;
     		}
 
     		this.$percentageTooltip.css({
-    			top: circlePos.top + circleHeight + 32,
+    			top: circlePos.top + circleHeight + topOffset,
     			left: circlePos.left - widthOffset
     		});
 

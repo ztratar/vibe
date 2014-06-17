@@ -75,6 +75,7 @@ define("views/ratingChartView",
     	drawBar: function(voteKey, voteData) {
     		var barYInfo = this.getBarCoords(voteData),
     			barHeight = barYInfo.height,
+    			startY = barYInfo.startY,
     			barXPos = this.chartSettings.chartMargin + (voteKey-1) * this.barCalcInterval,
     			imgMap = {
     				1: 'img/cry-100.png',
