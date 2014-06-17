@@ -1,9 +1,10 @@
 define("views/questionListItemView", 
-  ["backbone","text!templates/questionListItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __exports__) {
+  ["backbone","moment","text!templates/questionListItemView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
 
-    var template = __dependency2__;
+    var moment = __dependency2__;
+    var template = __dependency3__;
 
     var QuestionListItemView = Backbone.View.extend({
 
@@ -43,7 +44,8 @@ define("views/questionListItemView",
     			className: this.button.className,
     			icon: this.button.icon,
     			question_type: this.question_type,
-    			sentInLastDay: sentInLastDay
+    			sentInLastDay: sentInLastDay,
+    			lastSentString: moment(this.model.get('time_last_sent')).fromNow()
     		}));
 
     		this.$sendNowButton = this.$('.send-now');

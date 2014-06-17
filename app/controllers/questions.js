@@ -370,6 +370,7 @@ exports.send = function(req, res, questionId, next) {
 					if (err) return helpers.sendError(res, err);
 
 					question.time_last_sent = Date.now();
+					question.user_last_sent = req.user.name;
 					question.save();
 
 					next(null, posts);

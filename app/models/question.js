@@ -16,7 +16,8 @@ var QuestionSchema = new Schema({
 	creator: { type: Schema.Types.ObjectId, ref: 'User' },
 	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	timeCreated: { type: Date, default: Date.now() },
-	time_last_sent: { type: Date }
+	time_last_sent: { type: Date },
+	user_last_sent: { type: String }
 });
 
 // Validations

@@ -8157,6 +8157,11 @@ html {
   font-size: 18px;
   line-height: 24px;
 }
+.question-list-view > li .question-col span.last-sent {
+  font-size: 13px;
+  font-style: italic;
+  opacity: 0.3;
+}
 .question-list-view > li .save-col {
   position: absolute;
   right: 95px;

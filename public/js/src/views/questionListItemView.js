@@ -1,5 +1,6 @@
 import 'backbone';
 
+module moment from 'moment';
 module template from 'text!templates/questionListItemView.html';
 
 var QuestionListItemView = Backbone.View.extend({
@@ -40,7 +41,8 @@ var QuestionListItemView = Backbone.View.extend({
 			className: this.button.className,
 			icon: this.button.icon,
 			question_type: this.question_type,
-			sentInLastDay: sentInLastDay
+			sentInLastDay: sentInLastDay,
+			lastSentString: moment(this.model.get('time_last_sent')).fromNow()
 		}));
 
 		this.$sendNowButton = this.$('.send-now');
