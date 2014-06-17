@@ -16,7 +16,8 @@ define("views/managePollsView",
     	template: _.template(template),
 
     	events: {
-    		'submit form': 'addPoll',
+    		'keydown form input': 'addPoll',
+    		'click form button': 'addPoll',
     		'click a.close-modal': 'closeModal'
     	},
 
@@ -87,8 +88,14 @@ define("views/managePollsView",
     		return this;
     	},
 
-    	addPoll: function() {
-    		debugger;
+    	// Add poll is only triggered with keydown
+    	// and click, instead of submit, because of some
+    	// strange bug with the modal overlay. Forms wouldn't
+    	// trigger a submit action... not worth the time atm.
+    	addPoll: function(ev) {
+    		if (ev.type === 'keydown' && ev.keyCode !== 13) {
+    			return;
+    		}
 
     		var that = this,
     			pollText = this.$addPollInput.val(),

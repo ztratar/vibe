@@ -288,7 +288,7 @@ define("views/timeSeriesChartView",
     			topOffset = 32;
     		} else {
     			widthOffset = 31;
-    			topOffset = 36;
+    			topOffset = 38;
     		}
 
     		this.$percentageTooltip.css({
