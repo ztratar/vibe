@@ -28,7 +28,7 @@ exports.login = function (req, res) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
 			return res.send({
-				error: 'Invalid email or password'
+				error: 'Wrong email or password'
 			});
 		}
 
@@ -41,7 +41,7 @@ exports.login = function (req, res) {
 		req.logIn(user, function(err) {
 			if (err || !user) {
 				return res.send({
-					error: 'Invalid email or password'
+					error: 'Wrong email or password'
 				});
 			}
 			return res.send({
