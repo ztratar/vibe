@@ -1,6 +1,10 @@
 .time-series-chart-view {
 	height: 260px;
 
+	@media (max-width: 550px) {
+		height: 100%;
+	}
+
 	svg {
 		display: block;
 		margin: 0 auto;
@@ -94,5 +98,10 @@
 		border-bottom: 6px solid rgb(241, 198, 134);
 		border-right: 6px solid transparent;
 		border-left: 6px solid transparent;
+	}
+
+	@media (max-width: 550px) {
+		width: 70px;
+		font-size: 18px;
 	}
 }

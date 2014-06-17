@@ -15,20 +15,33 @@ var TimeSeriesChartView = Backbone.View.extend({
 	chartSettings: {
 		chartMargin: 80,
 		chartBottomMargin: 24,
-		maxRating: 4,
-		minIntervalSpacing: 80
+		maxRating: 4
 	},
 
-	initialize: function(opts) {
-		this.model = opts.model;
+	smallChartSettings: {
+		chartMargin: 40,
+		chartBottomMargin: 24,
+		maxRating: 4
+	},
 
+	smallChartWindowWidthBreakpoint: 550,
+
+	initialize: function(opts) {
+		var that = this;
+
+		this.model = opts.model;
 		this.model.on('newAnswer', this.addNewAnswer, this);
+
+		this.answerData = this.model.get('answer_data');
+
+		$(window).on('resize', _.throttle(function() {
+			that.render();
+		}, 16));
 	},
 
 	render: function() {
-		this.answerData = this.model.get('answer_data');
-
 		if (this.answerData.length > 1) {
+			this.windowWidth = $(window).width();
 			this.initChart();
 			this.drawAxisGradient();
 			for (var i = 0; i < this.answerData.length; i++) {
@@ -84,6 +97,14 @@ var TimeSeriesChartView = Backbone.View.extend({
 		}
 	},
 
+	getChartMargin: function() {
+		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+			return this.smallChartSettings.chartMargin;
+		}
+
+		return this.chartSettings.chartMargin;
+	},
+
 	getPoint: function(i, answerItem) {
 		var chartWidth = this.chartWidth,
 			topMargin = 10,
@@ -107,7 +128,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 			xPercentage = (pointTime - this.oldestTime) / this.totalGraphTimeDiff;
 
 			coords = {
-				x: (xPercentage * (this.chartWidth-(2*this.chartSettings.chartMargin))) + this.chartSettings.chartMargin,
+				x: (xPercentage * (this.chartWidth-(2*this.getChartMargin()))) + this.getChartMargin(),
 				y: topMargin + (realChartHeight * (1 - yPercentage))
 			};
 
@@ -151,7 +172,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 			.selectAll('stop')
 			.data([
 				{ offset: '0%', color: 'white' },
-				{ offset: '70%', color: 'white' },
+				{ offset: '90%', color: 'white' },
 				{ offset: '100%', color: 'rgba(255, 255, 255, 0)' }
 			])
 			.enter()
@@ -241,7 +262,8 @@ var TimeSeriesChartView = Backbone.View.extend({
 		var lastCircle = _.last(this.circles)[0],
 			$circleElem = $(lastCircle),
 			circlePos = $circleElem.position(),
-			circleHeight = $circleElem.height();
+			circleHeight = $circleElem.height(),
+			widthOffset;
 
 		if (this.$percentageTooltip) {
 			this.$percentageTooltip.remove();
@@ -252,9 +274,16 @@ var TimeSeriesChartView = Backbone.View.extend({
 		}));
 
 		this.$percentageTooltip = this.$('.percentage-tooltip');
+
+		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+			widthOffset = 25;
+		} else {
+			widthOffset = 35;
+		}
+
 		this.$percentageTooltip.css({
 			top: circlePos.top + circleHeight + 32,
-			left: circlePos.left - 35
+			left: circlePos.left - widthOffset
 		});
 
 		_.delay(_.bind(function() {

@@ -7056,7 +7056,7 @@ html {
   }
 }
 .time-series-chart-view {
-  height: 260px;
+  height: 100%;
 }
 .time-series-chart-view svg {
   display: block;
@@ -7145,6 +7145,12 @@ html {
   border-bottom: 6px solid #f1c686;
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
+}
+@media (max-width: 550px) {
+  .percentage-tooltip {
+    width: 70px;
+    font-size: 18px;
+  }
 }
 @keyframes bounceHit {
   0% {
@@ -8678,7 +8684,7 @@ html {
 }
 .post-question-item-view h4 {
   margin-top: 0;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
 }
 .post-question-item-view ul.answers {
   margin: 0;
@@ -8783,6 +8789,11 @@ html {
 .post-question-item-view .vote-results-container {
   height: 280px;
   position: relative;
+}
+@media (max-width: 550px) {
+  .post-question-item-view .vote-results-container {
+    height: 200px;
+  }
 }
 .post-question-item-view .vote-results-container.voted ul.answers {
   -webkit-transform: scale(0.94, 0.94);
