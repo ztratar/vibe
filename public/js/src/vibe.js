@@ -2,6 +2,7 @@
 import 'jquery';
 import 'underscore';
 import 'backbone';
+import 'faye';
 import Router from 'router';
 import ScreenRouter from 'screenRouter';
 import ModelCache from 'modelCache';
@@ -11,6 +12,9 @@ import AppView from 'views/AppView';
 window.Vibe = window.Vibe || {};
 
 window.Vibe.run = function() {
+	// Initialize Faye for real-time pub sub
+	window.Vibe.faye = new Faye.Client(window.fayeServerRoute);
+
 	// Load in data, such as user
 	window.Vibe.user = new User(window.Vibe._data_.currentUser);
 

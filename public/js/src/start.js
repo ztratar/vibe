@@ -7,7 +7,8 @@ require.config({
 		backbone: '../libs/backbone',
 		d3: '../libs/d3',
 		moment: '../libs/moment',
-		autosize: '../libs/jquery.autosize'
+		autosize: '../libs/jquery.autosize',
+		faye: '../libs/faye-browser'
 	},
 	shim: {
 		d3: {

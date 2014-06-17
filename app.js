@@ -1,11 +1,15 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),
 	fs = require('fs'),
 	passport = require('passport'),
-	_ = require('underscore');
+	_ = require('underscore'),
+	http = require('http')
+	faye = require('faye');
+
+var fayeServer = http.createServer(),
+	fayeNode = new faye.NodeAdapter({ mount: '/' });
 
 // Load configurations
 // if test env, load example file
@@ -50,7 +54,11 @@ require('./config/routes')(app, passport);
 // Start the app by listening on <port>
 var port = process.env.PORT || 3000;
 app.listen(port);
-console.log('Express app started on port '+port);
+console.log('Express app started on port ' + port);
+
+fayeNode.attach(fayeServer);
+fayeServer.listen(8000);
+console.log('Faye started on port 8000');
 
 // expose app
 exports = module.exports = app;
