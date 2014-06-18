@@ -27,6 +27,7 @@ var NotificationsView = Backbone.View.extend({
 			this.notifications.fetch({
 				reset: true
 			});
+			this.notifications.markAllRead();
 		}, this));
 
 		return this;

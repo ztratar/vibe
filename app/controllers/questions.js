@@ -343,7 +343,8 @@ exports.send = function(req, res, questionId, next) {
 	}, function(question, cb) {
 		// Get the users who should be sent the question
 		User.find({
-			company: question.company.toString()
+			company: question.company.toString(),
+			active: true
 		}, function(err, users) {
 			if (err) return cb(err);
 			cb(null, question, users);

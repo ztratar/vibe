@@ -1,6 +1,26 @@
 <a href="#" class="media">
 	<% if (!model.read) { %><span class="unread"></span><% } %>
-	<img class="pull-left" src="<%= model.img %>">
+
+	<% if (model.img.length) { %>
+		<img src="<%= model.img %>">
+	<% } else if (model.type === 'question-vote') { %>
+		<span class="fake-img img-question">
+			<i class="icon">&#61753;</i>
+		</span>
+	<% } else if (model.type === 'feedback-rejected') { %>
+		<span class="fake-img img-feedback-rejected">
+			<i class="icon">&#61733;</i>
+		</span>
+	<% } else if (model.type === 'feedback-approved') { %>
+		<span class="fake-img img-feedback-approved">
+			<i class="icon">&#61790;</i>
+		</span>
+	<% } else if (model.type === 'feedback-agree') { %>
+		<span class="fake-img img-feedback-agree">
+			<i class="icon">&#61845;</i>
+		</span>
+	<% } %>
+
 	<div class="media-body">
 		<p>
 			<% if (model.type === 'question') { %>

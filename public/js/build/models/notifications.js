@@ -49,6 +49,13 @@ define("models/notifications",
     				if (!data.length) that.atLastItem = true
     			}
     		});
+    	},
+
+    	markAllRead: function() {
+    		$.ajax({
+    			type: 'PUT',
+    			url: '/api/notifications/mark_read'
+    		});
     	}
 
     });

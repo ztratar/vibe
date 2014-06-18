@@ -29,6 +29,7 @@ define("views/notificationsView",
     			this.notifications.fetch({
     				reset: true
     			});
+    			this.notifications.markAllRead();
     		}, this));
 
     		return this;

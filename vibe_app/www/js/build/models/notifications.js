@@ -9,7 +9,7 @@ define("models/notifications",
     	model: Notification,
 
     	comparator: function(a,b) {
-    		return Date.parse(a.get('time_created')) < Date.parse(b.get('time_created'));
+    		return Date.parse(a.get('time_updated')) < Date.parse(b.get('time_updated'));
     	},
 
     	getNew: function() {
@@ -48,6 +48,13 @@ define("models/notifications",
     				that.trigger('fetchingDone');
     				if (!data.length) that.atLastItem = true
     			}
+    		});
+    	},
+
+    	markAllRead: function() {
+    		$.ajax({
+    			type: 'PUT',
+    			url: '/api/notifications/mark_read'
     		});
     	}
 

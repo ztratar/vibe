@@ -63,6 +63,7 @@ module.exports = function (app, passport) {
 	app.put('/api/feedback/:feedback', c.feedback.update);
 	app.put('/api/feedback/:feedback/agree', c.feedback.agree);
 	app.put('/api/feedback/:feedback/undo_agree', c.feedback.undoAgree);
+	app.put('/api/notifications/mark_read', c.notifications.markRead);
 
 	app.param('feedback', c.feedback.loadFeedback);
 	app.param('meta_question', c.meta_questions.loadMetaQuestion);
