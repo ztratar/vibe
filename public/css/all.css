@@ -7168,6 +7168,20 @@ html {
   background: #212427;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
+.chat-view .form-inline img {
+  width: 58px;
+  height: 58px;
+  border-radius: 100px;
+  background: #aaa;
+  position: absolute;
+  top: 14px;
+  left: 24px;
+}
+.chat-view .form-inline .form-group {
+  margin: 0 114px 0 88px;
+  display: block;
+  vertical-align: middle;
+}
 .chat-view .form-inline input {
   background: #191c1e;
   border-color: #191c1e;
@@ -7186,6 +7200,11 @@ html {
 .chat-view .form-inline input:-ms-input-placeholder {
   color: #444444;
 }
+.chat-view .form-inline button {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+}
 .chat-view .chats-container {
   padding: 16px 24px;
   overflow-y: scroll;
@@ -7196,8 +7215,8 @@ html {
   padding: 12px 0;
 }
 .chat-view .chats-container .chat-item img {
-  width: 62px;
-  height: 62px;
+  width: 58px;
+  height: 58px;
   border-radius: 100px;
   background: #aaa;
   position: absolute;
@@ -7205,7 +7224,7 @@ html {
   left: 0;
 }
 .chat-view .chats-container .chat-item .chat-bubble {
-  margin: 0 0 0 90px;
+  margin: 0 0 0 80px;
   border-radius: 6px;
   background: #2f557c;
   color: white;

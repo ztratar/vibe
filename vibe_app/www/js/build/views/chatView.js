@@ -13,6 +13,7 @@ define("views/chatView",
     	className: 'chat-view',
 
     	template: _.template(template),
+    	chatTemplate: _.template(chatTemplate),
 
     	events: {
     		'keydown form input': 'newChat',

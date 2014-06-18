@@ -58,10 +58,32 @@
 		background: #212427;
 		.stdBoxShadow();
 
+		img {
+			width: 58px;
+			height: 58px;
+			border-radius: 100px;
+			background: #aaa;
+			position: absolute;
+			top: 14px;
+			left: 24px;
+		}
+
+		.form-group {
+			margin: 0 114px 0 88px;
+			display: block;
+			vertical-align: middle;
+		}
+
 		input {
 			background: darken(@vibe-grey-dark, 8%);
 			border-color: darken(@vibe-grey-dark, 8%);
 			.placeholderTextColor(#444);
+		}
+
+		button {
+			position: absolute;
+			top: 16px;
+			right: 24px;
 		}
 	}
 
@@ -75,8 +97,8 @@
 			padding: 12px 0;
 
 			img {
-				width: 62px;
-				height: 62px;
+				width: 58px;
+				height: 58px;
 				border-radius: 100px;
 				background: #aaa;
 				position: absolute;
@@ -85,7 +107,7 @@
 			}
 
 			.chat-bubble {
-				margin: 0 0 0 90px;
+				margin: 0 0 0 80px;
 				border-radius: @border-radius-large;
 				background: @vibe-light;
 				color: white;
