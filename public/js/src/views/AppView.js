@@ -22,6 +22,8 @@ var AppView = Backbone.View.extend({
 
 	initialize: function() {
 		this.headerView = new HeaderView();
+		this.notificationsView = new NotificationsView();
+
 		this.overrideLinks();
 	},
 
@@ -106,6 +108,8 @@ var AppView = Backbone.View.extend({
 	},
 
 	openNotifications: function() {
+		this.$notificationsContainer.html(this.notificationsView.$el);
+		this.notificationsView.render();
 		this.$notificationsContainer.addClass('expand');
 		this.headerView.setButtons({
 			title: 'Notifications',

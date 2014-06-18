@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 	Comment = mongoose.model('Comment'),
 	Company = mongoose.model('Company'),
 	Answer = mongoose.model('Answer'),
+	notificationsController = require('./notifications')(),
 	helpers = require('../helpers');
 
 /*
@@ -205,12 +206,26 @@ exports.createAnswer = function(req, res) {
 			})
 			.sort({ _id: -1 })
 			.exec(function(err, questionInstance) {
+				var usersVotedBefore = questionInstance.users_voted;
+
 				if (err) return cb(err);
 				if (questionInstance.didUserAnswer(req.user._id)) {
 					return cb('You have already voted');
 				}
 				questionInstance.answer(req.user, req.body.body, function(err, answer) {
 					if (err) return helpers.sendError(res, err);
+
+					// Send notification to those who already voted
+					notificationsController.sendToUsers(usersVotedBefore, {
+						type: 'question-vote',
+						cluster_tag: 'question-vote_' + questionInstance._id,
+						data: {
+							num_people: questionInstance.users_voted.length,
+							question: req.question.body,
+							questionId: req.question._id
+						}
+					});
+
 					cb(null, answer);
 				});
 			});
@@ -372,6 +387,16 @@ exports.send = function(req, res, questionId, next) {
 					question.time_last_sent = Date.now();
 					question.user_last_sent = req.user.name;
 					question.save();
+
+					notificationsController.sendToCompany(req, {
+						type: 'question',
+						img: req.user.avatar,
+						data: {
+							user: req.user.name,
+							question: question.body,
+							questionId: question._id
+						}
+					});
 
 					next(null, posts);
 				});

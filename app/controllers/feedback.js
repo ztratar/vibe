@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 	Post = mongoose.model('Post'),
 	Feedback = mongoose.model('Feedback'),
 	postsController = require('./posts')(),
+	notificationsController = require('./notifications')(),
 	helpers = require('../helpers'),
 	app;
 
@@ -127,7 +128,7 @@ exports.update = function(req, res, next) {
 /*
  * PUT /api/feedback/:feedback/agree
  *
- * Agree with this feedback, which increments 
+ * Agree with this feedback, which increments
  * the score.
  */
 exports.agree = function(req, res, next) {
@@ -136,6 +137,8 @@ exports.agree = function(req, res, next) {
 			error: "You've already agreed with this"
 		});
 	}
+
+	var usersAgreedBefore = req.feedback.votes;
 
 	req.feedback.update({
 		$inc: {
@@ -149,7 +152,19 @@ exports.agree = function(req, res, next) {
 	}, function(err, feedback) {
 		if (err) helpers.sendError(res, err);
 		Feedback.findById(req.feedback._id, function(err, feedback) {
+
+			notificationsController.sendToUsers(usersAgreedBefore, {
+				type: 'feedback-agree',
+				cluster_tag: 'feedback-agree_' + feedback._id,
+				data: {
+					num_people: feedback.num_votes,
+					feedback: feedback.body,
+					feedbackId: feedback._id
+				}
+			});
+
 			res.send(feedback.stripInfo(req.user));
+
 		});
 	});
 };
@@ -242,9 +257,14 @@ exports.approve = function(req, res, next) {
 
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
+
 		res.send(feedback.stripInfo(req.user));
 
 		postsController.createPostsFromFeedback(res, feedback);
+		notificationsController.send({
+			for_user: req.feedback.creator,
+			type: 'feedback-approved'
+		});
 	});
 };
 
@@ -259,8 +279,14 @@ exports.approve = function(req, res, next) {
  */
 exports.disapprove = function(req, res, next) {
 	if (!req.user.isAdmin) {
-		return res.send({
+		return res.send(500, {
 			error: 'You must be an admin to do this'
+		});
+	}
+
+	if (!req.body.status_change_reason || !req.body.status_change_reason.length) {
+		return res.send(500, {
+			error: 'Please provide a reason. Anything works!'
 		});
 	}
 
@@ -271,6 +297,15 @@ exports.disapprove = function(req, res, next) {
 
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
+
+		notificationsController.send({
+			for_user: req.feedback.creator,
+			type: 'feedback-rejected',
+			data: {
+				reason: req.body.status_change_reason
+			}
+		});
+
 		res.send(feedback.stripInfo(req.user));
 	});
 };

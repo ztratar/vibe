@@ -6,7 +6,7 @@
 	right: 0;
 	bottom: 0;
 	z-index: 190;
-	opacity: 1;
+	opacity: 0;
 	overflow-y: scroll;
 	visibility: hidden;
 	pointer-events: none;
@@ -15,7 +15,8 @@
 	&.expand {
 		pointer-events: auto;
 		visibility: visible;
-		background: rgba(6, 11, 29, 0.93);
+		background: rgba(6, 11, 29, 0.97);
+		opacity: 1;
 	}
 
 	.notifications-view {
@@ -31,14 +32,24 @@
 				display: block;
 				text-align: left;
 				padding: 24px 0;
+				position: relative;
 				border-bottom: 1px solid rgba(255, 255, 255, .12);
 				color: rgba(255,255,255,.88);
 				.transition(all 0.12s ease-out);
 
 				&:hover {
 					text-decoration: none;
-					background: rgba(255, 255, 255, 0.04);
+					background: rgba(87, 139, 250, 0.04);
 					box-shadow: 0 0 18px rgba(255, 255, 255, 0.06);
+				}
+
+				span.unread {
+					width: 20px;
+					height: 20px;
+					border-radius: 100px;
+					position: absolute;
+					background: saturate(@vibe-red, 10%);
+					box-shadow: 0 1px 4px rgba(0,0,0,.2);
 				}
 
 				img {

@@ -131,7 +131,7 @@ define("views/postOverlayView",
     				title: '',
     				icon: '#61886',
     				click: function() {
-    					that.navigateWithAnimation('settings', 'pushLeft', {
+    					window.Vibe.appRouter.navigateWithAnimation('settings', 'pushLeft', {
     						trigger: true
     					});
     					return false;

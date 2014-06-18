@@ -10,10 +10,11 @@ define("models/notification",
 
     	defaults: {
     		time_created: new Date(),
-    		for_user: undefined,
-    		img: undefined,
-    		body: '',
-    		link: ''
+    		time_updated: new Date(),
+    		data: {},
+    		read: false,
+    		type: '',
+    		img: ''
     	}
 
     });

@@ -55,7 +55,7 @@ var RatingChartView = Backbone.View.extend({
 			that.groupedBarData[i] = that.groupedBarData[i] || 0;
 		}
 
-		this.modeNum = _.max(this.groupedBarData);
+		this.modeNum = Math.max(_.max(this.groupedBarData), 1);
 	},
 
 	drawChart: function() {
