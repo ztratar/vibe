@@ -133,7 +133,7 @@ define("views/ratingChartView",
     					.attr('width', 40)
     					.attr('height', 40)
     					.attr('x', barXPos)
-    					.attr('y', 20 + this.chartHeight - this.chartSettings.chartBottomMargin)
+    					.attr('y', 20 + this.chartHeight - this.getChartBottomMargin())
     					.attr('xlink:href', window.staticRoute + imgMap[voteKey]);
 
     		if (zerodValue) rect.attr('class', 'zero');
@@ -142,8 +142,8 @@ define("views/ratingChartView",
     	},
 
     	getBarCoords: function(voteData) {
-    		var barHeight = (this.chartHeight-this.chartSettings.chartBottomMargin) * (voteData / this.modeNum),
-    			barYPos = this.chartHeight - barHeight - this.chartSettings.chartBottomMargin;
+    		var barHeight = (this.chartHeight-this.getChartBottomMargin()) * (voteData / this.modeNum),
+    			barYPos = this.chartHeight - barHeight - this.getChartBottomMargin();
 
     		return {
     			height: barHeight,

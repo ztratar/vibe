@@ -2,6 +2,7 @@ import 'underscore';
 import 'backbone';
 
 import ConfirmDialogView from 'views/confirmDialogView';
+import ChatView from 'views/chatView';
 
 module template from 'text!templates/feedbackItemView.html';
 
@@ -16,6 +17,7 @@ var FeedbackItemView = Backbone.View.extend({
 	events: {
 		'click a.agree': 'agree',
 		'click a.agreed': 'undoAgree',
+		'click a.discuss': 'discuss',
 		'click a.pull-down': 'adminPullDown'
 	},
 
@@ -66,6 +68,16 @@ var FeedbackItemView = Backbone.View.extend({
 		setTimeout(function() {
 			that.$score.removeClass('pop-reverse');
 		}, 500);
+
+		return false;
+	},
+
+	discuss: function() {
+		var chatView = new ChatView({
+			chatTitle: this.model.get('feedback').get('body'),
+			chatsUrl: '/api/feedback/' + this.model.get('_id') + '/chats'
+		});
+		window.Vibe.appView.showOverlay(chatView);
 
 		return false;
 	},

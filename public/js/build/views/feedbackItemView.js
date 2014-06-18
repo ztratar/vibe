@@ -1,11 +1,12 @@
 define("views/feedbackItemView", 
-  ["underscore","backbone","views/confirmDialogView","text!templates/feedbackItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
+  ["underscore","backbone","views/confirmDialogView","views/chatView","text!templates/feedbackItemView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
     "use strict";
 
     var ConfirmDialogView = __dependency3__["default"];
+    var ChatView = __dependency4__["default"];
 
-    var template = __dependency4__;
+    var template = __dependency5__;
 
     var FeedbackItemView = Backbone.View.extend({
 
@@ -18,6 +19,7 @@ define("views/feedbackItemView",
     	events: {
     		'click a.agree': 'agree',
     		'click a.agreed': 'undoAgree',
+    		'click a.discuss': 'discuss',
     		'click a.pull-down': 'adminPullDown'
     	},
 
@@ -68,6 +70,16 @@ define("views/feedbackItemView",
     		setTimeout(function() {
     			that.$score.removeClass('pop-reverse');
     		}, 500);
+
+    		return false;
+    	},
+
+    	discuss: function() {
+    		var chatView = new ChatView({
+    			chatTitle: this.model.get('feedback').get('body'),
+    			chatsUrl: '/api/feedback/' + this.model.get('_id') + '/chats'
+    		});
+    		window.Vibe.appView.showOverlay(chatView);
 
     		return false;
     	},

@@ -1,0 +1,111 @@
+.overlay-container.expand .chat-view {
+	opacity: 1;
+	-webkit-transform: translate3d(0, 0, 0) scale(1, 1);
+			transform: translate3d(0, 0, 0) scale(1, 1);
+}
+
+.chat-view {
+	max-width: 580px;
+	height: 524px;
+	margin: 0 auto;
+	position: relative;
+	background: #1C1F22;
+	border-radius: @border-radius-large;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04), 0 7px 18px rgba(0,0,0,.14), inset 0 2px 180px rgba(0, 0, 0, 0.2);
+
+	opacity: 0;
+	-webkit-transform: translate3d(0, 10px, 0) scale(0.96, 0.96);
+			transform: translate3d(0, 10px, 0) scale(0.96, 0.96);
+	.transition(all 0.14s ease-out);
+
+	.chat-header {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		border-radius: @border-radius-large @border-radius-large 0 0;
+		height: 50px;
+		text-align: left;
+		padding: 14px 24px;
+		background: #212427;
+		position: relative;
+		z-index: 1000;
+		.stdBoxShadow();
+
+		h4 {
+			font-size: inherit;
+			color: #4D4C4C;
+			margin: 0;
+		}
+
+		a.close-chat {
+			.x-icon-wrap;
+			background: #18191B;
+
+			&:hover {
+				background: #1D1E20;
+			}
+		}
+	}
+
+	.form-inline {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: 0;
+		border-radius: 0 0 @border-radius-large @border-radius-large;
+		background: #212427;
+		.stdBoxShadow();
+
+		input {
+			background: darken(@vibe-grey-dark, 8%);
+			border-color: darken(@vibe-grey-dark, 8%);
+			.placeholderTextColor(#444);
+		}
+	}
+
+	.chats-container {
+		padding: 16px 24px;
+		overflow-y: scroll;
+		height: calc(~"100% - 137px");
+
+		.chat-item {
+			position: relative;
+			padding: 12px 0;
+
+			img {
+				width: 62px;
+				height: 62px;
+				border-radius: 100px;
+				background: #aaa;
+				position: absolute;
+				top: 12px;
+				left: 0;
+			}
+
+			.chat-bubble {
+				margin: 0 0 0 90px;
+				border-radius: @border-radius-large;
+				background: @vibe-light;
+				color: white;
+				text-align: left;
+				padding: 10px 14px;
+				.stdBoxShadow();
+
+				p {
+					margin: 0 0 4px;
+					font-size: 16px;
+					color: white;
+				}
+
+				span {
+					display: block;
+					font-size: 11px;
+					color: white;
+					opacity: 0.4;
+				}
+			}
+		}
+	}
+}
