@@ -16,10 +16,22 @@ define("views/ratingChartView",
     		numAnswerKeys: 4
     	},
 
-    	initialize: function(opts) {
-    		this.model = opts.model;
+    	smallChartSettings: {
+    		chartMargin: 10,
+    		chartBottomMargin: 64
+    	},
 
+    	smallChartWindowWidthBreakpoint: 550,
+
+    	initialize: function(opts) {
+    		var that = this;
+
+    		this.model = opts.model;
     		this.model.on('newAnswer', this.addNewAnswer, this);
+
+    		$(window).on('resize', _.throttle(function() {
+    			that.render();
+    		}, 16));
     	},
 
     	render: function() {
@@ -28,8 +40,10 @@ define("views/ratingChartView",
 
     	initChart: function() {
     		this.bars = [];
+    		this.windowWidth = $(window).width();
     		this.chartHeight = this.$el.height();
     		this.chartWidth = this.$el.width();
+    		this.$el.empty();
 
     		this.svg = d3.select(this.$el[0])
     			.append("svg")
@@ -61,10 +75,26 @@ define("views/ratingChartView",
     		this.modeNum = Math.max(_.max(this.groupedBarData), 1);
     	},
 
+    	getChartMargin: function() {
+    		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+    			return this.smallChartSettings.chartMargin;
+    		}
+
+    		return this.chartSettings.chartMargin;
+    	},
+
+    	getChartBottomMargin: function() {
+    		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+    			return this.smallChartSettings.chartBottomMargin;
+    		}
+
+    		return this.chartSettings.chartBottomMargin;
+    	},
+
     	drawChart: function() {
     		var that = this;
 
-    		this.usableWidth = this.chartWidth - 2*this.chartSettings.chartMargin;
+    		this.usableWidth = this.chartWidth - 2*this.getChartMargin();
     		this.barCalcInterval = (this.usableWidth - this.chartSettings.barWidth) / (this.chartSettings.numAnswerKeys - 1);
 
     		_.each(this.groupedBarData, function(data, key) {
@@ -76,7 +106,7 @@ define("views/ratingChartView",
     		var barYInfo = this.getBarCoords(voteData),
     			barHeight = barYInfo.height,
     			startY = barYInfo.startY,
-    			barXPos = this.chartSettings.chartMargin + (voteKey-1) * this.barCalcInterval,
+    			barXPos = this.getChartMargin() + (voteKey-1) * this.barCalcInterval,
     			imgMap = {
     				1: 'img/cry-100.png',
     				2: 'img/sad-100.png',
