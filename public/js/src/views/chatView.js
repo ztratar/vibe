@@ -20,6 +20,8 @@ var ChatView = Backbone.View.extend({
 	},
 
 	initialize: function(opts) {
+		var that = this;
+
 		this.chats = new Chats();
 		this.chats.url = opts.chatsUrl;
 
@@ -28,9 +30,14 @@ var ChatView = Backbone.View.extend({
 
 		this.chatTitle = opts.chatTitle || 'Chat';
 
-		_.defer(_.bind(function() {
-			this.chats.fetch();
-		}, this));
+		_.defer(function() {
+			window.Vibe.faye.subscribe(that.chats.url, function(chatModel) {
+				that.chats.add(chatModel);
+			});
+			that.chats.fetch({
+				reset: true
+			});
+		});
 	},
 
 	render: function() {
@@ -64,10 +71,14 @@ var ChatView = Backbone.View.extend({
 			timeago: moment(chat.get('time_created')).fromNow()
 		});
 
+		console.log('adding', chat.get('body'));
+
+		window.chats = this.chats;
+
 		if (this.chats.indexOf(chat) === 0) {
-			this.$chatsContainer.prepend(newChatItem);
-		} else {
 			this.$chatsContainer.append(newChatItem);
+		} else {
+			this.$chatsContainer.prepend(newChatItem);
 		}
 
 		this.scrollToBottom();
@@ -78,7 +89,8 @@ var ChatView = Backbone.View.extend({
 			return;
 		}
 
-		var inputVal = this.$input.val(),
+		var that = this,
+			inputVal = this.$input.val(),
 			chat;
 
 		if (!inputVal) return false;
@@ -89,13 +101,16 @@ var ChatView = Backbone.View.extend({
 				avatar: window.Vibe.user.get('avatar')
 			},
 			body: inputVal,
-			time_created: Date.now()
+			time_created: new Date().toISOString()
 		});
 
 		this.chats.add(chat);
 
 		chat.save({}, {
-			url: this.chats.url
+			url: this.chats.url,
+			success: function(model, data) {
+				window.Vibe.faye.publish(that.chats.url, model);
+			}
 		});
 
 		this.$input.val('');

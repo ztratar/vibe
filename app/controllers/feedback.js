@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	postsController = require('./posts')(),
 	notificationsController = require('./notifications')(),
 	helpers = require('../helpers'),
+	live = require('../live'),
 	app;
 
 /*
@@ -97,7 +98,6 @@ exports.getChats = function(req, res, next){
  * 		body (string): the chat message
  */
 exports.newChat = function(req, res, next){
-	console.log('create at', Date.now());
 	Chat.create({
 		creator: {
 			ref: req.user._id,
@@ -107,7 +107,6 @@ exports.newChat = function(req, res, next){
 		feedback: req.feedback._id,
 		body: req.body.body
 	}, function(err, chat) {
-		console.log('chat', Date.parse(chat.time_created), chat.time_created);
 		if (err) return helpers.sendError(res, err);
 		res.send(chat.stripInfo());
 	});
