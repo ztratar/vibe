@@ -7133,11 +7133,6 @@ html {
   z-index: 1000;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
-.chat-view .chat-header h4 {
-  font-size: inherit;
-  color: #4D4C4C;
-  margin: 0;
-}
 .chat-view .chat-header a.close-chat {
   position: absolute;
   top: -8px;
