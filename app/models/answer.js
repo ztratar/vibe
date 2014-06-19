@@ -9,7 +9,7 @@ var AnswerSchema = new Schema({
 	question: { type: Schema.Types.ObjectId, ref: 'Question' },
 	question_instance: { type: Schema.Types.ObjectId, ref: 'QuestionInstance' },
 	body: Schema.Types.Mixed,
-	time_created: { type: Date, default: Date.now() }
+	time_created: { type: Date, default: Date.now }
 });
 
 AnswerSchema.path('body').validate(function(body) {

@@ -1,5 +1,6 @@
 import 'backbone';
 
+import Chat from 'models/chat';
 import Chats from 'models/chats';
 
 module template from 'text!templates/chatView.html';
@@ -57,11 +58,17 @@ var ChatView = Backbone.View.extend({
 	},
 
 	addOne: function(chat) {
-		this.$chatsContainer.append(this.chatTemplate({
+		var newChatItem = this.chatTemplate({
 			body: chat.get('body'),
-			userAvatar: chat.get('user').get('avatar'),
+			userAvatar: chat.get('creator').avatar,
 			timeago: moment(chat.get('time_created')).fromNow()
-		}));
+		});
+
+		if (this.chats.indexOf(chat) === 0) {
+			this.$chatsContainer.prepend(newChatItem);
+		} else {
+			this.$chatsContainer.append(newChatItem);
+		}
 
 		this.scrollToBottom();
 	},
@@ -71,14 +78,24 @@ var ChatView = Backbone.View.extend({
 			return;
 		}
 
-		var inputVal = this.$input.val();
+		var inputVal = this.$input.val(),
+			chat;
 
 		if (!inputVal) return false;
 
-		this.chats.add({
-			user: window.Vibe.user,
+		chat = new Chat({
+			creator: {
+				name: window.Vibe.user.get('name'),
+				avatar: window.Vibe.user.get('avatar')
+			},
 			body: inputVal,
 			time_created: Date.now()
+		});
+
+		this.chats.add(chat);
+
+		chat.save({}, {
+			url: this.chats.url
 		});
 
 		this.$input.val('');

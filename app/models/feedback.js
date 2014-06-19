@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 // Feedback Schema
 var FeedbackSchema = new Schema({
-	time_created: { type: Date, default: Date.now() },
+	time_created: { type: Date, default: Date.now },
 	status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending'},
 	status_change_reason: { type: String },
 	status_changed_by: { type: Schema.Types.ObjectId, ref: 'User' },

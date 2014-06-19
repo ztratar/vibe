@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 	Async = require('async'),
 	_ = require('underscore'),
 	Post = mongoose.model('Post'),
+	Chat = mongoose.model('Chat'),
 	Feedback = mongoose.model('Feedback'),
 	postsController = require('./posts')(),
 	notificationsController = require('./notifications')(),
@@ -56,6 +57,59 @@ exports.pending = function(req, res) {
 		res.send(_.map(feedbacks, function(feedback) {
 			return feedback.stripInfo(req.user);
 		}));
+	});
+};
+
+/*
+ * GET /api/feedback/:feedback/chats
+ *
+ * Get comment associated with feedback
+ */
+exports.getChats = function(req, res, next){
+	var afterId = /afterId=([^&]+)/.exec(req.url),
+		beforeId = /beforeId=([^&]+)/.exec(req.url),
+		queryObj = {
+			feedback: req.feedback._id
+		};
+
+	if (afterId && afterId.length) {
+		queryObj._id = { $gt: mongoose.Types.ObjectId(afterId[1]) };
+	} else if (beforeId && beforeId.length) {
+		queryObj._id = { $lt: mongoose.Types.ObjectId(beforeId[1]) };
+	}
+
+	Chat
+		.find(queryObj)
+		.limit(10)
+		.sort({ _id: -1 })
+		.exec(function(err, chats) {
+			if (err) return helpers.sendError(res, err);
+			res.send(200, _.map(chats, function(chat) { return chat.stripInfo(); }));
+		});
+};
+
+/*
+ * POST /api/feedback/:feedback/chats
+ *
+ * Create a new chat
+ *
+ * Query params:
+ * 		body (string): the chat message
+ */
+exports.newChat = function(req, res, next){
+	console.log('create at', Date.now());
+	Chat.create({
+		creator: {
+			ref: req.user._id,
+			name: req.user.name,
+			avatar: req.user.avatar
+		},
+		feedback: req.feedback._id,
+		body: req.body.body
+	}, function(err, chat) {
+		console.log('chat', Date.parse(chat.time_created), chat.time_created);
+		if (err) return helpers.sendError(res, err);
+		res.send(chat.stripInfo());
 	});
 };
 

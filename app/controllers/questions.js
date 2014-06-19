@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	MetaQuestion = mongoose.model('MetaQuestion'),
 	Question = mongoose.model('Question'),
 	QuestionInstance = mongoose.model('QuestionInstance'),
-	Comment = mongoose.model('Comment'),
+	Chat = mongoose.model('Chat'),
 	Company = mongoose.model('Company'),
 	Answer = mongoose.model('Answer'),
 	notificationsController = require('./notifications')(),
@@ -252,49 +252,53 @@ exports.update = function (req, res, next) {
 };
 
 /*
- * GET /questions/:question/comments
+ * GET /api/questions/:question/chats
  *
- * Get comments associated with question
+ * Get comment associated with question
  */
-exports.getComments = function(req, res, next){
-	var query = Comment.find({question: req.question._id});
+exports.getChats = function(req, res, next){
+	var afterId = /afterId=([^&]+)/.exec(req.url),
+		beforeId = /beforeId=([^&]+)/.exec(req.url),
+		queryObj = {
+			question: req.question._id
+		};
 
-	if (req.query.limit){
-		var limit = parseInt(req.query.limit);
-		if(!isNaN(limit)) query.limit(limit);
+	if (afterId && afterId.length) {
+		queryObj._id = { $gt: mongoose.Types.ObjectId(afterId[1]) };
+	} else if (beforeId && beforeId.length) {
+		queryObj._id = { $lt: mongoose.Types.ObjectId(beforeId[1]) };
 	}
 
-	if (req.query.offset){
-		var offset = parseInt(req.query.offset);
-		if(!isNaN(offset)) query.skip(offset);
-	}
-
-	query.exec(function(err, comments){
-		if(err) return next(err);
-		return res.send(comments);
-	});
+	Chat
+		.find(queryObj)
+		.limit(10)
+		.sort({ _id: -1 })
+		.exec(function(err, chats) {
+			if (err) return helpers.sendError(res, err);
+			res.send(200, _.map(chats, function(chat) { return chat.stripInfo(); }));
+		});
 };
 
 /*
- * POST /questions/:question/comments
+ * POST /api/questions/:question/chats
  *
- * Create a new comment
+ * Create a new chat
  *
  * Query params:
- *		comment (String): comment body
+ * 		body (string): the chat message
  */
-exports.newComment = function(req, res, next){
-	if(!req.body.comment) return next(new Error("no comment body"));
-
-	var comment = new Comment({
+exports.newChat = function(req, res, next){
+	Chat.create({
+		creator: {
+			ref: req.user._id,
+			name: req.user.name,
+			avatar: req.user.avatar
+		},
 		question: req.question._id,
-		creator: req.user._id,
-		body: req.body.comment
-	});
-
-	comment.save(function(err, comment){
-		if(err) return next(err);
-		return res.send(comment);
+		body: req.body.body
+	}, function(err, chat) {
+		if (err) return helpers.sendError(res, err);
+		res.send(chat.stripInfo());
 	});
 };
 

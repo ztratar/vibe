@@ -77,7 +77,7 @@ define("views/feedbackItemView",
     	discuss: function() {
     		var chatView = new ChatView({
     			chatTitle: this.model.get('feedback').get('body'),
-    			chatsUrl: '/api/feedback/' + this.model.get('_id') + '/chats'
+    			chatsUrl: '/api/feedback/' + this.model.get('feedback').get('_id') + '/chats'
     		});
     		window.Vibe.appView.showOverlay(chatView);
 

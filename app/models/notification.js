@@ -10,8 +10,8 @@ var NotificationSchema = new Schema({
 	type: { type: String, required: true },
 	img: { type: String, default: '' },
 	data: { type: Schema.Types.Mixed },
-	time_created: { type: Date, default: Date.now() },
-	time_updated: { type: Date, default: Date.now() },
+	time_created: { type: Date, default: Date.now },
+	time_updated: { type: Date, default: Date.now },
 	cluster_tag: { type: String },
 	cluster_data: Schema.Types.Mixed
 });

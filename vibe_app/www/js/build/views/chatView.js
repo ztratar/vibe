@@ -1,12 +1,13 @@
 define("views/chatView", 
-  ["backbone","models/chats","text!templates/chatView.html","text!templates/chatItem.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
+  ["backbone","models/chat","models/chats","text!templates/chatView.html","text!templates/chatItem.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
     "use strict";
 
-    var Chats = __dependency2__["default"];
+    var Chat = __dependency2__["default"];
+    var Chats = __dependency3__["default"];
 
-    var template = __dependency3__;
-    var chatTemplate = __dependency4__;
+    var template = __dependency4__;
+    var chatTemplate = __dependency5__;
 
     var ChatView = Backbone.View.extend({
 
@@ -60,11 +61,17 @@ define("views/chatView",
     	},
 
     	addOne: function(chat) {
-    		this.$chatsContainer.append(this.chatTemplate({
+    		var newChatItem = this.chatTemplate({
     			body: chat.get('body'),
-    			userAvatar: chat.get('user').get('avatar'),
+    			userAvatar: chat.get('creator').avatar,
     			timeago: moment(chat.get('time_created')).fromNow()
-    		}));
+    		});
+
+    		if (this.chats.indexOf(chat) === 0) {
+    			this.$chatsContainer.prepend(newChatItem);
+    		} else {
+    			this.$chatsContainer.append(newChatItem);
+    		}
 
     		this.scrollToBottom();
     	},
@@ -74,14 +81,24 @@ define("views/chatView",
     			return;
     		}
 
-    		var inputVal = this.$input.val();
+    		var inputVal = this.$input.val(),
+    			chat;
 
     		if (!inputVal) return false;
 
-    		this.chats.add({
-    			user: window.Vibe.user,
+    		chat = new Chat({
+    			creator: {
+    				name: window.Vibe.user.get('name'),
+    				avatar: window.Vibe.user.get('avatar')
+    			},
     			body: inputVal,
     			time_created: Date.now()
+    		});
+
+    		this.chats.add(chat);
+
+    		chat.save({}, {
+    			url: this.chats.url
     		});
 
     		this.$input.val('');

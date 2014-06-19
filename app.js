@@ -25,7 +25,7 @@ var models_path = __dirname + '/app/models',
 	models = [
 		'accessRequest',
 		'answer',
-		'comment',
+		'chat',
 		'company',
 		'feedback',
 		'metaquestion',
@@ -33,7 +33,6 @@ var models_path = __dirname + '/app/models',
 		'questionInstance',
 		'question',
 		'post',
-		'survey',
 		'user',
 		'userInvite'
 	];

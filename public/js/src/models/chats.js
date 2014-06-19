@@ -5,6 +5,11 @@ var Chats = Backbone.Collection.extend({
 
 	model: Chat,
 
+	comparator: function(a,b) {
+		console.log(a.get('time_created'), Date.parse(a.get('time_created')));
+		return Date.parse(a.get('time_created')) > Date.parse(b.get('time_created'));
+	},
+
 	getMore: function() {
 		var lastModel = this.last(),
 			that = this;

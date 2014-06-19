@@ -33,7 +33,10 @@ var UserSchema = new Schema({
 	google: {},
 
 	tutorial: { type: String, default: "{}" },
-	reset_password_hash: String
+	reset_password_hash: String,
+
+	time_created: { type: Date, default: Date.now },
+	time_updated: { type: Date, default: Date.now }
 })
 
 /**

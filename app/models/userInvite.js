@@ -13,7 +13,7 @@ var UserInviteSchema = new Schema({
 		isAdmin: { type: Boolean, default: false }
 	},
 	registered: { type: Boolean, default: false },
-	timeCreated: { type: Date, default: Date.now() }
+	time_created: { type: Date, default: Date.now }
 });
 
 // Validations
@@ -30,7 +30,7 @@ UserInviteSchema.methods = {
 	asUser: function() {
 		return _.extend(this.toObject().invitee, {
 			_id: this._id.toString(),
-			time_invited: this.timeCreated
+			time_invited: this.time_created
 		});
 	}
 

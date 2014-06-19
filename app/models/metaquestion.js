@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
 var MetaQuestionSchema = new Schema({
 	body: String,
 	suggested: { type: Boolean, default: false },
-	creator: { type: Schema.Types.ObjectId, ref: 'User' }
+	creator: { type: Schema.Types.ObjectId, ref: 'User' },
+	time_created: { type: Date, default: Date.now }
 });
 
 // MetaQuestion Methods
