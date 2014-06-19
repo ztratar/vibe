@@ -10,8 +10,8 @@ var QuestionInstanceSchema = new Schema({
 		ref: 'Question',
 		required: true
 	},
-	time_sent: { type: Date, default: Date.now() },
-	time_updated: { type: Date, default: Date.now() },
+	time_sent: { type: Date, default: Date.now },
+	time_updated: { type: Date, default: Date.now },
 	users_sent_to: { type: Array, default: [] },
 	users_voted: { type: Array, default: [] },
 	num_sent_to: { type: Number, default: 1 },

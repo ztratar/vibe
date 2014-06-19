@@ -1,12 +1,13 @@
 define("views/postQuestionItemView", 
-  ["backbone","underscore","views/confirmDialogView","views/timeSeriesChartView","views/ratingChartView","text!templates/postQuestionItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
+  ["backbone","underscore","views/confirmDialogView","views/timeSeriesChartView","views/chatView","views/ratingChartView","text!templates/postQuestionItemView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
     "use strict";
     var ConfirmDialogView = __dependency3__["default"];
     var TimeSeriesChartView = __dependency4__["default"];
-    var RatingChartView = __dependency5__["default"];
+    var ChatView = __dependency5__["default"];
+    var RatingChartView = __dependency6__["default"];
 
-    var template = __dependency6__;
+    var template = __dependency7__;
 
     var PostQuestionItemView = Backbone.View.extend({
 
@@ -64,6 +65,11 @@ define("views/postQuestionItemView",
     	},
 
     	discuss: function() {
+    		var chatView = new ChatView({
+    			chatTitle: this.model.get('question').get('body'),
+    			chatsUrl: '/api/questions/' + this.model.get('question').get('_id') + '/chats'
+    		});
+    		window.Vibe.appView.showOverlay(chatView);
 
     		return false;
     	}

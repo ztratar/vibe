@@ -41,6 +41,8 @@ define("helpers/avatarInputHelper",
     					var ctx = canvas.getContext("2d");
     					ctx.drawImage(this, startX, startY, tempW, tempH, 0, 0, tempW, tempH);
     					ctx.scale(SQUARE_WIDTH / tempW, SQUARE_WIDTH / tempH);
+    					canvas.width = SQUARE_WIDTH;
+    					canvas.height = SQUARE_WIDTH;
 
     					var dataURL = canvas.toDataURL("image/jpeg");
     					$(imgElem).attr("src", dataURL);

@@ -74,8 +74,6 @@ define("views/chatView",
     			timeago: moment(chat.get('time_created')).fromNow()
     		});
 
-    		console.log('adding', chat.get('body'));
-
     		window.chats = this.chats;
 
     		if (this.chats.indexOf(chat) === 0) {

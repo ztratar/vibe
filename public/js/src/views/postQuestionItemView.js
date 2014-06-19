@@ -2,6 +2,7 @@ import 'backbone';
 import 'underscore';
 import ConfirmDialogView from 'views/confirmDialogView';
 import TimeSeriesChartView from 'views/timeSeriesChartView';
+import ChatView from 'views/chatView';
 import RatingChartView from 'views/ratingChartView';
 
 module template from 'text!templates/postQuestionItemView.html';
@@ -62,6 +63,11 @@ var PostQuestionItemView = Backbone.View.extend({
 	},
 
 	discuss: function() {
+		var chatView = new ChatView({
+			chatTitle: this.model.get('question').get('body'),
+			chatsUrl: '/api/questions/' + this.model.get('question').get('_id') + '/chats'
+		});
+		window.Vibe.appView.showOverlay(chatView);
 
 		return false;
 	}

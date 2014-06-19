@@ -74,8 +74,6 @@ define("views/chatView",
     			timeago: moment(chat.get('time_created')).fromNow()
     		});
 
-    		console.log('adding', chat.get('body'));
-
     		window.chats = this.chats;
 
     		if (this.chats.indexOf(chat) === 0) {
@@ -110,7 +108,10 @@ define("views/chatView",
     		this.chats.add(chat);
 
     		chat.save({}, {
-    			url: this.chats.url
+    			url: this.chats.url,
+    			success: function(model, data) {
+    				window.Vibe.faye.publish(that.chats.url, model);
+    			}
     		});
 
     		this.$input.val('');

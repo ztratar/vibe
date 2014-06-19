@@ -9,7 +9,7 @@ define("models/notifications",
     	model: Notification,
 
     	comparator: function(a,b) {
-    		return Date.parse(a.get('time_updated')) < Date.parse(b.get('time_updated'));
+    		return (Date.parse(a.get('time_updated')) < Date.parse(b.get('time_updated'))) ? 1 : -1;
     	},
 
     	getNew: function() {

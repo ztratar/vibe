@@ -29,7 +29,7 @@ exports.index = function(req, res) {
 	Notification
 		.find(queryObj)
 		.sort({ time_updated: -1 })
-		.limit(20)
+		.limit(10)
 		.exec(function(err, notifications) {
 			if (err) return helpers.sendError(res, err);
 			res.send(notifications);
