@@ -32,9 +32,9 @@
 			<% } else if (model.type === 'comment-like') { %>
 				<strong><%- numPeopleString %></strong> liked your comment: "<%- model.data.question %>"
 			<% } else if (model.type === 'feedback-rejected') { %>
-				Sorry, but your suggestion wasn't sent to everyone because: "<%= model.data.reason %>"
+				Sorry, your suggestion wasn't selected to send to everyone because "<%= model.data.reason %>"
 			<% } else if (model.type === 'feedback-approved') { %>
-				Your feedback was approved and sent to everyone!
+				Congratulations, your feedback was just sent to everyone!
 			<% } else if (model.type === 'feedback-agree') { %>
 				<strong><%- numPeopleString %></strong> agreed with the suggestion "<%- model.data.feedback %>"
 			<% } %>

@@ -15,6 +15,8 @@ var CompanySchema = new Schema({
 	name: String,
 	domain: String,
 	size: { type: Number, default: 1 },
+	logo: String,
+	cover: String,
 	time_created: { type: Date, default: Date.now }
 });
 

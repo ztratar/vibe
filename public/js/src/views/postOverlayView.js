@@ -117,7 +117,7 @@ var PostOverlayView = Backbone.View.extend({
 	remove: function() {
 		window.Vibe.appRouter.screenRouter.enableScreenScroll();
 		window.Vibe.appView.headerView.setButtons({
-			title: 'vibe',
+			title: '',
 			leftAction: {
 				icon: '#61804',
 				click: function() {

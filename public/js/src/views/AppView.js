@@ -130,7 +130,7 @@ var AppView = Backbone.View.extend({
 
 		this.$notificationsContainer.removeClass('expand');
 		window.Vibe.appView.headerView.setButtons({
-			title: 'vibe',
+			title: '',
 			leftAction: {
 				icon: '#61804',
 				click: function() {

@@ -1,21 +1,39 @@
 <div class="post-overlay-container"></div>
-<div class="post-wrapper">
+
+<% if (company.cover) { %>
+<div class="home-info-wrapper with-bg" style="background-image: url('<%= company.cover %>')">
+<% } else { %>
+<div class="home-info-wrapper">
+<% } %>
 	<div class="container">
-		<% if (window.Vibe.user.get('isAdmin')) { %>
-		<a href="#" class="new-post btn btn-info with-polls">
-		<% } else { %>
-		<a href="#" class="new-post btn btn-info">
-		<% } %>
-			<i class="icon">&#61943;</i>
-			<span>New anonymous suggestion</span>
-			<span class="short-v">New suggestion</span>
-		</a>
-		<% if (window.Vibe.user.get('isAdmin')) { %>
-		<a href="#" class="manage-polls btn btn-success">
-			<i class="icon">&#61738;</i>
-			<span>Polls</span>
-		</a>
-		<% } %>
+		<div class="company-info-bar v-centered">
+			<div>
+				<h1>
+					<% if (company.logo) { %>
+					<img src="<%= company.logo %>">
+					<% } else { %>
+					<%- company.name %>
+					<% } %>
+				</h1>
+			</div>
+		</div>
+		<div class="post-wrapper">
+			<% if (window.Vibe.user.get('isAdmin')) { %>
+			<a href="#" class="new-post btn btn-info with-polls">
+			<% } else { %>
+			<a href="#" class="new-post btn btn-info">
+			<% } %>
+				<i class="icon">&#61943;</i>
+				<span>New anonymous suggestion</span>
+				<span class="short-v">New suggestion</span>
+			</a>
+			<% if (window.Vibe.user.get('isAdmin')) { %>
+			<a href="#" class="manage-polls btn btn-success">
+				<i class="icon">&#61738;</i>
+				<span>Polls</span>
+			</a>
+			<% } %>
+		</div>
 	</div>
 </div>
 <div class="feedback-approval-container"></div>

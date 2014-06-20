@@ -35,7 +35,8 @@ define("views/homeView",
 
     	render: function() {
     		this.$el.html(this.template({
-    			user: window.Vibe.user.toJSON()
+    			user: window.Vibe.user.toJSON(),
+    			company: window.Vibe.user.get('company')
     		}));
 
     		this.$newPostButton = this.$('a.new-post');
@@ -67,7 +68,9 @@ define("views/homeView",
     		window.Vibe.appView.showOverlay(postOverlayView, {
     			showTopBar: true,
     			afterAnimate: function() {
-    				postOverlayView.$textarea.focus();
+    				_.delay(function() {
+    					postOverlayView.$textarea.focus();
+    				}, 260);
     			}
     		});
 

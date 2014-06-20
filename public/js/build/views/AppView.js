@@ -132,7 +132,7 @@ define("views/AppView",
 
     		this.$notificationsContainer.removeClass('expand');
     		window.Vibe.appView.headerView.setButtons({
-    			title: 'vibe',
+    			title: '',
     			leftAction: {
     				icon: '#61804',
     				click: function() {

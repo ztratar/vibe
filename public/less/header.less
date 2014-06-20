@@ -15,10 +15,14 @@
 	}
 
 	.header-components {
-		padding: 22px 0 10px;
+		padding: 16px 0 10px;
 		height: 64px;
 		width: 100%;
 		position: absolute;
+
+		@media (max-width: @screen-xs) {
+			padding: 22px 0 10px;
+		}
 
 		&.animate-pushLeft {
 			&.new {
@@ -138,10 +142,14 @@
 			position: absolute;
 			color: white;
 			font-size: 18px;
-			top: 13px;
+			top: 7px;
 			padding: 11px 8px 4px;
 			opacity: 1;
 			.transition(opacity 0.18s ease-in-out 0.1s);
+
+			@media (max-width: @screen-xs) {
+				top: 13px;
+			}
 
 			span {
 				font-size: 20px;
