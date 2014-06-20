@@ -1,14 +1,15 @@
 define("views/AppView", 
-  ["backbone","jquery","models/survey","views/headerView","views/notificationsView","text!templates/AppView.html","text!templates/modalOverlay.html","text!templates/surveyNotification.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
+  ["backbone","jquery","models/survey","models/notifications","views/headerView","views/notificationsView","text!templates/AppView.html","text!templates/modalOverlay.html","text!templates/surveyNotification.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __exports__) {
     "use strict";
     var Survey = __dependency3__["default"];
-    var HeaderView = __dependency4__["default"];
-    var NotificationsView = __dependency5__["default"];
+    var Notifications = __dependency4__["default"];
+    var HeaderView = __dependency5__["default"];
+    var NotificationsView = __dependency6__["default"];
 
-    var template = __dependency6__;
-    var overlayTemplate = __dependency7__;
-    var surveyTemplate = __dependency8__;
+    var template = __dependency7__;
+    var overlayTemplate = __dependency8__;
+    var surveyTemplate = __dependency9__;
 
     var AppView = Backbone.View.extend({
 
@@ -23,8 +24,19 @@ define("views/AppView",
     	},
 
     	initialize: function() {
+    		var that = this;
+
+    		this.notifications = new Notifications();
+    		this.notifications.url = '/api/notifications';
+
     		this.headerView = new HeaderView();
-    		this.notificationsView = new NotificationsView();
+    		this.notificationsView = new NotificationsView({
+    			notifications: this.notifications
+    		});
+
+    		this.notificationsView.notifications.on('add reset sort', function() {
+    			that.headerView.changeUnreadNum(that.notificationsView.notifications.unread().length);
+    		});
 
     		this.overrideLinks();
     	},
@@ -41,6 +53,21 @@ define("views/AppView",
     		this.$notifText = this.$('.notif-text');
 
     		this.$notificationsContainer = this.$('.notifications-container');
+
+    		this.$notificationsContainer.html(this.notificationsView.$el);
+    		this.notificationsView.render();
+
+    		// Load the unread count
+    		this.headerView.changeUnreadNum(this.notificationsView.notifications.unread().length);
+    	},
+
+    	run: function() {
+    		this.notifications.fetch({
+    			reset: true
+    		});
+    		setInterval(_.bind(function() {
+    			this.notifications.getNew();
+    		}, this), 3000);
     	},
 
     	overrideLinks: function() {
@@ -110,8 +137,7 @@ define("views/AppView",
     	},
 
     	openNotifications: function() {
-    		this.$notificationsContainer.html(this.notificationsView.$el);
-    		this.notificationsView.render();
+    		this.notifications.markAllRead();
     		this.$notificationsContainer.addClass('expand');
     		this.headerView.setButtons({
     			title: 'Notifications',

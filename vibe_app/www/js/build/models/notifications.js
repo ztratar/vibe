@@ -23,7 +23,7 @@ define("models/notifications",
     		this.currentlyFetching = true;
     		this.trigger('currentlyFetching');
     		this.fetch({
-    			url: this.url + '?afterId=' + mostRecentModel.get('_id'),
+    			url: this.url + '?afterTime=' + mostRecentModel.get('time_updated'),
     			remove: false,
     			success: function() {
     				that.currentlyFetching = false;
@@ -41,7 +41,7 @@ define("models/notifications",
     		this.currentlyFetching = true;
     		this.trigger('currentlyFetching');
     		this.fetch({
-    			url: this.url + '?beforeId=' + lastModel.get('_id'),
+    			url: this.url + '?beforeTime=' + lastModel.get('time_updated'),
     			remove: false,
     			success: function(model, data) {
     				that.currentlyFetching = false;
@@ -51,7 +51,20 @@ define("models/notifications",
     		});
     	},
 
+    	unread: function() {
+    		return this.where({ read: false });
+    	},
+
     	markAllRead: function() {
+    		var unread = this.where({ read: false });
+
+    		_.each(unread, function(unreadItem) {
+    			unreadItem.set({
+    				read: true,
+    				pseudoRead: true
+    			});
+    		});
+
     		$.ajax({
     			type: 'PUT',
     			url: '/api/notifications/mark_read'

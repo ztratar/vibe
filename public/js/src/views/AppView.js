@@ -1,6 +1,7 @@
 import 'backbone';
 import 'jquery';
 import Survey from 'models/survey';
+import Notifications from 'models/notifications';
 import HeaderView from 'views/headerView';
 import NotificationsView from 'views/notificationsView';
 
@@ -21,8 +22,19 @@ var AppView = Backbone.View.extend({
 	},
 
 	initialize: function() {
+		var that = this;
+
+		this.notifications = new Notifications();
+		this.notifications.url = '/api/notifications';
+
 		this.headerView = new HeaderView();
-		this.notificationsView = new NotificationsView();
+		this.notificationsView = new NotificationsView({
+			notifications: this.notifications
+		});
+
+		this.notificationsView.notifications.on('add reset sort', function() {
+			that.headerView.changeUnreadNum(that.notificationsView.notifications.unread().length);
+		});
 
 		this.overrideLinks();
 	},
@@ -39,6 +51,21 @@ var AppView = Backbone.View.extend({
 		this.$notifText = this.$('.notif-text');
 
 		this.$notificationsContainer = this.$('.notifications-container');
+
+		this.$notificationsContainer.html(this.notificationsView.$el);
+		this.notificationsView.render();
+
+		// Load the unread count
+		this.headerView.changeUnreadNum(this.notificationsView.notifications.unread().length);
+	},
+
+	run: function() {
+		this.notifications.fetch({
+			reset: true
+		});
+		setInterval(_.bind(function() {
+			this.notifications.getNew();
+		}, this), 3000);
 	},
 
 	overrideLinks: function() {
@@ -108,8 +135,7 @@ var AppView = Backbone.View.extend({
 	},
 
 	openNotifications: function() {
-		this.$notificationsContainer.html(this.notificationsView.$el);
-		this.notificationsView.render();
+		this.notifications.markAllRead();
 		this.$notificationsContainer.addClass('expand');
 		this.headerView.setButtons({
 			title: 'Notifications',
@@ -129,26 +155,8 @@ var AppView = Backbone.View.extend({
 		var that = this;
 
 		this.$notificationsContainer.removeClass('expand');
-		window.Vibe.appView.headerView.setButtons({
-			title: '',
-			leftAction: {
-				icon: '#61804',
-				click: function() {
-					window.Vibe.appView.openNotifications();
-					return false;
-				}
-			},
-			rightAction: {
-				title: '',
-				icon: '#61886',
-				click: function() {
-					window.Vibe.appRouter.navigateWithAnimation('settings', 'pushLeft', {
-						trigger: true
-					});
-					return false;
-				}
-			}
-		});
+		window.Vibe.appView.headerView.setHomeButtons();
+
 		this.headerView.animateToNewComponents('fade');
 	},
 

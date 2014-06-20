@@ -25,6 +25,8 @@ define("vibe",
     	window.Vibe.appView = new AppView();
     	window.Vibe.appView.render();
 
+    	window.Vibe.appView.run();
+
     	// inits window.Vibe.appRouter
     	Router.init();
     };

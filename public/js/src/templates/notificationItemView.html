@@ -1,5 +1,5 @@
 <a href="#" class="media">
-	<% if (!model.read) { %><span class="unread"></span><% } %>
+	<% if (!model.read || model.pseudoRead) { %><span class="unread"></span><% } %>
 
 	<% if (model.img.length) { %>
 		<img src="<%= model.img %>">

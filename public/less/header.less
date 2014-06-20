@@ -1,3 +1,5 @@
+.makeBounceZoom(popZoomBig, 1, 1.38, .84, 1);
+
 .header-view {
 	background: @vibe-light;
 	padding: 0;
@@ -155,6 +157,24 @@
 				font-size: 20px;
 				font-weight: 100;
 				line-height: 32px;
+			}
+
+			span.unread-num {
+				position: absolute;
+				left: 24px;
+				top: 8px;
+				width: 20px;
+				height: 20px;
+				background: @vibe-red;
+				font-size: 14px;
+				font-weight: 600;
+				line-height: 19px;
+				border-radius: 100px;
+
+				&.bounce {
+					-webkit-animation: popZoomBig 0.32s linear 0s forwards;
+					animation: popZoomBig 0.32s linear 0s forwards;
+				}
 			}
 
 			i {

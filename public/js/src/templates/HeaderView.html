@@ -6,6 +6,9 @@
 		<% if (leftAction.title) { %>
 		<span><%- leftAction.title %></span>
 		<% } %>
+		<% if (leftAction.num_unread) { %>
+		<span class="unread-num"><%- leftAction.num_unread %></span>
+		<% } %>
 	</a>
 <% } %>
 

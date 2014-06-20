@@ -7732,6 +7732,50 @@ form.form-horizontal-top button.btn {
     margin: 0 -15px;
   }
 }
+@keyframes popZoomBig {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  30% {
+    -webkit-transform: scale(1.38, 1.38);
+    -ms-transform: scale(1.38, 1.38);
+    transform: scale(1.38, 1.38);
+  }
+  70% {
+    -webkit-transform: scale(0.84, 0.84);
+    -ms-transform: scale(0.84, 0.84);
+    transform: scale(0.84, 0.84);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-webkit-keyframes popZoomBig {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  30% {
+    -webkit-transform: scale(1.38, 1.38);
+    -ms-transform: scale(1.38, 1.38);
+    transform: scale(1.38, 1.38);
+  }
+  70% {
+    -webkit-transform: scale(0.84, 0.84);
+    -ms-transform: scale(0.84, 0.84);
+    transform: scale(0.84, 0.84);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
 .header-view {
   background: #2f557c;
   padding: 0;
@@ -7870,6 +7914,22 @@ form.form-horizontal-top button.btn {
   font-size: 20px;
   font-weight: 100;
   line-height: 32px;
+}
+.header-view .header-components a span.unread-num {
+  position: absolute;
+  left: 24px;
+  top: 8px;
+  width: 20px;
+  height: 20px;
+  background: #b93d3d;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19px;
+  border-radius: 100px;
+}
+.header-view .header-components a span.unread-num.bounce {
+  -webkit-animation: popZoomBig 0.32s linear 0s forwards;
+  animation: popZoomBig 0.32s linear 0s forwards;
 }
 .header-view .header-components a i {
   font-size: 24px;

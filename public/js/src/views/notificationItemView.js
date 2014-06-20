@@ -12,6 +12,15 @@ var NotificationItemView = Backbone.View.extend({
 
 	template: _.template(template),
 
+	events: {
+		'click a': 'clicked'
+	},
+
+	initialize: function(opts) {
+		this.model = opts.model;
+		this.model.on('change', this.render, this);
+	},
+
 	render: function() {
 		var templateDate = {
 			model: this.model.toJSON(),
@@ -48,6 +57,11 @@ var NotificationItemView = Backbone.View.extend({
 		} else {
 			return num + ' people';
 		}
+	},
+
+	clicked: function() {
+		this.model.set('pseudoRead', false);
+		return false;
 	}
 
 });

@@ -21,13 +21,21 @@ var HeaderView = Backbone.View.extend({
 		this.$container = this.$('.container');
 	},
 
-	render: function() {
-		if (this.oldComponents) this.removeOldComponents();
-		this.oldComponents = this.$('.header-components');
-		this.newComponents = $('<div class="header-components new"></div>');
-		this.$container.append(this.newComponents);
+	render: function(skipAnimation) {
+		if (!skipAnimation) {
+			if (this.oldComponents) this.removeOldComponents();
+			this.oldComponents = this.$('.header-components');
+			this.newComponents = $('<div class="header-components new"></div>');
+			this.$container.append(this.newComponents);
+		}
 		this.newComponents.html(_.template(template, this.data));
 		this.bindButtonActions();
+
+		if (this.data.leftAction.num_unread) {
+			_.delay(_.bind(function() {
+				this.$('span.unread-num').addClass('bounce');
+			}, this), 30);
+		}
 	},
 
 	renderCurrentComponents: function() {
@@ -82,6 +90,37 @@ var HeaderView = Backbone.View.extend({
 			this.$('a').addClass('now');
 		}
 		this.$('a').addClass('flyIn');
+	},
+
+	changeUnreadNum: function(newNum) {
+		if (this.data.leftAction.id === 'notifications') {
+			this.data.leftAction.num_unread = newNum;
+			this.render(true);
+		}
+	},
+
+	setHomeButtons: function() {
+		window.Vibe.appView.headerView.setButtons({
+			title: '',
+			leftAction: {
+				id: 'notifications',
+				icon: '#61804',
+				click: function() {
+					window.Vibe.appView.openNotifications();
+					return false;
+				}
+			},
+			rightAction: {
+				title: '',
+				icon: '#61886',
+				click: function() {
+					window.Vibe.appRouter.navigateWithAnimation('settings', 'pushLeft', {
+						trigger: true
+					});
+					return false;
+				}
+			}
+		});
 	}
 
 });

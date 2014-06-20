@@ -14,6 +14,15 @@ define("views/notificationItemView",
 
     	template: _.template(template),
 
+    	events: {
+    		'click a': 'clicked'
+    	},
+
+    	initialize: function(opts) {
+    		this.model = opts.model;
+    		this.model.on('change', this.render, this);
+    	},
+
     	render: function() {
     		var templateDate = {
     			model: this.model.toJSON(),
@@ -50,6 +59,11 @@ define("views/notificationItemView",
     		} else {
     			return num + ' people';
     		}
+    	},
+
+    	clicked: function() {
+    		this.model.set('pseudoRead', false);
+    		return false;
     	}
 
     });

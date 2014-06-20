@@ -26,23 +26,7 @@ define("views/postOverlayView",
 
     		window.Vibe.appRouter.screenRouter.disableScreenScroll();
     		setTimeout(function() {
-    			window.Vibe.appView.headerView.setButtons({
-    				title: '',
-    				rightAction: {
-    					title: 'Post',
-    					click: function(ev) {
-    						that.submitNewFeedback();
-    						return false;
-    					}
-    				},
-    				leftAction: {
-    					title: 'Cancel',
-    					click: function(ev) {
-    						that.remove();
-    						return false;
-    					}
-    				}
-    			});
+    			window.Vibe.appView.headerView.setHomeButtons();
     			window.Vibe.appView.headerView.animateToNewComponents('slideDown');
     		}, 200);
 

@@ -50,27 +50,7 @@ var Router = Backbone.Router.extend({
 			return;
 		}
 
-		window.Vibe.appView.headerView.setButtons({
-			title: '',
-			leftAction: {
-				icon: '#61804',
-				click: function() {
-					window.Vibe.appView.openNotifications();
-					return false;
-				}
-			},
-			rightAction: {
-				title: '',
-				icon: '#61886',
-				click: function() {
-					that.navigateWithAnimation('settings', 'pushLeft', {
-						trigger: true
-					});
-					return false;
-				}
-			}
-		});
-
+		window.Vibe.appView.headerView.setHomeButtons();
 		this.homeView = new HomeView();
 
 		this.screenRouter.currentScreenContainer.html(this.homeView.$el);
@@ -134,26 +114,7 @@ var Router = Backbone.Router.extend({
 				helperText: 'Please enter your full name. Your identity is only visible in chat.'
 			});
 
-		window.Vibe.appView.headerView.setButtons({
-			title: 'Name',
-			leftAction: {
-				icon: '',
-				title: 'Cancel',
-				click: function(ev) {
-					that.navigateWithAnimation('/settings', 'pushRight', {
-						trigger: true
-					});
-					return false;
-				}
-			},
-			rightAction: {
-				title: 'Save',
-				click: function() {
-					settingsEditFieldView.saveField();
-					return false;
-				}
-			}
-		});
+		window.Vibe.appView.headerView.setHomeButtons();
 
 		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
 		settingsEditFieldView.render();
