@@ -16,6 +16,10 @@
 			height: 100%;
 			.translate3d(0, 122px, 0);
 			.transition(all 1s linear);
+
+			@media (max-width: @screen-xs) {
+				.transition(all 0.34s linear);
+			}
 		}
 
 		.new-post {
@@ -129,8 +133,8 @@
 		.new-post {
 			height: 500px;
 			box-shadow: 0 6px 20px rgba(0,0,0,.3);
-			-webkit-animation: downSway 1300ms linear both;
-			animation: downSway 1300ms linear both;
+			-webkit-animation: downSway 1400ms linear both;
+			animation: downSway 1400ms linear both;
 
 			@media (max-height: 650px) {
 				height: 440px;
@@ -143,8 +147,8 @@
 			@media (max-width: @screen-xs) {
 				height: 220px;
 				box-shadow: 0 4px 10px rgba(0,0,0,.3);
-				-webkit-animation: bounceDownUpSmall 0.39s linear 0s forwards;
-				animation: bounceDownUpSmall 0.39s linear 0s forwards;
+				-webkit-animation: downSwaySmall 1000ms linear both;
+				animation: downSwaySmall 1000ms linear both;
 			}
 
 			.initButtonText {
