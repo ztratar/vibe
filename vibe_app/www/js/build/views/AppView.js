@@ -65,7 +65,7 @@ define("views/AppView",
     	changeUnreadNotificationsNum: function() {
     		var numUnread = this.notificationsView.notifications.unread().length;
     		this.headerView.changeUnreadNum(numUnread);
-    		document.title = (numUnread > 0 ? '(' + numUnread + ') ' : '') + origPageTitle;
+    		document.title = (numUnread > 0 ? '(' + numUnread + ') ' : '') + this.origPageTitle;
     	},
 
     	run: function() {

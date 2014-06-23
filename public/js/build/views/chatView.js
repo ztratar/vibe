@@ -33,6 +33,8 @@ define("views/chatView",
 
     		this.chatTitle = opts.chatTitle || 'Chat';
 
+    		this.chatItemTimes = [];
+
     		_.defer(function() {
     			window.Vibe.faye.subscribe(that.chats.url, function(chatModel) {
     				that.chats.add(chatModel);
@@ -60,6 +62,12 @@ define("views/chatView",
     		this.addAll();
     		this.scrollToBottom();
 
+    		this.chatTimeUpdateInterval = setInterval(function() {
+    			_.each(that.chatItemTimes, function(chatItemTime) {
+    				chatItemTime.elem.html(moment(chatItemTime.time).fromNow());
+    			});
+    		}, 5000);
+
     		return this;
     	},
 
@@ -69,18 +77,24 @@ define("views/chatView",
 
     	addOne: function(chat) {
     		var newChatItem = this.chatTemplate({
-    			body: chat.get('body'),
-    			userAvatar: chat.get('creator').avatar,
-    			timeago: moment(chat.get('time_created')).fromNow()
-    		});
+    				body: chat.get('body'),
+    				userAvatar: chat.get('creator').avatar,
+    				timeago: moment(chat.get('time_created')).fromNow()
+    			}),
+    			$chatElem = $('<div/>');
 
-    		window.chats = this.chats;
+    		$chatElem.html(newChatItem);
 
     		if (this.chats.indexOf(chat) === 0) {
-    			this.$chatsContainer.append(newChatItem);
+    			this.$chatsContainer.append($chatElem);
     		} else {
-    			this.$chatsContainer.prepend(newChatItem);
+    			this.$chatsContainer.prepend($chatElem);
     		}
+
+    		this.chatItemTimes.push({
+    			elem: $chatElem.find('span.time'),
+    			time: chat.get('time_created')
+    		});
 
     		this.scrollToBottom();
     	},
@@ -121,6 +135,8 @@ define("views/chatView",
     	},
 
     	closeChat: function() {
+    		clearInterval(this.chatTimeUpdateInterval);
+
     		this.trigger('remove');
 
     		return false;
