@@ -4,7 +4,6 @@
 
 var express = require('express')
   , mongoStore = require('connect-mongo')(express)
-  , flash = require('connect-flash')
   , helpers = require('view-helpers')
   , swig = require('swig');
 
@@ -55,9 +54,6 @@ module.exports = function (app, config, passport) {
       })
     }));
 
-    // connect flash for flash messages
-    app.use(flash());
-
     app.use(function (req, res, next) {
         res.locals.session = req.session;
         next();
@@ -68,6 +64,24 @@ module.exports = function (app, config, passport) {
     // use passport session
     app.use(passport.initialize());
     app.use(passport.session());
+
+	// CSRF Tokens
+	var csrfValue = function(req) {
+		var token = (req.body && req.body._csrf)
+			|| (req.query && req.query._csrf)
+			|| (req.cookies['x-csrf-token'])
+			|| (req.cookies['x-xsrf-token']);
+		return token;
+	};
+	app.use(express.csrf({
+		value: csrfValue
+	}));
+	app.use(function(req, res, next) {
+		var newToken = req.csrfToken();
+		res.cookie('x-csrf-token', newToken);
+		res.locals.token = newToken;
+		next();
+	});
 
     // routes should be at the last
     app.use(app.router);
