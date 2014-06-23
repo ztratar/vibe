@@ -24,6 +24,8 @@ var AppView = Backbone.View.extend({
 	initialize: function() {
 		var that = this;
 
+		this.origPageTitle = document.title;
+
 		this.notifications = new Notifications();
 		this.notifications.url = '/api/notifications';
 
@@ -33,7 +35,7 @@ var AppView = Backbone.View.extend({
 		});
 
 		this.notificationsView.notifications.on('add reset sort', function() {
-			that.headerView.changeUnreadNum(that.notificationsView.notifications.unread().length);
+			that.changeUnreadNotificationsNum();
 		});
 
 		this.overrideLinks();
@@ -55,8 +57,13 @@ var AppView = Backbone.View.extend({
 		this.$notificationsContainer.html(this.notificationsView.$el);
 		this.notificationsView.render();
 
-		// Load the unread count
-		this.headerView.changeUnreadNum(this.notificationsView.notifications.unread().length);
+		this.changeUnreadNotificationsNum();
+	},
+
+	changeUnreadNotificationsNum: function() {
+		var numUnread = this.notificationsView.notifications.unread().length;
+		this.headerView.changeUnreadNum(numUnread);
+		document.title = (numUnread > 0 ? '(' + numUnread + ') ' : '') + this.origPageTitle;
 	},
 
 	run: function() {
@@ -66,7 +73,6 @@ var AppView = Backbone.View.extend({
 			reset: true
 		});
 		window.Vibe.faye.subscribe('/api/users/' + window.Vibe.user.get('_id') + '/notifications', function(data) {
-			debugger;
 			that.notifications.add(data);
 		});
 	},
@@ -152,6 +158,7 @@ var AppView = Backbone.View.extend({
 			}
 		});
 		this.headerView.animateToNewComponents('fade');
+		this.changeUnreadNotificationsNum();
 	},
 
 	closeNotifications: function() {

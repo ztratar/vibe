@@ -24,8 +24,6 @@ define("views/notificationItemView",
     	},
 
     	render: function() {
-    		console.log(this.model.toJSON());
-
     		var templateDate = {
     			model: this.model.toJSON(),
     			timeAgo: moment(this.model.get('time_updated')).fromNow()
