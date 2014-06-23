@@ -24,7 +24,6 @@ var NotificationItemView = Backbone.View.extend({
 	render: function() {
 		var templateDate = {
 			model: this.model.toJSON(),
-			body: 'Test',
 			timeAgo: moment(this.model.get('time_updated')).fromNow()
 		};
 

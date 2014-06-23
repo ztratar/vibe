@@ -105,14 +105,11 @@ define("views/chatView",
     			time_created: new Date().toISOString()
     		});
 
-    		this.chats.add(chat);
-
+    		//this.chats.add(chat);
     		chat.save({}, {
-    			url: this.chats.url,
-    			success: function(model, data) {
-    				window.Vibe.faye.publish(that.chats.url, model);
-    			}
+    			url: this.chats.url
     		});
+    		//window.Vibe.faye.publish(that.chats.url, chat);
 
     		this.$input.val('');
 

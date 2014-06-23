@@ -9,7 +9,8 @@ exports.index = function(req, res) {
 		}
 
 		res.render('home/index', {
-			currentUser: req.user
+			currentUser: req.user,
+			sessionID: req.sessionID
 		});
 	} else {
 		res.render('splash/index');
@@ -24,8 +25,7 @@ exports.login = function (req, res) {
 		res.redirect('/');
 	} else {
 		res.render('users/login', {
-			title: 'Login',
-			message: req.flash('error')
+			title: 'Login'
 		});
 	}
 };

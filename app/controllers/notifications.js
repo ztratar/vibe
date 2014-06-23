@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 	Notification = mongoose.model('Notification'),
 	helpers = require('../helpers'),
 	email = require('./email')(),
+	live = require('../live'),
 	app;
 
 /*
@@ -144,6 +145,9 @@ exports.send = function(notifOpts, cb) {
 		}
 
 		notif.save(function(err, notification) {
+			var notifUrl = '/api/users/' + notifOpts.for_user.toString() + '/notifications';
+			live.send(notifUrl, notification);
+
 			if (cb && typeof cb === 'function') {
 				if (err) return cb(err);
 				cb(null, notification);

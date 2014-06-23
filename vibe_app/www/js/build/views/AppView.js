@@ -62,12 +62,15 @@ define("views/AppView",
     	},
 
     	run: function() {
+    		var that = this;
+
     		this.notifications.fetch({
     			reset: true
     		});
-    		setInterval(_.bind(function() {
-    			this.notifications.getNew();
-    		}, this), 3000);
+    		window.Vibe.faye.subscribe('/api/users/' + window.Vibe.user.get('_id') + '/notifications', function(data) {
+    			debugger;
+    			that.notifications.add(data);
+    		});
     	},
 
     	overrideLinks: function() {

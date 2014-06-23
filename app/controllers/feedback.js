@@ -108,6 +108,7 @@ exports.newChat = function(req, res, next){
 		body: req.body.body
 	}, function(err, chat) {
 		if (err) return helpers.sendError(res, err);
+		live.send('/api/feedback/' + req.feedback._id + '/chats', chat);
 		res.send(chat.stripInfo());
 	});
 };

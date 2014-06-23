@@ -9,6 +9,7 @@
 		window.Vibe._data_ = {};
 
 		window.Vibe._data_.currentUser = {{ JSON.stringify(currentUser.stripInfo()) }};
+		window.Vibe._data_.sessionID = '{{ sessionID }}';
 	</script>
 	<script data-main="js/build/start" src="/js/libs/require.js"></script>
 {% endblock %}
