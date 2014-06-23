@@ -15,7 +15,7 @@
 			position: relative;
 			height: 100%;
 			.translate3d(0, 122px, 0);
-			.transition(all 1s linear);
+			.transition(all 0.8s linear);
 
 			@media (max-width: @screen-xs) {
 				.transition(all 0.34s linear);
@@ -28,7 +28,7 @@
 			left: 15px;
 			right: 15px;
 			height: 48px;
-			.transition(~"all .3s ease-in-out, box-shadow 4.0s ease-out 4.36s");
+			.transition(~"all .28s ease-in-out, box-shadow 1.0s ease-out 1.06s");
 
 			&:hover {
 				background: @vibe-lighter;
@@ -133,8 +133,8 @@
 		.new-post {
 			height: 500px;
 			box-shadow: 0 6px 20px rgba(0,0,0,.3);
-			-webkit-animation: downSway 1400ms linear both;
-			animation: downSway 1400ms linear both;
+			-webkit-animation: downSway 1000ms linear both;
+			animation: downSway 1000ms linear both;
 
 			@media (max-height: 650px) {
 				height: 440px;

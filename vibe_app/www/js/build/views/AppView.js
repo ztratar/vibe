@@ -157,26 +157,8 @@ define("views/AppView",
     		var that = this;
 
     		this.$notificationsContainer.removeClass('expand');
-    		window.Vibe.appView.headerView.setButtons({
-    			title: '',
-    			leftAction: {
-    				icon: '#61804',
-    				click: function() {
-    					window.Vibe.appView.openNotifications();
-    					return false;
-    				}
-    			},
-    			rightAction: {
-    				title: '',
-    				icon: '#61886',
-    				click: function() {
-    					window.Vibe.appRouter.navigateWithAnimation('settings', 'pushLeft', {
-    						trigger: true
-    					});
-    					return false;
-    				}
-    			}
-    		});
+    		window.Vibe.appView.headerView.setHomeButtons();
+
     		this.headerView.animateToNewComponents('fade');
     	},
 

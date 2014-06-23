@@ -24,7 +24,23 @@ var PostOverlayView = Backbone.View.extend({
 
 		window.Vibe.appRouter.screenRouter.disableScreenScroll();
 		setTimeout(function() {
-			window.Vibe.appView.headerView.setHomeButtons();
+			window.Vibe.appView.headerView.setButtons({
+				title: '',
+				rightAction: {
+					title: 'Post',
+					click: function(ev) {
+						that.submitNewFeedback();
+						return false;
+					}
+				},
+				leftAction: {
+					title: 'Cancel',
+					click: function(ev) {
+						that.remove();
+						return false;
+					}
+				}
+			});
 			window.Vibe.appView.headerView.animateToNewComponents('slideDown');
 		}, 200);
 
@@ -100,26 +116,8 @@ var PostOverlayView = Backbone.View.extend({
 
 	remove: function() {
 		window.Vibe.appRouter.screenRouter.enableScreenScroll();
-		window.Vibe.appView.headerView.setButtons({
-			title: '',
-			leftAction: {
-				icon: '#61804',
-				click: function() {
-					window.Vibe.appView.openNotifications();
-					return false;
-				}
-			},
-			rightAction: {
-				title: '',
-				icon: '#61886',
-				click: function() {
-					window.Vibe.appRouter.navigateWithAnimation('settings', 'pushLeft', {
-						trigger: true
-					});
-					return false;
-				}
-			}
-		});
+
+		window.Vibe.appView.headerView.setHomeButtons();
 		window.Vibe.appView.headerView.animateToNewComponents('slideDown');
 
 		this.trigger('remove');

@@ -67,7 +67,7 @@ var HomeView = Backbone.View.extend({
 			afterAnimate: function() {
 				_.delay(function() {
 					postOverlayView.$textarea.focus();
-				}, 260);
+				}, 230);
 			}
 		});
 

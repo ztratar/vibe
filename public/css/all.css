@@ -9789,8 +9789,8 @@ html {
   height: 100%;
   -webkit-transform: translate3d(0, 122px, 0);
   transform: translate3d(0, 122px, 0);
-  -webkit-transition: all 1s linear;
-  transition: all 1s linear;
+  -webkit-transition: all 0.8s linear;
+  transition: all 0.8s linear;
 }
 @media (max-width: 480px) {
   .post-overlay-view .post-wrapper .container {
@@ -9804,8 +9804,8 @@ html {
   left: 15px;
   right: 15px;
   height: 48px;
-  -webkit-transition: all .3s ease-in-out, box-shadow 4.0s ease-out 4.36s;
-  transition: all .3s ease-in-out, box-shadow 4.0s ease-out 4.36s;
+  -webkit-transition: all .28s ease-in-out, box-shadow 1.0s ease-out 1.06s;
+  transition: all .28s ease-in-out, box-shadow 1.0s ease-out 1.06s;
 }
 .post-overlay-view .post-wrapper .new-post:hover {
   background: #5388be;
@@ -9908,8 +9908,8 @@ html {
 .overlay-container.expand .post-overlay-view .post-wrapper .new-post {
   height: 500px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  -webkit-animation: downSway 1400ms linear both;
-  animation: downSway 1400ms linear both;
+  -webkit-animation: downSway 1000ms linear both;
+  animation: downSway 1000ms linear both;
 }
 @media (max-height: 650px) {
   .overlay-container.expand .post-overlay-view .post-wrapper .new-post {

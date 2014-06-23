@@ -101,6 +101,7 @@ define("views/headerView",
     	},
 
     	setHomeButtons: function() {
+    		debugger;
     		window.Vibe.appView.headerView.setButtons({
     			title: '',
     			leftAction: {
