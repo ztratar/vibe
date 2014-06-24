@@ -1,12 +1,18 @@
 import 'backbone';
 import Post from 'models/post';
 
+var BasePosts = Backbone.Collection.extend({
+
+	model: Post
+
+});
+
 var Posts = Backbone.Collection.extend({
 
 	model: Post,
 
 	initialize: function() {
-		this.cached = [];
+		this.cached = new BasePosts();
 		this.on('add', this.removeOlderSimilarPost, this);
 	},
 
@@ -16,16 +22,19 @@ var Posts = Backbone.Collection.extend({
 
 	addCached: function(posts) {
 		if (posts) {
-			this.cached = this.cached.concat(posts);
+			this.cached.add(posts);
 			this.trigger('cachedPostsChange');
 		}
 	},
 
 	loadCachedPosts: function() {
-		for (var i = 0; i < this.cached.length; i++) {
-			this.add(this.cached[i]);
-		}
-		this.cached = [];
+		var that = this;
+
+		this.cached.each(function(cachedPost) {
+			console.log('adding', cachedPost);
+			that.add(cachedPost);
+		});
+		this.cached.reset([]);
 		this.trigger('cachedPostsChange');
 	},
 
