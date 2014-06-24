@@ -104,7 +104,7 @@ var HeaderView = Backbone.View.extend({
 			title: '',
 			leftAction: {
 				id: 'notifications',
-				icon: '#61804',
+				icon: '#61954',
 				click: function() {
 					window.Vibe.appView.openNotifications();
 					return false;

@@ -1,7 +1,8 @@
 <div class="post-overlay-container"></div>
 
 <% if (company.cover) { %>
-<div class="home-info-wrapper with-bg" style="background-image: url('<%= company.cover %>')">
+<div class="home-info-wrapper with-bg">
+	<div class="bg-image" style="background-image: url('<%= company.cover %>')"></div>
 <% } else { %>
 <div class="home-info-wrapper">
 <% } %>

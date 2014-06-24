@@ -8548,6 +8548,9 @@ html {
   font-weight: 600;
   margin: 0;
 }
+.home-info-wrapper .company-info-bar h1 img {
+  max-width: 270px;
+}
 .post-wrapper {
   padding: 0;
 }
@@ -8621,6 +8624,7 @@ html {
 }
 .time-series-chart-view {
   height: 260px;
+  margin: 0 60px 0 0;
 }
 @media (max-width: 550px) {
   .time-series-chart-view {
@@ -8708,12 +8712,15 @@ html {
 .percentage-tooltip:after {
   content: '';
   position: absolute;
-  top: -6px;
-  left: 50%;
-  margin-left: -6px;
-  border-bottom: 6px solid #f1c686;
-  border-right: 6px solid transparent;
-  border-left: 6px solid transparent;
+  top: -7px;
+  left: 0;
+  margin-left: -9px;
+  border-bottom: 17px solid #f1c686;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 @media (max-width: 550px) {
   .percentage-tooltip {

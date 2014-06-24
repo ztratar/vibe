@@ -285,13 +285,13 @@ var TimeSeriesChartView = Backbone.View.extend({
 			widthOffset = 25;
 			topOffset = 32;
 		} else {
-			widthOffset = 31;
+			widthOffset = 36;
 			topOffset = 38;
 		}
 
 		this.$percentageTooltip.css({
 			top: circlePos.top + circleHeight + topOffset,
-			left: circlePos.left - widthOffset
+			left: circlePos.left + widthOffset
 		});
 
 		_.delay(_.bind(function() {
