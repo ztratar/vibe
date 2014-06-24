@@ -1,6 +1,6 @@
 define("views/chatView", 
-  ["backbone","models/chat","models/chats","text!templates/chatView.html","text!templates/chatItem.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
+  ["backbone","models/chat","models/chats","text!templates/chatView.html","text!templates/chatItem.html","text!templates/chatEmptyState.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
     "use strict";
 
     var Chat = __dependency2__["default"];
@@ -8,6 +8,7 @@ define("views/chatView",
 
     var template = __dependency4__;
     var chatTemplate = __dependency5__;
+    var chatEmptyStateTemplate = __dependency6__;
 
     var ChatView = Backbone.View.extend({
 
@@ -15,6 +16,7 @@ define("views/chatView",
 
     	template: _.template(template),
     	chatTemplate: _.template(chatTemplate),
+    	chatEmptyStateTemplate: _.template(chatEmptyStateTemplate),
 
     	events: {
     		'keydown form input': 'newChat',
@@ -76,7 +78,13 @@ define("views/chatView",
     	},
 
     	addAll: function() {
-    		this.chats.each(this.addOne, this);
+    		if (this.chats.length) {
+    			this.$chatsContainer.html('');
+    			this.chats.each(this.addOne, this);
+    		} else {
+    			this.emptyState = true;
+    			this.$chatsContainer.html(this.chatEmptyStateTemplate());
+    		}
     	},
 
     	addOne: function(chat) {
@@ -88,6 +96,11 @@ define("views/chatView",
     			$chatElem = $('<div/>');
 
     		$chatElem.html(newChatItem);
+
+    		if (this.emptyState) {
+    			this.$chatsContainer.html('');
+    			this.emptyState = false;
+    		}
 
     		if (this.chats.indexOf(chat) === 0) {
     			this.$chatsContainer.append($chatElem);

@@ -4,7 +4,11 @@ define("models/posts",
     "use strict";
     var Post = __dependency2__["default"];
 
-    var BasePosts = Backbone.Collection.extend();
+    var BasePosts = Backbone.Collection.extend({
+
+    	model: Post
+
+    });
 
     var Posts = Backbone.Collection.extend({
 

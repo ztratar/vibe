@@ -5,6 +5,7 @@ import Chats from 'models/chats';
 
 module template from 'text!templates/chatView.html';
 module chatTemplate from 'text!templates/chatItem.html';
+module chatEmptyStateTemplate from 'text!templates/chatEmptyState.html';
 
 var ChatView = Backbone.View.extend({
 
@@ -12,6 +13,7 @@ var ChatView = Backbone.View.extend({
 
 	template: _.template(template),
 	chatTemplate: _.template(chatTemplate),
+	chatEmptyStateTemplate: _.template(chatEmptyStateTemplate),
 
 	events: {
 		'keydown form input': 'newChat',
@@ -73,7 +75,13 @@ var ChatView = Backbone.View.extend({
 	},
 
 	addAll: function() {
-		this.chats.each(this.addOne, this);
+		if (this.chats.length) {
+			this.$chatsContainer.html('');
+			this.chats.each(this.addOne, this);
+		} else {
+			this.emptyState = true;
+			this.$chatsContainer.html(this.chatEmptyStateTemplate());
+		}
 	},
 
 	addOne: function(chat) {
@@ -85,6 +93,11 @@ var ChatView = Backbone.View.extend({
 			$chatElem = $('<div/>');
 
 		$chatElem.html(newChatItem);
+
+		if (this.emptyState) {
+			this.$chatsContainer.html('');
+			this.emptyState = false;
+		}
 
 		if (this.chats.indexOf(chat) === 0) {
 			this.$chatsContainer.append($chatElem);
