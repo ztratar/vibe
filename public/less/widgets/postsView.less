@@ -22,6 +22,38 @@
 			.transition(all 0.18s ease-in-out);
 		}
 	}
+
+	.posts-view-empty {
+		border: 2px solid rgba(255, 255, 255, 0.07);
+		border-radius: 10px;
+		padding: 50px 0;
+		margin-top: 10px;
+
+		.media {
+			text-align: left;
+			max-width: 526px;
+			margin: 0px auto 0;
+
+			i {
+				font-size: 136px;
+				height: 140px;
+				line-height: 151px;
+				color: lighten(@vibe-orange, 6%);
+			}
+
+			h4 {
+				font-size: 32px;
+				font-weight: 600;
+				opacity: 0.8;
+				margin-top: 10px;
+			}
+
+			p {
+				font-size: 18px;
+				opacity: 0.3;
+			}
+		}
+	}
 }
 
 ul.posts-view {

@@ -219,7 +219,7 @@ exports.agree = function(req, res, next) {
 
 			res.send(feedback.stripInfo(req.user));
 
-			// Blast the feedback to the top of everyone's list
+			// Blast the feedback to the top of everyone's feed
 			// as it grown in popularity
 			var triggerBlasts = [
 				Math.floor(req.user.company.size * 0.75),

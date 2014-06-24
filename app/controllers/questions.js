@@ -228,6 +228,17 @@ exports.createAnswer = function(req, res) {
 					});
 
 					cb(null, answer);
+
+					// Blast the question to the top of everyone's feed
+					// as it grown in popularity
+					var triggerBlasts = [
+						Math.floor(questionInstance.num_sent_to * 0.75),
+						Math.floor(questionInstance.num_sent_to * 0.5),
+						Math.floor(questionInstance.num_sent_to * 0.25)
+					];
+					if (_.contains(triggerBlasts, questionInstance.num_completed+1)) {
+						exports.createPostsForQuestion(req, req.question);
+					}
 				});
 			});
 	}], function(err, answer) {
@@ -363,62 +374,82 @@ exports.send = function(req, res, questionId, next) {
 			question: question._id,
 			num_sent_to: users.length
 		}, function(err, questionInstance) {
-			// Create Posts for Question
-			var postObjs = [];
+			question.time_last_sent = Date.now();
+			question.user_last_sent = req.user.name;
+			question.save();
+
+			exports.createPostsForQuestion(req, question, users);
+		});
+	});
+};
+
+exports.createPostsForQuestion = function(req, question, users, next) {
+	Async.waterfall([function(cb) {
+		if (users && users.length) {
+			cb(null, users);
+		} else {
+			// If users aren't already loaded, get the proper users
+			User.find({
+				company: question.company.toString(),
+				active: true
+			}, function(err, users) {
+				if (err) return cb(err);
+				cb(null, users);
+			});
+		}
+	}], function(err, users) {
+		// Create Posts for Question
+		var postObjs = [];
+		if (err) return helpers.sendError(res, err);
+
+		_.each(users, function(user) {
+			postObjs.push({
+				for_user: user._id,
+				company: question.company,
+				content_type: 'question',
+				question: question._id
+			});
+		});
+
+		Post.update({
+			question: question._id
+		}, {
+			$set: {
+				active: false
+			}
+		}, {
+			multi: true
+		}, function(err, numAffected) {
 			if (err) return helpers.sendError(res, err);
 
-			_.each(users, function(user) {
-				postObjs.push({
-					for_user: user._id,
-					company: question.company,
-					content_type: 'question',
-					question: question._id
-				});
-			});
-
-			Post.update({
-				question: question._id
-			}, {
-				$set: {
-					active: false
-				}
-			}, {
-				multi: true
-			}, function(err, numAffected) {
+			Post.create(postObjs, function(err, posts) {
 				if (err) return helpers.sendError(res, err);
 
-				Post.create(postObjs, function(err, posts) {
-					if (err) return helpers.sendError(res, err);
-
-					question.time_last_sent = Date.now();
-					question.user_last_sent = req.user.name;
-					question.save();
-
-					// Blast out the new posts live
-					_.each(arguments, function(arg, i) {
-						if (arg && arg.for_user) {
-							arg = arg.toObject();
-							question.withAnswerData(null, function(questionObj) {
-								arg.question = questionObj;
-								live.send('/api/users/' + arg.for_user + '/posts', arg);
-							});
-						}
-					});
-
-					notificationsController.sendToCompany(req, {
-						type: 'question',
-						img: req.user.avatar,
-						data: {
-							user: req.user.name,
-							question: question.body,
-							questionId: question._id
-						}
-					});
-
-					next(null, posts);
+				// Blast out the new posts live
+				_.each(arguments, function(arg, i) {
+					if (arg && arg.for_user) {
+						arg = arg.toObject();
+						question.withAnswerData({
+							_id: arg.for_user
+						}, function(questionObj) {
+							arg.question = questionObj;
+							live.send('/api/users/' + arg.for_user + '/posts', arg);
+						});
+					}
 				});
-			});
 
+				notificationsController.sendToCompany(req, {
+					type: 'question',
+					img: req.user.avatar,
+					data: {
+						user: req.user.name,
+						question: question.body,
+						questionId: question._id
+					}
+				});
+
+				if (typeof next === 'function') next(null, posts);
+			});
 		});
 	});
 };

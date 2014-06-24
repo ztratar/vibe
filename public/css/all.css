@@ -8487,7 +8487,7 @@ html {
 }
 .chat-view .chats-container .chat-empty-state .media {
   margin: 0 auto;
-  width: 360px;
+  width: 420px;
   text-align: left;
 }
 .chat-view .chats-container .chat-empty-state .media i {
@@ -10164,6 +10164,33 @@ html {
   margin-top: 30px;
   -webkit-transition: all 0.18s ease-in-out;
   transition: all 0.18s ease-in-out;
+}
+.posts-view-wrap .posts-view-empty {
+  border: 2px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 50px 0;
+  margin-top: 10px;
+}
+.posts-view-wrap .posts-view-empty .media {
+  text-align: left;
+  max-width: 526px;
+  margin: 0px auto 0;
+}
+.posts-view-wrap .posts-view-empty .media i {
+  font-size: 136px;
+  height: 140px;
+  line-height: 151px;
+  color: #e9aa4b;
+}
+.posts-view-wrap .posts-view-empty .media h4 {
+  font-size: 32px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 10px;
+}
+.posts-view-wrap .posts-view-empty .media p {
+  font-size: 18px;
+  opacity: 0.3;
 }
 ul.posts-view {
   list-style: none;

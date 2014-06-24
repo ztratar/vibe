@@ -6,6 +6,7 @@ import PostQuestionItemView from 'views/postQuestionItemView';
 
 module template from 'text!templates/postsView.html';
 module loaderTemplate from 'text!templates/loader.html';
+module postsEmptyTemplate from 'text!templates/postsViewEmpty.html';
 
 var PostsView = Backbone.View.extend({
 
@@ -15,6 +16,7 @@ var PostsView = Backbone.View.extend({
 
 	template: _.template(template),
 	loaderTemplate: _.template(loaderTemplate),
+	emptyTemplate: _.template(postsEmptyTemplate),
 
 	events: {
 		'click a.new-posts-button': 'loadCachedPosts'
@@ -49,8 +51,13 @@ var PostsView = Backbone.View.extend({
 	},
 
 	addAll: function() {
-		this.$posts.html('');
-		this.posts.each(this.addOne, this);
+		if (this.posts.length) {
+			this.$posts.html('');
+			this.posts.each(this.addOne, this);
+		} else {
+			this.isEmpty = true;
+			this.$posts.html(this.emptyTemplate());
+		}
 	},
 
 	addOne: function(post) {
@@ -64,6 +71,11 @@ var PostsView = Backbone.View.extend({
 			itemView = new PostQuestionItemView({
 				model: post
 			});
+		}
+
+		if (this.isEmpty) {
+			this.isEmpty = false;
+			this.$posts.html('');
 		}
 
 		if (this.posts.indexOf(post) === 0) {

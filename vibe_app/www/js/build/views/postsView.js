@@ -1,6 +1,6 @@
 define("views/postsView", 
-  ["backbone","underscore","views/feedbackItemView","views/postQuestionItemView","text!templates/postsView.html","text!templates/loader.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __exports__) {
+  ["backbone","underscore","views/feedbackItemView","views/postQuestionItemView","text!templates/postsView.html","text!templates/loader.html","text!templates/postsViewEmpty.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
     "use strict";
 
     var FeedbackItemView = __dependency3__["default"];
@@ -8,6 +8,7 @@ define("views/postsView",
 
     var template = __dependency5__;
     var loaderTemplate = __dependency6__;
+    var postsEmptyTemplate = __dependency7__;
 
     var PostsView = Backbone.View.extend({
 
@@ -17,6 +18,7 @@ define("views/postsView",
 
     	template: _.template(template),
     	loaderTemplate: _.template(loaderTemplate),
+    	emptyTemplate: _.template(postsEmptyTemplate),
 
     	events: {
     		'click a.new-posts-button': 'loadCachedPosts'
@@ -51,8 +53,13 @@ define("views/postsView",
     	},
 
     	addAll: function() {
-    		this.$posts.html('');
-    		this.posts.each(this.addOne, this);
+    		if (this.posts.length) {
+    			this.$posts.html('');
+    			this.posts.each(this.addOne, this);
+    		} else {
+    			this.isEmpty = true;
+    			this.$posts.html(this.emptyTemplate());
+    		}
     	},
 
     	addOne: function(post) {
@@ -66,6 +73,11 @@ define("views/postsView",
     			itemView = new PostQuestionItemView({
     				model: post
     			});
+    		}
+
+    		if (this.isEmpty) {
+    			this.isEmpty = false;
+    			this.$posts.html('');
     		}
 
     		if (this.posts.indexOf(post) === 0) {
