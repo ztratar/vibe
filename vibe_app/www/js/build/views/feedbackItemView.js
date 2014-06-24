@@ -34,9 +34,8 @@ define("views/feedbackItemView",
     		this.model.on('destroy', this.remove, this);
 
     		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/vote_change', function(newNumVotes) {
-    			debugger;
     			that.model.get('feedback').set({
-    				'num_votes': newNumVote
+    				'num_votes': newNumVotes
     			});
     			that.$score.addClass('pop');
 

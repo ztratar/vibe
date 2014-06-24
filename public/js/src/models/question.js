@@ -21,6 +21,13 @@ var Question = BaseModel.extend({
 		answer_data: []
 	},
 
+	initialize: function() {
+		var that = this;
+		window.Vibe.faye.subscribe('/api/questions/' + this.get('_id') + '/new_answer', function(answerBody) {
+			that.trigger('newAnswer', answerBody);
+		});
+	},
+
 	deselect: function() {
 		this.set('active', false);
 		return this.save();
@@ -35,7 +42,9 @@ var Question = BaseModel.extend({
 		newAnswer.save();
 
 		this.set('current_user_voted', true, { silent: true });
-		this.trigger('newAnswer', answerBody);
+
+		window.Vibe.faye.publish('/api/questions/' + this.get('_id') + '/new_answer', answerBody);
+		//this.trigger('newAnswer', answerBody);
 	}
 
 });
