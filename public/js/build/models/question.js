@@ -21,6 +21,7 @@ define("models/question",
     		to: {
     			name: 'everyone'
     		},
+    		current_user_voted: false,
     		answer_data: []
     	},
 
@@ -37,6 +38,7 @@ define("models/question",
 
     		newAnswer.save();
 
+    		this.set('current_user_voted', true, { silent: true });
     		this.trigger('newAnswer', answerBody);
     	}
 

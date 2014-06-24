@@ -379,6 +379,16 @@ exports.send = function(req, res, questionId, next) {
 			question.user_last_sent = req.user.name;
 			question.save();
 
+			notificationsController.sendToCompany(req, {
+				type: 'question',
+				img: req.user.avatar,
+				data: {
+					user: req.user.name,
+					question: question.body,
+					questionId: question._id
+				}
+			});
+
 			exports.createPostsForQuestion(req, question, users);
 		});
 	});
@@ -436,16 +446,6 @@ exports.createPostsForQuestion = function(req, question, users, next) {
 							arg.question = questionObj;
 							live.send('/api/users/' + arg.for_user + '/posts', arg);
 						});
-					}
-				});
-
-				notificationsController.sendToCompany(req, {
-					type: 'question',
-					img: req.user.avatar,
-					data: {
-						user: req.user.name,
-						question: question.body,
-						questionId: question._id
 					}
 				});
 

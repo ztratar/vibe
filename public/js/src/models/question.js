@@ -17,6 +17,7 @@ var Question = BaseModel.extend({
 		to: {
 			name: 'everyone'
 		},
+		current_user_voted: false,
 		answer_data: []
 	},
 
@@ -33,6 +34,7 @@ var Question = BaseModel.extend({
 
 		newAnswer.save();
 
+		this.set('current_user_voted', true, { silent: true });
 		this.trigger('newAnswer', answerBody);
 	}
 
