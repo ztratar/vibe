@@ -24,6 +24,10 @@ var FeedbackApprovalView = Backbone.View.extend({
 				reset: true
 			});
 		}, this));
+
+		setInterval(_.bind(function() {
+			this.feedback.fetch();
+		}, this), 4000);
 	},
 
 	determineVisibility: function() {

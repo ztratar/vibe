@@ -114,7 +114,7 @@ exports.createPostsFromFeedback = function(req, res, feedback, cb) {
 						arguments[i].feedback = feedback.stripInfo({
 							_id: arguments[i].for_user
 						});
-						if (arguments[i].for_user.toString() !== req.user._id.toString()) {
+						if (!req || arguments[i].for_user.toString() !== req.user._id.toString()) {
 							live.send('/api/users/' + arguments[i].for_user + '/posts', arguments[i]);
 						}
 					}

@@ -46,7 +46,9 @@ define("models/question",
     		newAnswer.save();
 
     		this.set('current_user_voted', true, { silent: true });
-    		this.trigger('newAnswer', answerBody);
+
+    		window.Vibe.faye.publish('/api/questions/' + this.get('_id') + '/new_answer', answerBody);
+    		//this.trigger('newAnswer', answerBody);
     	}
 
     });

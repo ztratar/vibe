@@ -329,7 +329,8 @@ exports.approve = function(req, res, next) {
 
 		res.send(feedback.stripInfo(req.user));
 
-		postsController.createPostsFromFeedback(req, res, feedback);
+		postsController.createPostsFromFeedback(null, res, feedback);
+
 		notificationsController.send({
 			for_user: req.feedback.creator,
 			type: 'feedback-approved'
