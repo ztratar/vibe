@@ -79,7 +79,7 @@ define("views/postsView",
     	showNewPostsButton: function() {
     		var numNewPosts = this.posts.cached.length;
     		if (numNewPosts) {
-    			this.$newPostsButton.html('View ' + numNewPosts + ' new posts');
+    			this.$newPostsButton.html('View ' + numNewPosts + ' new updates');
     			this.$newPostsButton.addClass('show');
     		} else {
     			this.$newPostsButton.removeClass('show');

@@ -93,6 +93,18 @@ exports.createPostsFromFeedback = function(res, feedback, cb) {
 			});
 		});
 
+		// Invalidate the old posts that refer to this same
+		// piece of feedback
+		Post.update({
+			feedback: feedback._id
+		}, {
+			$set: {
+				active: false
+			}
+		}, {
+			multi: true
+		});
+
 		Post.create(postObjs, function(err) {
 			if (err) return helpers.sendError(res, err);
 
@@ -100,7 +112,9 @@ exports.createPostsFromFeedback = function(res, feedback, cb) {
 			for (var i = 1; i < arguments.length; i++) {
 				if (arguments[i].for_user) {
 					arguments[i] = arguments[i].toObject();
-					arguments[i].feedback = feedback.stripInfo();
+					arguments[i].feedback = feedback.stripInfo({
+						_id: arguments[i].for_user
+					});
 					live.send('/api/users/' + arguments[i].for_user + '/posts', arguments[i]);
 				}
 			}

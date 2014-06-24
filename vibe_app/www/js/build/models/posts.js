@@ -10,6 +10,7 @@ define("models/posts",
 
     	initialize: function() {
     		this.cached = [];
+    		this.on('add', this.removeOlderSimilarPost, this);
     	},
 
     	comparator: function(a,b) {
@@ -68,6 +69,26 @@ define("models/posts",
     				if (!data.length) that.atLastItem = true
     			}
     		});
+    	},
+
+    	// If we load in a new post that references the same feedback
+    	// or question that is already in the feed, we want to show the
+    	// new post intead.
+    	removeOlderSimilarPost: function(newPost) {
+    		var contentType = newPost.get('content_type'),
+    			foundObj;
+
+    		foundObj = this.find(function(post) {
+    			return (post.get(contentType).get('_id') === newPost.get(contentType).get('_id')
+    				&& post.get('_id') !== newPost.get('_id'));
+    		});
+
+    		console.log(foundObj);
+
+    		if (foundObj) {
+    			foundObj.trigger('destroy');
+    			this.remove(foundObj);
+    		}
     	}
 
     });

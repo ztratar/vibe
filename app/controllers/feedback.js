@@ -219,6 +219,16 @@ exports.agree = function(req, res, next) {
 
 			res.send(feedback.stripInfo(req.user));
 
+			// Blast the feedback to the top of everyone's list
+			// as it grown in popularity
+			var triggerBlasts = [
+				Math.floor(req.user.company.size * 0.75),
+				Math.floor(req.user.company.size * 0.5),
+				Math.floor(req.user.company.size * 0.25)
+			];
+			if (_.contains(triggerBlasts, feedback.num_votes)) {
+				postsController.createPostsFromFeedback(res, feedback);
+			}
 		});
 	});
 };
