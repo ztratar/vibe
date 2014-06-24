@@ -227,7 +227,7 @@ exports.agree = function(req, res, next) {
 				Math.floor(req.user.company.size * 0.25)
 			];
 			if (_.contains(triggerBlasts, feedback.num_votes)) {
-				postsController.createPostsFromFeedback(res, feedback);
+				postsController.createPostsFromFeedback(req, res, feedback);
 			}
 		});
 	});
@@ -324,7 +324,7 @@ exports.approve = function(req, res, next) {
 
 		res.send(feedback.stripInfo(req.user));
 
-		postsController.createPostsFromFeedback(res, feedback);
+		postsController.createPostsFromFeedback(req, res, feedback);
 		notificationsController.send({
 			for_user: req.feedback.creator,
 			type: 'feedback-approved'

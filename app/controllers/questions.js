@@ -389,7 +389,7 @@ exports.send = function(req, res, questionId, next) {
 				}
 			});
 
-			exports.createPostsForQuestion(req, question, users);
+			exports.createPostsForQuestion(null, question, users);
 		});
 	});
 };
@@ -440,7 +440,9 @@ exports.createPostsForQuestion = function(req, question, users, next) {
 							_id: arg.for_user
 						}, function(questionObj) {
 							arg.question = questionObj;
-							live.send('/api/users/' + arg.for_user + '/posts', arg);
+							if (!req || arg.for_user.toString() !== req.user._id.toString()) {
+								live.send('/api/users/' + arg.for_user + '/posts', arg);
+							}
 						});
 					}
 				});

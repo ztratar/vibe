@@ -75,7 +75,7 @@ exports.index = function(req, res) {
  * Given a piece of feedback, create the posts
  * for the company's users
  */
-exports.createPostsFromFeedback = function(res, feedback, cb) {
+exports.createPostsFromFeedback = function(req, res, feedback, cb) {
 	// Get company's users
 	User.find({
 		company: feedback.company,
@@ -114,7 +114,9 @@ exports.createPostsFromFeedback = function(res, feedback, cb) {
 						arguments[i].feedback = feedback.stripInfo({
 							_id: arguments[i].for_user
 						});
-						live.send('/api/users/' + arguments[i].for_user + '/posts', arguments[i]);
+						if (arguments[i].for_user.toString() !== req.user._id.toString()) {
+							live.send('/api/users/' + arguments[i].for_user + '/posts', arguments[i]);
+						}
 					}
 				}
 
