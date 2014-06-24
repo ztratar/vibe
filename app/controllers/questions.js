@@ -411,7 +411,7 @@ exports.createPostsForQuestion = function(req, question, users, next) {
 	}], function(err, users) {
 		// Create Posts for Question
 		var postObjs = [];
-		if (err) return helpers.sendError(res, err);
+		if (err) return;
 
 		_.each(users, function(user) {
 			postObjs.push({
@@ -431,11 +431,7 @@ exports.createPostsForQuestion = function(req, question, users, next) {
 		}, {
 			multi: true
 		}, function(err, numAffected) {
-			if (err) return helpers.sendError(res, err);
-
 			Post.create(postObjs, function(err, posts) {
-				if (err) return helpers.sendError(res, err);
-
 				// Blast out the new posts live
 				_.each(arguments, function(arg, i) {
 					if (arg && arg.for_user) {
