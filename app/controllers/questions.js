@@ -10,6 +10,7 @@ var mongoose = require('mongoose'),
 	Chat = mongoose.model('Chat'),
 	Company = mongoose.model('Company'),
 	Answer = mongoose.model('Answer'),
+	live = require('../live'),
 	notificationsController = require('./notifications')(),
 	helpers = require('../helpers');
 
@@ -392,6 +393,17 @@ exports.send = function(req, res, questionId, next) {
 					question.time_last_sent = Date.now();
 					question.user_last_sent = req.user.name;
 					question.save();
+
+					// Blast out the new posts live
+					_.each(arguments, function(arg, i) {
+						if (arg && arg.for_user) {
+							arg = arg.toObject();
+							question.withAnswerData(null, function(questionObj) {
+								arg.question = questionObj;
+								live.send('/api/users/' + arg.for_user + '/posts', arg);
+							});
+						}
+					});
 
 					notificationsController.sendToCompany(req, {
 						type: 'question',

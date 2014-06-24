@@ -43,7 +43,6 @@ $(function() {
 					$('.form-step-wrapper').addClass('success');
 				},
 				error: function(d) {
-					console.log('err', d);
 				}
 			});
 		}

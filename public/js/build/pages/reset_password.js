@@ -46,7 +46,6 @@ define("pages/reset_password",
     					$('.form-step-wrapper').addClass('success');
     				},
     				error: function(d) {
-    					console.log('err', d);
     				}
     			});
     		}

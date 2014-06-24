@@ -79,10 +79,11 @@ define("views/chatView",
 
     	addAll: function() {
     		if (this.chats.length) {
+    			this.$chatsContainer.html('');
     			this.chats.each(this.addOne, this);
     		} else {
     			this.emptyState = true;
-    			this.$chatsContainer.append(this.chatEmptyStateTemplate());
+    			this.$chatsContainer.html(this.chatEmptyStateTemplate());
     		}
     	},
 

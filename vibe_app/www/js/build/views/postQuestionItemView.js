@@ -24,6 +24,8 @@ define("views/postQuestionItemView",
 
     	initialize: function(opts) {
     		this.model = opts.model;
+
+    		this.model.on('destroy', this.remove, this);
     	},
 
     	render: function() {

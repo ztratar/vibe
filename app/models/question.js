@@ -67,7 +67,11 @@ QuestionSchema.methods = {
 					return data === undefined;
 				});
 
-				question.current_user_voted = lastInstance.didUserAnswer(currentUser._id);
+				if (currentUser) {
+					question.current_user_voted = lastInstance.didUserAnswer(currentUser._id);
+				} else {
+					question.current_user_voted = false;
+				}
 
 				cb(question);
 			});

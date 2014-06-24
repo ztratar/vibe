@@ -125,7 +125,6 @@ exports.invite = function(req, res) {
 
 			accessRequest.save(function(err, accessRequest) {
 				// Send them the invite
-				console.log(accessRequest._id);
 				email.send({
 					to: req.body.email,
 					subject: 'You\'ve been invited to Vibe!',

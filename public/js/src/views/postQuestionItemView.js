@@ -22,6 +22,8 @@ var PostQuestionItemView = Backbone.View.extend({
 
 	initialize: function(opts) {
 		this.model = opts.model;
+
+		this.model.on('destroy', this.remove, this);
 	},
 
 	render: function() {

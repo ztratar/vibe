@@ -34,7 +34,6 @@ define("models/posts",
     		var that = this;
 
     		this.cached.each(function(cachedPost) {
-    			console.log('adding', cachedPost);
     			that.add(cachedPost);
     		});
     		this.cached.reset([]);
@@ -88,7 +87,8 @@ define("models/posts",
     			foundObj;
 
     		foundObj = this.find(function(post) {
-    			return (post.get(contentType).get('_id') === newPost.get(contentType).get('_id')
+    			return (post.get('content_type') === contentType
+    				&& post.get(contentType).get('_id') === newPost.get(contentType).get('_id')
     				&& post.get('_id') !== newPost.get('_id'));
     		});
 

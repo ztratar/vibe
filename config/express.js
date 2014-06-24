@@ -95,9 +95,7 @@ module.exports = function (app, config, passport) {
       if (err.message && ~err.message.indexOf('not found')) return next()
 
       // log it
-      console.log("we have and error")
-      console.log(err)
-      console.error(err.stack)
+      console.log('Express error', err)
 
       res.send(err.status || 500, { error: err.message })
     });
