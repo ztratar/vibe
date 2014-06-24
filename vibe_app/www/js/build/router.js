@@ -61,6 +61,10 @@ define("router",
     		this.homeView.posts.url = '/api/posts';
     		this.homeView.posts.fetch();
 
+    		window.Vibe.faye.subscribe('/api/users/' + window.Vibe.user.get('_id') + '/posts', function(newPost) {
+    			that.homeView.posts.addCached(newPost);
+    		});
+
     		this.trigger('loaded');
     	},
 

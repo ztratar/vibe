@@ -65,6 +65,10 @@ var ChatView = Backbone.View.extend({
 			});
 		}, 5000);
 
+		this.on('remove', function() {
+			clearInterval(that.chatTimeUpdateInterval);
+		});
+
 		return this;
 	},
 
@@ -132,8 +136,6 @@ var ChatView = Backbone.View.extend({
 	},
 
 	closeChat: function() {
-		clearInterval(this.chatTimeUpdateInterval);
-
 		this.trigger('remove');
 
 		return false;

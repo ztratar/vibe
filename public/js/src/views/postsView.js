@@ -4,15 +4,21 @@ import 'underscore';
 import FeedbackItemView from 'views/feedbackItemView';
 import PostQuestionItemView from 'views/postQuestionItemView';
 
+module template from 'text!templates/postsView.html';
 module loaderTemplate from 'text!templates/loader.html';
 
 var PostsView = Backbone.View.extend({
 
-	tagName: 'ul',
+	tagName: 'div',
 
-	className: 'posts-view',
+	className: 'posts-view-wrap',
 
+	template: _.template(template),
 	loaderTemplate: _.template(loaderTemplate),
+
+	events: {
+		'click a.new-posts-button': 'loadCachedPosts'
+	},
 
 	initialize: function(opts) {
 		var that = this;
@@ -26,16 +32,24 @@ var PostsView = Backbone.View.extend({
 
 		this.posts.on('currentlyFetching', this.showLoader, this);
 		this.posts.on('fetchingDone', this.removeLoader, this);
+
+		this.posts.on('cachedPostsChange', this.showNewPostsButton, this);
 	},
 
 	render: function() {
+		this.$el.html(this.template());
+
+		this.$posts = this.$('ul.posts-view');
+		this.$newPostsButton = this.$('.new-posts-button');
+		this.$postsLoaderContainer = this.$('.post-loader-container');
+
 		this.addAll();
 
 		return this;
 	},
 
 	addAll: function() {
-		this.$el.html('');
+		this.$posts.html('');
 		this.posts.each(this.addOne, this);
 	},
 
@@ -53,21 +67,35 @@ var PostsView = Backbone.View.extend({
 		}
 
 		if (this.posts.indexOf(post) === 0) {
-			this.$el.prepend(itemView.$el);
+			this.$posts.prepend(itemView.$el);
 		} else {
-			this.$el.append(itemView.$el);
+			this.$posts.append(itemView.$el);
 		}
 		itemView.render();
 	},
 
+	showNewPostsButton: function() {
+		var numNewPosts = this.posts.cached.length;
+		if (numNewPosts) {
+			this.$newPostsButton.html('View ' + numNewPosts + ' new posts');
+			this.$newPostsButton.addClass('show');
+		} else {
+			this.$newPostsButton.removeClass('show');
+		}
+	},
+
+	loadCachedPosts: function() {
+		this.posts.loadCachedPosts();
+
+		return false;
+	},
+
 	showLoader: function() {
-		this.$el.append(
-			'<li class="loader-container">' + this.loaderTemplate({ useDark: true }) + '</li>'
-		);
+		this.$postsLoaderContainer.html(this.loaderTemplate({ useDark: true }));
 	},
 
 	removeLoader: function() {
-		this.$('.loader-container').remove();
+		this.$postsLoaderContainer.html('');
 	}
 
 });

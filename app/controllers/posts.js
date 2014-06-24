@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 	Post = mongoose.model('Post'),
 	User = mongoose.model('User'),
 	Feedback = mongoose.model('Feedback'),
+	live = require('../live'),
 	helpers = require('../helpers'),
 	app;
 
@@ -92,8 +93,18 @@ exports.createPostsFromFeedback = function(res, feedback, cb) {
 			});
 		});
 
-		Post.create(postObjs, function(err, posts) {
+		Post.create(postObjs, function(err) {
 			if (err) return helpers.sendError(res, err);
+
+			// Blast out the new posts live
+			for (var i = 1; i < arguments.length; i++) {
+				if (arguments[i].for_user) {
+					arguments[i] = arguments[i].toObject();
+					arguments[i].feedback = feedback.stripInfo();
+					live.send('/api/users/' + arguments[i].for_user + '/posts', arguments[i]);
+				}
+			}
+
 			if (cb && typeof cb === 'function') {
 				cb(posts);
 			}

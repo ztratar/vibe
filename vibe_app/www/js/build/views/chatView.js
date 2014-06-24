@@ -64,10 +64,13 @@ define("views/chatView",
 
     		this.chatTimeUpdateInterval = setInterval(function() {
     			_.each(that.chatItemTimes, function(chatItemTime) {
-    				console.log('updating', chatItemTime);
     				chatItemTime.elem.html(moment(chatItemTime.time).fromNow());
     			});
     		}, 5000);
+
+    		this.on('remove', function() {
+    			clearInterval(that.chatTimeUpdateInterval);
+    		});
 
     		return this;
     	},
@@ -136,8 +139,6 @@ define("views/chatView",
     	},
 
     	closeChat: function() {
-    		clearInterval(this.chatTimeUpdateInterval);
-
     		this.trigger('remove');
 
     		return false;

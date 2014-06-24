@@ -8,8 +8,27 @@ define("models/posts",
 
     	model: Post,
 
+    	initialize: function() {
+    		this.cached = [];
+    	},
+
     	comparator: function(a,b) {
-    		return Date.parse(a.get('time_created')) < Date.parse(b.get('time_created'));
+    		return (Date.parse(a.get('time_created')) < Date.parse(b.get('time_created'))) ? 1 : -1;
+    	},
+
+    	addCached: function(posts) {
+    		if (posts) {
+    			this.cached = this.cached.concat(posts);
+    			this.trigger('cachedPostsChange');
+    		}
+    	},
+
+    	loadCachedPosts: function() {
+    		for (var i = 0; i < this.cached.length; i++) {
+    			this.add(this.cached[i]);
+    		}
+    		this.cached = [];
+    		this.trigger('cachedPostsChange');
     	},
 
     	getNew: function() {
