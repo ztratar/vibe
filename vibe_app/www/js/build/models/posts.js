@@ -33,7 +33,7 @@ define("models/posts",
     			added = false;
 
     		_.each(firstPosts, function(post) {
-    			curPostAttachmentIds.push(post.get(post.get('content_type')).pluck('_id'));
+    			curPostAttachmentIds.push(post.get(post.get('content_type')).get('_id'));
     		});
 
     		if (posts && !posts.length) posts = [posts];

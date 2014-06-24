@@ -205,6 +205,7 @@ exports.agree = function(req, res, next) {
 		w: 1
 	}, function(err, feedback) {
 		if (err) helpers.sendError(res, err);
+
 		Feedback.findById(req.feedback._id, function(err, feedback) {
 
 			notificationsController.sendToUsers(usersAgreedBefore, {
@@ -229,6 +230,8 @@ exports.agree = function(req, res, next) {
 			if (_.contains(triggerBlasts, feedback.num_votes)) {
 				postsController.createPostsFromFeedback(req, res, feedback);
 			}
+
+			live.send('/api/feedback/' + req.feedback._id + '/vote_change', feedback.num_votes);
 		});
 	});
 };
@@ -258,6 +261,8 @@ exports.undoAgree = function(req, res, next) {
 		if (err) helpers.sendError(res, err);
 		Feedback.findById(req.feedback._id, function(err, feedback) {
 			res.send(feedback.stripInfo(req.user));
+
+			live.send('/api/feedback/' + req.feedback._id + '/vote_change', feedback.num_votes);
 		});
 	});
 };

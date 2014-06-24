@@ -22,12 +22,25 @@ var FeedbackItemView = Backbone.View.extend({
 	},
 
 	initialize: function(opts) {
+		var that = this;
+
 		this.model = opts.model;
 
 		this.model.on('change', this.render, this);
 		this.model.get('feedback').on('change', this.render, this);
 
 		this.model.on('destroy', this.remove, this);
+
+		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/vote_change', function(newNumVotes) {
+			that.model.get('feedback').set({
+				'num_votes': newNumVotes
+			});
+			that.$score.addClass('pop');
+
+			setTimeout(function() {
+				that.$score.removeClass('pop');
+			}, 500);
+		});
 	},
 
 	render: function() {
