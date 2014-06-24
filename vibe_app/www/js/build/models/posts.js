@@ -24,8 +24,28 @@ define("models/posts",
     	},
 
     	addCached: function(posts) {
-    		if (posts) {
-    			this.cached.add(posts);
+    		// Only add to cache if the postis not already
+    		// displayed in the top 3 of the user's current
+    		// feed.
+    		var that = this,
+    			firstPosts = this.first(3),
+    			curPostAttachmentIds = [],
+    			added = false;
+
+    		_.each(firstPosts, function(post) {
+    			curPostAttachmentIds.push(post.get(post.get('content_type')).pluck('_id'));
+    		});
+
+    		if (posts && !posts.length) posts = [posts];
+
+    		_.each(posts, function(post) {
+    			if (!_.contains(curPostAttachmentIds, post[post.content_type]._id)) {
+    				that.cached.add(posts);
+    				added = true;
+    			}
+    		});
+
+    		if (added) {
     			this.trigger('cachedPostsChange');
     		}
     	},

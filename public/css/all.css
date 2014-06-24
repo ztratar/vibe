@@ -7940,6 +7940,9 @@ form.form-horizontal-top button.btn {
   font-weight: 400;
   margin-top: 1px;
 }
+.header-view .header-components a i.icon-61954 {
+  font-size: 28px;
+}
 .header-view .header-components a.left-action {
   left: 15px;
 }
