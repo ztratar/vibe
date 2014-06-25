@@ -12,7 +12,7 @@ define("models/chats",
     		return (Date.parse(a.get('time_created')) < Date.parse(b.get('time_created'))) ? 1 : -1;
     	},
 
-    	getMore: function() {
+    	getMore: function(cb) {
     		var lastModel = this.last(),
     			that = this;
 
@@ -27,6 +27,8 @@ define("models/chats",
     				that.currentlyFetching = false;
     				that.trigger('fetchingDone');
     				if (!data.length) that.atLastItem = true
+
+    				cb && cb(model, data);
     			}
     		});
     	}

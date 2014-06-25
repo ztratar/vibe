@@ -8470,16 +8470,16 @@ html {
   top: 16px;
   right: 24px;
 }
-.chat-view .chats-container {
+.chat-view .chat-scroll-container {
   padding: 16px 24px;
   overflow-y: scroll;
   height: calc(100% - 137px);
 }
-.chat-view .chats-container .chat-item {
+.chat-view .chat-scroll-container .chats-container .chat-item {
   position: relative;
   padding: 12px 0;
 }
-.chat-view .chats-container .chat-item img {
+.chat-view .chat-scroll-container .chats-container .chat-item img {
   width: 58px;
   height: 58px;
   border-radius: 100px;
@@ -8488,7 +8488,7 @@ html {
   top: 12px;
   left: 0;
 }
-.chat-view .chats-container .chat-item .chat-bubble {
+.chat-view .chat-scroll-container .chats-container .chat-item .chat-bubble {
   margin: 0 0 0 80px;
   border-radius: 6px;
   background: #2f557c;
@@ -8497,30 +8497,30 @@ html {
   padding: 10px 14px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
-.chat-view .chats-container .chat-item .chat-bubble p {
+.chat-view .chat-scroll-container .chats-container .chat-item .chat-bubble p {
   margin: 0 0 4px;
   font-size: 16px;
   color: white;
 }
-.chat-view .chats-container .chat-item .chat-bubble span {
+.chat-view .chat-scroll-container .chats-container .chat-item .chat-bubble span {
   display: block;
   font-size: 11px;
   color: white;
   opacity: 0.4;
 }
-.chat-view .chats-container .chat-empty-state .media {
+.chat-view .chat-scroll-container .chat-empty-state .media {
   margin: 0 auto;
   width: 420px;
   text-align: left;
 }
-.chat-view .chats-container .chat-empty-state .media i {
+.chat-view .chat-scroll-container .chat-empty-state .media i {
   color: rgba(46, 204, 113, 0.75);
   font-size: 92px;
   height: 100px;
   line-height: 114px;
   margin-right: 25px;
 }
-.chat-view .chats-container .chat-empty-state .media h4 {
+.chat-view .chat-scroll-container .chat-empty-state .media h4 {
   font-size: 28px;
   font-weight: 600;
   line-height: 32px;
@@ -8528,7 +8528,7 @@ html {
   margin-bottom: 7px;
   opacity: 0.6;
 }
-.chat-view .chats-container .chat-empty-state .media p {
+.chat-view .chat-scroll-container .chat-empty-state .media p {
   font-size: 20px;
   opacity: .3;
 }
