@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 	Async = require('async'),
 	Answer = mongoose.model('Answer'),
 	QuestionInstance = mongoose.model('QuestionInstance'),
+	QuestionInstanceSchema = require('./questionInstance'),
 	ChatRoomPlugin = require('./plugins/chatRoomPlugin'),
 	_ = require('underscore');
 
@@ -18,7 +19,8 @@ var QuestionSchema = new Schema({
 	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	time_created: { type: Date, default: Date.now },
 	time_last_sent: { type: Date },
-	user_last_sent: { type: String }
+	user_last_sent: { type: String },
+	question_instance: [QuestionInstanceSchema]
 });
 
 // Validations

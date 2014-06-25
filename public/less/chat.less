@@ -117,7 +117,7 @@
 		}
 	}
 
-	.chats-container {
+	.chat-scroll-container {
 		padding: 16px 24px;
 		overflow-y: scroll;
 		height: calc(~"100% - 137px");
@@ -174,11 +174,27 @@
 					}
 				}
 
-				span {
-					display: block;
-					font-size: 11px;
+				.chat-bubble {
+					margin: 0 0 0 80px;
+					border-radius: @border-radius-large;
+					background: @vibe-light;
 					color: white;
-					opacity: 0.4;
+					text-align: left;
+					padding: 10px 14px;
+					.stdBoxShadow();
+
+					p {
+						margin: 0 0 4px;
+						font-size: 16px;
+						color: white;
+					}
+
+					span {
+						display: block;
+						font-size: 11px;
+						color: white;
+						opacity: 0.4;
+					}
 				}
 			}
 		}

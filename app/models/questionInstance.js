@@ -73,3 +73,5 @@ QuestionInstanceSchema.methods = {
 };
 
 mongoose.model('QuestionInstance', QuestionInstanceSchema);
+
+exports = module.exports = QuestionInstanceSchema;

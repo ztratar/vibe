@@ -6,6 +6,7 @@ import Chats from 'models/chats';
 module template from 'text!templates/chatView.html';
 module chatTemplate from 'text!templates/chatItem.html';
 module chatEmptyStateTemplate from 'text!templates/chatEmptyState.html';
+module loaderTemplate from 'text!templates/loader.html';
 
 var ChatView = Backbone.View.extend({
 
@@ -14,6 +15,7 @@ var ChatView = Backbone.View.extend({
 	template: _.template(template),
 	chatTemplate: _.template(chatTemplate),
 	chatEmptyStateTemplate: _.template(chatEmptyStateTemplate),
+	loaderTemplate: _.template(loaderTemplate),
 
 	events: {
 		'keydown form input': 'newChat',
@@ -37,6 +39,10 @@ var ChatView = Backbone.View.extend({
 		_.defer(function() {
 			window.Vibe.faye.subscribe(that.chats.url, function(chatModel) {
 				that.chats.add(chatModel);
+
+				if (chatModel.creator.ref === window.Vibe.user.get('_id')) {
+					that.scrollToBottom();
+				}
 			});
 			that.chats.fetch({
 				reset: true
@@ -52,7 +58,9 @@ var ChatView = Backbone.View.extend({
 		}));
 
 		this.$input = this.$('.form-inline input');
+		this.$chatScrollContainer = this.$('.chat-scroll-container');
 		this.$chatsContainer = this.$('.chats-container');
+		this.$chatsLoaderContainer = this.$('.chats-loader-container');
 
 		_.delay(function() {
 			that.$input.focus();
@@ -66,6 +74,10 @@ var ChatView = Backbone.View.extend({
 				chatItemTime.elem.html(moment(chatItemTime.time).fromNow());
 			});
 		}, 5000);
+
+		_.delay(function() {
+			that.infScrollHandler();
+		}, 800);
 
 		this.on('remove', function() {
 			clearInterval(that.chatTimeUpdateInterval);
@@ -82,6 +94,8 @@ var ChatView = Backbone.View.extend({
 			this.emptyState = true;
 			this.$chatsContainer.html(this.chatEmptyStateTemplate());
 		}
+
+		this.scrollToBottom();
 	},
 
 	addOne: function(chat) {
@@ -99,6 +113,10 @@ var ChatView = Backbone.View.extend({
 			this.emptyState = false;
 		}
 
+		var currentScrollTop = this.$chatScrollContainer.scrollTop(),
+			scrollHeight = this.$chatScrollContainer[0].scrollHeight - this.$chatScrollContainer.height(),
+			atBottom = (currentScrollTop >= scrollHeight - 40);
+
 		if (this.chats.indexOf(chat) === 0) {
 			this.$chatsContainer.append($chatElem);
 		} else {
@@ -110,7 +128,11 @@ var ChatView = Backbone.View.extend({
 			time: chat.get('time_created')
 		});
 
-		this.scrollToBottom();
+		if (atBottom) {
+			this.scrollToBottom();
+		}
+
+		this.trigger('infScrollLoaded');
 	},
 
 	newChat: function(ev) {
@@ -133,11 +155,9 @@ var ChatView = Backbone.View.extend({
 			time_created: new Date().toISOString()
 		});
 
-		//this.chats.add(chat);
 		chat.save({}, {
 			url: this.chats.url
 		});
-		//window.Vibe.faye.publish(that.chats.url, chat);
 
 		this.$input.val('');
 
@@ -145,11 +165,53 @@ var ChatView = Backbone.View.extend({
 	},
 
 	scrollToBottom: function() {
-		this.$chatsContainer.scrollTop(this.$chatsContainer[0].scrollHeight);
+		this.$chatScrollContainer.scrollTop(this.$chatScrollContainer[0].scrollHeight);
+	},
+
+	infScrollHandler: function() {
+		var that = this,
+			$scrollContainer = this.$chatScrollContainer,
+			prevScrollHeight,
+			newScrollHeight,
+			verticalOffset = 100;
+
+		$scrollContainer
+			.off('scroll.chatsInfScroll')
+			.on('scroll.chatsInfScroll', _.throttle(function() {
+				var targetScroll = verticalOffset,
+					currentScroll = $scrollContainer.scrollTop();
+
+				if (currentScroll <= targetScroll
+						&& !that.chats.currentlyFetching
+						&& !that.chats.atLastItem) {
+
+					that.once('infScrollLoaded', function() {
+						_.defer(function() {
+							newScrollHeight = $scrollContainer[0].scrollHeight;
+							var heightDiff = newScrollHeight - prevScrollHeight;
+							$scrollContainer.scrollTop($scrollContainer.scrollTop() + heightDiff);
+						});
+					});
+
+					prevScrollHeight = $scrollContainer[0].scrollHeight;
+					that.chats.getMore();
+				}
+			}, 16));
+	},
+
+	showLoader: function() {
+		this.$chatsLoaderContainer.html(this.loaderTemplate({ useDark: true }));
+	},
+
+	removeLoader: function() {
+		this.$chatsLoaderContainer.html('');
 	},
 
 	closeChat: function() {
 		this.trigger('remove');
+		_.delay(_.bind(function() {
+			this.remove();
+		}, this), 400);
 
 		return false;
 	}

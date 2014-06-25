@@ -9,7 +9,7 @@ var Chats = Backbone.Collection.extend({
 		return (Date.parse(a.get('time_created')) < Date.parse(b.get('time_created'))) ? 1 : -1;
 	},
 
-	getMore: function() {
+	getMore: function(cb) {
 		var lastModel = this.last(),
 			that = this;
 
@@ -24,6 +24,8 @@ var Chats = Backbone.Collection.extend({
 				that.currentlyFetching = false;
 				that.trigger('fetchingDone');
 				if (!data.length) that.atLastItem = true
+
+				cb && cb(model, data);
 			}
 		});
 	}
