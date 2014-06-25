@@ -6,7 +6,16 @@
 		{% endblock %}
 	</head>
 	<body>
-	  {% block content %}
-	  {% endblock %}
+		<script>
+			window.Vibe = window.Vibe || {};
+
+			window.Vibe.serverUrl = '/';
+			window.staticRoute = '/';
+			window.fayeServerRoute = 'http://localhost:8000/';
+
+			window.Vibe._data_ = {};
+		</script>
+		{% block content %}
+		{% endblock %}
 	</body>
 </html>
