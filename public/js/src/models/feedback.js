@@ -9,9 +9,11 @@ var Feedback = BaseModel.extend({
 		status: '',
 		body: '',
 		num_votes: 0,
-		num_unread_chats: 0,
-		chats_last_seen: [],
-		current_user_agreed: false
+		chat: {
+			chats_last_seen: {},
+			num_chats: 0,
+			current_user_agreed: false
+		}
 	},
 
 	approve: function() {

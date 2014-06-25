@@ -1,6 +1,7 @@
 // Module dependencies.
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
+	ChatRoomPlugin = require('./plugins/chatRoomPlugin'),
 	_ = require('underscore');
 
 // Feedback Schema
@@ -14,12 +15,7 @@ var FeedbackSchema = new Schema({
 	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	body: { type: String },
 	votes: { type: Array, default: [] },
-	chats_last_seen: { type: Schema.Types.Mixed, default: {} },
-	// chats_last_seen stores '<user_id>' -> 'num_votes when chat opened'
-	num_chats: { type: Number, default: 0 },
-	num_votes: { type: Number, default: 0 },
-	users_chatted: { type: [Schema.Types.ObjectId], ref: 'User', default: [] },
-	users_chatting: { type: [Schema.Types.ObjectId], ref: 'User', default: [] }
+	num_votes: { type: Number, default: 0 }
 });
 
 // Validations
@@ -58,46 +54,12 @@ FeedbackSchema.methods = {
 		return _.contains(_.map(this.votes, function(vote) {
 			return vote.toString();
 		}), userId.toString());
-	},
-
-	markChatEntered: function(req) {
-		var fbQueryObj = {
-			$set: {},
-			$push: {
-				users_chatting: req.user._id
-			}
-		};
-		fbQueryObj.$set['chats_last_seen.' + req.user._id] = this.num_chats;
-		this.update(fbQueryObj, function(err, numAffected, test) {});
-	},
-
-	leaveChat: function(req) {
-		var that = this;
-
-		this.update({ $pull: { 'users_chatting': req.user._id } }, function(err, numAffected) {});
-	},
-
-	incrementUnreadCountsAndMarkParticipation: function(req) {
-		var updateObj = {
-				$addToSet: {
-					users_chatted: req.user._id
-				},
-				$inc: {}
-			},
-			currentLastSeen = this.chats_last_seen,
-			currentChatting = _.map(this.users_chatting, function(userId) {
-				return userId.toString();
-			});
-
-		_.each(currentChatting, function(user) {
-			updateObj.$inc['chats_last_seen.' + user] = 1;
-		});
-		updateObj.$inc.num_chats = 1;
-
-		this.update(updateObj, function(err, numAffected) {});
 	}
 
-}
+};
+
+// Attach the chat room!
+FeedbackSchema.plugin(ChatRoomPlugin);
 
 mongoose.model('Feedback', FeedbackSchema);
 

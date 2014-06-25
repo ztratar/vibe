@@ -31,9 +31,9 @@ var FeedbackItemView = Backbone.View.extend({
 
 		this.model.on('destroy', this.remove, this);
 
-		var totalChats = this.model.get('feedback').get('num_chats'),
-			chatsLastSeen = this.model.get('feedback').get('chats_last_seen'),
-			myLastSeen = chatsLastSeen[window.Vibe.user.get('_id')];
+		var totalChats = this.model.get('feedback').get('chat').num_chats,
+			chatsLastSeen = this.model.get('feedback').get('chat').chats_last_seen,
+			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
 
 		if (myLastSeen) {
 			this.numUnread = totalChats - myLastSeen;
