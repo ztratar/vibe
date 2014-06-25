@@ -11,7 +11,12 @@
 
 			window.Vibe.serverUrl = '/';
 			window.staticRoute = '/';
+
+			{% if env == 'development' %}
 			window.fayeServerRoute = 'http://localhost:8000/';
+			{% else %}
+			window.fayeServerRoute = 'http://www.getvibe.com:8000/';
+			{% endif %}
 
 			window.Vibe._data_ = {};
 		</script>

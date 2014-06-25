@@ -64,7 +64,7 @@ var Notifications = Backbone.Collection.extend({
 
 		$.ajax({
 			type: 'PUT',
-			url: '/api/notifications/mark_read'
+			url: window.Vibe.serverUrl + 'api/notifications/mark_read'
 		});
 	}
 

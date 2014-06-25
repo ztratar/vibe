@@ -38,7 +38,7 @@ window.Vibe.run = function() {
 		}, function() {
 			var loginView = new LoginView({
 				loginCallback: function() {
-					renderView();
+					renderViews();
 				}
 			});
 			$('body').html(loginView.$el);

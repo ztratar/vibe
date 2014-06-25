@@ -8684,6 +8684,7 @@ html {
 }
 .home-info-wrapper .company-info-bar h1 img {
   max-width: 270px;
+  max-height: 82px;
 }
 @media (max-width: 480px) {
   .home-info-wrapper .company-info-bar h1 img {
