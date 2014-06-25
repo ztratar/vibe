@@ -31,6 +31,18 @@ var FeedbackItemView = Backbone.View.extend({
 
 		this.model.on('destroy', this.remove, this);
 
+		var totalChats = this.model.get('feedback').get('num_chats'),
+			chatsLastSeen = this.model.get('feedback').get('chats_last_seen'),
+			myLastSeen = chatsLastSeen[window.Vibe.user.get('_id')];
+
+		if (myLastSeen) {
+			this.numUnread = totalChats - myLastSeen;
+		} else {
+			this.numUnread = totalChats;
+		}
+
+		this.chatOpen = false;
+
 		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/vote_change', function(newNumVotes) {
 			that.model.get('feedback').set({
 				'num_votes': newNumVotes
@@ -41,13 +53,21 @@ var FeedbackItemView = Backbone.View.extend({
 				that.$score.removeClass('pop');
 			}, 500);
 		});
+
+		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/chats', function(newChat) {
+			if (!that.chatOpen) {
+				that.numUnread++;
+				that.render();
+			}
+		});
 	},
 
 	render: function() {
 		var modelJSON = this.model.toJSON();
 
 		this.$el.html(this.template({
-			model: modelJSON
+			model: modelJSON,
+			numUnread: this.numUnread
 		}));
 
 		this.$score = this.$('.score');
@@ -91,6 +111,15 @@ var FeedbackItemView = Backbone.View.extend({
 			chatsUrl: '/api/feedback/' + this.model.get('feedback').get('_id') + '/chats'
 		});
 		window.Vibe.appView.showOverlay(chatView);
+
+		this.chatOpen = true;
+		this.numUnread = 0;
+		this.render();
+
+		chatView.on('remove', _.bind(function() {
+			this.chatOpen = false;
+			this.model.get('feedback').leaveChat();
+		}, this));
 
 		return false;
 	},

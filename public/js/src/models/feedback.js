@@ -9,6 +9,8 @@ var Feedback = BaseModel.extend({
 		status: '',
 		body: '',
 		num_votes: 0,
+		num_unread_chats: 0,
+		chats_last_seen: [],
 		current_user_agreed: false
 	},
 
@@ -30,7 +32,7 @@ var Feedback = BaseModel.extend({
 
 		this.set({
 			'current_user_agreed': true,
-			'num_votes': currentVotes+1
+			'num_votes': currentVotes + 1
 		});
 
 		this.save({}, {
@@ -48,6 +50,12 @@ var Feedback = BaseModel.extend({
 
 		this.save({}, {
 			url: this.url() + '/undo_agree'
+		});
+	},
+
+	leaveChat: function() {
+		this.save({}, {
+			url: this.url() + '/leave_chat'
 		});
 	},
 

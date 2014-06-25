@@ -13,6 +13,8 @@ define("models/feedback",
     		status: '',
     		body: '',
     		num_votes: 0,
+    		num_unread_chats: 0,
+    		chats_last_seen: [],
     		current_user_agreed: false
     	},
 
@@ -34,7 +36,7 @@ define("models/feedback",
 
     		this.set({
     			'current_user_agreed': true,
-    			'num_votes': currentVotes+1
+    			'num_votes': currentVotes + 1
     		});
 
     		this.save({}, {
@@ -52,6 +54,12 @@ define("models/feedback",
 
     		this.save({}, {
     			url: this.url() + '/undo_agree'
+    		});
+    	},
+
+    	leaveChat: function() {
+    		this.save({}, {
+    			url: this.url() + '/leave_chat'
     		});
     	},
 

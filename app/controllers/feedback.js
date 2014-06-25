@@ -35,6 +35,8 @@ exports.loadFeedback = function(req, res, next, id) {
  * feedbacks.
  */
 exports.pending = function(req, res) {
+	if (!req.user) return helpers.sendError(res, 'Not logged in');
+
 	Async.waterfall([function(cb) {
 		if (req.user.isAdmin) {
 			Feedback.find({
@@ -79,6 +81,8 @@ exports.getChats = function(req, res, next){
 		queryObj._id = { $lt: mongoose.Types.ObjectId(beforeId[1]) };
 	}
 
+	req.feedback.markChatEntered(req);
+
 	Chat
 		.find(queryObj)
 		.limit(10)
@@ -87,6 +91,16 @@ exports.getChats = function(req, res, next){
 			if (err) return helpers.sendError(res, err);
 			res.send(200, _.map(chats, function(chat) { return chat.stripInfo(); }));
 		});
+};
+
+/*
+ * PUT /api/feedback/:feedback/leave_chat
+ *
+ * Marks that the user has left the chat room
+ */
+exports.leaveChatRoom = function(req, res, next) {
+	req.feedback.leaveChat(req);
+	res.send(req.feedback.stripInfo());
 };
 
 /*
@@ -108,7 +122,11 @@ exports.newChat = function(req, res, next){
 		body: req.body.body
 	}, function(err, chat) {
 		if (err) return helpers.sendError(res, err);
+
+		req.feedback.incrementUnreadCountsAndMarkParticipation(req);
+
 		live.send('/api/feedback/' + req.feedback._id + '/chats', chat);
+
 		res.send(chat.stripInfo());
 	});
 };

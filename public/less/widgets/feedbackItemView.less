@@ -68,8 +68,25 @@
 			}
 
 			&.discuss {
+				position: relative;
 				border-left: 1px solid rgba(0, 0, 0, 0.08);
 				border-radius: 0 0 @border-radius-large 0;
+				.transition(all 0.24s ease-in-out);
+
+				&.with-unread {
+					padding: 20px 95px 20px 20px;
+				}
+
+				span.unread-chats {
+					background: rgba(185, 61, 61, 0.94);
+					border-radius: 4px;
+					color: rgba(255, 255, 255, 0.91);
+					position: absolute;
+					top: 19px;
+					right: 18px;
+					font-size: 16px;
+					padding: 4px 9px;
+				}
 			}
 
 			&.agreed {

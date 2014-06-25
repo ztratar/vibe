@@ -21,8 +21,18 @@
 		Agree
 	</a>
 	<% } %>
+	<% if (numUnread > 0) { %>
+	<a href="#" class="btn discuss with-unread">
+		<i class="icon">&#61704;</i>
+		Discuss
+		<span class="unread-chats">
+			<%- numUnread %> new
+		</span>
+	</a>
+	<% } else { %>
 	<a href="#" class="btn discuss">
 		<i class="icon">&#61704;</i>
 		Discuss
 	</a>
+	<% } %>
 </div>
