@@ -8522,45 +8522,33 @@ html {
   top: 16px;
   right: 24px;
 }
-<<<<<<< HEAD
 @media (max-width: 480px) {
   .chat-view .form-inline button {
     top: 8px;
     right: 7px;
   }
 }
-.chat-view .chats-container {
-=======
 .chat-view .chat-scroll-container {
->>>>>>> development
   padding: 16px 24px;
   overflow-y: scroll;
   height: calc(100% - 137px);
 }
-<<<<<<< HEAD
 @media (max-width: 480px) {
-  .chat-view .chats-container {
+  .chat-view .chat-scroll-container {
     height: calc(100% - 100px);
     padding: 8px;
   }
 }
-.chat-view .chats-container .chat-item {
+.chat-view .chat-scroll-container .chat-item {
   position: relative;
   padding: 12px 0;
 }
 @media (max-width: 480px) {
-  .chat-view .chats-container .chat-item {
+  .chat-view .chat-scroll-container .chat-item {
     padding: 8px 0;
   }
 }
-.chat-view .chats-container .chat-item img {
-=======
-.chat-view .chat-scroll-container .chats-container .chat-item {
-  position: relative;
-  padding: 12px 0;
-}
-.chat-view .chat-scroll-container .chats-container .chat-item img {
->>>>>>> development
+.chat-view .chat-scroll-container .chat-item img {
   width: 58px;
   height: 58px;
   border-radius: 100px;
@@ -8569,17 +8557,13 @@ html {
   top: 12px;
   left: 0;
 }
-<<<<<<< HEAD
 @media (max-width: 480px) {
-  .chat-view .chats-container .chat-item img {
+  .chat-view .chat-scroll-container .chat-item img {
     width: 32px;
     height: 32px;
   }
 }
-.chat-view .chats-container .chat-item .chat-bubble {
-=======
-.chat-view .chat-scroll-container .chats-container .chat-item .chat-bubble {
->>>>>>> development
+.chat-view .chat-scroll-container .chat-item .chat-bubble {
   margin: 0 0 0 80px;
   border-radius: 6px;
   background: #2f557c;
@@ -8588,31 +8572,37 @@ html {
   padding: 10px 14px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
-<<<<<<< HEAD
 @media (max-width: 480px) {
-  .chat-view .chats-container .chat-item .chat-bubble {
+  .chat-view .chat-scroll-container .chat-item .chat-bubble {
     margin-left: 48px;
   }
 }
-.chat-view .chats-container .chat-item .chat-bubble p {
-=======
-.chat-view .chat-scroll-container .chats-container .chat-item .chat-bubble p {
->>>>>>> development
+.chat-view .chat-scroll-container .chat-item .chat-bubble p {
   margin: 0 0 4px;
   font-size: 16px;
   color: white;
 }
-<<<<<<< HEAD
 @media (max-width: 480px) {
-  .chat-view .chats-container .chat-item .chat-bubble p {
+  .chat-view .chat-scroll-container .chat-item .chat-bubble p {
     font-size: 14px;
     line-height: 17px;
   }
 }
-.chat-view .chats-container .chat-item .chat-bubble span {
-=======
-.chat-view .chat-scroll-container .chats-container .chat-item .chat-bubble span {
->>>>>>> development
+.chat-view .chat-scroll-container .chat-item .chat-bubble .chat-bubble {
+  margin: 0 0 0 80px;
+  border-radius: 6px;
+  background: #2f557c;
+  color: white;
+  text-align: left;
+  padding: 10px 14px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+.chat-view .chat-scroll-container .chat-item .chat-bubble .chat-bubble p {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: white;
+}
+.chat-view .chat-scroll-container .chat-item .chat-bubble .chat-bubble span {
   display: block;
   font-size: 11px;
   color: white;
@@ -9449,6 +9439,14 @@ html {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin-top: 32px;
   color: rgba(255, 255, 255, 0.7);
+}
+@media (max-width: 480px) {
+  .bottom-links {
+    font-size: 12px;
+  }
+}
+.login-view {
+  margin: 80px 18px 0;
 }
 .manage-team-view .settings-group {
   text-align: left;
@@ -10327,6 +10325,12 @@ html {
   padding: 50px 0;
   margin-top: 10px;
 }
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty {
+    margin-top: 70px;
+    padding: 20px 0;
+  }
+}
 .posts-view-wrap .posts-view-empty .media {
   text-align: left;
   max-width: 526px;
@@ -10338,15 +10342,33 @@ html {
   line-height: 151px;
   color: #e9aa4b;
 }
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty .media i {
+    font-size: 100px;
+    height: 120px;
+    line-height: 131px;
+    width: 90px;
+  }
+}
 .posts-view-wrap .posts-view-empty .media h4 {
   font-size: 32px;
   font-weight: 600;
   opacity: 0.8;
   margin-top: 10px;
 }
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty .media h4 {
+    font-size: 18px;
+  }
+}
 .posts-view-wrap .posts-view-empty .media p {
   font-size: 18px;
   opacity: 0.3;
+}
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty .media p {
+    font-size: 12px;
+  }
 }
 ul.posts-view {
   list-style: none;

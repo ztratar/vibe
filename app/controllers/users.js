@@ -315,6 +315,21 @@ exports.get = function(req, res, next){
 	});
 };
 
+
+/*
+ * GET /api/users/me
+ *
+ * Get the current user
+ */
+exports.getCurrentUser = function(req, res, next){
+	if (!req.user) {
+		return helpers.sendError(res, "You're not logged in");
+	} else {
+		res.send(req.user.stripInfo());
+	}
+};
+
+
 /*
  * GET /api/users/pending
  *

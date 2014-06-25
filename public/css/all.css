@@ -8720,7 +8720,7 @@ html {
 }
 @media (max-width: 480px) {
   .post-wrapper .new-post.with-polls {
-    width: calc(100% - 57px);
+    width: calc(100% - 58px);
   }
   .post-wrapper .new-post.with-polls span {
     display: none;
@@ -9439,6 +9439,14 @@ html {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin-top: 32px;
   color: rgba(255, 255, 255, 0.7);
+}
+@media (max-width: 480px) {
+  .bottom-links {
+    font-size: 12px;
+  }
+}
+.login-view {
+  margin: 80px 18px 0;
 }
 .manage-team-view .settings-group {
   text-align: left;
@@ -10317,6 +10325,12 @@ html {
   padding: 50px 0;
   margin-top: 10px;
 }
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty {
+    margin-top: 70px;
+    padding: 20px 0;
+  }
+}
 .posts-view-wrap .posts-view-empty .media {
   text-align: left;
   max-width: 526px;
@@ -10328,15 +10342,33 @@ html {
   line-height: 151px;
   color: #e9aa4b;
 }
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty .media i {
+    font-size: 100px;
+    height: 120px;
+    line-height: 131px;
+    width: 90px;
+  }
+}
 .posts-view-wrap .posts-view-empty .media h4 {
   font-size: 32px;
   font-weight: 600;
   opacity: 0.8;
   margin-top: 10px;
 }
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty .media h4 {
+    font-size: 18px;
+  }
+}
 .posts-view-wrap .posts-view-empty .media p {
   font-size: 18px;
   opacity: 0.3;
+}
+@media (max-width: 480px) {
+  .posts-view-wrap .posts-view-empty .media p {
+    font-size: 12px;
+  }
 }
 ul.posts-view {
   list-style: none;

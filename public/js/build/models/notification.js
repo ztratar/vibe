@@ -6,7 +6,7 @@ define("models/notification",
 
     var Notification = BaseModel.extend({
 
-    	urlRoot: '/api/notifications',
+    	urlRoot: window.Vibe.serverUrl + 'api/notifications',
 
     	defaults: {
     		time_created: new Date(),

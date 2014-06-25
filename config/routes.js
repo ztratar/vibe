@@ -24,6 +24,7 @@ module.exports = function (app, passport) {
 	// API ENDPOINTS
 	//
 	app.get('/api/users', c.users.get);
+	app.get('/api/users/me', c.users.getCurrentUser);
 	app.get('/api/users/pending', c.users.getPending);
 	app.get('/api/meta_questions', c.meta_questions.index);
 	app.get('/api/meta_questions/suggested', c.meta_questions.suggested);

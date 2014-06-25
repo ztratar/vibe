@@ -6,7 +6,7 @@ define("models/chat",
 
     var Chat = BaseModel.extend({
 
-    	urlRoot: '/api/chats',
+    	urlRoot: window.Vibe.serverUrl + 'api/chats',
 
     	defaults: {
     		user: {},

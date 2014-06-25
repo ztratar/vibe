@@ -12,9 +12,17 @@
 </head>
 	<body>
 		<script>
-			window.staticRoute = window.location.pathname.replace('index.html', '');	
+			window.Vibe = window.Vibe || {};
+
+			window.Vibe.serverUrl = 'http://localhost:3000/';
+			window.staticRoute = window.location.pathname.replace('index.html', '');
+			window.fayeServerRoute = 'http://localhost:8000/';
+
+			window.Vibe._data_ = {};
+
+			window.isCordova = true;
 		</script>
         <script type="text/javascript" src="cordova.js"></script>
-		<script data-main="js/build/start" src="js/libs/require.js"></script>
+		<script data-main="js/build/start-cordova" src="js/libs/require.js"></script>
 	</body>
 </html>

@@ -7,7 +7,7 @@ define("models/question",
 
     var Question = BaseModel.extend({
 
-    	urlRoot: '/api/questions',
+    	urlRoot: window.Vibe.serverUrl + 'api/questions',
 
     	defaults: {
     		_id: undefined,

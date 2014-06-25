@@ -2,7 +2,7 @@
 
 <% if (company.cover) { %>
 <div class="home-info-wrapper with-bg">
-	<div class="bg-image" style="background-image: url('<%= company.cover %>')"></div>
+	<div class="bg-image" style="background-image: url('<%= window.staticRoute + company.cover %>')"></div>
 <% } else { %>
 <div class="home-info-wrapper">
 <% } %>
@@ -11,7 +11,7 @@
 			<div>
 				<h1>
 					<% if (company.logo) { %>
-					<img src="<%= company.logo %>">
+					<img src="<%= window.staticRoute + company.logo %>">
 					<% } else { %>
 					<%- company.name %>
 					<% } %>

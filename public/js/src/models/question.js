@@ -3,7 +3,7 @@ import Answer from 'models/answer';
 
 var Question = BaseModel.extend({
 
-	urlRoot: '/api/questions',
+	urlRoot: window.Vibe.serverUrl + 'api/questions',
 
 	defaults: {
 		_id: undefined,

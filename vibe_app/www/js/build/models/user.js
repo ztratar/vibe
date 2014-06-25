@@ -6,7 +6,7 @@ define("models/user",
 
     var User = BaseModel.extend({
 
-    	urlRoot: '/api/users',
+    	urlRoot: window.Vibe.serverUrl + 'api/users',
 
     	defaults: {
     		name: '',
@@ -40,6 +40,22 @@ define("models/user",
     	removeAdmin: function() {
     		this.save({
     			isAdmin: false
+    		});
+    	},
+
+    	fetchCurrentUser: function(cb, errorCb) {
+    		this.fetch({
+    			url: window.Vibe.serverUrl + 'api/users/me',
+    			success: function(model, data) {
+    				if (typeof cb === 'function') {
+    					cb(model, data);
+    				}
+    			},
+    			error: function(data) {
+    				if (typeof errorCb === 'function') {
+    					errorCb(data);
+    				}
+    			}
     		});
     	}
 

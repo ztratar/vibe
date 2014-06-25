@@ -16,7 +16,7 @@ define("views/feedbackApprovalView",
 
     	initialize: function(opts) {
     		this.feedback = new Feedbacks();
-    		this.feedback.url = '/api/feedback/pending';
+    		this.feedback.url = window.Vibe.serverUrl + 'api/feedback/pending';
 
     		this.feedback.on('reset', this.render, this);
     		this.feedback.on('add', this.addOne, this);

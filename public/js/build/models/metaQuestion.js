@@ -6,7 +6,7 @@ define("models/metaQuestion",
 
     var MetaQuestion = BaseModel.extend({
 
-    	urlRoot: '/api/meta_questions',
+    	urlRoot: window.Vibe.serverUrl + 'api/meta_questions',
 
     	defaults: {
     		_id: '',

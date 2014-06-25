@@ -29,7 +29,7 @@ define("views/AppView",
     		this.origPageTitle = document.title;
 
     		this.notifications = new Notifications();
-    		this.notifications.url = '/api/notifications';
+    		this.notifications.url = window.Vibe.serverUrl + 'api/notifications';
 
     		this.headerView = new HeaderView();
     		this.notificationsView = new NotificationsView({

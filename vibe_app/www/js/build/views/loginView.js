@@ -1,0 +1,76 @@
+define("views/loginView", 
+  ["backbone","underscore","text!templates/loginView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
+    "use strict";
+
+    var template = __dependency3__;
+
+    var LoginView = Backbone.View.extend({
+
+    	className: 'login-view',
+
+    	template: _.template(template),
+
+    	events: {
+    		'submit form': 'submitLogin',
+    		'click button': 'submitLogin'
+    	},
+
+    	initialize: function(opts) {
+    		if (opts && opts.loginCallback) {
+    			this.loginCallback = opts.loginCallback;
+    		}
+    	},
+
+    	render: function() {
+    		this.$el.html(this.template());
+
+    		return this;
+    	},
+
+    	submitLogin: function() {
+    		debugger;
+
+    		var that = this,
+    			email = this.$('input[name="email"]').val(),
+    			password = this.$('input[name="password"]').val(),
+    			$error = this.$('.alert-danger');
+
+    		$error.html('').hide();
+
+    		if (!email.length) {
+    			$error.html('Please enter an email').show();
+    			return false;
+    		}
+
+    		if (!password.length) {
+    			$error.html('Please enter a password').show();
+    			return false;
+    		}
+
+    		$.ajax({
+    			type: 'POST',
+    			url: window.Vibe.serverUrl + 'api/login',
+    			data:{
+    				email: email,
+    				password: password
+    			},
+    			success: function(d) {
+    				if (d.error) {
+    					$error.html(d.error).show();
+    					return false;
+    				}
+
+    				if (typeof that.loginCallback === 'function') {
+    					that.loginCallback(d);
+    				}
+    			}
+    		});
+
+    		return false;
+    	}
+
+    });
+
+    __exports__["default"] = LoginView;
+  });

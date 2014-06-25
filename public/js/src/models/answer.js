@@ -3,7 +3,7 @@ import BaseModel from 'models/baseModel';
 var Answer = BaseModel.extend({
 
 	urlRoot: function() {
-		return '/api/questions/' + this.get('question') + '/answers';
+		return window.Vibe.serverUrl + 'api/questions/' + this.get('question') + '/answers';
 	},
 
 	defaults: {

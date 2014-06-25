@@ -6,7 +6,7 @@ define("models/feedback",
 
     var Feedback = BaseModel.extend({
 
-    	urlRoot: '/api/feedback',
+    	urlRoot: window.Vibe.serverUrl + 'api/feedback',
 
     	defaults: {
     		time_created: new Date(),

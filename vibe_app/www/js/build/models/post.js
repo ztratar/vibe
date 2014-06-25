@@ -8,7 +8,7 @@ define("models/post",
 
     var Post = BaseModel.extend({
 
-    	urlRoot: '/api/posts',
+    	urlRoot: window.Vibe.serverUrl + 'api/posts',
 
     	defaults: {
     		time_created: new Date(),
