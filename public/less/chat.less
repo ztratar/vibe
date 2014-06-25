@@ -174,32 +174,20 @@
 					}
 				}
 
-				.chat-bubble {
-					margin: 0 0 0 80px;
-					border-radius: @border-radius-large;
-					background: @vibe-light;
+				span {
+					display: block;
+					font-size: 11px;
 					color: white;
-					text-align: left;
-					padding: 10px 14px;
-					.stdBoxShadow();
-
-					p {
-						margin: 0 0 4px;
-						font-size: 16px;
-						color: white;
-					}
-
-					span {
-						display: block;
-						font-size: 11px;
-						color: white;
-						opacity: 0.4;
-					}
+					opacity: 0.4;
 				}
 			}
 		}
 
 		.chat-empty-state {
+			position: absolute;
+			top: 0;
+			left: 0;
+
 			.media {
 				margin: 0 auto;
 				width: 420px;
@@ -225,6 +213,26 @@
 				p {
 					font-size: 20px;
 					opacity: .3;
+				}
+
+				@media (max-width: @screen-xs) {
+					width: 280px;
+
+					i {
+						font-size: 60px;
+						margin-right: 18px;
+						height: 74px;
+						line-height: 87px;
+					}
+
+					h4 {
+						font-size: 18px;
+						line-height: 22px;
+					}
+
+					p {
+						font-size: 14px;
+					}
 				}
 			}
 		}
