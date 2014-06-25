@@ -1,6 +1,6 @@
 define("views/postQuestionItemView", 
-  ["backbone","underscore","views/confirmDialogView","views/timeSeriesChartView","views/chatView","views/ratingChartView","text!templates/postQuestionItemView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __exports__) {
+  ["backbone","underscore","views/confirmDialogView","views/timeSeriesChartView","views/chatView","views/ratingChartView","text!templates/postQuestionItemView.html","text!templates/postQuestionItemActionBar.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
     "use strict";
     var ConfirmDialogView = __dependency3__["default"];
     var TimeSeriesChartView = __dependency4__["default"];
@@ -8,6 +8,7 @@ define("views/postQuestionItemView",
     var RatingChartView = __dependency6__["default"];
 
     var template = __dependency7__;
+    var actionBarTemplate = __dependency8__;
 
     var PostQuestionItemView = Backbone.View.extend({
 
@@ -16,6 +17,7 @@ define("views/postQuestionItemView",
     	className: 'post-question-item-view',
 
     	template: _.template(template),
+    	actionBarTemplate: _.template(actionBarTemplate),
 
     	events: {
     		'click ul.answers a': 'vote',
@@ -31,19 +33,21 @@ define("views/postQuestionItemView",
 
     	render: function() {
     		this.$el.html(this.template({
-    			model: this.model.toJSON(),
-    			numUnread: this.numUnread
+    			model: this.model.toJSON()
     		}));
 
     		this.$voteResultsContainer = this.$('.vote-results-container');
     		this.$chartContainer = this.$('.chart-container');
-    		this.$discussContainer = this.$('.action-bar');
+    		this.$actionBarContainer = this.$('.action-bar');
 
     		this.renderChart();
+    		this.renderActionBar();
     	},
 
-    	renderDiscussButton: function() {
-
+    	renderActionBar: function() {
+    		this.$actionBarContainer.html(this.actionBarTemplate({
+    			numUnread: this.numUnread
+    		}));
     	},
 
     	renderChart: function() {
@@ -107,7 +111,7 @@ define("views/postQuestionItemView",
     		window.Vibe.faye.subscribe('/api/questions/' + this.model.get('question').get('_id') + '/chats', function(newChat) {
     			if (!that.chatOpen) {
     				that.numUnread++;
-    				that.render();
+    				that.renderActionBar();
     			}
     		});
     	},
@@ -115,7 +119,7 @@ define("views/postQuestionItemView",
     	markChatOpened: function() {
     		this.chatOpen = true;
     		this.numUnread = 0;
-    		this.render();
+    		this.renderActionBar();
 
     		this.chatView.on('remove', _.bind(function() {
     			this.chatOpen = false;
