@@ -18,6 +18,16 @@
 			transform: translate3d(0, 10px, 0) scale(0.96, 0.96);
 	.transition(all 0.14s ease-out);
 
+	@media (max-width: @screen-xs) {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		margin: 0 auto;
+		height: 100%;
+	}
+
 	.chat-header {
 		position: absolute;
 		top: 0;
@@ -36,6 +46,11 @@
 			.x-icon-wrap;
 			background: #18191B;
 
+			@media (max-width: @screen-xs) {
+				top: 9px;
+				right: 9px;
+			}
+
 			&:hover {
 				background: #1D1E20;
 			}
@@ -52,6 +67,10 @@
 		background: #292D31;
 		.stdBoxShadow();
 
+		@media (max-width: @screen-xs) {
+			top: auto;
+		}
+
 		img {
 			width: 58px;
 			height: 58px;
@@ -60,6 +79,13 @@
 			position: absolute;
 			top: 14px;
 			left: 24px;
+
+			@media (max-width: @screen-xs) {
+				width: 32px;
+				height: 32px;
+				top: 8px;
+				left: 8px;
+			}
 		}
 
 		.form-group {
@@ -67,6 +93,10 @@
 			display: block;
 			vertical-align: middle;
 			width: auto;
+
+			@media (max-width: @screen-xs) {
+				margin: 0 66px 0 38px;
+			}
 		}
 
 		input {
@@ -79,6 +109,11 @@
 			position: absolute;
 			top: 16px;
 			right: 24px;
+
+			@media (max-width: @screen-xs) {
+				top: 8px;
+				right: 7px;
+			}
 		}
 	}
 
@@ -87,9 +122,18 @@
 		overflow-y: scroll;
 		height: calc(~"100% - 137px");
 
+		@media (max-width: @screen-xs) {
+			height: calc(~"100% - 100px");
+			padding: 8px;
+		}
+
 		.chat-item {
 			position: relative;
 			padding: 12px 0;
+
+			@media (max-width: @screen-xs) {
+				padding: 8px 0;
+			}
 
 			img {
 				width: 58px;
@@ -99,6 +143,11 @@
 				position: absolute;
 				top: 12px;
 				left: 0;
+
+				@media (max-width: @screen-xs) {
+					width: 32px;
+					height: 32px;
+				}
 			}
 
 			.chat-bubble {
@@ -110,10 +159,19 @@
 				padding: 10px 14px;
 				.stdBoxShadow();
 
+				@media (max-width: @screen-xs) {
+					margin-left: 48px;
+				}
+
 				p {
 					margin: 0 0 4px;
 					font-size: 16px;
 					color: white;
+
+					@media (max-width: @screen-xs) {
+						font-size: 14px;
+						line-height: 17px;
+					}
 				}
 
 				span {

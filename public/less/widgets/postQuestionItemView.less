@@ -29,28 +29,28 @@
 				left: 0;
 				bottom: 50%;
 				right: 50%;
-				margin: 0 10px 10px 0;
+				margin: 0 8px 8px 0;
 			}
 			&.top-right {
 				top: 0;
 				right: 0;
 				bottom: 50%;
 				left: 50%;
-				margin: 0 0 10px 10px;
+				margin: 0 0 8px 8px;
 			}
 			&.bottom-left {
 				top: 50%;
 				left: 0;
 				bottom: 0;
 				right: 50%;
-				margin: 10px 10px 0 0;
+				margin: 8px 8px 0 0;
 			}
 			&.bottom-right {
 				top: 50%;
 				right: 0;
 				bottom: 0;
 				left: 50%;
-				margin: 10px 0 0 10px;
+				margin: 8px 0 0 8px;
 			}
 
 			a {
@@ -80,8 +80,8 @@
 						height: 72px;
 
 						@media (max-width: @screen-xs) {
-							width: 38px;
-							height: 38px;
+							width: 46px;
+							height: 46px;
 						}
 					}
 
@@ -124,7 +124,7 @@
 		position: relative;
 
 		@media (max-width: 550px) {
-			height: 200px;
+			height: 160px;
 		}
 
 		&.voted {
@@ -157,6 +157,7 @@
 			float: left;
 			color: white;
 			padding: 20px;
+			padding: 14px 26px 14px 14px;
 			font-size: 20px;
 
 			i {
@@ -170,13 +171,13 @@
 
 			&.with-unread {
 				@media (max-width: @screen-xs) {
-					padding: 20px 95px 20px 20px;
+					padding: 14px 26px 14px 14px;
 				}
 			}
 
 			@media (max-width: @screen-xs) {
-				font-size: 16px;
-				padding: 14px;
+				font-size: 18px;
+				padding: 14px 14px 16px;
 
 				i {
 					font-size: 24px;
@@ -190,10 +191,21 @@
 				border-radius: 4px;
 				color: rgba(255, 255, 255, 0.91);
 				position: absolute;
-				top: 19px;
-				right: 18px;
+				top: 14px;
+				right: 14px;
 				font-size: 16px;
 				padding: 4px 9px;
+
+				@media (max-width: @screen-xs) {
+					font-size: 14px;
+					top: 16px;
+					right: 14px;
+					padding: 2px 7px;
+
+					span {
+						display: none;
+					}
+				}
 			}
 		}
 	}

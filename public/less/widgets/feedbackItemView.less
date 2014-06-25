@@ -75,6 +75,14 @@
 
 				&.with-unread {
 					padding: 20px 95px 20px 20px;
+
+					@media (max-width: @screen-xs) {
+						padding: 14px 30px 14px 0;
+
+						i {
+							margin-right: 3px;
+						}
+					}
 				}
 
 				span.unread-chats {
@@ -86,6 +94,17 @@
 					right: 18px;
 					font-size: 16px;
 					padding: 4px 9px;
+
+					@media (max-width: @screen-xs) {
+						font-size: 14px;
+						top: 15px;
+						right: 9px;
+						padding: 2px 7px;
+
+						span {
+							display: none;
+						}
+					}
 				}
 			}
 
@@ -94,7 +113,7 @@
 			}
 
 			@media (max-width: @screen-xs) {
-				font-size: 16px;
+				font-size: 18px;
 				padding: 14px;
 
 				i {

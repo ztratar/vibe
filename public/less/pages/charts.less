@@ -6,6 +6,10 @@
 		height: 100%;
 	}
 
+	@media (max-width: @screen-xs) {
+		margin: 0 42px 0 0;
+	}
+
 	svg {
 		display: block;
 		margin: 0 auto;
@@ -50,6 +54,10 @@
 
 	text {
 		fill: rgba(255, 255, 255, 0.6);
+
+		@media (max-width: @screen-xs) {
+			font-size: 12px;
+		}
 	}
 }
 
@@ -105,5 +113,11 @@
 	@media (max-width: 550px) {
 		width: 70px;
 		font-size: 18px;
+	}
+
+	@media (max-width: @screen-xs) {
+		width: 54px;
+		font-size: 16px;
+		padding: 4px 0 6px;
 	}
 }

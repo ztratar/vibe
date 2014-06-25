@@ -8550,7 +8550,7 @@ html {
 }
 @media (max-width: 480px) {
   .home-info-wrapper {
-    height: 164px;
+    height: 238px;
   }
 }
 .home-info-wrapper.with-bg {
@@ -8574,7 +8574,7 @@ html {
 }
 @media (max-width: 480px) {
   .home-info-wrapper .company-info-bar {
-    height: 106px;
+    height: 126px;
   }
 }
 .home-info-wrapper .company-info-bar h1 {
@@ -8584,6 +8584,11 @@ html {
 }
 .home-info-wrapper .company-info-bar h1 img {
   max-width: 270px;
+}
+@media (max-width: 480px) {
+  .home-info-wrapper .company-info-bar h1 img {
+    max-width: 190px;
+  }
 }
 .post-wrapper {
   padding: 0;
@@ -8615,7 +8620,7 @@ html {
 }
 @media (max-width: 480px) {
   .post-wrapper .new-post.with-polls {
-    width: calc(100% - 53px);
+    width: calc(100% - 57px);
   }
   .post-wrapper .new-post.with-polls span {
     display: none;
@@ -8634,7 +8639,7 @@ html {
 @media (max-width: 480px) {
   .post-wrapper .manage-polls {
     padding: 8px 5px 8px 10px;
-    margin-left: 6px;
+    margin-left: 10px;
   }
   .post-wrapper .manage-polls span {
     display: none;
@@ -8664,6 +8669,11 @@ html {
 @media (max-width: 550px) {
   .time-series-chart-view {
     height: 100%;
+  }
+}
+@media (max-width: 480px) {
+  .time-series-chart-view {
+    margin: 0 42px 0 0;
   }
 }
 .time-series-chart-view svg {
@@ -8708,6 +8718,11 @@ html {
 }
 .time-series-chart-view text {
   fill: rgba(255, 255, 255, 0.6);
+}
+@media (max-width: 480px) {
+  .time-series-chart-view text {
+    font-size: 12px;
+  }
 }
 .rating-chart-view rect {
   fill: #F8EEDF;
@@ -8761,6 +8776,13 @@ html {
   .percentage-tooltip {
     width: 70px;
     font-size: 18px;
+  }
+}
+@media (max-width: 480px) {
+  .percentage-tooltip {
+    width: 54px;
+    font-size: 16px;
+    padding: 4px 0 6px;
   }
 }
 @keyframes bounceHit {
@@ -10261,7 +10283,7 @@ ul.posts-view li h4 {
 @media (max-width: 480px) {
   ul.posts-view li h4 {
     font-size: 18px;
-    padding: 24px 32px;
+    padding: 22px 18px;
   }
 }
 ul.posts-view li.feedback-item-view h4 {
@@ -10394,28 +10416,28 @@ ul.posts-view li.feedback-item-view h4 {
   left: 0;
   bottom: 50%;
   right: 50%;
-  margin: 0 10px 10px 0;
+  margin: 0 8px 8px 0;
 }
 .post-question-item-view ul.answers li.top-right {
   top: 0;
   right: 0;
   bottom: 50%;
   left: 50%;
-  margin: 0 0 10px 10px;
+  margin: 0 0 8px 8px;
 }
 .post-question-item-view ul.answers li.bottom-left {
   top: 50%;
   left: 0;
   bottom: 0;
   right: 50%;
-  margin: 10px 10px 0 0;
+  margin: 8px 8px 0 0;
 }
 .post-question-item-view ul.answers li.bottom-right {
   top: 50%;
   right: 0;
   bottom: 0;
   left: 50%;
-  margin: 10px 0 0 10px;
+  margin: 8px 0 0 8px;
 }
 .post-question-item-view ul.answers li a {
   display: table;
@@ -10445,8 +10467,8 @@ ul.posts-view li.feedback-item-view h4 {
 }
 @media (max-width: 480px) {
   .post-question-item-view ul.answers li a div img {
-    width: 38px;
-    height: 38px;
+    width: 46px;
+    height: 46px;
   }
 }
 .post-question-item-view ul.answers li a div h3 {
@@ -10486,7 +10508,7 @@ ul.posts-view li.feedback-item-view h4 {
 }
 @media (max-width: 550px) {
   .post-question-item-view .vote-results-container {
-    height: 200px;
+    height: 160px;
   }
 }
 .post-question-item-view .vote-results-container.voted ul.answers {
@@ -10518,6 +10540,7 @@ ul.posts-view li.feedback-item-view h4 {
   float: left;
   color: white;
   padding: 20px;
+  padding: 14px 26px 14px 14px;
   font-size: 20px;
 }
 .post-question-item-view .action-bar a.btn i {
@@ -10529,13 +10552,13 @@ ul.posts-view li.feedback-item-view h4 {
 }
 @media (max-width: 480px) {
   .post-question-item-view .action-bar a.btn.with-unread {
-    padding: 20px 95px 20px 20px;
+    padding: 14px 26px 14px 14px;
   }
 }
 @media (max-width: 480px) {
   .post-question-item-view .action-bar a.btn {
-    font-size: 16px;
-    padding: 14px;
+    font-size: 18px;
+    padding: 14px 14px 16px;
   }
   .post-question-item-view .action-bar a.btn i {
     font-size: 24px;
@@ -10552,6 +10575,16 @@ ul.posts-view li.feedback-item-view h4 {
   right: 18px;
   font-size: 16px;
   padding: 4px 9px;
+}
+@media (max-width: 480px) {
+  .post-question-item-view .action-bar a.btn span.unread-chats {
+    font-size: 14px;
+    top: 12px;
+    right: 12px;
+  }
+  .post-question-item-view .action-bar a.btn span.unread-chats span {
+    display: none;
+  }
 }
 .feedback-item-view {
   background: #5388be;
@@ -10638,12 +10671,22 @@ ul.posts-view li.feedback-item-view h4 {
   font-size: 16px;
   padding: 4px 9px;
 }
+@media (max-width: 480px) {
+  .feedback-item-view .action-bar a.btn.discuss span.unread-chats {
+    font-size: 14px;
+    top: 14px;
+    right: 14px;
+  }
+  .feedback-item-view .action-bar a.btn.discuss span.unread-chats span {
+    display: none;
+  }
+}
 .feedback-item-view .action-bar a.btn.agreed {
   background: #67C481;
 }
 @media (max-width: 480px) {
   .feedback-item-view .action-bar a.btn {
-    font-size: 16px;
+    font-size: 18px;
     padding: 14px;
   }
   .feedback-item-view .action-bar a.btn i {

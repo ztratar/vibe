@@ -19,7 +19,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 	},
 
 	smallChartSettings: {
-		chartMargin: 40,
+		chartMargin: 24,
 		chartBottomMargin: 24,
 		maxRating: 4
 	},
