@@ -1,14 +1,12 @@
 define("views/questionPickerView", 
-  ["backbone","models/question","models/questions","models/metaQuestions","text!templates/questionPickerView.html","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __exports__) {
+  ["backbone","models/question","models/questions","text!templates/questionPickerView.html","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
 
     var Question = __dependency2__["default"];
-
     var Questions = __dependency3__["default"];
-    var MetaQuestions = __dependency4__["default"];
 
-    var template = __dependency5__;
+    var template = __dependency4__;
 
     var QuestionPickerView = Backbone.View.extend({
 
@@ -23,13 +21,44 @@ define("views/questionPickerView",
     	},
 
     	initialize: function() {
-    		this.suggestedQuestions = new MetaQuestions();
+    		this.suggestedQuestions = new Questions();
     		this.selectedQuestions = new Questions();
+
+    		this.selectedQuestions.url = window.Vibe.serverUrl + 'api/questions';
+    		this.suggestedQuestions.url = window.Vibe.serverUrl + 'api/questions/suggested';
 
     		this.suggestedQuestions.on('all', this.render, this);
     		this.selectedQuestions.on('all', this.render, this);
 
-    		this.suggestedQuestions.fetchSuggested();
+    		this.selectedQuestionsList = new QuestionListView({
+    			questions: this.selectedQuestions,
+    			question_type: 'selected',
+    			button: {
+    				click: function(model) {
+    					model.save({
+    						active: false
+    					});
+    					if (model.get('suggested')) {
+    						that.suggestedQuestions.add(model);
+    					}
+    					that.selectedQuestions.remove(model);
+    				}
+    			}
+    		});
+    		this.suggestedQuestionsList = new QuestionListView({
+    			questions: this.suggestedQuestions,
+    			question_type: 'suggested',
+    			button: {
+    				icon: '&#61943;',
+    				click: function(model) {
+    					model.save();
+    					that.selectedQuestions.add(model);
+    					that.suggestedQuestions.remove(model);
+    				}
+    			}
+    		});
+
+    		this.suggestedQuestions.fetch();
     	},
 
     	render: function() {

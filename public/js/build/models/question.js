@@ -31,9 +31,11 @@ define("models/question",
 
     	initialize: function() {
     		var that = this;
-    		window.Vibe.faye.subscribe('/api/questions/' + this.get('_id') + '/new_answer', function(answerBody) {
-    			that.trigger('newAnswer', answerBody);
-    		});
+    		if (window.Vibe.faye) {
+    			window.Vibe.faye.subscribe('/api/questions/' + this.get('_id') + '/new_answer', function(answerBody) {
+    				that.trigger('newAnswer', answerBody);
+    			});
+    		}
     	},
 
     	deselect: function() {
@@ -51,7 +53,9 @@ define("models/question",
 
     		this.set('current_user_voted', true, { silent: true });
 
-    		window.Vibe.faye.publish('/api/questions/' + this.get('_id') + '/new_answer', answerBody);
+    		if (window.Vibe.faye) {
+    			window.Vibe.faye.publish('/api/questions/' + this.get('_id') + '/new_answer', answerBody);
+    		}
     	},
 
     	leaveChat: function() {

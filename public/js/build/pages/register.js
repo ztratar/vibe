@@ -1,10 +1,10 @@
 define("pages/register", 
-  ["jquery","underscore","backbone","models/user","views/questionPickerView","views/userListInviteView","helpers/avatarInputHelper"],
+  ["jquery","underscore","backbone","models/user","views/managePollsView","views/userListInviteView","helpers/avatarInputHelper"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__) {
     "use strict";
 
     var User = __dependency4__["default"];
-    var QuestionPickerView = __dependency5__["default"];
+    var ManagePollsView = __dependency5__["default"];
     var UserListInviteView = __dependency6__["default"];
 
     var avatarInputHelper = __dependency7__["default"];
@@ -131,7 +131,7 @@ define("pages/register",
     	});
 
     	// Step 2
-    	var questionPicker = new QuestionPickerView();
+    	var questionPicker = new ManagePollsView();
     	$('.question-picker-container').html(questionPicker.$el);
     	questionPicker.render();
 

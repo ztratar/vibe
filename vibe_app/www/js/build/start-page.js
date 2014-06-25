@@ -3,12 +3,21 @@ define("start-page",
   function() {
     "use strict";
     require.config({
-    	baseUrl: '/js/build',
+    	baseUrl: 'js/build',
     	paths: {
     		text: '../libs/text',
     		jquery: '../libs/jquery',
     		underscore: '../libs/underscore',
-    		backbone: '../libs/backbone'
+    		backbone: '../libs/backbone',
+    		d3: '../libs/d3',
+    		moment: '../libs/moment',
+    		autosize: '../libs/jquery.autosize',
+    		faye: '../libs/faye-browser'
+    	},
+    	shim: {
+    		d3: {
+    			exports: 'd3'
+    		}
     	}
     });
 

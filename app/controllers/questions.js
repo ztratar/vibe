@@ -96,17 +96,9 @@ exports.index = function(req, res, next){
  * use, transformed into questions
  */
 exports.suggested = function(req, res, next) {
-	Question.find({
-		company: req.user.company,
-		active: true
-	}, function(err, questions) {
-		if (err) return helpers.sendError(res, err);
-
-		var metaQuestionIds = _.pluck(questions, 'meta_question');
-
+	if (!req.user) {
 		MetaQuestion.find({
-			suggested: true,
-			_id: { $nin: metaQuestionIds }
+			suggested: true
 		}, function(err, meta_questions) {
 			if (err) return helpers.sendError(res, err);
 			if (!meta_questions.length) {
@@ -116,7 +108,29 @@ exports.suggested = function(req, res, next) {
 				return mQ.asQuestion();
 			}));
 		});
-	});
+	} else {
+		Question.find({
+			company: req.user.company,
+			active: true
+		}, function(err, questions) {
+			if (err) return helpers.sendError(res, err);
+
+			var metaQuestionIds = _.pluck(questions, 'meta_question');
+
+			MetaQuestion.find({
+				suggested: true,
+				_id: { $nin: metaQuestionIds }
+			}, function(err, meta_questions) {
+				if (err) return helpers.sendError(res, err);
+				if (!meta_questions.length) {
+					return res.send([]);
+				}
+				return res.send(_.map(meta_questions, function(mQ) {
+					return mQ.asQuestion();
+				}));
+			});
+		});
+	}
 };
 
 /*

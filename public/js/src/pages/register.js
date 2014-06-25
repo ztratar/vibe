@@ -3,7 +3,7 @@ import 'underscore';
 import 'backbone';
 
 import User from 'models/user';
-import QuestionPickerView from 'views/questionPickerView';
+import ManagePollsView from 'views/managePollsView';
 import UserListInviteView from 'views/userListInviteView';
 
 import avatarInputHelper from 'helpers/avatarInputHelper';
@@ -130,7 +130,7 @@ $(function() {
 	});
 
 	// Step 2
-	var questionPicker = new QuestionPickerView();
+	var questionPicker = new ManagePollsView();
 	$('.question-picker-container').html(questionPicker.$el);
 	questionPicker.render();
 

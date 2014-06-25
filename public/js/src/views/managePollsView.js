@@ -25,8 +25,8 @@ var ManagePollsView = Backbone.View.extend({
 		this.selectedQuestions = new Questions();
 		this.suggestedQuestions = new Questions();
 
-		this.selectedQuestions.url = '/api/questions';
-		this.suggestedQuestions.url = '/api/questions/suggested';
+		this.selectedQuestions.url = window.Vibe.serverUrl + 'api/questions';
+		this.suggestedQuestions.url = window.Vibe.serverUrl + 'api/questions/suggested';
 
 		this.selectedQuestionsList = new QuestionListView({
 			questions: this.selectedQuestions,
