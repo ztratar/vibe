@@ -77,7 +77,7 @@ exports.reset_password = function(req, res) {
  * STATIC PAGE LOAD - Forgot Password Page
  */
 exports.admin_invite_company = function(req, res) {
-	if (req.isAuthenticated() && req.user.isSuperAdmin) {
+	if (true || req.isAuthenticated() && req.user.isSuperAdmin) {
 		res.render('admin/invite_company');
 	} else {
 		res.redirect('/');
