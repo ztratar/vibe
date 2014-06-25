@@ -23,12 +23,14 @@ var LoginView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(this.template());
 
+		_.delay(function() {
+			that.$('input[name="email"]').focus();
+		}, 200);
+
 		return this;
 	},
 
 	submitLogin: function() {
-		debugger;
-
 		var that = this,
 			email = this.$('input[name="email"]').val(),
 			password = this.$('input[name="password"]').val(),

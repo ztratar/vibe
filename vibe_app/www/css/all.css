@@ -8720,7 +8720,7 @@ html {
 }
 @media (max-width: 480px) {
   .post-wrapper .new-post.with-polls {
-    width: calc(100% - 57px);
+    width: calc(100% - 58px);
   }
   .post-wrapper .new-post.with-polls span {
     display: none;
@@ -9446,7 +9446,7 @@ html {
   }
 }
 .login-view {
-  margin: 80px 18px 0;
+  margin: 100px 18px 0;
 }
 .manage-team-view .settings-group {
   text-align: left;

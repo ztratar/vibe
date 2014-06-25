@@ -36,8 +36,11 @@ window.Vibe.run = function() {
 		window.Vibe.user.fetchCurrentUser(function() {
 			renderViews();
 		}, function() {
-			debugger;
-			var loginView = new LoginView();
+			var loginView = new LoginView({
+				loginCallback: function() {
+					renderView();
+				}
+			});
 			$('body').html(loginView.$el);
 			loginView.render();
 		});
