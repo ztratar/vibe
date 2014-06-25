@@ -10528,6 +10528,11 @@ ul.posts-view li.feedback-item-view h4 {
   background: rgba(255, 255, 255, 0.04);
 }
 @media (max-width: 480px) {
+  .post-question-item-view .action-bar a.btn.with-unread {
+    padding: 20px 95px 20px 20px;
+  }
+}
+@media (max-width: 480px) {
   .post-question-item-view .action-bar a.btn {
     font-size: 16px;
     padding: 14px;
@@ -10537,6 +10542,16 @@ ul.posts-view li.feedback-item-view h4 {
     margin-right: 8px;
     margin-top: -4px;
   }
+}
+.post-question-item-view .action-bar a.btn span.unread-chats {
+  background: rgba(185, 61, 61, 0.94);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.91);
+  position: absolute;
+  top: 19px;
+  right: 18px;
+  font-size: 16px;
+  padding: 4px 9px;
 }
 .feedback-item-view {
   background: #5388be;

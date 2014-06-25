@@ -24,19 +24,26 @@ define("views/postQuestionItemView",
 
     	initialize: function(opts) {
     		this.model = opts.model;
-
     		this.model.on('destroy', this.remove, this);
+
+    		this.initChat();
     	},
 
     	render: function() {
     		this.$el.html(this.template({
-    			model: this.model.toJSON()
+    			model: this.model.toJSON(),
+    			numUnread: this.numUnread
     		}));
 
     		this.$voteResultsContainer = this.$('.vote-results-container');
     		this.$chartContainer = this.$('.chart-container');
+    		this.$discussContainer = this.$('.action-bar');
 
     		this.renderChart();
+    	},
+
+    	renderDiscussButton: function() {
+
     	},
 
     	renderChart: function() {
@@ -67,13 +74,54 @@ define("views/postQuestionItemView",
     	},
 
     	discuss: function() {
-    		var chatView = new ChatView({
+    		this.chatView = new ChatView({
     			chatTitle: this.model.get('question').get('body'),
     			chatsUrl: '/api/questions/' + this.model.get('question').get('_id') + '/chats'
     		});
-    		window.Vibe.appView.showOverlay(chatView);
+    		window.Vibe.appView.showOverlay(this.chatView);
+
+    		this.markChatOpened();
 
     		return false;
+    	},
+
+
+
+    	// ************
+    	// CHAT METHODS
+    	// ************
+
+    	initChat: function() {
+    		var that = this,
+    			totalChats = this.model.get('question').get('chat').num_chats,
+    			chatsLastSeen = this.model.get('question').get('chat').chats_last_seen,
+    			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
+
+    		if (myLastSeen) {
+    			this.numUnread = totalChats - myLastSeen;
+    		} else {
+    			this.numUnread = totalChats;
+    		}
+    		this.chatOpen = false;
+
+    		window.Vibe.faye.subscribe('/api/questions/' + this.model.get('question').get('_id') + '/chats', function(newChat) {
+    			if (!that.chatOpen) {
+    				that.numUnread++;
+    				that.render();
+    			}
+    		});
+    	},
+
+    	markChatOpened: function() {
+    		this.chatOpen = true;
+    		this.numUnread = 0;
+    		this.render();
+
+    		this.chatView.on('remove', _.bind(function() {
+    			this.chatOpen = false;
+    			this.model.get('question').leaveChat();
+    			this.chatView = undefined;
+    		}, this));
     	}
 
     });

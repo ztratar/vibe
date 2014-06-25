@@ -56,6 +56,7 @@ module.exports = function (app, passport) {
 
 	app.put('/api/users/:id', c.users.update);
 	app.put('/api/questions/:question', c.questions.update);
+	app.put('/api/questions/:question/leave_chat', c.questions.leaveChatRoom);
 	app.put('/api/feedback/:feedback', c.feedback.update);
 	app.put('/api/feedback/:feedback/agree', c.feedback.agree);
 	app.put('/api/feedback/:feedback/undo_agree', c.feedback.undoAgree);

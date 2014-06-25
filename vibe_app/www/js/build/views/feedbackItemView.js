@@ -27,23 +27,11 @@ define("views/feedbackItemView",
     		var that = this;
 
     		this.model = opts.model;
-
     		this.model.on('change', this.render, this);
+    		this.model.on('destroy', this.remove, this);
     		this.model.get('feedback').on('change', this.render, this);
 
-    		this.model.on('destroy', this.remove, this);
-
-    		var totalChats = this.model.get('feedback').get('chat').num_chats,
-    			chatsLastSeen = this.model.get('feedback').get('chat').chats_last_seen,
-    			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
-
-    		if (myLastSeen) {
-    			this.numUnread = totalChats - myLastSeen;
-    		} else {
-    			this.numUnread = totalChats;
-    		}
-
-    		this.chatOpen = false;
+    		this.initChat();
 
     		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/vote_change', function(newNumVotes) {
     			that.model.get('feedback').set({
@@ -54,13 +42,6 @@ define("views/feedbackItemView",
     			setTimeout(function() {
     				that.$score.removeClass('pop');
     			}, 500);
-    		});
-
-    		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/chats', function(newChat) {
-    			if (!that.chatOpen) {
-    				that.numUnread++;
-    				that.render();
-    			}
     		});
     	},
 
@@ -108,20 +89,13 @@ define("views/feedbackItemView",
     	},
 
     	discuss: function() {
-    		var chatView = new ChatView({
+    		this.chatView = new ChatView({
     			chatTitle: this.model.get('feedback').get('body'),
     			chatsUrl: '/api/feedback/' + this.model.get('feedback').get('_id') + '/chats'
     		});
-    		window.Vibe.appView.showOverlay(chatView);
+    		window.Vibe.appView.showOverlay(this.chatView);
 
-    		this.chatOpen = true;
-    		this.numUnread = 0;
-    		this.render();
-
-    		chatView.on('remove', _.bind(function() {
-    			this.chatOpen = false;
-    			this.model.get('feedback').leaveChat();
-    		}, this));
+    		this.markChatOpened();
 
     		return false;
     	},
@@ -140,6 +114,45 @@ define("views/feedbackItemView",
     		window.Vibe.appView.showOverlay(confirmView);
 
     		return false;
+    	},
+
+
+
+    	// ************
+    	// CHAT METHODS
+    	// ************
+
+    	initChat: function() {
+    		var that = this,
+    			totalChats = this.model.get('feedback').get('chat').num_chats,
+    			chatsLastSeen = this.model.get('feedback').get('chat').chats_last_seen,
+    			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
+
+    		if (myLastSeen) {
+    			this.numUnread = totalChats - myLastSeen;
+    		} else {
+    			this.numUnread = totalChats;
+    		}
+    		this.chatOpen = false;
+
+    		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/chats', function(newChat) {
+    			if (!that.chatOpen) {
+    				that.numUnread++;
+    				that.render();
+    			}
+    		});
+    	},
+
+    	markChatOpened: function() {
+    		this.chatOpen = true;
+    		this.numUnread = 0;
+    		this.render();
+
+    		this.chatView.on('remove', _.bind(function() {
+    			this.chatOpen = false;
+    			this.model.get('feedback').leaveChat();
+    			this.chatView = undefined;
+    		}, this));
     	}
 
     });

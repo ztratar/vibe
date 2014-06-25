@@ -6,6 +6,7 @@ import ChatView from 'views/chatView';
 import RatingChartView from 'views/ratingChartView';
 
 module template from 'text!templates/postQuestionItemView.html';
+module actionBarTemplate from 'text!templates/postQuestionItemActionBar.html';
 
 var PostQuestionItemView = Backbone.View.extend({
 
@@ -14,6 +15,7 @@ var PostQuestionItemView = Backbone.View.extend({
 	className: 'post-question-item-view',
 
 	template: _.template(template),
+	actionBarTemplate: _.template(actionBarTemplate),
 
 	events: {
 		'click ul.answers a': 'vote',
@@ -22,8 +24,9 @@ var PostQuestionItemView = Backbone.View.extend({
 
 	initialize: function(opts) {
 		this.model = opts.model;
-
 		this.model.on('destroy', this.remove, this);
+
+		this.initChat();
 	},
 
 	render: function() {
@@ -33,8 +36,16 @@ var PostQuestionItemView = Backbone.View.extend({
 
 		this.$voteResultsContainer = this.$('.vote-results-container');
 		this.$chartContainer = this.$('.chart-container');
+		this.$actionBarContainer = this.$('.action-bar');
 
 		this.renderChart();
+		this.renderActionBar();
+	},
+
+	renderActionBar: function() {
+		this.$actionBarContainer.html(this.actionBarTemplate({
+			numUnread: this.numUnread
+		}));
 	},
 
 	renderChart: function() {
@@ -65,13 +76,54 @@ var PostQuestionItemView = Backbone.View.extend({
 	},
 
 	discuss: function() {
-		var chatView = new ChatView({
+		this.chatView = new ChatView({
 			chatTitle: this.model.get('question').get('body'),
 			chatsUrl: '/api/questions/' + this.model.get('question').get('_id') + '/chats'
 		});
-		window.Vibe.appView.showOverlay(chatView);
+		window.Vibe.appView.showOverlay(this.chatView);
+
+		this.markChatOpened();
 
 		return false;
+	},
+
+
+
+	// ************
+	// CHAT METHODS
+	// ************
+
+	initChat: function() {
+		var that = this,
+			totalChats = this.model.get('question').get('chat').num_chats,
+			chatsLastSeen = this.model.get('question').get('chat').chats_last_seen,
+			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
+
+		if (myLastSeen) {
+			this.numUnread = totalChats - myLastSeen;
+		} else {
+			this.numUnread = totalChats;
+		}
+		this.chatOpen = false;
+
+		window.Vibe.faye.subscribe('/api/questions/' + this.model.get('question').get('_id') + '/chats', function(newChat) {
+			if (!that.chatOpen) {
+				that.numUnread++;
+				that.renderActionBar();
+			}
+		});
+	},
+
+	markChatOpened: function() {
+		this.chatOpen = true;
+		this.numUnread = 0;
+		this.renderActionBar();
+
+		this.chatView.on('remove', _.bind(function() {
+			this.chatOpen = false;
+			this.model.get('question').leaveChat();
+			this.chatView = undefined;
+		}, this));
 	}
 
 });

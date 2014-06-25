@@ -22,7 +22,11 @@ define("models/question",
     			name: 'everyone'
     		},
     		current_user_voted: false,
-    		answer_data: []
+    		answer_data: [],
+    		chat: {
+    			chats_last_seen: {},
+    			num_chats: 0
+    		}
     	},
 
     	initialize: function() {
@@ -48,6 +52,12 @@ define("models/question",
     		this.set('current_user_voted', true, { silent: true });
 
     		window.Vibe.faye.publish('/api/questions/' + this.get('_id') + '/new_answer', answerBody);
+    	},
+
+    	leaveChat: function() {
+    		this.save({}, {
+    			url: this.url() + '/leave_chat'
+    		});
     	}
 
     });

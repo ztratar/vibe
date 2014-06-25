@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 	Async = require('async'),
 	Answer = mongoose.model('Answer'),
 	QuestionInstance = mongoose.model('QuestionInstance'),
+	ChatRoomPlugin = require('./plugins/chatRoomPlugin'),
 	_ = require('underscore');
 
 // Question Schema
@@ -78,5 +79,8 @@ QuestionSchema.methods = {
 	}
 
 };
+
+// Attach the chat room!
+QuestionSchema.plugin(ChatRoomPlugin);
 
 mongoose.model('Question', QuestionSchema);

@@ -281,6 +281,8 @@ exports.getChats = function(req, res, next){
 		queryObj._id = { $lt: mongoose.Types.ObjectId(beforeId[1]) };
 	}
 
+	req.question.markChatEntered(req.user);
+
 	Chat
 		.find(queryObj)
 		.limit(10)
@@ -290,6 +292,17 @@ exports.getChats = function(req, res, next){
 			res.send(200, _.map(chats, function(chat) { return chat.stripInfo(); }));
 		});
 };
+
+/*
+ * PUT /api/question/:question/leave_chat
+ *
+ * Marks that the user has left the chat room
+ */
+exports.leaveChatRoom = function(req, res, next) {
+	req.question.leaveChat(req.user);
+	res.send(req.question);
+};
+
 
 /*
  * POST /api/questions/:question/chats
@@ -310,7 +323,11 @@ exports.newChat = function(req, res, next){
 		body: req.body.body
 	}, function(err, chat) {
 		if (err) return helpers.sendError(res, err);
+
+		req.question.incrementUnreadCountsAndMarkParticipation(req.user);
+
 		live.send('/api/questions/' + req.question._id + '/chats', chat);
+
 		res.send(chat.stripInfo());
 	});
 };

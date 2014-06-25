@@ -9,10 +9,10 @@ var Feedback = BaseModel.extend({
 		status: '',
 		body: '',
 		num_votes: 0,
+		current_user_agreed: false,
 		chat: {
 			chats_last_seen: {},
-			num_chats: 0,
-			current_user_agreed: false
+			num_chats: 0
 		}
 	},
 

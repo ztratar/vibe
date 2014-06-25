@@ -14,31 +14,31 @@ var ChatRoomPlugin = function(schema, options) {
 
 	_.extend(schema.methods, {
 
-		markChatEntered: function(req) {
+		markChatEntered: function(user) {
 			var fbQueryObj = {
 				$set: {},
 				$push: {
-					'chat.users_chatting': req.user._id
+					'chat.users_chatting': user._id
 				}
 			};
-			fbQueryObj.$set['chat.chats_last_seen.' + req.user._id] = this.chat.num_chats;
+			fbQueryObj.$set['chat.chats_last_seen.' + user._id] = this.chat.num_chats;
 			this.update(fbQueryObj, function(err, numAffected, test) {});
 		},
 
-		leaveChat: function(req) {
+		leaveChat: function(user) {
 			var that = this;
 
 			this.update({
 				$pull: {
-					'chat.users_chatting': req.user._id
+					'chat.users_chatting': user._id
 				}
 			}, function(err, numAffected) {});
 		},
 
-		incrementUnreadCountsAndMarkParticipation: function(req) {
+		incrementUnreadCountsAndMarkParticipation: function(user) {
 			var updateObj = {
 					$addToSet: {
-						'chat.users_participating': req.user._id
+						'chat.users_participating': user._id
 					},
 					$inc: {}
 				},
@@ -52,10 +52,7 @@ var ChatRoomPlugin = function(schema, options) {
 			});
 			updateObj.$inc['chat.num_chats'] = 1;
 
-			console.log(updateObj);
-			this.update(updateObj, function(err, numAffected) {
-				console.log('test', err, numAffected);
-			});
+			this.update(updateObj, function(err, numAffected) {});
 		}
 
 	});

@@ -1,0 +1,14 @@
+<% if (numUnread > 0) { %>
+<a href="#" class="btn btn-full discuss with-unread">
+	<i class="icon">&#61704;</i>
+	Discuss
+	<span class="unread-chats">
+		<%- numUnread %> new
+	</span>
+</a>
+<% } else { %>
+<a href="#" class="btn btn-full discuss">
+	<i class="icon">&#61704;</i>
+	Discuss
+</a>
+<% } %>

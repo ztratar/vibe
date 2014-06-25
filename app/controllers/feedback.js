@@ -81,7 +81,7 @@ exports.getChats = function(req, res, next){
 		queryObj._id = { $lt: mongoose.Types.ObjectId(beforeId[1]) };
 	}
 
-	req.feedback.markChatEntered(req);
+	req.feedback.markChatEntered(req.user);
 
 	Chat
 		.find(queryObj)
@@ -99,7 +99,7 @@ exports.getChats = function(req, res, next){
  * Marks that the user has left the chat room
  */
 exports.leaveChatRoom = function(req, res, next) {
-	req.feedback.leaveChat(req);
+	req.feedback.leaveChat(req.user);
 	res.send(req.feedback.stripInfo());
 };
 
@@ -123,7 +123,7 @@ exports.newChat = function(req, res, next){
 	}, function(err, chat) {
 		if (err) return helpers.sendError(res, err);
 
-		req.feedback.incrementUnreadCountsAndMarkParticipation(req);
+		req.feedback.incrementUnreadCountsAndMarkParticipation(req.user);
 
 		live.send('/api/feedback/' + req.feedback._id + '/chats', chat);
 
