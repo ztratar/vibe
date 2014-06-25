@@ -129,7 +129,7 @@ exports.createFromAccessRequest = function (req, res, next) {
 
 	var sendStandardError = function() {
 		return res.send({
-			error: "There was an error. Please contact support at access@getvibe.org for help."
+			error: "There was an error. Please contact support at access@getvibe.com for help."
 		});
 	};
 
@@ -139,7 +139,7 @@ exports.createFromAccessRequest = function (req, res, next) {
 			AccessRequest.findById(req.body.companyInviteHash, function(err, accessRequest) {
 				if (err) return cb(err);
 				if (!accessRequest || !accessRequest.invited) {
-					return cb("Your invite is invalid. Please contact support at access@getvibe.org for help.");
+					return cb("Your invite is invalid. Please contact support at access@getvibe.com for help.");
 				}
 				accessRequest.registered = true;
 				accessRequest.save(function(err) {
@@ -164,7 +164,7 @@ exports.createFromAccessRequest = function (req, res, next) {
 			Company.findOne({ domain: domain }, function(err, company){
 				if (err) return sendStandardError();
 				if (company) {
-					return cb("Your company has already been created. Please contact support at access@getvibe.org for help.");
+					return cb("Your company has already been created. Please contact support at access@getvibe.com for help.");
 				}
 				return cb(null);
 			});
@@ -219,7 +219,7 @@ exports.createFromAccessRequest = function (req, res, next) {
 exports.createFromUserInvite = function(req, res, next) {
 	var sendStandardError = function() {
 		return res.send({
-			error: "There was an error. Please contact support at access@getvibe.org for help."
+			error: "There was an error. Please contact support at access@getvibe.com for help."
 		});
 	};
 
@@ -228,7 +228,7 @@ exports.createFromUserInvite = function(req, res, next) {
 		UserInvite.findById(req.body.userInviteHash, function(err, userInvite) {
 			if (err) return sendStandardError();
 			if (!userInvite) {
-				return cb("Your invite code is invalid. Email access@getvibe.org for help.");
+				return cb("Your invite code is invalid. Email access@getvibe.com for help.");
 			}
 			cb(null, userInvite);
 		});

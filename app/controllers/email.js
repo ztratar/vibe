@@ -20,7 +20,7 @@ var _ = require('underscore'),
 exports.send = function(options) {
 	options = _.extend({
 		to: '',
-		from: 'info@getvibe.org',
+		from: 'info@getvibe.com',
 		subject: '',
 		templateName: '',
 		templateData: {},
