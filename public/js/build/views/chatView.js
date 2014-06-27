@@ -40,7 +40,7 @@ define("views/chatView",
     		this.chatItemTimes = [];
 
     		_.defer(function() {
-    			window.Vibe.faye.subscribe(that.chats.url, function(chatModel) {
+    			window.Vibe.faye.subscribe(that.chats.url.replace(window.Vibe.serverUrl, '/'), function(chatModel) {
     				that.chats.add(chatModel);
 
     				if (chatModel.creator.ref === window.Vibe.user.get('_id')) {
