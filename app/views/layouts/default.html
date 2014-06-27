@@ -9,14 +9,15 @@
 		<script>
 			window.Vibe = window.Vibe || {};
 
-			window.Vibe.serverUrl = '/';
-			window.staticRoute = '/';
-
 			{% if env == 'development' %}
 			window.fayeServerRoute = 'http://localhost:{{ port }}/faye';
+			window.Vibe.serverUrl = '/';
 			{% else %}
 			window.fayeServerRoute = 'https://getvibe.com/faye';
+			window.Vibe.serverUrl = 'https://getvibe.com/';
 			{% endif %}
+
+			window.staticRoute = window.Vibe.serverUrl;
 
 			window.Vibe._data_ = {};
 		</script>
