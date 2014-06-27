@@ -67,7 +67,7 @@ define("models/notifications",
 
     		$.ajax({
     			type: 'PUT',
-    			url: '/api/notifications/mark_read'
+    			url: window.Vibe.serverUrl + 'api/notifications/mark_read'
     		});
     	}
 

@@ -12,8 +12,7 @@ var NotificationSchema = new Schema({
 	data: { type: Schema.Types.Mixed },
 	time_created: { type: Date, default: Date.now },
 	time_updated: { type: Date, default: Date.now },
-	cluster_tag: { type: String },
-	cluster_data: Schema.Types.Mixed
+	cluster_tag: { type: String }
 });
 
 // Validations
@@ -50,6 +49,14 @@ NotificationSchema.methods = {
 					&& bd.feedback
 					&& bd.feedback.length
 					&& bd.feedbackId);
+		} else if (this.type === 'feedback-chat') {
+			return (bd.users && bd.users.length
+					&& bd.feedbackId
+					&& bd.feedback && bd.feedback.length);
+		} else if (this.type === 'question-chat') {
+			return (bd.users && bd.users.length
+					&& bd.questionId
+					&& bd.question && bd.question.length);
 		}
 
 		return false;

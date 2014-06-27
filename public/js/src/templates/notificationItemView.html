@@ -19,6 +19,8 @@
 		<span class="fake-img img-feedback-agree">
 			<i class="icon">&#61845;</i>
 		</span>
+	<% } else if (model.type === 'feedback-chat' || model.type === 'question-chat') { %>
+		<img src="<%= firstUserImg %>">
 	<% } %>
 
 	<div class="media-body">
@@ -37,6 +39,10 @@
 				Congratulations, your feedback was just sent to everyone!
 			<% } else if (model.type === 'feedback-agree') { %>
 				<strong><%- numPeopleString %></strong> agreed with the suggestion "<%- model.data.feedback %>"
+			<% } else if (model.type === 'question-chat') {%>
+				<%= peopleString %> chatting on "<%- model.data.question %>"
+			<% } else if (model.type === 'feedback-chat') {%>
+				<%= peopleString %> chatting on "<%- model.data.feedback %>"
 			<% } %>
 		</p>
 		<span>

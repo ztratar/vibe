@@ -122,37 +122,50 @@ exports.send = function(notifOpts, cb) {
 	}, function(notification, asyncCb) {
 		// If notification exists, get process for clustering
 		// based on type
-		if (notification) {
-			notification.read = false;
-			notification.time_updated = Date.now();
-			notification.data = notifOpts.data;
-			notification.cluster_data = notifOpts.cluster_data;
+		if (notification && notifOpts.cluster_query) {
+			notifOpts.cluster_query.$set = notifOpts.cluster_query.$set || {};
+			notifOpts.cluster_query.$set.read = false;
+			notifOpts.cluster_query.$set.time_updated = Date.now();
+			notification.update(notifOpts.cluster_query, function(err, numAffected) {
+				Notification.findById(notification._id, function(err, notification) {
+					asyncCb(null, notification);
+				});
+			});
 		} else {
-			// If not, create a new notification
-			notification = new Notification({
-				for_user: notifOpts.for_user,
-				img: notifOpts.img,
-				type: notifOpts.type,
-				data: notifOpts.data,
-				cluster_tag: notifOpts.cluster_tag,
-				cluster_data: notifOpts.cluster_data
+			if (notification) {
+				notification.read = false;
+				notification.time_updated = Date.now();
+				notification.data = notifOpts.data;
+			} else {
+				// If not, create a new notification
+				notification = new Notification({
+					for_user: notifOpts.for_user,
+					img: notifOpts.img,
+					type: notifOpts.type,
+					data: notifOpts.data,
+					cluster_tag: notifOpts.cluster_tag
+				});
+			}
+
+			if (!notification.verifyData()) {
+				if (cb) {
+					return cb("Invalid body data for notification type");
+				} else {
+					return;
+				}
+			}
+			notification.save(function(err, notification) {
+				asyncCb(null, notification);
 			});
 		}
-		asyncCb(null, notification);
-	}], function(err, notif) {
-		if (!notif.verifyData()) {
-			return cb("Invalid body data for notification type");
+	}], function(err, notification) {
+		var notifUrl = '/api/users/' + notifOpts.for_user.toString() + '/notifications';
+		live.send(notifUrl, notification);
+
+		if (cb && typeof cb === 'function') {
+			if (err) return cb(err);
+			cb(null, notification);
 		}
-
-		notif.save(function(err, notification) {
-			var notifUrl = '/api/users/' + notifOpts.for_user.toString() + '/notifications';
-			live.send(notifUrl, notification);
-
-			if (cb && typeof cb === 'function') {
-				if (err) return cb(err);
-				cb(null, notification);
-			}
-		});
 	});
 };
 

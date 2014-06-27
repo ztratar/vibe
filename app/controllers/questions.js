@@ -338,11 +338,44 @@ exports.newChat = function(req, res, next){
 	}, function(err, chat) {
 		if (err) return helpers.sendError(res, err);
 
+		console.log(req.question.chat.users_participating, req.user._id);
+		var sendNotificationsTo = _.filter(req.question.chat.users_participating, function(user) {
+			return (user.toString() !== req.user._id.toString());
+		});
+		console.log(sendNotificationsTo);
+
 		req.question.incrementUnreadCountsAndMarkParticipation(req.user);
 
 		live.send('/api/questions/' + req.question._id + '/chats', chat);
 
 		res.send(chat.stripInfo());
+
+		notificationsController.sendToUsers(sendNotificationsTo, {
+			type: 'question-chat',
+			cluster_tag: 'question-chat_' + req.question._id,
+			cluster_query: {
+				$addToSet: {
+					'data.users': {
+						_id: req.user._id,
+						avatar: req.user.avatar,
+						name: req.user.name
+					}
+				},
+				$set: {
+					'data.first_user_id': req.user._id
+				}
+			},
+			data: {
+				users: [{
+					_id: req.user._id,
+					avatar: req.user.avatar,
+					name: req.user.name
+				}],
+				first_user_id: req.user._id,
+				questionId: req.question._id,
+				question: req.question.body
+			}
+		});
 	});
 };
 

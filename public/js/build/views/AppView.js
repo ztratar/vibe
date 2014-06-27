@@ -36,7 +36,7 @@ define("views/AppView",
     			notifications: this.notifications
     		});
 
-    		this.notificationsView.notifications.on('add reset sort', function() {
+    		this.notificationsView.notifications.on('add reset sort fake-add', function() {
     			that.changeUnreadNotificationsNum();
     		});
 
@@ -75,7 +75,10 @@ define("views/AppView",
     			reset: true
     		});
     		window.Vibe.faye.subscribe('/api/users/' + window.Vibe.user.get('_id') + '/notifications', function(data) {
-    			that.notifications.add(data);
+    			that.notifications.add(data, {
+    				merge: true
+    			});
+    			that.notifications.trigger('fake-add');
     		});
     	},
 

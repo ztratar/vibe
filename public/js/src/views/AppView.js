@@ -34,7 +34,7 @@ var AppView = Backbone.View.extend({
 			notifications: this.notifications
 		});
 
-		this.notificationsView.notifications.on('add reset sort', function() {
+		this.notificationsView.notifications.on('add reset sort fake-add', function() {
 			that.changeUnreadNotificationsNum();
 		});
 
@@ -73,7 +73,10 @@ var AppView = Backbone.View.extend({
 			reset: true
 		});
 		window.Vibe.faye.subscribe('/api/users/' + window.Vibe.user.get('_id') + '/notifications', function(data) {
-			that.notifications.add(data);
+			that.notifications.add(data, {
+				merge: true
+			});
+			that.notifications.trigger('fake-add');
 		});
 	},
 

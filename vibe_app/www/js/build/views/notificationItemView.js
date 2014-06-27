@@ -33,22 +33,58 @@ define("views/notificationItemView",
     			templateDate.numPeopleString = this.getNumPeopleString(this.model.get('data').num_people);
     		}
 
+    		var users = this.model.get('data').users,
+    			firstUserId = this.model.get('data').first_user_id,
+    			firstUser,
+    			adhocSortedUsers;
+    		if (users && users.length) {
+    			users = _.filter(users, function(user) {
+    				return (user._id !== window.Vibe.user.get('_id'));
+    			});
+    			users = _.compact(users);
+    			firstUser = _.find(users, function(user) {
+    				return user._id === firstUserId;
+    			}) || users[0];
+
+    			// Move first user to the 0th position
+    			adhocSortedUsers = _.without(users, firstUser);
+    			if (firstUser) {
+    				adhocSortedUsers = [firstUser].concat(adhocSortedUsers);
+    			}
+
+    			if (adhocSortedUsers.length) {
+    				templateDate.peopleString = this.getUsersListString(adhocSortedUsers);
+    			} else {
+    				templateDate.peopleString = '';
+    			}
+    			templateDate.firstUserImg = firstUser.avatar;
+    		}
+
     		this.$el.html(this.template(templateDate));
 
     		return this;
     	},
 
     	getUsersListString: function(users) {
+    		var baseUserStr = ''
+
     		if (!users.length) return false;
 
     		if (users.length === 1) {
-    			return users[0].name;
+    			baseUserStr = users[0].name;
     		} else if (users.length === 2) {
-    			return users[0].name + ' and ' + users[1].name;
+    			baseUserStr = users[0].name + ' and ' + users[1].name;
     		} else if (users.length === 3) {
-    			return users[0].name + ', ' + users[1].name + ', and ' + users[2].name;
+    			baseUserStr = users[0].name + ', ' + users[1].name + ', and ' + users[2].name;
     		} else {
-    			return users[0].name + ', ' + users[1].name + ', and ' + (users.length-2) + ' others';
+    			baseUserStr = users[0].name + ', ' + users[1].name + ', and ' + (users.length-2) + ' others';
+    		}
+
+    		baseUserStr = '<strong>' + _.escape(baseUserStr) + '</strong>';
+    		if (users.length > 1) {
+    			return baseUserStr + ' are';
+    		} else {
+    			return baseUserStr + ' is';
     		}
     	},
 
