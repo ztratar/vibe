@@ -58,7 +58,6 @@ define("pages/register_from_invite",
     		}, {
     			success: function(model, d) {
     				if (d.error) {
-    					unmarkCurrentStepAsLoading();
     					$error.html(d.error).show();
     				} else {
     					window.location.href = '/';

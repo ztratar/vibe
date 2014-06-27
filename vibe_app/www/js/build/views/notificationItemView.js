@@ -48,9 +48,7 @@ define("views/notificationItemView",
 
     			// Move first user to the 0th position
     			adhocSortedUsers = _.without(users, firstUser);
-    			if (firstUser) {
-    				adhocSortedUsers = [firstUser].concat(adhocSortedUsers);
-    			}
+    			adhocSortedUsers = [firstUser].concat(adhocSortedUsers);
 
     			if (adhocSortedUsers.length) {
     				templateDate.peopleString = this.getUsersListString(adhocSortedUsers);

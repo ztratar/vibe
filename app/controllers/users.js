@@ -226,6 +226,7 @@ exports.createFromUserInvite = function(req, res, next) {
 	Async.waterfall([function(cb) {
 		// Load & Validate Invite
 		UserInvite.findById(req.body.userInviteHash, function(err, userInvite) {
+			if (err) return helpers.sendError(res, err);
 			if (err) return sendStandardError();
 			if (!userInvite) {
 				return cb("Your invite code is invalid. Email access@getvibe.com for help.");
@@ -235,6 +236,7 @@ exports.createFromUserInvite = function(req, res, next) {
 	}, function(userInvite, cb) {
 		// Load company
 		Company.findById(userInvite.company, function(err, company) {
+			if (err) return helpers.sendError(res, err);
 			if (err) return sendStandardError();
 			if (!company) {
 				return cb("Company for the given invite not found.");
@@ -245,6 +247,7 @@ exports.createFromUserInvite = function(req, res, next) {
 		User.findOne({
 			email: req.body.email
 		}, function(err, user){
+			if (err) return helpers.sendError(res, err);
 			if (err) return sendStandardError();
 			if (user) {
 				return cb("Email already registered.");
@@ -261,6 +264,7 @@ exports.createFromUserInvite = function(req, res, next) {
 			company: company._id,
 			provider: 'local'
 		}, function(err, user) {
+			if (err) return helpers.sendError(res, err);
 			if (err) return sendStandardError();
 			if (!user) {
 				return cb("User could not be created");
