@@ -31,7 +31,7 @@ var FeedbackItemView = Backbone.View.extend({
 
 		this.initChat();
 
-		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/vote_change', function(newNumVotes) {
+		window.Vibe.faye.subscribe(window.Vibe.serverUrl + '/api/feedback/' + this.model.get('feedback').get('_id') + '/vote_change', function(newNumVotes) {
 			that.model.get('feedback').set({
 				'num_votes': newNumVotes
 			});
@@ -89,7 +89,7 @@ var FeedbackItemView = Backbone.View.extend({
 	discuss: function() {
 		this.chatView = new ChatView({
 			chatTitle: this.model.get('feedback').get('body'),
-			chatsUrl: '/api/feedback/' + this.model.get('feedback').get('_id') + '/chats'
+			chatsUrl: window.Vibe.serverUrl + '/api/feedback/' + this.model.get('feedback').get('_id') + '/chats'
 		});
 		window.Vibe.appView.showOverlay(this.chatView);
 
