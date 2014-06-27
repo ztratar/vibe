@@ -8764,12 +8764,10 @@ html {
   width: 100%;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
-.charts-container {
-  margin-top: 96px;
-}
 @media (max-width: 480px) {
-  .charts-container {
-    margin-top: 71px;
+  .posts-container {
+    position: relative;
+    z-index: 40;
   }
 }
 .time-series-chart-view {

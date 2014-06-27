@@ -8672,7 +8672,7 @@ html {
   right: 0;
   bottom: 0;
   background-size: cover;
-  opacity: 0.15;
+  opacity: 1;
 }
 .home-info-wrapper .container {
   position: relative;
@@ -8764,12 +8764,10 @@ html {
   width: 100%;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
-.charts-container {
-  margin-top: 96px;
-}
 @media (max-width: 480px) {
-  .charts-container {
-    margin-top: 71px;
+  .posts-container {
+    position: relative;
+    z-index: 40;
   }
 }
 .time-series-chart-view {
