@@ -8588,25 +8588,16 @@ html {
     line-height: 17px;
   }
 }
-.chat-view .chat-scroll-container .chat-item .chat-bubble .chat-bubble {
-  margin: 0 0 0 80px;
-  border-radius: 6px;
-  background: #2f557c;
-  color: white;
-  text-align: left;
-  padding: 10px 14px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-}
-.chat-view .chat-scroll-container .chat-item .chat-bubble .chat-bubble p {
-  margin: 0 0 4px;
-  font-size: 16px;
-  color: white;
-}
-.chat-view .chat-scroll-container .chat-item .chat-bubble .chat-bubble span {
+.chat-view .chat-scroll-container .chat-item .chat-bubble span {
   display: block;
   font-size: 11px;
   color: white;
   opacity: 0.4;
+}
+.chat-view .chat-scroll-container .chat-empty-state {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .chat-view .chat-scroll-container .chat-empty-state .media {
   margin: 0 auto;
@@ -8631,6 +8622,24 @@ html {
 .chat-view .chat-scroll-container .chat-empty-state .media p {
   font-size: 20px;
   opacity: .3;
+}
+@media (max-width: 480px) {
+  .chat-view .chat-scroll-container .chat-empty-state .media {
+    width: 280px;
+  }
+  .chat-view .chat-scroll-container .chat-empty-state .media i {
+    font-size: 60px;
+    margin-right: 18px;
+    height: 74px;
+    line-height: 87px;
+  }
+  .chat-view .chat-scroll-container .chat-empty-state .media h4 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .chat-view .chat-scroll-container .chat-empty-state .media p {
+    font-size: 14px;
+  }
 }
 .home-view {
   padding-top: 192px;
@@ -8663,7 +8672,7 @@ html {
   right: 0;
   bottom: 0;
   background-size: cover;
-  opacity: 0.15;
+  opacity: 1;
 }
 .home-info-wrapper .container {
   position: relative;
@@ -8684,6 +8693,7 @@ html {
 }
 .home-info-wrapper .company-info-bar h1 img {
   max-width: 270px;
+  max-height: 82px;
 }
 @media (max-width: 480px) {
   .home-info-wrapper .company-info-bar h1 img {
@@ -8754,12 +8764,10 @@ html {
   width: 100%;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
-.charts-container {
-  margin-top: 96px;
-}
 @media (max-width: 480px) {
-  .charts-container {
-    margin-top: 71px;
+  .posts-container {
+    position: relative;
+    z-index: 40;
   }
 }
 .time-series-chart-view {
@@ -10671,8 +10679,7 @@ ul.posts-view li.feedback-item-view h4 {
   text-align: center;
   float: left;
   color: white;
-  padding: 20px;
-  padding: 14px 26px 14px 14px;
+  padding: 20px 24px 20px 20px;
   font-size: 20px;
 }
 .post-question-item-view .action-bar a.btn i {
@@ -10703,8 +10710,8 @@ ul.posts-view li.feedback-item-view h4 {
   border-radius: 4px;
   color: rgba(255, 255, 255, 0.91);
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 20px;
+  right: 20px;
   font-size: 16px;
   padding: 4px 9px;
 }
@@ -10712,7 +10719,7 @@ ul.posts-view li.feedback-item-view h4 {
   .post-question-item-view .action-bar a.btn span.unread-chats {
     font-size: 14px;
     top: 16px;
-    right: 14px;
+    right: 9px;
     padding: 2px 7px;
   }
   .post-question-item-view .action-bar a.btn span.unread-chats span {

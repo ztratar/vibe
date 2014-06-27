@@ -1,9 +1,15 @@
 var _ = require('underscore'),
 	faye = require('faye'),
+	redis = require('faye-redis'),
 	server,
 	fayeNode,
 	port = process.env.PORT || 8000,
-	fayeClient;
+	fayeClient,
+	rtg;
+
+if (process.env.REDISTOGO_URL) {
+	rtg = require("url").parse(process.env.REDISTOGO_URL);
+}
 
 // Date objects aren't sent properly over faye
 // unless converted to strings first. Some objects
@@ -29,9 +35,21 @@ var recurseFormatDates = function(inputObj) {
 };
 
 exports.start = function() {
-	fayeNode = new faye.NodeAdapter({
-		mount: '/faye'
-	});
+	var nodeAdapterOpts = {
+		mount: '/faye',
+		timeout: 60
+	};
+
+	if (rtg) {
+		nodeAdapterOpts.engine = {
+			type: redis,
+			host: rtg.hostname,
+			port: rtg.port,
+			password: rtg.auth.split(":")[1]
+		};
+	}
+
+	fayeNode = new faye.NodeAdapter(nodeAdapterOpts);
 	fayeNode.attach(server);
 };
 
