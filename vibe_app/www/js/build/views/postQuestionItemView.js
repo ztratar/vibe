@@ -80,7 +80,7 @@ define("views/postQuestionItemView",
     	discuss: function() {
     		this.chatView = new ChatView({
     			chatTitle: this.model.get('question').get('body'),
-    			chatsUrl: window.Vibe.serverUrl + '/api/questions/' + this.model.get('question').get('_id') + '/chats'
+    			chatsUrl: window.Vibe.serverUrl + 'api/questions/' + this.model.get('question').get('_id') + '/chats'
     		});
     		window.Vibe.appView.showOverlay(this.chatView);
 
@@ -108,7 +108,7 @@ define("views/postQuestionItemView",
     		}
     		this.chatOpen = false;
 
-    		window.Vibe.faye.subscribe(window.Vibe.serverUrl + '/api/questions/' + this.model.get('question').get('_id') + '/chats', function(newChat) {
+    		window.Vibe.faye.subscribe(window.Vibe.serverUrl + 'api/questions/' + this.model.get('question').get('_id') + '/chats', function(newChat) {
     			if (!that.chatOpen) {
     				that.numUnread++;
     				that.renderActionBar();
