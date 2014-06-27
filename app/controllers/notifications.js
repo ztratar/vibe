@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 	Notification = mongoose.model('Notification'),
 	helpers = require('../helpers'),
 	email = require('./email')(),
-	live = require('../live'),
+	live = require('../live')(),
 	app;
 
 /*

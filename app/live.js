@@ -1,14 +1,9 @@
 var _ = require('underscore'),
-	http = require('http'),
 	faye = require('faye'),
-	fayeServer = http.createServer(),
-	fayeNode = new faye.NodeAdapter({ mount: '/' }),
+	server,
+	fayeNode,
+	port = process.env.PORT || 8000,
 	fayeClient;
-
-fayeNode.attach(fayeServer);
-var port = 8000;
-fayeServer.listen(port);
-console.log('Faye started on port ' + port);
 
 // Date objects aren't sent properly over faye
 // unless converted to strings first. Some objects
@@ -33,6 +28,13 @@ var recurseFormatDates = function(inputObj) {
 	return inputObj;
 };
 
+exports.start = function() {
+	fayeNode = new faye.NodeAdapter({
+		mount: '/faye'
+	});
+	fayeNode.attach(server);
+};
+
 exports.send = function(channel, data) {
 	if (typeof data.toJSON === 'function') {
 		data = data.toJSON();
@@ -43,4 +45,11 @@ exports.send = function(channel, data) {
 	fayeNode.getClient().publish(channel, data);
 };
 
-module.exports = exports;
+// Cache the app
+module.exports = function(exportedServer) {
+	if (exportedServer) {
+		server = exportedServer;
+		exports.start();
+	}
+	return exports;
+};

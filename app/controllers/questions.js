@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 	Chat = mongoose.model('Chat'),
 	Company = mongoose.model('Company'),
 	Answer = mongoose.model('Answer'),
-	live = require('../live'),
+	live = require('../live')(),
 	notificationsController = require('./notifications')(),
 	helpers = require('../helpers');
 

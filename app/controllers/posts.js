@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 	Post = mongoose.model('Post'),
 	User = mongoose.model('User'),
 	Feedback = mongoose.model('Feedback'),
-	live = require('../live'),
+	live = require('../live')(),
 	helpers = require('../helpers'),
 	app;
 

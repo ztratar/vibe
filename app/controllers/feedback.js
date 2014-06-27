@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
 	postsController = require('./posts')(),
 	notificationsController = require('./notifications')(),
 	helpers = require('../helpers'),
-	live = require('../live'),
+	live = require('../live')(),
 	app;
 
 /*

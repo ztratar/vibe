@@ -13,9 +13,9 @@
 			window.staticRoute = '/';
 
 			{% if env == 'development' %}
-			window.fayeServerRoute = 'http://localhost:8000/';
+			window.fayeServerRoute = 'http://localhost:{{ port }}/faye';
 			{% else %}
-			window.fayeServerRoute = 'http://www.getvibe.com:8000/';
+			window.fayeServerRoute = 'http://getvibe.com:{{ port }}/faye';
 			{% endif %}
 
 			window.Vibe._data_ = {};

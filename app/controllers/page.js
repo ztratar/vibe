@@ -10,6 +10,7 @@ exports.index = function(req, res) {
 
 		res.render('home/index', {
 			env: process.env.NODE_ENV || 'development',
+			port: process.env.PORT || 3000,
 			currentUser: req.user,
 			sessionID: req.sessionID
 		});
