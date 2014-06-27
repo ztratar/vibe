@@ -6,8 +6,9 @@ var _ = require('underscore'),
 	fayeClient;
 
 fayeNode.attach(fayeServer);
-fayeServer.listen(8000);
-console.log('Faye started on port 8000');
+var port = 8000;
+fayeServer.listen(port);
+console.log('Faye started on port ' + port);
 
 // Date objects aren't sent properly over faye
 // unless converted to strings first. Some objects
