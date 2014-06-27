@@ -10681,7 +10681,6 @@ ul.posts-view li.feedback-item-view h4 {
   text-align: center;
   float: left;
   color: white;
-  padding: 20px;
   padding: 20px 24px 20px 20px;
   font-size: 20px;
 }
@@ -10713,8 +10712,8 @@ ul.posts-view li.feedback-item-view h4 {
   border-radius: 4px;
   color: rgba(255, 255, 255, 0.91);
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 20px;
+  right: 20px;
   font-size: 16px;
   padding: 4px 9px;
 }
@@ -10722,7 +10721,7 @@ ul.posts-view li.feedback-item-view h4 {
   .post-question-item-view .action-bar a.btn span.unread-chats {
     font-size: 14px;
     top: 16px;
-    right: 14px;
+    right: 9px;
     padding: 2px 7px;
   }
   .post-question-item-view .action-bar a.btn span.unread-chats span {
