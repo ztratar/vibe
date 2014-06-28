@@ -4,3 +4,8 @@ bower_components/
 Makefile
 sftp-config.json
 syncAll
+vibe_app/platforms/
+vibe_app/www/js/
+vibe_app/www/css/
+vibe_app/www/img/
+public/js/build/

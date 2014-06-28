@@ -12,6 +12,8 @@ var FeedbackApprovalView = Backbone.View.extend({
 	template: _.template(template),
 
 	initialize: function(opts) {
+		var that = this;
+
 		this.feedback = new Feedbacks();
 		this.feedback.url = window.Vibe.serverUrl + 'api/feedback/pending';
 
@@ -25,9 +27,9 @@ var FeedbackApprovalView = Backbone.View.extend({
 			});
 		}, this));
 
-		setInterval(_.bind(function() {
-			this.feedback.fetch();
-		}, this), 4000);
+		window.Vibe.faye.subscribe('/api/feedback/pending', function(data) {
+			that.feedback.add(data);
+		});
 	},
 
 	determineVisibility: function() {
