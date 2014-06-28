@@ -10378,16 +10378,16 @@ html {
     font-size: 12px;
   }
 }
-ul.posts-view {
+.posts-view {
   list-style: none;
   padding: 32px 0 0 0;
 }
 @media (max-width: 480px) {
-  ul.posts-view {
+  .posts-view {
     padding: 20px 0 0 0;
   }
 }
-ul.posts-view li {
+.posts-view > div {
   display: block;
   position: relative;
   border-radius: 6px;
@@ -10395,11 +10395,11 @@ ul.posts-view li {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
 @media (max-width: 480px) {
-  ul.posts-view li {
+  .posts-view > div {
     margin: 0 0 20px 0;
   }
 }
-ul.posts-view li a.pull-down {
+.posts-view > div a.pull-down {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -10411,26 +10411,26 @@ ul.posts-view li a.pull-down {
   border-radius: 100px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
-ul.posts-view li a.pull-down i {
+.posts-view > div a.pull-down i {
   color: rgba(255, 255, 255, 0.45);
   margin: 0 0 0 -2px;
 }
-ul.posts-view li h4 {
+.posts-view > div h4 {
   font-size: 28px;
   font-weight: 600;
   padding: 40px 60px;
 }
 @media (max-width: 480px) {
-  ul.posts-view li h4 {
+  .posts-view > div h4 {
     font-size: 20px;
     padding: 22px 18px;
   }
 }
-ul.posts-view li.feedback-item-view h4 {
+.posts-view > div.feedback-item-view h4 {
   padding: 40px 60px 24px;
 }
 @media (max-width: 480px) {
-  ul.posts-view li.feedback-item-view h4 {
+  .posts-view > div.feedback-item-view h4 {
     padding: 24px 32px 18px;
   }
 }

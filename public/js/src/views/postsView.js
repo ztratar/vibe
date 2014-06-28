@@ -41,7 +41,7 @@ var PostsView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(this.template());
 
-		this.$posts = this.$('ul.posts-view');
+		this.$posts = this.$('.posts-view');
 		this.$newPostsButton = this.$('.new-posts-button');
 		this.$postsLoaderContainer = this.$('.post-loader-container');
 

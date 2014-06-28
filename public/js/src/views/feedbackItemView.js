@@ -8,8 +8,6 @@ module template from 'text!templates/feedbackItemView.html';
 
 var FeedbackItemView = Backbone.View.extend({
 
-	tagName: 'li',
-
 	className: 'feedback-item-view',
 
 	template: _.template(template),

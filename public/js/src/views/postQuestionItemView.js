@@ -10,8 +10,6 @@ module actionBarTemplate from 'text!templates/postQuestionItemActionBar.html';
 
 var PostQuestionItemView = Backbone.View.extend({
 
-	tagName: 'li',
-
 	className: 'post-question-item-view',
 
 	template: _.template(template),
