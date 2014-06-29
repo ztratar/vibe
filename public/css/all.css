@@ -10583,7 +10583,7 @@ html {
   display: table;
   height: 100%;
   width: 100%;
-  background: #e7a33f;
+  background: #f0a73b;
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   -webkit-transition: background 0.12s ease-out;
@@ -10591,7 +10591,7 @@ html {
 }
 .post-question-item-view ul.answers li a:hover {
   text-decoration: none;
-  background: #e8a848;
+  background: #f3ae47;
 }
 .post-question-item-view ul.answers li a.selected {
   -webkit-animation: bounceHit 0.32s linear;
@@ -10843,6 +10843,54 @@ html {
     margin-right: 8px;
     margin-top: -4px;
   }
+}
+.post-chat-view {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.post-chat-view .post-chat-view-section-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  height: 100%;
+}
+.post-chat-view .post-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+}
+.post-chat-view .post-section .feedback-item-view {
+  position: relative;
+  border-radius: 4px 0 0 4px;
+}
+.post-chat-view .post-section .feedback-item-view .pull-down {
+  display: none;
+}
+.post-chat-view .post-section .feedback-item-view .v-centered {
+  min-height: 278px;
+}
+.post-chat-view .post-section .feedback-item-view h4 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  padding: 0 32px;
+}
+.post-chat-view .post-section .feedback-item-view a.agreed,
+.post-chat-view .post-section .feedback-item-view a.agree {
+  width: 100% !important;
+}
+.post-chat-view .post-section .feedback-item-view a.discuss {
+  display: none;
+}
+.post-chat-view .chat-section {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
 }
 html,
 body {
