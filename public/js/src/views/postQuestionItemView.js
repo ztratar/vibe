@@ -24,8 +24,14 @@ var PostQuestionItemView = Backbone.View.extend({
 	},
 
 	initialize: function(opts) {
-		this.model = opts.model;
-		this.model.on('destroy', this.remove, this);
+		if (opts.model) {
+			this.model = opts.model;
+			this.model.on('destroy', this.remove, this);
+			this.question = this.model.get('question');
+		} else if (opts.question) {
+			this.question = opts.question;
+			this.question.once('change', this.render, this);
+		}
 
 		this.chartDelay = opts.chartDelay || 0;
 		this.forceSmallChart = opts.forceSmallChart || false;
@@ -35,7 +41,7 @@ var PostQuestionItemView = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template({
-			model: this.model.toJSON()
+			question: this.question
 		}));
 
 		this.$voteResultsContainer = this.$('.vote-results-container');
@@ -56,16 +62,17 @@ var PostQuestionItemView = Backbone.View.extend({
 	},
 
 	renderChart: function() {
-		var question = this.model.get('question');
+		var question = this.question;
 
 		if (question.get('answer_data').length > 1) {
 			this.chartView = new TimeSeriesChartView({
-				model: this.model.get('question'),
+				model: this.question,
 				forceSmallChart: this.forceSmallChart
 			});
 		} else {
 			this.chartView = new RatingChartView({
-				model: this.model.get('question')
+				model: this.question,
+				forceSmallChart: this.forceSmallChart
 			});
 		}
 
@@ -78,18 +85,21 @@ var PostQuestionItemView = Backbone.View.extend({
 			answerBody = parseInt($target.attr('data-answer'), 10);
 
 		this.$voteResultsContainer.addClass('voted');
-		this.model.get('question').answer(answerBody);
+		this.question.answer(answerBody);
 
 		return false;
 	},
 
 	discuss: function() {
 		this.postChatView = new PostChatView.default({
-			post: this.model
+			post: this.model,
+			question: this.question
 		});
 		window.Vibe.appView.showOverlay(this.postChatView);
 
 		this.markChatOpened();
+
+		window.Vibe.appRouter.navigate('/question/' + this.question.get('_id'));
 
 		return false;
 	},
@@ -102,8 +112,8 @@ var PostQuestionItemView = Backbone.View.extend({
 
 	initChat: function() {
 		var that = this,
-			totalChats = this.model.get('question').get('chat').num_chats,
-			chatsLastSeen = this.model.get('question').get('chat').chats_last_seen,
+			totalChats = this.question.get('chat').num_chats,
+			chatsLastSeen = this.question.get('chat').chats_last_seen,
 			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
 
 		if (myLastSeen) {
@@ -113,7 +123,7 @@ var PostQuestionItemView = Backbone.View.extend({
 		}
 		this.chatOpen = false;
 
-		window.Vibe.faye.subscribe(window.Vibe.serverUrl + 'api/questions/' + this.model.get('question').get('_id') + '/chats', function(newChat) {
+		window.Vibe.faye.subscribe(window.Vibe.serverUrl + 'api/questions/' + this.question.get('_id') + '/chats', function(newChat) {
 			if (!that.chatOpen) {
 				that.numUnread++;
 				that.renderActionBar();
@@ -128,7 +138,7 @@ var PostQuestionItemView = Backbone.View.extend({
 
 		this.postChatView.on('remove', _.bind(function() {
 			this.chatOpen = false;
-			this.model.get('question').leaveChat();
+			this.question.leaveChat();
 			this.postChatView = undefined;
 		}, this));
 	}

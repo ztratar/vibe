@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: 'js/build',
+	baseUrl: '/js/build',
 	paths: {
 		modernizr: '../libs/modernizr',
 		text: '../libs/text',

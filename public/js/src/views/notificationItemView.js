@@ -94,6 +94,11 @@ var NotificationItemView = Backbone.View.extend({
 
 	clicked: function() {
 		this.model.set('pseudoRead', false);
+
+		var notifUrl = this.model.getActionUrl();
+
+
+
 		return false;
 	}
 

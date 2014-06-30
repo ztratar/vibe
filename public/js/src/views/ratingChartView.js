@@ -20,11 +20,19 @@ var RatingChartView = Backbone.View.extend({
 
 	smallChartWindowWidthBreakpoint: 550,
 
+	useSmallVersion: function() {
+		return (this.windowWidth < this.smallChartWindowWidthBreakpoint) || this.forceSmallChart;
+	},
+
 	initialize: function(opts) {
 		var that = this;
 
 		this.model = opts.model;
+
+		this.model.on('change', this.render, this);
 		this.model.on('newAnswer', this.addNewAnswer, this);
+
+		this.forceSmallChart = opts.forceSmallChart || false;
 
 		$(window).on('resize', _.throttle(function() {
 			that.render();
@@ -32,7 +40,9 @@ var RatingChartView = Backbone.View.extend({
 	},
 
 	render: function() {
-		this.initChart();
+		if (this.model.get('answer_data') && this.model.get('answer_data').length) {
+			this.initChart();
+		}
 	},
 
 	initChart: function() {
@@ -73,7 +83,7 @@ var RatingChartView = Backbone.View.extend({
 	},
 
 	getChartMargin: function() {
-		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+		if (this.useSmallVersion()) {
 			return this.smallChartSettings.chartMargin;
 		}
 
@@ -81,7 +91,7 @@ var RatingChartView = Backbone.View.extend({
 	},
 
 	getChartBottomMargin: function() {
-		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+		if (this.useSmallVersion()) {
 			return this.smallChartSettings.chartBottomMargin;
 		}
 
@@ -112,7 +122,7 @@ var RatingChartView = Backbone.View.extend({
 			},
 			zerodValue = false;
 
-		if (barHeight === 0) {
+		if (barHeight <= 0) {
 			zerodValue = true;
 			barHeight = 10;
 			startY -= 10;

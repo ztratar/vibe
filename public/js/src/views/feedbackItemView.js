@@ -22,15 +22,21 @@ var FeedbackItemView = Backbone.View.extend({
 	initialize: function(opts) {
 		var that = this;
 
-		this.model = opts.model;
-		this.model.on('change', this.render, this);
-		this.model.on('destroy', this.remove, this);
-		this.model.get('feedback').on('change', this.render, this);
+		if (opts.model) {
+			this.model = opts.model;
+			this.model.on('change', this.render, this);
+			this.model.on('destroy', this.remove, this);
+			this.feedback = this.model.get('feedback');
+		} else if (opts.feedback) {
+			this.feedback = opts.feedback;
+		}
+
+		this.feedback.on('change', this.render, this);
 
 		this.initChat();
 
-		window.Vibe.faye.subscribe(window.Vibe.serverUrl + 'api/feedback/' + this.model.get('feedback').get('_id') + '/vote_change', function(newNumVotes) {
-			that.model.get('feedback').set({
+		window.Vibe.faye.subscribe(window.Vibe.serverUrl + 'api/feedback/' + this.feedback.get('_id') + '/vote_change', function(newNumVotes) {
+			that.feedback.set({
 				'num_votes': newNumVotes
 			});
 			that.$score.addClass('pop');
@@ -56,7 +62,7 @@ var FeedbackItemView = Backbone.View.extend({
 
 	agree: function() {
 		var that = this,
-			feedback = this.model.get('feedback');
+			feedback = this.feedback;
 
 		feedback.agree();
 
@@ -71,7 +77,7 @@ var FeedbackItemView = Backbone.View.extend({
 
 	undoAgree: function() {
 		var that = this,
-			feedback = this.model.get('feedback');
+			feedback = this.feedback;
 
 		feedback.undoAgree();
 
@@ -92,6 +98,8 @@ var FeedbackItemView = Backbone.View.extend({
 
 		this.markChatOpened();
 
+		window.Vibe.appRouter.navigate('/feedback/' + this.feedback.get('_id'));
+
 		return false;
 	},
 
@@ -101,8 +109,8 @@ var FeedbackItemView = Backbone.View.extend({
 				title: 'Are you sure?',
 				body: 'As an admin, you can remove this piece of feedback instantly by clicking confirm. This will also delete all relevant discussion.',
 				onConfirm: function() {
-					that.model.trigger('destroy');
-					that.model.get('feedback').pullDown();
+					if (that.model) that.model.trigger('destroy');
+					that.feedback.pullDown();
 				}
 			});
 
@@ -119,8 +127,8 @@ var FeedbackItemView = Backbone.View.extend({
 
 	initChat: function() {
 		var that = this,
-			totalChats = this.model.get('feedback').get('chat').num_chats,
-			chatsLastSeen = this.model.get('feedback').get('chat').chats_last_seen,
+			totalChats = this.feedback.get('chat').num_chats,
+			chatsLastSeen = this.feedback.get('chat').chats_last_seen,
 			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
 
 		if (myLastSeen) {
@@ -130,7 +138,7 @@ var FeedbackItemView = Backbone.View.extend({
 		}
 		this.chatOpen = false;
 
-		window.Vibe.faye.subscribe('/api/feedback/' + this.model.get('feedback').get('_id') + '/chats', function(newChat) {
+		window.Vibe.faye.subscribe('/api/feedback/' + this.feedback.get('_id') + '/chats', function(newChat) {
 			if (!that.chatOpen) {
 				that.numUnread++;
 				that.render();
@@ -145,7 +153,7 @@ var FeedbackItemView = Backbone.View.extend({
 
 		this.postChatView.on('remove', _.bind(function() {
 			this.chatOpen = false;
-			this.model.get('feedback').leaveChat();
+			this.feedback.leaveChat();
 			this.postChatView = undefined;
 		}, this));
 	}

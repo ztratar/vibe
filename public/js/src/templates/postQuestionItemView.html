@@ -1,5 +1,5 @@
-<h4><%- model.question.get('body') %></h4>
-<div class="vote-results-container <%- model.question.get('current_user_voted') ? 'voted' : '' %>">
+<h4><%- question.get('body') %></h4>
+<div class="vote-results-container <%- question.get('current_user_voted') ? 'voted' : '' %>">
 	<ul class="answers">
 		<li class="top-left">
 			<a href="#" data-answer="4">

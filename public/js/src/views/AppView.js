@@ -126,6 +126,12 @@ var AppView = Backbone.View.extend({
 		});
 	},
 
+	startCloseOverlay: function() {
+		if (this.overlayedView) {
+			this.overlayedView.remove();
+		}
+	},
+
 	closeOverlay: function() {
 		var that = this;
 
@@ -151,7 +157,7 @@ var AppView = Backbone.View.extend({
 
 		if ($target.hasClass('overlay-view-container')
 				|| $target.hasClass('close-modal')) {
-			this.closeOverlay();
+			this.startCloseOverlay();
 		}
 		return false;
 	},

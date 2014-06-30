@@ -18,14 +18,23 @@ var PostChatView = Backbone.View.extend({
 	template: _.template(template),
 
 	initialize: function(opts) {
-		this.post = opts.post;
-		this.postType = this.post.get('content_type');
-
-		if (this.postType === 'feedback') {
-			this.feedback = this.post.get('feedback');
-		} else {
-			this.question = this.post.get('question');
+		if (opts.post) {
+			this.post = opts.post;
+			this.postType = this.post.get('content_type');
+			if (this.postType === 'feedback') {
+				this.feedback = this.post.get('feedback');
+			} else {
+				this.question = this.post.get('question');
+			}
+		} else if (opts.question) {
+			this.postType = 'question';
+			this.question = opts.question;
+		} else if (opts.feedback) {
+			this.postType = 'feedback';
+			this.feedback = opts.feedback;
 		}
+
+		this.closeUrl = opts.closeUrl || '';
 	},
 
 	render: function() {
@@ -59,11 +68,13 @@ var PostChatView = Backbone.View.extend({
 		if (this.postType === 'feedback') {
 			// Circular dependency.
 			this.postView = new FeedbackItemView.default({
-				model: this.post
+				model: this.post,
+				feedback: this.feedback
 			});
 		} else {
 			this.postView = new PostQuestionItemView.default({
 				model: this.post,
+				question: this.question,
 				chartDelay: 200,
 				forceSmallChart: true
 			});
@@ -75,10 +86,11 @@ var PostChatView = Backbone.View.extend({
 
 	renderChat: function() {
 		var that = this,
-			apiResourceUrl = (this.postType === 'question') ? this.postType+'s' : this.postType;
+			apiResourceUrl = (this.postType === 'question') ? this.postType+'s' : this.postType,
+			apiResourceId = (this.postType === 'question') ? this.question.get('_id') : this.feedback.get('_id');
 
 		this.chatView = new ChatView({
-			chatsUrl: window.Vibe.serverUrl + 'api/' + apiResourceUrl + '/' + this.post.get(this.postType).get('_id') + '/chats',
+			chatsUrl: window.Vibe.serverUrl + 'api/' + apiResourceUrl + '/' + apiResourceId + '/chats',
 			closeChat: function() {
 				that.remove();
 			}
@@ -90,6 +102,7 @@ var PostChatView = Backbone.View.extend({
 
 	remove: function() {
 		this.once('remove-done', _.bind(function() {
+			window.Vibe.appRouter.navigate(this.closeUrl);
 			this.chatView.closeChat();
 			this.$el.remove();
 		}, this));

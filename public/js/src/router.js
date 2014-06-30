@@ -6,17 +6,16 @@ import ScreenRouter from 'screenRouter';
 
 import Survey from 'models/survey';
 import Question from 'models/question';
+import Feedback from 'models/feedback';
 
 import HomeView from 'views/homeView';
 import WelcomeView from 'views/welcomeView';
-import SurveyView from 'views/surveyView';
-import SurveyDoneView from 'views/surveyDoneView';
-import DiscussView from 'views/discussView';
 
 import SettingsView from 'views/settingsView';
 import SettingsEditFieldView from 'views/settingsEditFieldView';
 import ManageTeamView from 'views/manageTeamView';
 import ManagePollsView from 'views/managePollsView';
+import PostChatView from 'views/postChatView';
 
 var Router = Backbone.Router.extend({
 
@@ -36,13 +35,14 @@ var Router = Backbone.Router.extend({
 		'settings/admin/team': 'manageTeam',
 		'settings/admin/polls': 'managePolls',
 		'welcome/:step': 'welcome',
-		'discuss/:id': 'discuss',
-		'survey/:tag': 'survey',
-		'surveyDone': 'surveyDone'
+		'question/:id': 'question',
+		'feedback/:id': 'feedback'
 	},
 
 	index: function() {
 		var that = this;
+
+		window.Vibe.appView.startCloseOverlay();
 
 		// Started tutorial system to test screenRouter
 		if (false && !window.Vibe.user.get('seenTutorial')) {
@@ -252,11 +252,11 @@ var Router = Backbone.Router.extend({
 		this.trigger('loaded');
 	},
 
-	discuss: function(questionId) {
+	question: function(questionId, closeUrl) {
 		var that = this,
-			discussView,
 			qData = window.Vibe.modelCache.getAndRemove('question-' + questionId),
-			question;
+			question,
+			postChatView;
 
 		if (qData) {
 			question = new Question(qData);
@@ -264,82 +264,40 @@ var Router = Backbone.Router.extend({
 			question = new Question({
 				_id: questionId
 			});
-			_.defer(question.fetch);
-		}
-
-		discussView = new DiscussView({
-			model: question
-		});
-
-		window.Vibe.appView.headerView.setButtons({
-			title: question.get('title'),
-			headerSize: 'small',
-			leftAction: {
-				icon: '#61903',
-				title: '',
-				click: function(ev) {
-					that.navigateWithAnimation('/', 'pushRight', {
-						trigger: true
-					});
-					return false;
-				}
-			}
-		});
-
-		this.screenRouter.currentScreenContainer.html(discussView.$el);
-		discussView.render();
-
-		this.trigger('loaded');
-	},
-
-	survey: function(surveyId) {
-		var surveyData = window.Vibe.modelCache.getAndRemove('survey-' + surveyId),
-			surveyView,
-			survey;
-
-		if (surveyData) {
-			survey = new Survey(surveyData);
-		} else {
-			survey = new Survey({
-				id: surveyId
+			_.defer(function() {
+				question.fetch();
 			});
-			_.defer(survey.fetch);
 		}
 
-		surveyView = new SurveyView({
-			model: survey
+		postChatView = new PostChatView({
+			question: question,
+			closeUrl: closeUrl || ''
 		});
-
-		this.screenRouter.currentScreenContainer.html(surveyView.$el);
-		surveyView.render();
-
-		this.trigger('loaded');
+		window.Vibe.appView.showOverlay(postChatView);
 	},
 
-	surveyDone: function() {
+	feedback: function(feedbackId, closeUrl) {
 		var that = this,
-			surveyDoneView = new SurveyDoneView();
+			qData = window.Vibe.modelCache.getAndRemove('feedback-' + feedbackId),
+			feedback,
+			postChatView;
 
-		this.homeView.surveyTaken = true;
+		if (qData) {
+			feedback = new Feedback(qData);
+		} else {
+			feedback = new Feedback({
+				_id: feedbackId
+			});
+			_.defer(function() {
+				feedback.fetch();
+			});
+		}
 
-		window.Vibe.appView.headerView.setButtons({
-			title: '',
-			leftAction: {
-				icon: '#61903',
-				title: 'vibe',
-				click: function(ev) {
-					that.navigateWithAnimation('/', 'pushRight', {
-						trigger: true
-					});
-					return false;
-				}
-			}
+		postChatView = new PostChatView({
+			feedback: feedback,
+			closeUrl: closeUrl || ''
 		});
-
-		this.screenRouter.currentScreenContainer.html(surveyDoneView.$el);
-		surveyDoneView.render();
-
-		this.trigger('loaded');
+		window.Vibe.appView.showOverlay(postChatView);
 	}
 
 });
@@ -377,12 +335,11 @@ var initRouter = function() {
 		window.Vibe.appView.headerView.renderCurrentComponents();
 	});
 
+	window.Vibe.appRouter.index();
+
 	Backbone.history.start({
 		pushState: true,
 		root: '/'
-	});
-	window.Vibe.appRouter.navigate('/', {
-		trigger: true
 	});
 };
 

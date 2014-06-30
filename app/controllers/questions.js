@@ -139,7 +139,12 @@ exports.suggested = function(req, res, next) {
  * Retrieve a question
  */
 exports.get = function (req, res, next) {
-	return res.send(req.question);
+
+	req.question.withAnswerData({
+		_id: req.user._id
+	}, function(questionObj) {
+		return res.send(questionObj);
+	});
 };
 
 /*
