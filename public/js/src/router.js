@@ -28,6 +28,7 @@ var Router = Backbone.Router.extend({
 		'index.html': 'index',
 		'': 'index',
 		'/': 'index',
+		'notifications': 'notifications',
 		'settings': 'settings',
 		'settings/name': 'settingsName',
 		'settings/email': 'settingsEmail',
@@ -36,7 +37,9 @@ var Router = Backbone.Router.extend({
 		'settings/admin/polls': 'managePolls',
 		'welcome/:step': 'welcome',
 		'question/:id': 'question',
-		'feedback/:id': 'feedback'
+		'feedback/:id': 'feedback',
+		'question/:id/chat': 'question',
+		'feedback/:id/chat': 'feedback'
 	},
 
 	index: function() {
@@ -79,6 +82,11 @@ var Router = Backbone.Router.extend({
 		}
 
 		this.trigger('loaded');
+	},
+
+	notifications: function() {
+		this.index();
+		window.Vibe.appView.openNotifications();
 	},
 
 	settings: function() {
@@ -252,11 +260,12 @@ var Router = Backbone.Router.extend({
 		this.trigger('loaded');
 	},
 
-	question: function(questionId, closeUrl) {
+	question: function(questionId) {
 		var that = this,
 			qData = window.Vibe.modelCache.getAndRemove('question-' + questionId),
 			question,
-			postChatView;
+			postChatView,
+			closeUrl = this.getCachedBackUrl();
 
 		if (qData) {
 			question = new Question(qData);
@@ -271,16 +280,18 @@ var Router = Backbone.Router.extend({
 
 		postChatView = new PostChatView({
 			question: question,
-			closeUrl: closeUrl || ''
+			closeUrl: closeUrl || '',
+			forceChatPosition: (window.Backbone.history.fragment.indexOf('/chat') !== -1)
 		});
 		window.Vibe.appView.showOverlay(postChatView);
 	},
 
-	feedback: function(feedbackId, closeUrl) {
+	feedback: function(feedbackId) {
 		var that = this,
 			qData = window.Vibe.modelCache.getAndRemove('feedback-' + feedbackId),
 			feedback,
-			postChatView;
+			postChatView,
+			closeUrl = this.getCachedBackUrl();
 
 		if (qData) {
 			feedback = new Feedback(qData);
@@ -295,7 +306,8 @@ var Router = Backbone.Router.extend({
 
 		postChatView = new PostChatView({
 			feedback: feedback,
-			closeUrl: closeUrl || ''
+			closeUrl: closeUrl || '',
+			forceChatPosition: (window.Backbone.history.fragment.indexOf('/chat') !== -1)
 		});
 		window.Vibe.appView.showOverlay(postChatView);
 	}
@@ -323,6 +335,16 @@ _.extend(Router.prototype, {
 			this.screenRouter.animateScreens(animation);
 			this.navigate(href, opts);
 			window.Vibe.appView.headerView.animateToNewComponents(animation);
+		}
+	},
+
+	getCachedBackUrl: function() {
+		if (window.Vibe.cachedBackUrl) {
+			var holdUrl = window.Vibe.cachedBackUrl;
+			window.Vibe.cachedBackUrl = false;
+			return holdUrl;
+		} else {
+			return false;
 		}
 	}
 

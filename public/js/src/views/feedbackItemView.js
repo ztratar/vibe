@@ -48,10 +48,8 @@ var FeedbackItemView = Backbone.View.extend({
 	},
 
 	render: function() {
-		var modelJSON = this.model.toJSON();
-
 		this.$el.html(this.template({
-			model: modelJSON,
+			feedback: this.feedback,
 			numUnread: this.numUnread
 		}));
 
@@ -92,7 +90,8 @@ var FeedbackItemView = Backbone.View.extend({
 
 	discuss: function() {
 		this.postChatView = new PostChatView({
-			post: this.model
+			post: this.model,
+			feedback: this.feedback
 		});
 		window.Vibe.appView.showOverlay(this.postChatView);
 

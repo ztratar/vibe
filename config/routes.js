@@ -34,6 +34,7 @@ module.exports = function (app, passport) {
 	app.get('/api/questions/:question', c.questions.get);
 	app.get('/api/questions/:question/chats', c.questions.getChats);
 	app.get('/api/feedback/pending', c.feedback.pending);
+	app.get('/api/feedback/:feedback', c.feedback.get);
 	app.get('/api/feedback/:feedback/chats', c.feedback.getChats);
 	app.get('/api/posts', c.posts.index);
 	app.get('/api/notifications', c.notifications.index);

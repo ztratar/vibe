@@ -97,7 +97,12 @@ var NotificationItemView = Backbone.View.extend({
 
 		var notifUrl = this.model.getActionUrl();
 
-
+		if (notifUrl) {
+			window.Vibe.cachedBackUrl = '/notifications';
+			window.Vibe.appRouter.navigate(notifUrl, {
+				trigger: true
+			});
+		}
 
 		return false;
 	}

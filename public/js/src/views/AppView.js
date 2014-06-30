@@ -171,6 +171,7 @@ var AppView = Backbone.View.extend({
 				icon: '#61943',
 				iconClass: 'x-icon',
 				click: function() {
+					window.Vibe.appRouter.navigate('/');
 					window.Vibe.appView.closeNotifications();
 					return false;
 				}

@@ -107,6 +107,7 @@ var HeaderView = Backbone.View.extend({
 				icon: '#61954',
 				click: function() {
 					window.Vibe.appView.openNotifications();
+					window.Vibe.appRouter.navigate('/notifications');
 					return false;
 				}
 			},

@@ -28,6 +28,15 @@ exports.loadFeedback = function(req, res, next, id) {
 };
 
 /*
+ * GET /api/feedback/:feedback
+ *
+ * Get a stripped feedback object
+ */
+exports.get = function(req, res) {
+	return res.send(req.feedback.stripInfo(req.user));
+};
+
+/*
  * GET /api/feedback/pending
  *
  * If admin, get all feedbacks pending
@@ -37,23 +46,15 @@ exports.loadFeedback = function(req, res, next, id) {
 exports.pending = function(req, res) {
 	if (!req.user) return helpers.sendError(res, 'Not logged in');
 
+	if (!req.user.isAdmin) return res.send(500);
+
 	Async.waterfall([function(cb) {
-		if (req.user.isAdmin) {
-			Feedback.find({
-				company: req.user.company._id,
-				status: 'pending'
-			}, function(err, feedbacks) {
-				cb(err, feedbacks);
-			});
-		} else {
-			Feedback.find({
-				creator: req.user._id,
-				company: req.user.company._id,
-				status: 'pending'
-			}, function(err, feedbacks) {
-				cb(err, feedbacks);
-			});
-		}
+		Feedback.find({
+			company: req.user.company._id,
+			status: 'pending'
+		}, function(err, feedbacks) {
+			cb(err, feedbacks);
+		});
 	}], function(err, feedbacks) {
 		if (err) return helpers.sendError(res, err);
 
@@ -186,6 +187,9 @@ exports.create = function(req, res, next) {
 		votes: [req.user._id]
 	}, function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
+
+		live.send('/api/feedback/pending', feedback.stripInfo());
+
 		return res.send(feedback.stripInfo(req.user));
 	});
 };
@@ -376,6 +380,8 @@ exports.approve = function(req, res, next) {
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
 
+		live.send('/api/feedback/decided', feedback.stripInfo());
+
 		res.send(feedback.stripInfo(req.user));
 
 		postsController.createPostsFromFeedback(null, res, feedback);
@@ -416,6 +422,8 @@ exports.disapprove = function(req, res, next) {
 
 	req.feedback.save(function(err, feedback) {
 		if (err) return helpers.sendError(res, err);
+
+		live.send('/api/feedback/decided', feedback.stripInfo());
 
 		notificationsController.send({
 			for_user: req.feedback.creator,

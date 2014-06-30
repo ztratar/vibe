@@ -40,6 +40,10 @@ var PostQuestionItemView = Backbone.View.extend({
 	},
 
 	render: function() {
+		if (!this.question.get('body')) {
+			return false;
+		}
+
 		this.$el.html(this.template({
 			question: this.question
 		}));

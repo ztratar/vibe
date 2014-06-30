@@ -27,12 +27,13 @@ var FeedbackApprovalView = Backbone.View.extend({
 			});
 		}, this));
 
-		setInterval(_.bind(function() {
-			this.feedback.fetch();
-		}, this), 4000);
-
 		window.Vibe.faye.subscribe('/api/feedback/pending', function(data) {
 			that.feedback.add(data);
+		});
+
+		window.Vibe.faye.subscribe('/api/feedback/decided', function(data) {
+			var toRemove = that.feedback.get(data._id);
+			if (toRemove) that.feedback.remove(toRemove);
 		});
 	},
 

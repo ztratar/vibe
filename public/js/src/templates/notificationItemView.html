@@ -29,10 +29,6 @@
 				<strong><%- model.data.user %></strong> just asked a question: "<%- model.data.question %>"
 			<% } else if (model.type === 'question-vote') { %>
 				<strong><%- numPeopleString %></strong> voted on "<%= model.data.question %>"
-			<% } else if (model.type === 'comment') { %>
-				<%- whoString %> commented on "<%= body_text %>"
-			<% } else if (model.type === 'comment-like') { %>
-				<strong><%- numPeopleString %></strong> liked your comment: "<%- model.data.question %>"
 			<% } else if (model.type === 'feedback-rejected') { %>
 				Sorry, your suggestion wasn't selected to send to everyone because "<%= model.data.reason %>"
 			<% } else if (model.type === 'feedback-approved') { %>

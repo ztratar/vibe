@@ -34,6 +34,8 @@ var PostChatView = Backbone.View.extend({
 			this.feedback = opts.feedback;
 		}
 
+		this.forceChatPosition = opts.forceChatPosition || false;
+
 		this.closeUrl = opts.closeUrl || '';
 	},
 
@@ -55,6 +57,10 @@ var PostChatView = Backbone.View.extend({
 			}
 		});
 		carousel.init();
+
+		if (this.forceChatPosition) {
+			carousel.showPane(1, false);
+		}
 
 		_.delay(function() {
 			window.carousel = carousel;
