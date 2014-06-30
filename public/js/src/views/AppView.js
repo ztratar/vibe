@@ -102,6 +102,8 @@ var AppView = Backbone.View.extend({
 
 		if (!view) return;
 
+		this.overlayedView = view;
+
 		this.$overlayViewContainer.html(view.$el);
 		view.render();
 
@@ -131,6 +133,10 @@ var AppView = Backbone.View.extend({
 
 		// Wait for the animation
 		_.delay(function() {
+			if (that.overlayedView) {
+				that.overlayedView.trigger('remove-done');
+			}
+			delete that.overlayedView;
 			that.$overlayContainer.attr('class', 'overlay-container');
 			that.$overlayViewContainer.html('');
 		}, 360);
@@ -138,6 +144,10 @@ var AppView = Backbone.View.extend({
 
 	clickedOverlayBg: function(ev) {
 		var $target = $(ev.target);
+
+		if (window.Vibe.draggingScreen) {
+			return false;
+		}
 
 		if ($target.hasClass('overlay-view-container')
 				|| $target.hasClass('close-modal')) {

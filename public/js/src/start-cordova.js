@@ -2,6 +2,7 @@ document.addEventListener("deviceready", function() {
 	require.config({
 		baseUrl: 'js/build',
 		paths: {
+			modernizr: '../libs/modernizr',
 			text: '../libs/text',
 			jquery: '../libs/jquery',
 			underscore: '../libs/underscore',
@@ -9,7 +10,8 @@ document.addEventListener("deviceready", function() {
 			d3: '../libs/d3',
 			moment: '../libs/moment',
 			autosize: '../libs/jquery.autosize',
-			faye: '../libs/faye-browser'
+			faye: '../libs/faye-browser',
+			hammer: '../libs/hammer'
 		},
 		shim: {
 			d3: {

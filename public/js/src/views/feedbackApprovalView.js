@@ -27,6 +27,10 @@ var FeedbackApprovalView = Backbone.View.extend({
 			});
 		}, this));
 
+		setInterval(_.bind(function() {
+			this.feedback.fetch();
+		}, this), 4000);
+
 		window.Vibe.faye.subscribe('/api/feedback/pending', function(data) {
 			that.feedback.add(data);
 		});

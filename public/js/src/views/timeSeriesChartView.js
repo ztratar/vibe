@@ -27,7 +27,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 	smallChartWindowWidthBreakpoint: 550,
 
 	useSmallVersion: function() {
-		return this.windowWidth < this.smallChartWindowWidthBreakpoint;
+		return (this.windowWidth < this.smallChartWindowWidthBreakpoint) || this.forceSmallChart;
 	},
 
 	initialize: function(opts) {
@@ -37,6 +37,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 		this.model.on('newAnswer', this.addNewAnswer, this);
 
 		this.answerData = this.model.get('answer_data');
+		this.forceSmallChart = opts.forceSmallChart || false;
 
 		$(window).on('resize', _.throttle(function() {
 			that.render();
@@ -102,7 +103,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 	},
 
 	getChartMargin: function() {
-		if (this.windowWidth < this.smallChartWindowWidthBreakpoint) {
+		if (this.useSmallVersion()) {
 			return this.smallChartSettings.chartMargin;
 		}
 

@@ -36,6 +36,10 @@ var ChatView = Backbone.View.extend({
 
 		this.chatItemTimes = [];
 
+		if (opts.closeChat) {
+			this.customCloseChat = opts.closeChat;
+		}
+
 		_.defer(function() {
 			window.Vibe.faye.subscribe(that.chats.url.replace(window.Vibe.serverUrl, '/'), function(chatModel) {
 				that.chats.add(chatModel);
@@ -208,10 +212,12 @@ var ChatView = Backbone.View.extend({
 	},
 
 	closeChat: function() {
-		this.trigger('remove');
-		_.delay(_.bind(function() {
+		if (this.customCloseChat) {
+			this.customCloseChat();
+		} else {
+			this.trigger('remove');
 			this.remove();
-		}, this), 400);
+		}
 
 		return false;
 	}

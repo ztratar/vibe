@@ -1,12 +1,15 @@
-import 'backbone';
 import 'underscore';
+import 'backbone';
+
 import ConfirmDialogView from 'views/confirmDialogView';
+import PostChatView from 'views/postChatView';
 import TimeSeriesChartView from 'views/timeSeriesChartView';
-import ChatView from 'views/chatView';
 import RatingChartView from 'views/ratingChartView';
 
 module template from 'text!templates/postQuestionItemView.html';
 module actionBarTemplate from 'text!templates/postQuestionItemActionBar.html';
+
+var PostChatView = require('views/postChatView');
 
 var PostQuestionItemView = Backbone.View.extend({
 
@@ -24,6 +27,9 @@ var PostQuestionItemView = Backbone.View.extend({
 		this.model = opts.model;
 		this.model.on('destroy', this.remove, this);
 
+		this.chartDelay = opts.chartDelay || 0;
+		this.forceSmallChart = opts.forceSmallChart || false;
+
 		this.initChat();
 	},
 
@@ -36,7 +42,10 @@ var PostQuestionItemView = Backbone.View.extend({
 		this.$chartContainer = this.$('.chart-container');
 		this.$actionBarContainer = this.$('.action-bar');
 
-		this.renderChart();
+		_.delay(_.bind(function() {
+			this.renderChart();
+		}, this), this.chartDelay);
+
 		this.renderActionBar();
 	},
 
@@ -51,7 +60,8 @@ var PostQuestionItemView = Backbone.View.extend({
 
 		if (question.get('answer_data').length > 1) {
 			this.chartView = new TimeSeriesChartView({
-				model: this.model.get('question')
+				model: this.model.get('question'),
+				forceSmallChart: this.forceSmallChart
 			});
 		} else {
 			this.chartView = new RatingChartView({
@@ -74,11 +84,10 @@ var PostQuestionItemView = Backbone.View.extend({
 	},
 
 	discuss: function() {
-		this.chatView = new ChatView({
-			chatTitle: this.model.get('question').get('body'),
-			chatsUrl: window.Vibe.serverUrl + 'api/questions/' + this.model.get('question').get('_id') + '/chats'
+		this.postChatView = new PostChatView.default({
+			post: this.model
 		});
-		window.Vibe.appView.showOverlay(this.chatView);
+		window.Vibe.appView.showOverlay(this.postChatView);
 
 		this.markChatOpened();
 
@@ -117,10 +126,10 @@ var PostQuestionItemView = Backbone.View.extend({
 		this.numUnread = 0;
 		this.renderActionBar();
 
-		this.chatView.on('remove', _.bind(function() {
+		this.postChatView.on('remove', _.bind(function() {
 			this.chatOpen = false;
 			this.model.get('question').leaveChat();
-			this.chatView = undefined;
+			this.postChatView = undefined;
 		}, this));
 	}
 

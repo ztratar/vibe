@@ -2,7 +2,7 @@ import 'underscore';
 import 'backbone';
 
 import ConfirmDialogView from 'views/confirmDialogView';
-import ChatView from 'views/chatView';
+import PostChatView from 'views/postChatView';
 
 module template from 'text!templates/feedbackItemView.html';
 
@@ -85,11 +85,10 @@ var FeedbackItemView = Backbone.View.extend({
 	},
 
 	discuss: function() {
-		this.chatView = new ChatView({
-			chatTitle: this.model.get('feedback').get('body'),
-			chatsUrl: window.Vibe.serverUrl + 'api/feedback/' + this.model.get('feedback').get('_id') + '/chats'
+		this.postChatView = new PostChatView({
+			post: this.model
 		});
-		window.Vibe.appView.showOverlay(this.chatView);
+		window.Vibe.appView.showOverlay(this.postChatView);
 
 		this.markChatOpened();
 
@@ -144,10 +143,10 @@ var FeedbackItemView = Backbone.View.extend({
 		this.numUnread = 0;
 		this.render();
 
-		this.chatView.on('remove', _.bind(function() {
+		this.postChatView.on('remove', _.bind(function() {
 			this.chatOpen = false;
 			this.model.get('feedback').leaveChat();
-			this.chatView = undefined;
+			this.postChatView = undefined;
 		}, this));
 	}
 
