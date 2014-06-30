@@ -8632,6 +8632,49 @@ html {
     font-size: 14px;
   }
 }
+.demo-intro-view .vibe-modal-content {
+  height: 320px;
+  position: relative;
+  padding: 0 80px;
+}
+.demo-intro-view .vibe-modal-content h3 {
+  font-size: 32px;
+  margin-bottom: 32px;
+  color: #95C1EE;
+}
+.demo-intro-view .vibe-modal-content p {
+  font-size: 22px;
+  opacity: .8;
+  line-height: 26px;
+  margin: 0 -20px;
+}
+.demo-intro-view .demo-pane {
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+.demo-intro-view .demo-pane > div {
+  opacity: 0;
+  -webkit-transform: translate3d(20px, 0, 0);
+  transform: translate3d(20px, 0, 0);
+  visibility: hidden;
+  -webkit-transition: all 0.18s ease-in-out;
+  transition: all 0.18s ease-in-out;
+}
+.demo-intro-view .demo-pane.active > div {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  visibility: visible;
+  -webkit-transition: all 0.18s ease-in-out 0.12s;
+  transition: all 0.18s ease-in-out 0.12s;
+}
+.demo-intro-view .demo-pane.done > div {
+  opacity: 0;
+  -webkit-transform: translate3d(-20px, 0, 0);
+  transform: translate3d(-20px, 0, 0);
+  visibility: hidden;
+}
 .home-view {
   padding-top: 192px;
 }

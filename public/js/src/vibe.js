@@ -9,6 +9,7 @@ import ModelCache from 'modelCache';
 import User from 'models/user';
 import AppView from 'views/AppView';
 import LoginView from 'views/loginView';
+import DemoIntroView from 'views/demoIntroView';
 
 window.Vibe = window.Vibe || {};
 
@@ -47,6 +48,11 @@ window.Vibe.run = function() {
 	} else {
 		window.Vibe.user = new User(window.Vibe._data_.currentUser);
 		renderViews();
+
+		if (window.Vibe.user.get('email') === 'demo@getvibe.com') {
+			var demoIntroView = new DemoIntroView();
+			window.Vibe.appView.showOverlay(demoIntroView);
+		}
 	}
 };
 

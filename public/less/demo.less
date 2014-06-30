@@ -1,0 +1,47 @@
+.demo-intro-view {
+
+	.vibe-modal-content {
+		height: 320px;
+		position: relative;
+		padding: 0 80px;
+
+		h3 {
+			font-size: 32px;
+			margin-bottom: 32px;
+			color: #95C1EE;
+		}
+
+		p {
+			font-size: 22px;
+			opacity: .8;
+			line-height: 26px;
+			margin: 0 -20px;
+		}
+	}
+
+	.demo-pane {
+		position: absolute;
+		top: 0;
+		height: 100%;
+
+		& > div {
+			opacity: 0;
+			.translate3d(20px, 0, 0);
+			visibility: hidden;
+			.transition(all 0.18s ease-in-out);
+		}
+
+		&.active > div {
+			opacity: 1;
+			.translate3d(0, 0, 0);
+			visibility: visible;
+			.transition(all 0.18s ease-in-out 0.12s);
+		}
+
+		&.done > div {
+			opacity: 0;
+			.translate3d(-20px, 0, 0);
+			visibility: hidden;
+		}
+	}
+}
