@@ -459,6 +459,8 @@ exports.send = function(req, res, questionId, next) {
 			});
 
 			exports.createPostsForQuestion(null, question, users);
+
+			if (typeof next === 'function') next(null, { status: 'success' });
 		});
 	});
 };
