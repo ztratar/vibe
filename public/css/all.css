@@ -9879,9 +9879,9 @@ html {
 }
 .question-list-view > li a.x-action {
   position: absolute;
-  opacity: 0.4;
-  top: 3px;
-  right: 5px;
+  opacity: 0.5;
+  top: 28px;
+  right: 15px;
 }
 .question-list-view > li .question-col {
   padding: 7px 295px 6px 0;
@@ -9899,7 +9899,7 @@ html {
 }
 .question-list-view > li .save-col {
   position: absolute;
-  right: 95px;
+  right: 65px;
   top: 22px;
 }
 .question-list-view > li .save-col a.save-question {
@@ -9912,59 +9912,13 @@ html {
 }
 .question-list-view > li .send-now-col {
   position: absolute;
-  right: 175px;
+  right: 65px;
   top: 22px;
 }
 .question-list-view > li .send-now-col a {
   padding: 11px 18px 11px;
   font-weight: 600;
   width: 116px;
-}
-.question-list-view > li .send-later-col {
-  position: absolute;
-  right: 15px;
-  top: 19px;
-  width: 140px;
-}
-.question-list-view > li .send-later-col h4 {
-  text-transform: uppercase;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.3);
-  margin: 0 0 6px 0;
-}
-.question-list-view > li ul.days {
-  display: block;
-  padding: 0;
-  list-style: none;
-}
-.question-list-view > li ul.days li {
-  display: inline-block;
-}
-.question-list-view > li ul.days li a {
-  display: block;
-  width: 24px;
-  height: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  font-weight: 600;
-  text-align: center;
-  border-radius: 100px;
-  font-size: 11px;
-  line-height: 22px;
-  color: rgba(255, 255, 255, 0.8);
-}
-.question-list-view > li ul.days li a:hover {
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  text-decoration: none;
-}
-.question-list-view > li ul.days li a.state-1 {
-  background: #2f557c;
-  border: 1px solid #2f557c;
-}
-.question-list-view > li ul.days li a.state-2 {
-  background: #2ecc71;
-  border: 1px solid #2ecc71;
 }
 .post-overlay-view {
   position: absolute;
