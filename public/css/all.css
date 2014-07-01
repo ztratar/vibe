@@ -10958,6 +10958,7 @@ html {
 }
 .post-chat-view .post-section .post-question-item-view {
   padding: 24px 0 28px;
+  min-height: 348px;
   border-radius: 6px 0 0 6px;
 }
 .post-chat-view .post-section .post-question-item-view h4 {

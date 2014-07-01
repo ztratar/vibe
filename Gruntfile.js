@@ -42,19 +42,9 @@ module.exports = function(grunt) {
 				dest: 'public/css/fonts/',
 				filter: 'isFile'
 			},
-			'cordova-js-libs': {
-				expand: true,
-				cwd: 'public/js/libs/',
-				src: '**',
-				dest: 'vibe_app/www/js/libs',
-				filter: 'isFile'
-			},
 			'cordova-js': {
-				expand: true,
-				cwd: 'public/js/build/',
-				src: '**',
-				dest: 'vibe_app/www/js/build/',
-				filter: 'isFile'
+				src: 'public/js/all.js',
+				dest: 'vibe_app/www/js/all.js'
 			},
 			'cordova-css': {
 				expand: true,

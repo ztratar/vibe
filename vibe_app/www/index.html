@@ -23,6 +23,11 @@
 			window.isCordova = true;
 		</script>
         <script type="text/javascript" src="cordova.js"></script>
-		<script data-main="js/build/start-cordova" src="js/libs/require.js"></script>
+		<script src="js/all.js"></script>
+		<script>
+			document.addEventListener("deviceready", function() {
+				require(['vibe']);
+			}, false);
+		</script>
 	</body>
 </html>
