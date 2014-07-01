@@ -27,6 +27,8 @@ var HeaderView = Backbone.View.extend({
 			this.oldComponents = this.$('.header-components');
 			this.newComponents = $('<div class="header-components new"></div>');
 			this.$container.append(this.newComponents);
+		} else {
+			this.newComponents.removeClass('new').addClass('current');
 		}
 		this.newComponents.html(_.template(template, this.data));
 		this.bindButtonActions();

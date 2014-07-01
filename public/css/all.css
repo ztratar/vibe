@@ -7943,8 +7943,8 @@ form.form-horizontal-top button.btn {
   }
 }
 .header-view .header-components a span.unread-num.bounce {
-  -webkit-animation: popZoomBig 0.32s linear 0s forwards;
-  animation: popZoomBig 0.32s linear 0s forwards;
+  -webkit-animation: popZoomBig 0.32s linear 0s;
+  animation: popZoomBig 0.32s linear 0s;
 }
 .header-view .header-components a i {
   font-size: 28px;
