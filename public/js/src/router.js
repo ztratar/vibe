@@ -4,7 +4,6 @@ import 'backbone';
 
 import ScreenRouter from 'screenRouter';
 
-import Survey from 'models/survey';
 import Question from 'models/question';
 import Feedback from 'models/feedback';
 

@@ -1,6 +1,6 @@
 import 'backbone';
 import 'jquery';
-import Survey from 'models/survey';
+
 import Notifications from 'models/notifications';
 import HeaderView from 'views/headerView';
 import NotificationsView from 'views/notificationsView';

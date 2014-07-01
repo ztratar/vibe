@@ -23,6 +23,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -93,6 +94,18 @@ module.exports = function(grunt) {
 					'public/css/email.css': [
 						'public/less/email.less'
 					]
+				}
+			}
+		},
+		requirejs: {
+			compile: {
+				options: {
+					baseUrl: 'public/js/build',
+					mainConfigFile: 'public/js/build.js',
+					name: 'vibe',
+					out: 'public/js/all.js',
+					preserveLicenseComments: false,
+					include: ['../libs/require.js']
 				}
 			}
 		},
