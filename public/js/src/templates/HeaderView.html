@@ -1,5 +1,8 @@
 <% if (leftAction) { %>
-	<a href="#" class="btn btn-link left-action" title="<%- leftAction.title %>">
+	<a href="#" class="btn btn-link left-action" title="<%- leftAction.title %> <%= leftAction.id %>">
+		<% if (leftAction.image) { %>
+		<img src="<%= leftAction.image %>">
+		<% } %>
 		<% if (leftAction.icon) { %>
 		<i class="icon icon-<%= leftAction.icon.slice(1) %> <%= leftAction.iconClass %>">&<%= leftAction.icon %></i>
 		<% } %>

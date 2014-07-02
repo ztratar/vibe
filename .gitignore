@@ -9,3 +9,4 @@ vibe_app/www/js/
 vibe_app/www/css/
 vibe_app/www/img/
 public/js/build/
+.DS_Store

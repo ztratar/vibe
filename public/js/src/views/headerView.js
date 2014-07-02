@@ -106,7 +106,7 @@ var HeaderView = Backbone.View.extend({
 			title: '',
 			leftAction: {
 				id: 'notifications',
-				icon: '#61954',
+				image: window.staticRoute + 'img/bell.svg',
 				click: function() {
 					window.Vibe.appView.openNotifications();
 					window.Vibe.appRouter.navigate('/notifications');
