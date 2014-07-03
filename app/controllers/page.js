@@ -10,10 +10,6 @@ exports.index = function(req, res) {
 			res.redirect('/login');
 		}
 
-		if (req.user.email === 'zach@getvibe.com') {
-			email.send_unread_notifications(req.user);
-		}
-
 		res.render('home/index', {
 			env: process.env.NODE_ENV || 'development',
 			port: process.env.PORT || 3000,
