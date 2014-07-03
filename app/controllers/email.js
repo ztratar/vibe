@@ -51,6 +51,7 @@ function addNotificationTemplateVars(currentUser, notifications) {
 
 		if (notifications[i].type === 'question') {
 			notifications[i].notifBody = notifications[i].data.user + ' just asked a question: "' + notifications[i].data.question + '"';
+			notifications[i].img = notifications[i].data.avatar;
 			notifications[i].link = serverUrl + 'questions/' + notifications[i].data.questionId;
 		} else if (notifications[i].type === 'question-vote') {
 			notifications[i].notifBody = notifications[i].numPeopleString + ' voted on "' + notifications[i].data.question + '"';
