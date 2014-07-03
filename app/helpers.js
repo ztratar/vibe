@@ -35,5 +35,36 @@ helpers.requireLogin = function(res, req) {
 	}
 };
 
+helpers.getUsersListString = function(users) {
+	var baseUserStr = ''
+
+	if (!users.length) return false;
+
+	if (users.length === 1) {
+		baseUserStr = users[0].name;
+	} else if (users.length === 2) {
+		baseUserStr = users[0].name + ' and ' + users[1].name;
+	} else if (users.length === 3) {
+		baseUserStr = users[0].name + ', ' + users[1].name + ', and ' + users[2].name;
+	} else {
+		baseUserStr = users[0].name + ', ' + users[1].name + ', and ' + (users.length-2) + ' others';
+	}
+
+	baseUserStr = '<strong>' + _.escape(baseUserStr) + '</strong>';
+	if (users.length > 1) {
+		return baseUserStr + ' are';
+	} else {
+		return baseUserStr + ' is';
+	}
+};
+
+helpers.getNumPeopleString = function(num) {
+	if (num === 1) {
+		return '1 person';
+	} else {
+		return num + ' people';
+	}
+};
+
 exports = module.exports = helpers;
 

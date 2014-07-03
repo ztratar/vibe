@@ -1,3 +1,5 @@
+var email = require('./email')();
+
 /*
  * STATIC PAGE LOAD - Index & Splash
  */
@@ -6,6 +8,10 @@ exports.index = function(req, res) {
 		if (req.user.active === false) {
 			req.logout();
 			res.redirect('/login');
+		}
+
+		if (req.user.email === 'zach@getvibe.com') {
+			email.send_unread_notifications(req.user);
 		}
 
 		res.render('home/index', {
