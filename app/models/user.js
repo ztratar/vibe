@@ -34,6 +34,9 @@ var UserSchema = new Schema({
 
 	tutorial: { type: String, default: "{}" },
 	reset_password_hash: String,
+	emails: {
+		receive_unread_notifs: { type: Boolean, default: true }
+	},
 
 	time_created: { type: Date, default: Date.now },
 	time_updated: { type: Date, default: Date.now }

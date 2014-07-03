@@ -62,8 +62,10 @@ module.exports = function (app, config, passport) {
     //app.use(helpers('app name'));
     //
     // use passport session
-    app.use(passport.initialize());
-    app.use(passport.session());
+	if (passport) {
+		app.use(passport.initialize());
+		app.use(passport.session());
+	}
 
 	// CSRF Tokens
 	var csrfValue = function(req) {

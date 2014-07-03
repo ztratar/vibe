@@ -3,6 +3,7 @@ var _ = require('underscore'),
 	moment = require('moment'),
 	mongoose = require('mongoose'),
 	env = process.env.NODE_ENV || 'development',
+	User = mongoose.model('User'),
 	Notification = mongoose.model('Notification'),
 	config = require('../../config/config')[env],
 	sendgrid = require('sendgrid')('getvibe', 'ivREB7QmZuusFMX7'),
@@ -130,6 +131,26 @@ exports.send = function(options) {
 /*
  * INTERNAL
  *
+ * Worker task to send all notification emails. Uses the scheduler addon.
+ */
+exports.all_users_send_unread_notifications = function(cb) {
+	console.log('Sending unread emails...');
+
+	User.find({
+		active: true,
+		'emails.receive_unread_notifs': true
+	}, function(err, users) {
+		if (err || !users || !users.length) return;
+
+		_.each(users, function(user) {
+			exports.send_unread_notifications(user);
+		});
+	});
+};
+
+/*
+ * INTERNAL
+ *
  * Send an unread notifications email to the user
  */
 exports.send_unread_notifications = function(user) {
@@ -141,6 +162,8 @@ exports.send_unread_notifications = function(user) {
 		if (!notifications.length) return;
 
 		notifications = addNotificationTemplateVars(user, notifications);
+
+		console.log('Sending unread notification email for user', user.email);
 
 		exports.send({
 			to: user.email,
