@@ -5,7 +5,8 @@ var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 	opts = opts || {};
 	opts = _.extend({
 		maxHeight: 200,
-		maxWidth: 320
+		maxWidth: 320,
+		imageType: 'image/png'
 	}, opts);
 
 	// Uses filereader, which is supported in most
@@ -40,13 +41,13 @@ var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 
 					var canvas = document.createElement('canvas');
 
-					canvas.width = tempW;
-					canvas.height = tempH;
+					canvas.width = Math.min(tempW, opts.maxWidth);
+					canvas.height = Math.min(tempH, opts.maxHeight);
 
 					var ctx = canvas.getContext("2d");
 					ctx.drawImage(this, 0, 0, tempImg.width, tempImg.height, 0, 0, tempW, tempH);
 
-					var dataURL = canvas.toDataURL("image/png");
+					var dataURL = canvas.toDataURL(opts.imageType);
 					$(imgElem).attr("src", dataURL);
 					$(textInput).val(dataURL);
 					$(fileInput).trigger('image-helper-done');

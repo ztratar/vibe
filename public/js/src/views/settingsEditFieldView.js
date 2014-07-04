@@ -26,7 +26,8 @@ var SettingsEditFieldView = Backbone.View.extend({
 			helperText: '',
 			fieldType: 'text',
 			maxHeight: undefined,
-			maxWidth: undefined
+			maxWidth: undefined,
+			imageType: 'image/png'
 		}, opts);
 	},
 
@@ -60,7 +61,8 @@ var SettingsEditFieldView = Backbone.View.extend({
 				this.$('input[name="form-img_base64"]'),
 				{
 					maxHeight: this.maxHeight,
-					maxWidth: this.maxWidth
+					maxWidth: this.maxWidth,
+					imageType: this.imageType
 				}
 			);
 		}

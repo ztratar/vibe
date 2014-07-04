@@ -8692,7 +8692,7 @@ html {
   top: 0;
   left: 0;
   right: 0;
-  background: #122b43;
+  background: #052747;
   height: 192px;
 }
 @media (max-width: 480px) {
@@ -8710,7 +8710,11 @@ html {
   right: 0;
   bottom: 0;
   background-size: cover;
-  opacity: 1;
+  opacity: 0.16;
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  filter: gray;
+  filter: grayscale(100%);
 }
 .home-info-wrapper .container {
   position: relative;

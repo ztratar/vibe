@@ -63,10 +63,17 @@ CompanySchema.methods = {
 	convertField: function(fieldName, cb) {
 		var company = this,
 			imgBuffer,
+			imgType,
 			imgKey = 'company-' + fieldName + '-' + company._id + '-v' + company[fieldName + '_v'];
 
 		if (company.hasConvertedField(fieldName)) {
 			return;
+		}
+
+		if (company[fieldName].indexOf('image/png') !== -1) {
+			imgType = 'image/png';
+		} else {
+			imgType = 'image/jpeg';
 		}
 
 		imgBuffer = new Buffer(company[fieldName].replace(/^data:image\/\w+;base64,/, ""),'base64');
@@ -75,7 +82,7 @@ CompanySchema.methods = {
 			'Key': imgKey,
 			'Body': imgBuffer,
 			'ContentLength': imgBuffer.length,
-			'ContentType': 'image/png',
+			'ContentType': imgType,
 			'ACL': 'public-read'
 		}, function(err, url) {
 			if (err) return;

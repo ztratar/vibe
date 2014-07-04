@@ -321,8 +321,9 @@ var Router = Backbone.Router.extend({
 				attributeName: 'cover',
 				fieldType: 'image',
 				confirm: false,
-				maxWidth: 1200,
-				maxHeight: 600
+				maxWidth: 1000,
+				maxHeight: 600,
+				imageType: 'image/jpeg'
 			});
 
 		window.Vibe.appView.headerView.setButtons({
