@@ -12,7 +12,9 @@
 	<% if (fieldType === 'image') { %>
 	<div class="form-img-picker">
 		<img class="form-img" src="<%= currentValue %>">
-		<a href="#">Edit <%- title %></a>
+		<div>
+			<a class="btn btn-lg btn-info" href="#">Edit <%- title %></a>
+		</div>
 		<input type="file" name="form-img" id="form-img-input">
 		<input type="text" name="form-img_base64" class="hidden" value="">
 	</div>

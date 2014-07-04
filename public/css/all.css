@@ -7637,6 +7637,25 @@ form.form-horizontal-top button.btn {
     height: auto;
   }
 }
+.form-img-picker {
+  position: relative;
+}
+.form-img-picker input[name="form-img"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.form-img-picker a.btn {
+  margin: 12px auto 0;
+  max-width: 500px;
+}
+.form-img-picker img {
+  max-width: 100%;
+}
 .icon {
   font-size: 24px;
 }
