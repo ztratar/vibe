@@ -19,6 +19,16 @@ var User = BaseModel.extend({
 		}
 	},
 
+	getAvatar: function() {
+		var avatar = this.get('avatar');
+
+		if (avatar.indexOf('data:image') === -1) {
+			return window.Vibe.config.cloudfrontDomain + avatar;
+		} else {
+			return avatar;
+		}
+	},
+
 	setAvatar: function() {
 		if (this.get('avatar') === '') {
 			this.set('avatar', this.defaults.avatar, {

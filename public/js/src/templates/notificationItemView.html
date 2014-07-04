@@ -2,7 +2,7 @@
 	<% if (!model.read || model.pseudoRead) { %><span class="unread"></span><% } %>
 
 	<% if (model.img.length) { %>
-		<img src="<%= window.Vibe.config.cloudfrontDomain + model.img %>">
+		<img src="<%= model.img %>">
 	<% } else if (model.type === 'question-vote') { %>
 		<span class="fake-img img-question">
 			<i class="icon">&#61753;</i>

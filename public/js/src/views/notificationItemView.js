@@ -22,10 +22,11 @@ var NotificationItemView = Backbone.View.extend({
 	},
 
 	render: function() {
-		var templateDate = {
-			model: this.model.toJSON(),
-			timeAgo: moment(this.model.get('time_updated')).fromNow()
-		};
+		var avatar,
+			templateDate = {
+				model: this.model.toJSON(),
+				timeAgo: moment(this.model.get('time_updated')).fromNow()
+			};
 
 		if (this.model.get('data').num_people) {
 			templateDate.numPeopleString = this.getNumPeopleString(this.model.get('data').num_people);
@@ -35,6 +36,7 @@ var NotificationItemView = Backbone.View.extend({
 			firstUserId = this.model.get('data').first_user_id,
 			firstUser,
 			adhocSortedUsers;
+
 		if (users && users.length) {
 			users = _.filter(users, function(user) {
 				return (user._id !== window.Vibe.user.get('_id'));
@@ -53,7 +55,22 @@ var NotificationItemView = Backbone.View.extend({
 			} else {
 				templateDate.peopleString = '';
 			}
-			templateDate.firstUserImg = window.Vibe.config.cloudfrontDomain + firstUser.avatar;
+
+			avatar = firstUser.avatar;
+
+			if (avatar.indexOf('data:image') === -1) {
+				avatar = window.Vibe.config.cloudfrontDomain + avatar;
+			}
+
+			templateDate.firstUserImg = avatar;
+		}
+
+		if (templateDate.model.img) {
+			avatar = templateDate.model.img;
+			if (avatar.indexOf('data:image') === -1) {
+				avatar = window.Vibe.config.cloudfrontDomain + avatar;
+			}
+			templateDate.model.img = avatar;
 		}
 
 		this.$el.html(this.template(templateDate));

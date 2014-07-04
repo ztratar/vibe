@@ -1,6 +1,6 @@
 <div class="settings-group with-avatar">
 	<div class="avatar-picker small">
-		<img class="avatar-img" src="<%= window.Vibe.config.cloudfrontDomain + window.Vibe.user.get('avatar') %>">
+		<img class="avatar-img" src="<%= window.Vibe.user.getAvatar() %>">
 		<a href="#">Edit avatar</a>
 		<input type="file" name="avatar" id="avatar-input">
 		<input type="text" name="avatar_base64" class="hidden" value="">

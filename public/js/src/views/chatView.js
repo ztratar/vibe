@@ -103,9 +103,15 @@ var ChatView = Backbone.View.extend({
 	},
 
 	addOne: function(chat) {
+		var avatar = chat.get('creator').avatar;
+
+		if (avatar.indexOf('data:image') === -1) {
+			avatar = window.Vibe.config.cloudfrontDomain + avatar;
+		}
+
 		var newChatItem = this.chatTemplate({
 				body: chat.get('body'),
-				userAvatar: window.Vibe.config.cloudfrontDomain + chat.get('creator').avatar,
+				userAvatar: avatar,
 				timeago: moment(chat.get('time_created')).fromNow()
 			}),
 			$chatElem = $('<div/>');
