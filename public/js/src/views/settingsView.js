@@ -16,7 +16,9 @@ var SettingsView = Backbone.View.extend({
 		'click a.email': 'editEmailPage',
 		'click a.password': 'editPasswordPage',
 		'click a.manage-team': 'manageTeamPage',
-		'click a.manage-polls': 'managePollsPage',
+		'click a.edit-company-name': 'editCompanyName',
+		'click a.edit-company-logo': 'editCompanyLogo',
+		'click a.edit-company-cover': 'editCompanyCover',
 		'click a.log-out': 'logOut'
 	},
 
@@ -92,9 +94,31 @@ var SettingsView = Backbone.View.extend({
 		return false;
 	},
 
-	managePollsPage: function() {
+	editCompanyName: function() {
 		window.Vibe.appRouter.navigateWithAnimation(
-			'settings/admin/polls',
+			'settings/admin/company_name',
+			'pushLeft',
+			{
+				trigger: true
+			}
+		);
+		return false;
+	},
+
+	editCompanyLogo: function() {
+		window.Vibe.appRouter.navigateWithAnimation(
+			'settings/admin/company_logo',
+			'pushLeft',
+			{
+				trigger: true
+			}
+		);
+		return false;
+	},
+
+	editCompanyCover: function() {
+		window.Vibe.appRouter.navigateWithAnimation(
+			'settings/admin/company_cover',
 			'pushLeft',
 			{
 				trigger: true

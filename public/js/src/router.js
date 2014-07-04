@@ -33,7 +33,9 @@ var Router = Backbone.Router.extend({
 		'settings/email': 'settingsEmail',
 		'settings/password': 'settingsPassword',
 		'settings/admin/team': 'manageTeam',
-		'settings/admin/polls': 'managePolls',
+		'settings/admin/company_name': 'editCompanyName',
+		'settings/admin/company_logo': 'editCompanyLogo',
+		'settings/admin/company_cover': 'editCompanyCover',
 		'welcome/:step': 'welcome',
 		'question/:id': 'question',
 		'feedback/:id': 'feedback',
@@ -235,26 +237,117 @@ var Router = Backbone.Router.extend({
 		this.trigger('loaded');
 	},
 
-	managePolls: function() {
+	editCompanyName: function() {
 		var that = this,
-			managePollsView = new ManagePollsView();
+			settingsEditFieldView = new SettingsEditFieldView({
+				title: 'Name',
+				model: window.Vibe.user.get('company'),
+				attributeName: 'name',
+				placeholder: 'Ex: Vibe, Inc',
+				confirm: false
+			});
 
 		window.Vibe.appView.headerView.setButtons({
-			title: 'Polls',
+			title: 'Company',
 			leftAction: {
-				icon: '#61903',
-				title: '',
+				icon: '',
+				title: 'Cancel',
 				click: function(ev) {
 					that.navigateWithAnimation('/settings', 'pushRight', {
 						trigger: true
 					});
 					return false;
 				}
+			},
+			rightAction: {
+				title: 'Save',
+				click: function() {
+					settingsEditFieldView.saveField();
+					return false;
+				}
 			}
 		});
 
-		this.screenRouter.currentScreenContainer.html(managePollsView.$el);
-		managePollsView.render();
+		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+		settingsEditFieldView.render();
+
+		this.trigger('loaded');
+	},
+
+	editCompanyLogo: function() {
+		var that = this,
+			settingsEditFieldView = new SettingsEditFieldView({
+				title: 'Logo',
+				model: window.Vibe.user.get('company'),
+				attributeName: 'logo',
+				fieldType: 'image',
+				confirm: false,
+				maxWidth: 220,
+				maxHeight: 90
+			});
+
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Logo',
+			leftAction: {
+				icon: '',
+				title: 'Cancel',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			},
+			rightAction: {
+				title: 'Save',
+				click: function() {
+					settingsEditFieldView.saveField();
+					return false;
+				}
+			}
+		});
+
+		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+		settingsEditFieldView.render();
+
+		this.trigger('loaded');
+	},
+
+	editCompanyCover: function() {
+		var that = this,
+			settingsEditFieldView = new SettingsEditFieldView({
+				title: 'Cover',
+				model: window.Vibe.user.get('company'),
+				attributeName: 'cover',
+				fieldType: 'image',
+				confirm: false,
+				maxWidth: 1200,
+				maxHeight: 600
+			});
+
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Cover',
+			leftAction: {
+				icon: '',
+				title: 'Cancel',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			},
+			rightAction: {
+				title: 'Save',
+				click: function() {
+					settingsEditFieldView.saveField();
+					return false;
+				}
+			}
+		});
+
+		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
+		settingsEditFieldView.render();
 
 		this.trigger('loaded');
 	},

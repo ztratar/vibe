@@ -1,6 +1,8 @@
 import 'backbone';
 import 'underscore';
 
+import imageInputHelper from 'helpers/imageInputHelper';
+
 module template from 'text!templates/settingsEditFieldView.html';
 
 var SettingsEditFieldView = Backbone.View.extend({
@@ -22,11 +24,18 @@ var SettingsEditFieldView = Backbone.View.extend({
 			askForCurrent: false,
 			confirm: false,
 			helperText: '',
-			fieldType: 'text'
+			fieldType: 'text',
+			maxHeight: undefined,
+			maxWidth: undefined
 		}, opts);
 	},
 
 	render: function() {
+		var currentValue = this.model.get(this.attributeName);
+		if (this.fieldType === 'image' && typeof this.model.getImage === 'function') {
+			currentValue = this.model.getImage(this.attributeName);
+		}
+
 		this.$el.html(this.template({
 			title: this.title,
 			attributeName: this.attributeName,
@@ -35,7 +44,7 @@ var SettingsEditFieldView = Backbone.View.extend({
 			placeholder: this.placeholder,
 			helperText: this.helperText,
 			fieldType: this.fieldType,
-			currentValue: this.model.get(this.attributeName)
+			currentValue: currentValue
 		}));
 		this.$form = this.$('.form');
 		this.$error = this.$('.alert-danger');
@@ -43,6 +52,18 @@ var SettingsEditFieldView = Backbone.View.extend({
 		_.delay(_.bind(function() {
 			this.$('input:eq(0)').focus();
 		}, this), 400);
+
+		if (this.fieldType === 'image') {
+			imageInputHelper(
+				this.$('input[name="form-img"]'),
+				this.$('.form-img'),
+				this.$('input[name="form-img_base64"]'),
+				{
+					maxHeight: this.maxHeight,
+					maxWidth: this.maxWidth
+				}
+			);
+		}
 
 		return this;
 	},
@@ -105,7 +126,11 @@ var SettingsEditFieldView = Backbone.View.extend({
 	},
 
 	getFieldInputValue: function() {
-		return this.$('input[name="'+this.attributeName+'"]').val();
+		if (this.fieldType === 'image') {
+			return this.$('input[name="form-img_base64"]').val();
+		} else {
+			return this.$('input[name="'+this.attributeName+'"]').val();
+		}
 	},
 
 	getConfirmFieldInputValue: function() {

@@ -1,4 +1,5 @@
 import BaseModel from 'models/baseModel';
+import Company from 'models/company';
 
 var User = BaseModel.extend({
 
@@ -17,6 +18,22 @@ var User = BaseModel.extend({
 		if (opts && opts.avatar === '') {
 			this.setAvatar();
 		}
+
+		this.setCompany();
+
+		this.on('change:company', this.setCompany, this);
+	},
+
+	setCompany: function() {
+		var company = this.get('company');
+
+		if (company instanceof Company) {
+			return;
+		}
+
+		company = new Company(this.get('company'));
+
+		this.set('company', company, { silent: true });
 	},
 
 	getAvatar: function() {

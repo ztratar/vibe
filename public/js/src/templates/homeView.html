@@ -1,8 +1,8 @@
 <div class="post-overlay-container"></div>
 
-<% if (company.cover) { %>
+<% if (company.get('cover')) { %>
 <div class="home-info-wrapper with-bg">
-	<div class="bg-image" style="background-image: url('<%= company.cover %>')"></div>
+	<div class="bg-image" style="background-image: url('<%= company.getImage('cover') %>')"></div>
 <% } else { %>
 <div class="home-info-wrapper">
 <% } %>
@@ -10,10 +10,10 @@
 		<div class="company-info-bar v-centered">
 			<div>
 				<h1>
-					<% if (company.logo) { %>
-					<img src="<%= company.logo %>">
+					<% if (company.get('logo')) { %>
+					<img src="<%= company.getImage('logo') %>">
 					<% } else { %>
-					<%- company.name %>
+					<%- company.get('name') %>
 					<% } %>
 				</h1>
 			</div>

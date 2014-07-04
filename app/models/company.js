@@ -5,7 +5,8 @@
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	_ = require('underscore');
+	_ = require('underscore'),
+	helpers = require('../helpers');
 
 /**
  * Company Schema
@@ -17,6 +18,8 @@ var CompanySchema = new Schema({
 	size: { type: Number, default: 1 },
 	logo: String,
 	cover: String,
+	logo_v: { type: Number, default: 0 },
+	cover_v: { type: Number, default: 0 },
 	time_created: { type: Date, default: Date.now }
 });
 
@@ -52,6 +55,40 @@ CompanySchema.path('domain').validate(function (website) {
  */
 
 CompanySchema.methods = {
+
+	hasConvertedField: function(fieldName) {
+		return this[fieldName].indexOf('data:image') === -1;
+	},
+
+	convertField: function(fieldName, cb) {
+		var company = this,
+			imgBuffer,
+			imgKey = 'company-' + fieldName + '-' + company._id + '-v' + company[fieldName + '_v'];
+
+		if (company.hasConvertedField(fieldName)) {
+			return;
+		}
+
+		imgBuffer = new Buffer(company[fieldName].replace(/^data:image\/\w+;base64,/, ""),'base64');
+
+		helpers.setHostedFile({
+			'Key': imgKey,
+			'Body': imgBuffer,
+			'ContentLength': imgBuffer.length,
+			'ContentType': 'image/png',
+			'ACL': 'public-read'
+		}, function(err, url) {
+			if (err) return;
+			company[fieldName] = imgKey;
+			company[fieldName + '_v']++;
+			company.save(function(err, company) {
+				if (typeof cb === 'function') {
+					if (err) return cb(err);
+					cb(null, company);
+				}
+			});
+		});
+	},
 
 };
 

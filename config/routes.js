@@ -6,6 +6,7 @@ module.exports = function (app, passport) {
 		c = controllers = {},
 		controllerNames = [
 			'users',
+			'company',
 			'meta_questions',
 			'questions',
 			'access',
@@ -57,6 +58,7 @@ module.exports = function (app, passport) {
 	app.post('/api/feedback/:feedback/chats', c.feedback.newChat);
 
 	app.put('/api/users/:id', c.users.update);
+	app.put('/api/company/:id', c.company.update);
 	app.put('/api/questions/:question', c.questions.update);
 	app.put('/api/questions/:question/leave_chat', c.questions.leaveChatRoom);
 	app.put('/api/feedback/:feedback', c.feedback.update);
