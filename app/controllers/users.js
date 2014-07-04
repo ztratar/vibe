@@ -295,7 +295,9 @@ exports.createFromUserInvite = function(req, res, next) {
 
 		req.logIn(user, function(err) {
 			if (err) return sendStandardError();
-			return res.send(user.stripInfo());
+			res.send(user.stripInfo());
+
+			user.convertAvatar();
 		});
 	});
 };
@@ -388,7 +390,6 @@ exports.update = function(req, res, next){
 
 		var body = req.body;
 
-		if (body.tutorial) user.tutorial = JSON.stringify(body.tutorial);
 		if (body.name) user.name = body.name;
 		if (body.avatar) user.avatar = body.avatar;
 		if (body.isAdmin !== undefined) user.isAdmin = body.isAdmin;
@@ -407,7 +408,9 @@ exports.update = function(req, res, next){
 
 		user.save(function(err, user){
 			if (err) return helpers.sendError(res, err);
-			return res.send(user.stripInfo());
+			res.send(user.stripInfo());
+
+			if (body.avatar) user.convertAvatar();
 		});
 	});
 };

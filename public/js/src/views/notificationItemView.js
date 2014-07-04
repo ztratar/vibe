@@ -53,7 +53,7 @@ var NotificationItemView = Backbone.View.extend({
 			} else {
 				templateDate.peopleString = '';
 			}
-			templateDate.firstUserImg = firstUser.avatar;
+			templateDate.firstUserImg = window.Vibe.config.cloudfrontDomain + firstUser.avatar;
 		}
 
 		this.$el.html(this.template(templateDate));

@@ -19,6 +19,10 @@
 
 			window.staticRoute = window.Vibe.serverUrl;
 
+			window.Vibe.config = {
+				cloudfrontDomain: '{{ config.AWS.cloudfrontDomain }}'
+			};
+
 			window.Vibe._data_ = {};
 		</script>
 		{% block content %}

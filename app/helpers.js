@@ -1,4 +1,12 @@
-var helpers = {};
+var helpers = {},
+	_ = require('underscore'),
+	AWS = require('aws-sdk'),
+	env = process.env.NODE_ENV || 'development',
+	config = require('../config/config')[env];
+
+AWS.config.update(config.AWS);
+
+var s3 = new AWS.S3();
 
 helpers.isValidEmail = function(email) {
 	var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
@@ -64,6 +72,26 @@ helpers.getNumPeopleString = function(num) {
 	} else {
 		return num + ' people';
 	}
+};
+
+helpers.setHostedFile = function(opts, cb) {
+	if (!opts.Key || !opts.Body) return false;
+
+	s3.putObject(_.extend({
+		Bucket: config.AWS.Bucket
+	}, opts), function(err, data) {
+		helpers.getHostedFile(opts.Key, cb);
+	});
+};
+
+helpers.getHostedFile = function(key, cb) {
+	s3.getSignedUrl('getObject', {
+		Bucket: config.AWS.Bucket,
+		Key: key,
+		Expires: (60 * 60 * 24 * 365 * 5)
+	}, function(err, url) {
+		cb(err, url);
+	});
 };
 
 exports = module.exports = helpers;

@@ -42,16 +42,16 @@ function addNotificationTemplateVars(currentUser, notifications) {
 			} else {
 				notifications[i].peopleString = '';
 			}
-			notifications[i].img = firstUser.avatar;
+			notifications[i].img = config.AWS.cloudfrontDomain + firstUser.avatar;
 		}
 
-		console.log('before', notifications[i]);
 		if (!notifications[i].img) {
 			notifications[i].img = serverUrl + 'img/notifications/' + notifications[i].type + '.jpg';
 		}
 
 		if (notifications[i].type === 'question') {
 			notifications[i].notifBody = notifications[i].data.user + ' just asked a question: "' + notifications[i].data.question + '"';
+			notifications[i].img = config.AWS.cloudfrontDomain + notifications[i].img;
 			notifications[i].link = serverUrl + 'questions/' + notifications[i].data.questionId;
 		} else if (notifications[i].type === 'question-vote') {
 			notifications[i].notifBody = notifications[i].numPeopleString + ' voted on "' + notifications[i].data.question + '"';
@@ -78,7 +78,6 @@ function addNotificationTemplateVars(currentUser, notifications) {
 		}
 
 		notifications[i].timeAgo = moment(notifications.time_updated).fromNow();
-		console.log('after', notifications[i]);
 	}
 
 	return notifications;
@@ -156,10 +155,14 @@ exports.all_users_send_unread_notifications = function(cb) {
  * Send an unread notifications email to the user
  */
 exports.send_unread_notifications = function(user) {
-	Notification.find({
+	Notification
+	.find({
 		for_user: user._id,
 		read: false
-	}, function(err, notifications) {
+	})
+	.sort({ time_updated: -1 })
+	.limit(20)
+	.exec(function(err, notifications) {
 		if (err) return;
 		if (!notifications.length) return;
 

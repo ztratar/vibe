@@ -8,7 +8,9 @@ var mongoose = require('mongoose'),
 	_ = require('underscore'),
 	helpers = require('../helpers'),
 	Feedback = mongoose.model('Feedback'),
-	authTypes = ['github', 'twitter', 'facebook', 'google'];
+	authTypes = ['github', 'twitter', 'facebook', 'google'],
+	env = process.env.NODE_ENV || 'development',
+	config = require('../../config/config')[env];
 
 /**
  * User Schema
@@ -16,6 +18,7 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
 	name: String,
 	email: { type: String, lowercase: true, trim: true },
+	avatar_v: { type: Number, default: 0 },
 	avatar: { type: String, default: '' },
 
 	isAdmin: { type: Boolean, default: false },
@@ -32,7 +35,9 @@ var UserSchema = new Schema({
 	github: {},
 	google: {},
 
-	tutorial: { type: String, default: "{}" },
+	tutorial: {
+		fte: { type: Boolean, default: false }
+	},
 	reset_password_hash: String,
 	emails: {
 		receive_unread_notifs: { type: Boolean, default: true }
@@ -40,7 +45,7 @@ var UserSchema = new Schema({
 
 	time_created: { type: Date, default: Date.now },
 	time_updated: { type: Date, default: Date.now }
-})
+});
 
 /**
  * Virtuals
@@ -105,9 +110,14 @@ UserSchema.methods = {
 
 	stripInfo: function() {
 		var user = this.toObject();
+
 		user.hashed_password = undefined;
 		user.salt = undefined;
 		user.provider = undefined;
+
+		if (this.hasConvertedAvatar()) {
+			user.avatar = config.AWS.cloudfrontDomain + user.avatar;
+		}
 
 		return user;
 	},
@@ -146,6 +156,35 @@ UserSchema.methods = {
 	encryptPassword: function(password) {
 		if (!password) return ''
 		return bcrypt.hashSync(password, this.salt);
+	},
+
+	hasConvertedAvatar: function() {
+		return this.avatar.indexOf('data:image') === -1;
+	},
+
+	convertAvatar: function() {
+		var user = this,
+			imgBuffer,
+			avatarKey = 'user-avatar-' + user._id + '-v' + user.avatar_v;
+
+		if (user.hasConvertedAvatar()) {
+			return;
+		}
+
+		imgBuffer = new Buffer(user.avatar.replace(/^data:image\/\w+;base64,/, ""),'base64');
+
+		helpers.setHostedFile({
+			'Key': avatarKey,
+			'Body': imgBuffer,
+			'ContentLength': imgBuffer.length,
+			'ContentType': 'image/jpeg',
+			'ACL': 'public-read'
+		}, function(err, url) {
+			if (err) return;
+			user.avatar = avatarKey;
+			user.avatar_v++;
+			user.save();
+		});
 	},
 
 	generateNewUserPostsFeed: function(cb) {

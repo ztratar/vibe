@@ -1,9 +1,9 @@
 {% extends '../layouts/email.html' %}
 
 {% block content %}
-<table style="background: #f9f9f9; border-radius: 10px; padding: 10px 18px 10px;">
+<table style="background: #f9f9f9; border-radius: 10px; padding: 18px 18px 6px;">
 	{% for model in notifications %}
-	<tr style="height: 100px;">
+	<tr style="min-height: 100px;">
 		<td class="left-img" style="width: 96px;">
 			<a href="{{ model.link }}" class="media">
 				<span class="unread" style="width: 20px; height: 20px; border-radius: 100px; position: absolute; background: #B93D3D; box-shadow: 0 1px 4px rgba(0,0,0,.2);"></span>
@@ -12,7 +12,7 @@
 		</td>
 		<td class="media-body">
 			<a href="{{ model.link }}" style="text-decoration: none;">
-				<p style="font-size: 22px; font-weight: 500; font-family: 'Helvetica Neue'; margin: 0 0 10px 0; color: #223e59;">
+				<p style="font-size: 20px; font-weight: 500; font-family: 'Helvetica Neue'; margin: 0 0 10px 0; color: #223e59;">
 					{{ model.notifBody }}
 				</p>
 				<span style="font-size: 12px; color: #888;">
@@ -21,6 +21,7 @@
 			</a>
 		</td>
 	</tr>
+	<tr style="height: 12px;"></tr>
 	{% endfor %}
 </table>
 {% endblock %}
