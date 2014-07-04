@@ -1,3 +1,6 @@
+var env = process.env.NODE_ENV || 'development',
+	config = require('../../config/config')[env];
+
 /*
  * STATIC PAGE LOAD - Index & Splash
  */
@@ -11,7 +14,8 @@ exports.index = function(req, res) {
 		res.render('home/index', {
 			env: process.env.NODE_ENV || 'development',
 			currentUser: req.user,
-			sessionID: req.sessionID
+			sessionID: req.sessionID,
+			config: config
 		});
 	} else {
 		res.render('splash/index');

@@ -26,6 +26,7 @@ var SettingsView = Backbone.View.extend({
 	},
 
 	render: function() {
+		console.log('me',window.Vibe.config.cloudfrontDomain);
 		this.$el.html(this.template());
 		this.applyAvatarBindings();
 		return this;
