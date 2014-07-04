@@ -53,6 +53,15 @@ var User = BaseModel.extend({
 				}
 			}
 		});
+	},
+
+	setTutorialFinished: function(tutName) {
+		var tutorial = this.get('tutorial');
+		tutorial[tutName] = true;
+
+		this.save({
+			tutorial: tutorial
+		});
 	}
 
 });

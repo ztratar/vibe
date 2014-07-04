@@ -394,6 +394,7 @@ exports.update = function(req, res, next){
 		if (body.avatar) user.avatar = body.avatar;
 		if (body.isAdmin !== undefined) user.isAdmin = body.isAdmin;
 		if (body.email) user.email = body.email;
+		if (body.tutorial) user.tutorial = body.tutorial;
 
 		// Ensure current user for password changes
 		if (body.password && user._id.toString() === req.user._id.toString()) {

@@ -1,0 +1,22 @@
+<% _.each(steps, function(step, ind) { %>
+<div class="pane v-centered">
+	<div>
+		<div class="transparent-modal">
+			<div class="transparent-modal-content step-<%= ind %>">
+				<% if (step.img) { %>
+				<img src="<%= step.img %>">
+				<% } %>
+				<% if (step.title) { %>
+				<h3><%= step.title %></h3>
+				<% } %>
+				<% if (step.body) { %>
+				<p>
+					<%= step.body %>
+				</p>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+<% }); %>
+<a href="#" class="btn btn-success next">Next</a>

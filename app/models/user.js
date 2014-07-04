@@ -36,7 +36,8 @@ var UserSchema = new Schema({
 	google: {},
 
 	tutorial: {
-		fte: { type: Boolean, default: false }
+		fte: { type: Boolean, default: false },
+		fte_admin: { type: Boolean, default: false }
 	},
 	reset_password_hash: String,
 	emails: {
@@ -114,10 +115,6 @@ UserSchema.methods = {
 		user.hashed_password = undefined;
 		user.salt = undefined;
 		user.provider = undefined;
-
-		if (this.hasConvertedAvatar()) {
-			user.avatar = config.AWS.cloudfrontDomain + user.avatar;
-		}
 
 		return user;
 	},

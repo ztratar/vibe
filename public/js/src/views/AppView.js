@@ -4,6 +4,7 @@ import 'jquery';
 import Notifications from 'models/notifications';
 import HeaderView from 'views/headerView';
 import NotificationsView from 'views/notificationsView';
+import TutorialHelper from 'helpers/tutorialHelper';
 
 module template from 'text!templates/AppView.html';
 module overlayTemplate from 'text!templates/modalOverlay.html';
@@ -78,6 +79,10 @@ var AppView = Backbone.View.extend({
 			});
 			that.notifications.trigger('fake-add');
 		});
+
+		_.delay(function() {
+			TutorialHelper.firstTimeUser();
+		}, 400);
 	},
 
 	overrideLinks: function() {
