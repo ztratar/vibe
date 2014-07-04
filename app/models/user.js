@@ -21,6 +21,11 @@ var UserSchema = new Schema({
 	avatar_v: { type: Number, default: 0 },
 	avatar: { type: String, default: '' },
 
+	pending: {
+		changeHash: { type: String },
+		email: { type: String }
+	},
+
 	isAdmin: { type: Boolean, default: false },
 	isSuperAdmin: { type: Boolean, default: false },
 
@@ -182,6 +187,34 @@ UserSchema.methods = {
 			user.avatar_v++;
 			user.save();
 		});
+	},
+
+	startChangeEmail: function(email) {
+		var emailController = require('../controllers/email')(),
+			uniqueHash = crypto.randomBytes(20).toString('hex');
+
+		this.pending.email = email;
+		this.pending.hash = uniqueHash;
+
+		this.save();
+
+		emailController.send({
+			to: email,
+			subject: 'Vibe - Verify email',
+			templateName: 'verify_email',
+			templateData: {
+				uniqueHash: uniqueHash,
+				userEmail: email
+			}
+		});
+	},
+
+	changeEmailTo: function(email) {
+		this.email = email;
+		this.pending.email = '';
+		this.pending.hash = '';
+
+		this.save();
 	},
 
 	generateNewUserPostsFeed: function(cb) {

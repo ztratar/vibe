@@ -81,6 +81,7 @@ module.exports = function (app, passport) {
 	app.get('/registerFromInvite', c.page.registerFromInvite);
 	app.get('/forgot_password', c.page.forgot_password);
 	app.get('/reset_password', c.page.reset_password);
+	app.get('/change_email', c.page.change_email);
 	app.get('/privacy.html', c.page.privacy);
 	app.get('/terms.html', c.page.terms);
 

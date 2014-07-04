@@ -1,0 +1,14 @@
+{% extends '../layouts/email.html' %}
+
+{% block content %}
+<h3>We received a request to change the email of your account.</h3>
+<p>
+<a href="{{ static_path }}/change_email?hash={{ uniqueHash }}">Click here to verify</a>
+</p>
+<p>
+Didn't request anything? Let us know now at info@getvibe.com!
+<br />
+Thanks,<br />
+The Vibe Team
+</p>
+{% endblock %}

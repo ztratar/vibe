@@ -1,7 +1,3 @@
-var email = require('./email')(),
-	env = process.env.NODE_ENV || 'development',
-	config = require('../../config/config')[env];
-
 /*
  * STATIC PAGE LOAD - Index & Splash
  */
@@ -13,11 +9,9 @@ exports.index = function(req, res) {
 		}
 
 		res.render('home/index', {
-			env: env,
-			port: process.env.PORT || 3000,
+			env: process.env.NODE_ENV || 'development',
 			currentUser: req.user,
-			sessionID: req.sessionID,
-			config: config
+			sessionID: req.sessionID
 		});
 	} else {
 		res.render('splash/index');
@@ -81,7 +75,25 @@ exports.reset_password = function(req, res) {
 };
 
 /*
- * STATIC PAGE LOAD - Forgot Password Page
+ * STATIC PAGE LOAD - Reset Password Page
+ */
+exports.change_email = function(req, res) {
+	var hash = /hash=([^&]+)/.exec(req._parsedUrl.query);
+
+	if (!req.isAuthenticated()) {
+		return res.redirect('/login');
+	}
+
+	if (req.user.pending.hash = hash) {
+		req.user.changeEmailTo(req.user.pending.email);
+		res.render('users/change_email');
+	} else {
+		res.send(500);
+	}
+};
+
+/*
+ * STATIC PAGE LOAD - Admin Invite Company Page
  */
 exports.admin_invite_company = function(req, res) {
 	if (req.isAuthenticated() && req.user.isSuperAdmin) {
