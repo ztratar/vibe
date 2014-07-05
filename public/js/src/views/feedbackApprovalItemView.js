@@ -1,8 +1,8 @@
 import 'backbone';
-module moment from 'moment';
-
+import Analytics from 'helpers/analytics';
 import ConfirmDialogView from 'views/confirmDialogView';
 
+module moment from 'moment';
 module template from 'text!templates/feedbackApprovalItemView.html';
 
 var FeedbackApprovalItemView = Backbone.View.extend({
@@ -36,6 +36,11 @@ var FeedbackApprovalItemView = Backbone.View.extend({
 	},
 
 	approve: function() {
+		Analytics.log({
+			'eventCategory': 'post',
+			'eventAction': 'approved'
+		});
+
 		this.model.approve();
 		return false;
 	},
@@ -48,8 +53,19 @@ var FeedbackApprovalItemView = Backbone.View.extend({
 				textarea: true,
 				onConfirm: function(reasonVal) {
 					that.model.reject(reasonVal);
+
+					Analytics.log({
+						'eventCategory': 'post',
+						'eventAction': 'rejected',
+						'eventLabel': reasonVal
+					});
 				}
 			});
+
+		Analytics.log({
+			'eventCategory': 'post',
+			'eventAction': 'reject-clicked'
+		});
 
 		window.Vibe.appView.showOverlay(confirmDialog);
 

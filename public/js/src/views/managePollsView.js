@@ -4,6 +4,7 @@ import 'underscore';
 import Question from 'models/question';
 import Questions from 'models/questions';
 import QuestionListView from 'views/questionListView';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/managePollsView.html';
 
@@ -83,6 +84,11 @@ var ManagePollsView = Backbone.View.extend({
 			that.$addPollInput.focus();
 		}, 180);
 
+		Analytics.log({
+			eventCategory: 'question',
+			eventAction: 'manage-section-loaded'
+		});
+
 		return this;
 	},
 
@@ -105,14 +111,30 @@ var ManagePollsView = Backbone.View.extend({
 			return false;
 		}
 
+		Analytics.log({
+			eventCategory: 'question',
+			eventAction: 'adding-custom-poll'
+		});
+
 		question.save({}, {
 			success: function(model, data) {
 				if (data.error) {
+					Analytics.log({
+						eventCategory: 'question',
+						eventAction: 'add-custom-poll-error',
+						eventLabel: data.error
+					});
+
 					return;
 				}
 				that.$addPollInput.val('');
 				that.$addPollInput.focus();
 				that.selectedQuestions.add(model, { at: 0 });
+
+				Analytics.log({
+					eventCategory: 'question',
+					eventAction: 'add-custom-poll-success'
+				});
 			}
 		});
 

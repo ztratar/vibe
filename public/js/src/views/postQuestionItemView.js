@@ -5,6 +5,7 @@ import ConfirmDialogView from 'views/confirmDialogView';
 import PostChatView from 'views/postChatView';
 import TimeSeriesChartView from 'views/timeSeriesChartView';
 import RatingChartView from 'views/ratingChartView';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/postQuestionItemView.html';
 module actionBarTemplate from 'text!templates/postQuestionItemActionBar.html';
@@ -91,6 +92,11 @@ var PostQuestionItemView = Backbone.View.extend({
 		this.$voteResultsContainer.addClass('voted');
 		this.question.answer(answerBody);
 
+		Analytics.log({
+			eventCategory: 'question',
+			eventAction: 'voted'
+		});
+
 		return false;
 	},
 
@@ -104,6 +110,11 @@ var PostQuestionItemView = Backbone.View.extend({
 		this.markChatOpened();
 
 		window.Vibe.appRouter.navigate('/question/' + this.question.get('_id'));
+
+		Analytics.log({
+			eventCategory: 'question',
+			eventAction: 'clicked-discuss'
+		});
 
 		return false;
 	},

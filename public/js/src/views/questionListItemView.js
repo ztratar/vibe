@@ -1,4 +1,5 @@
 import 'backbone';
+import Analytics from 'helpers/analytics';
 
 module moment from 'moment';
 module template from 'text!templates/questionListItemView.html';
@@ -90,6 +91,12 @@ var QuestionListItemView = Backbone.View.extend({
 		this.$sendNowButton
 			.html('Sending...')
 			.attr('disabled', 'disabled');
+
+		Analytics.log({
+			eventCategory: 'question',
+			eventAction: 'sent_now',
+			eventLabel: this.model.get('body')
+		});
 
 		$.ajax({
 			type: 'POST',

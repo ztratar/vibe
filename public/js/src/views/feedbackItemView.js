@@ -3,6 +3,7 @@ import 'backbone';
 
 import ConfirmDialogView from 'views/confirmDialogView';
 import PostChatView from 'views/postChatView';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/feedbackItemView.html';
 
@@ -70,6 +71,11 @@ var FeedbackItemView = Backbone.View.extend({
 			that.$score.removeClass('pop');
 		}, 500);
 
+		Analytics.log({
+			eventCategory: 'feedback',
+			eventAction: 'clicked-agree'
+		});
+
 		return false;
 	},
 
@@ -99,6 +105,11 @@ var FeedbackItemView = Backbone.View.extend({
 
 		window.Vibe.appRouter.navigate('/feedback/' + this.feedback.get('_id'));
 
+		Analytics.log({
+			eventCategory: 'feedback',
+			eventAction: 'clicked-discuss'
+		});
+
 		return false;
 	},
 
@@ -112,6 +123,11 @@ var FeedbackItemView = Backbone.View.extend({
 					that.feedback.pullDown();
 				}
 			});
+
+		Analytics.log({
+			eventCategory: 'feedback',
+			eventAction: 'clicked-admin-pulldown'
+		});
 
 		window.Vibe.appView.showOverlay(confirmView);
 

@@ -2,11 +2,10 @@ import 'backbone';
 
 import Posts from 'models/posts';
 import PostsView from 'views/postsView';
-
 import PostOverlayView from 'views/postOverlayView';
 import FeedbackApprovalView from 'views/feedbackApprovalView';
-
 import ManagePollsView from 'views/managePollsView';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/homeView.html';
 module newChartsLockedTemplate from 'text!templates/newChartsLocked.html';
@@ -74,6 +73,11 @@ var HomeView = Backbone.View.extend({
 		postOverlayView.on('remove', _.bind(function() {
 			this.$newPostButton.removeClass('fadeOut');
 		}, this));
+
+		Analytics.log({
+			eventCategory: 'post',
+			eventAction: 'clicked-post-button'
+		});
 
 		return false;
 	},

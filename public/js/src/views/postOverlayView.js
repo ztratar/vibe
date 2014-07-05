@@ -1,7 +1,7 @@
 import 'backbone';
 import 'autosize';
-
 import Feedback from 'models/feedback';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/postOverlayView.html';
 
@@ -36,6 +36,11 @@ var PostOverlayView = Backbone.View.extend({
 				leftAction: {
 					title: 'Cancel',
 					click: function(ev) {
+						Analytics.log({
+							eventCategory: 'post',
+							eventAction: 'canceled'
+						});
+
 						that.remove();
 						return false;
 					}
@@ -100,14 +105,31 @@ var PostOverlayView = Backbone.View.extend({
 			return false;
 		}
 
+		Analytics.log({
+			eventCategory: 'post',
+			eventAction: 'submitted'
+		});
+
 		feedback.save({
 			body: inputVal
 		}, {
 			success: function(model, data) {
 				if (data.error) {
+					Analytics.log({
+						eventCategory: 'post',
+						eventAction: 'submission-error',
+						eventLabel: data.error
+					});
+
 					window.Vibe.appView.showNotif(data.error, 2000, 'danger');
 					return;
 				}
+
+				Analytics.log({
+					eventCategory: 'post',
+					eventAction: 'submission-success'
+				});
+
 				window.Vibe.appView.showNotif('Feedback sent!');
 				that.remove();
 			}

@@ -1,5 +1,6 @@
 import 'backbone';
 import 'underscore';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/notificationItemView.html';
 module moment from 'moment';
@@ -113,6 +114,12 @@ var NotificationItemView = Backbone.View.extend({
 		this.model.set('pseudoRead', false);
 
 		var notifUrl = this.model.getActionUrl();
+
+		Analytics.log({
+			'eventCategory': 'notifications',
+			'eventAction': 'clicked',
+			'eventLabel': this.model.get('type')
+		});
 
 		if (notifUrl) {
 			window.Vibe.cachedBackUrl = '/notifications';

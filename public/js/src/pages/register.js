@@ -7,6 +7,7 @@ import UserListInviteView from 'views/userListInviteView';
 
 import avatarInputHelper from 'helpers/avatarInputHelper';
 import imageInputHelper from 'helpers/imageInputHelper';
+import Analytics from 'helpers/analytics';
 
 $(function() {
 	var $steps = $('ul.steps li'),
@@ -66,6 +67,11 @@ $(function() {
 		maxHeight: 90
 	});
 
+	Analytics.log({
+		eventCategory: 'register',
+		eventAction: 'page-loaded'
+	});
+
 	// Form logic
 	$('form.step-1').on('submit', function() {
 		var name = $(this).find('input[name="name"]').val(),
@@ -90,6 +96,17 @@ $(function() {
 			$error.html('Please enter your name').show();
 			return false;
 		}
+
+		var stringifiedInfo = JSON.stringify({
+			name: name,
+			email: email
+		});
+
+		Analytics.log({
+			eventCategory: 'register',
+			eventAction: 'step-1-submitted',
+			eventLabel: stringifiedInfo
+		});
 
 		nextStep();
 
@@ -123,6 +140,20 @@ $(function() {
 
 		markCurrentStepAsLoading();
 
+		var stringifiedInfo = JSON.stringify({
+			name: name,
+			email: email,
+			company_name: company_name,
+			company_website: company_website,
+			company_logo: company_logo ? true : false
+		});
+
+		Analytics.log({
+			eventCategory: 'register',
+			eventAction: 'step-2-submitted',
+			eventLabel: stringifiedInfo
+		});
+
 		user.set({
 			name: name,
 			email: email,
@@ -138,6 +169,12 @@ $(function() {
 		}, {
 			success: function(model, d) {
 				if (d.error) {
+					Analytics.log({
+						eventCategory: 'register',
+						eventAction: 'step-2-error',
+						eventLabel: d.error
+					});
+
 					unmarkCurrentStepAsLoading();
 					$error.html(d.error).show();
 				} else {
@@ -170,6 +207,12 @@ $(function() {
 					isAdmin: admin
 				});
 			}
+		});
+
+		Analytics.log({
+			eventCategory: 'register',
+			eventAction: 'step-3-submitted',
+			eventLabel: 'Invited ' + inviteData.length
 		});
 
 		if (!inviteData.length) {

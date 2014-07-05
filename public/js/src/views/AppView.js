@@ -5,6 +5,7 @@ import Notifications from 'models/notifications';
 import HeaderView from 'views/headerView';
 import NotificationsView from 'views/notificationsView';
 import TutorialHelper from 'helpers/tutorialHelper';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/AppView.html';
 module overlayTemplate from 'text!templates/modalOverlay.html';
@@ -184,6 +185,12 @@ var AppView = Backbone.View.extend({
 		});
 		this.headerView.animateToNewComponents('fade');
 		this.changeUnreadNotificationsNum();
+
+		Analytics.log({
+			'eventCategory': 'notifications',
+			'eventAction': 'opened',
+			'eventLabel': 'Unread - ' + this.notificationsView.notifications.unread().length
+		});
 	},
 
 	closeNotifications: function() {
@@ -193,6 +200,11 @@ var AppView = Backbone.View.extend({
 		window.Vibe.appView.headerView.setHomeButtons();
 
 		this.headerView.animateToNewComponents('fade');
+
+		Analytics.log({
+			'eventCategory': 'notifications',
+			'eventAction': 'closed'
+		});
 	},
 
 	showNotif: function(text, timeToRead, addClass) {

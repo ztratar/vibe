@@ -2,6 +2,7 @@ import 'backbone';
 
 import Chat from 'models/chat';
 import Chats from 'models/chats';
+import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/chatView.html';
 module chatTemplate from 'text!templates/chatItem.html';
@@ -87,6 +88,11 @@ var ChatView = Backbone.View.extend({
 			clearInterval(that.chatTimeUpdateInterval);
 		});
 
+		Analytics.log({
+			'eventCategory': 'chat',
+			'eventAction': 'loaded'
+		});
+
 		return this;
 	},
 
@@ -170,6 +176,11 @@ var ChatView = Backbone.View.extend({
 		});
 
 		this.$input.val('');
+
+		Analytics.log({
+			'eventCategory': 'chat',
+			'eventAction': 'new-chat'
+		});
 
 		return false;
 	},
