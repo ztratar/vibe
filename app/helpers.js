@@ -94,5 +94,34 @@ helpers.getHostedFile = function(key, cb) {
 	});
 };
 
+helpers.security = {
+
+	requireLogin: function(req, res, next) {
+		if (req.isAuthenticated()
+				&& req.user
+				&& req.user.active) {
+			next(null, req, res);
+		} else {
+			req.logout();
+			res.redirect('/login');
+		}
+	},
+
+	requireAdmin: function(req, res, next) {
+		helpers.security.requireLogin(req, res, function() {
+			if (!req.user.isAdmin) return helpers.sendError(res, 'You must be an admin');
+			next(null, req, res);
+		});
+	},
+
+	requireSuperAdmin: function(req, res, next) {
+		helpers.security.requireLogin(req, res, function() {
+			if (!req.user.isSuperAdmin) return helpers.sendError(res, 'You cannot do this');
+			next(null, req, res);
+		});
+	}
+
+};
+
 exports = module.exports = helpers;
 

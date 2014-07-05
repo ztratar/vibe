@@ -44,10 +44,6 @@ exports.get = function(req, res) {
  * feedbacks.
  */
 exports.pending = function(req, res) {
-	if (!req.user) return helpers.sendError(res, 'Not logged in');
-
-	if (!req.user.isAdmin) return res.send(500);
-
 	Async.waterfall([function(cb) {
 		Feedback.find({
 			company: req.user.company._id,
