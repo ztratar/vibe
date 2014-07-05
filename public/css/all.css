@@ -10386,6 +10386,7 @@ html {
   font-weight: 600;
   opacity: 0.8;
   margin-top: 10px;
+  padding: 0;
 }
 @media (max-width: 480px) {
   .posts-view-wrap .posts-view-empty .media h4 {

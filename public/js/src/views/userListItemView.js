@@ -24,6 +24,7 @@ var UserListItemView = Backbone.View.extend({
 
 		this.$el.html(this.template({
 			model: this.model.toJSON(),
+			avatar: this.model.getAvatar(),
 			buttons: this.buttons
 		}));
 

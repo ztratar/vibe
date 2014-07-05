@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	_ = require('underscore'),
 	helpers = require('../helpers'),
 	Feedback = mongoose.model('Feedback'),
+	Post = mongoose.model('Post'),
 	authTypes = ['github', 'twitter', 'facebook', 'google'],
 	env = process.env.NODE_ENV || 'development',
 	config = require('../../config/config')[env];
