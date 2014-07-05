@@ -17,6 +17,8 @@ var Company = BaseModel.extend({
 			return fieldval;
 		}
 
+		if (fieldval === '') return '/img/default_'+fieldName+'.png';
+
 		return window.Vibe.config.cloudfrontDomain + fieldval;
 	}
 

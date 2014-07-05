@@ -76,6 +76,7 @@ exports.logout = function (req, res) {
  * 		Non-user vars:
  * 		companyName (String): Name of their company
  * 		companyWebsite (String): Website/domain of the company
+ * 		companyLogo (String): base64 encoded png
  * 		companyInviteHash: The AccessRequest ID object from the companies invite
  *
  * 		OR
@@ -115,7 +116,8 @@ exports.createFromAccessRequest = function (req, res, next) {
 	var domain = req.body.companyWebsite,
 		company = new Company({
 			name: req.body.companyName,
-			domain: domain
+			domain: domain,
+			logo: req.body.companyLogo || ''
 		}),
 		newUser = new User({
 			name: req.body.name,
@@ -173,6 +175,11 @@ exports.createFromAccessRequest = function (req, res, next) {
 		function(cb) {
 			company.save(function(err){
 				if (err) return sendStandardError();
+
+				if (req.body.companyLogo) {
+					company.convertField('logo');
+				}
+
 				return cb(null, company);
 			});
 		},

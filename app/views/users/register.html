@@ -8,13 +8,13 @@
 					<div class="num-wrap">
 						<i>1</i>
 					</div>
-					<span>Info</span>
+					<span>You</span>
 				</li>
 				<li class="step-2 col-xs-4">
 					<div class="num-wrap">
 						<i>2</i>
 					</div>
-					<span>Questions</span>
+					<span>Company</span>
 				</li>
 				<li class="step-3 col-xs-4">
 					<div class="num-wrap">
@@ -36,7 +36,7 @@
 					<input type="text" name="avatar_base64" class="hidden" value="">
 				</div>
 				<div class="form-group">
-					<label for="inputName" class="col-xs-4 control-label input-lg">Full Name</label>
+					<label for="inputName" class="col-xs-4 control-label input-lg">Your Name</label>
 					<div class="col-xs-8">
 						<input type="text" name="name" class="form-control input-lg" id="inputName" placeholder="Ex: Albus Dumbledore">
 					</div>
@@ -53,6 +53,15 @@
 						<input type="password" name="password" class="form-control input-lg" id="inputEmail" placeholder="Make it good!">
 					</div>
 				</div>
+				<div class="form-actions form-actions-lg">
+					<button type="submit" class="btn btn-success btn-lg">Next</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<form class="form-horizontal step-2 v-centered">
+		<div>
+			<div class="container max-600">
 				<div class="form-group">
 					<label for="inputCompanyName" class="col-xs-4 control-label input-lg">Company Name</label>
 					<div class="col-xs-8">
@@ -65,19 +74,14 @@
 						<input type="text" name="company_website" class="form-control input-lg" id="inputCompanyWebsite" placeholder="Ex: getvibe.com">
 					</div>
 				</div>
-				<div class="form-actions form-actions-lg">
-					<button type="submit" class="btn btn-success btn-lg">Next</button>
+				<div class="form-img-picker inline">
+					<img class="form-img" src="/img/default_logo.png">
+					<div>
+						<a class="btn btn-lg btn-info" href="#">Edit Logo</a>
+					</div>
+					<input type="file" name="form-img" id="form-img-input">
+					<input type="text" name="form-img_base64" class="hidden" value="">
 				</div>
-			</div>
-		</div>
-	</form>
-	<form class="form-horizontal step-2 v-centered">
-		<div>
-			<div class="container max-600">
-				<h1 class="sub-header margin-vertical-large no-top-margin">A couple polls get the ball rolling!</h1>
-				<p class="descript">These can be changed at any time. Polls are sent out every week and have the answers: Great, Good, Poor, &amp; Terrible.</p>
-				<div class="alert alert-block alert-danger"></div>
-				<div class="question-picker-container"></div>
 				<div class="form-actions form-actions-lg">
 					<button type="submit" class="btn btn-success btn-lg">Next</button>
 				</div>

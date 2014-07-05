@@ -13,9 +13,9 @@ exports.index = function(req, res) {
 
 		res.render('home/index', {
 			env: process.env.NODE_ENV || 'development',
+			config: config,
 			currentUser: req.user,
-			sessionID: req.sessionID,
-			config: config
+			sessionID: req.sessionID
 		});
 	} else {
 		res.render('splash/index');
@@ -30,7 +30,9 @@ exports.login = function (req, res) {
 		res.redirect('/');
 	} else {
 		res.render('users/login', {
-			title: 'Login'
+			title: 'Login',
+			env: process.env.NODE_ENV || 'development',
+			config: config
 		});
 	}
 };
@@ -40,7 +42,10 @@ exports.login = function (req, res) {
  */
 exports.register = function (req, res) {
 	if (req.isAuthenticated()) res.redirect('/');
-	res.render('users/register');
+	res.render('users/register', {
+		env: process.env.NODE_ENV || 'development',
+		config: config
+	});
 };
 
 /*
@@ -58,7 +63,9 @@ exports.registerFromInvite = function (req, res) {
 	}
 
 	res.render('users/registerFromInvite', {
-		company_name: company_name
+		company_name: company_name,
+		env: process.env.NODE_ENV || 'development',
+		config: config
 	});
 };
 
@@ -67,7 +74,10 @@ exports.registerFromInvite = function (req, res) {
  */
 exports.forgot_password = function(req, res) {
 	if (req.isAuthenticated()) res.redirect('/');
-	res.render('users/forgot_password');
+	res.render('users/forgot_password', {
+		env: process.env.NODE_ENV || 'development',
+		config: config
+	});
 };
 
 /*
@@ -75,7 +85,10 @@ exports.forgot_password = function(req, res) {
  */
 exports.reset_password = function(req, res) {
 	if (req.isAuthenticated()) res.redirect('/');
-	res.render('users/reset_password');
+	res.render('users/reset_password', {
+		env: process.env.NODE_ENV || 'development',
+		config: config
+	});
 };
 
 /*
@@ -90,7 +103,10 @@ exports.change_email = function(req, res) {
 
 	if (req.user.pending.hash = hash) {
 		req.user.changeEmailTo(req.user.pending.email);
-		res.render('users/change_email');
+		res.render('users/change_email', {
+			env: process.env.NODE_ENV || 'development',
+			config: config
+		});
 	} else {
 		res.send(500);
 	}
@@ -101,7 +117,10 @@ exports.change_email = function(req, res) {
  */
 exports.admin_invite_company = function(req, res) {
 	if (req.isAuthenticated() && req.user.isSuperAdmin) {
-		res.render('admin/invite_company');
+		res.render('admin/invite_company', {
+			env: process.env.NODE_ENV || 'development',
+			config: config
+		});
 	} else {
 		res.redirect('/');
 	}

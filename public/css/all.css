@@ -7656,6 +7656,13 @@ form.form-horizontal-top button.btn {
 .form-img-picker img {
   max-width: 100%;
 }
+.form-img-picker.inline {
+  padding: 10px 0;
+}
+.form-img-picker.inline div {
+  display: inline-block;
+  margin-left: 28px;
+}
 .icon {
   font-size: 24px;
 }
@@ -9776,6 +9783,7 @@ html {
   width: 0px;
   background: #2f557c;
   top: 31px;
+  left: 50%;
   height: 4px;
   z-index: 110;
   margin: 0 0px 0 20px;

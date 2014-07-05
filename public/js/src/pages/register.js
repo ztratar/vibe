@@ -3,10 +3,10 @@ import 'underscore';
 import 'backbone';
 
 import User from 'models/user';
-import ManagePollsView from 'views/managePollsView';
 import UserListInviteView from 'views/userListInviteView';
 
 import avatarInputHelper from 'helpers/avatarInputHelper';
+import imageInputHelper from 'helpers/imageInputHelper';
 
 $(function() {
 	var $steps = $('ul.steps li'),
@@ -53,7 +53,7 @@ $(function() {
 	// should be passed from the email that directed
 	// users to this page.
 	if (company_name && company_name.length) {
-		$('input[name="company_name"]').val(company_name.replace('+', ' '));
+		$('input[name="company_name"]').val(company_name.replace(/\+/g, ' '));
 	}
 	if (email && email.length) {
 		$('input[name="email"]').val(email.replace('+', ' '));
@@ -61,6 +61,10 @@ $(function() {
 	$('input[name="name"]').focus();
 
 	avatarInputHelper('#avatar-input', 'img.avatar-img', 'input[name="avatar_base64"]');
+	imageInputHelper('#form-img-input', 'img.form-img', 'input[name="form-img_base64"]', {
+		maxWidth: 220,
+		maxHeight: 90
+	});
 
 	// Form logic
 	$('form.step-1').on('submit', function() {
@@ -68,12 +72,7 @@ $(function() {
 			email = $(this).find('input[name="email"]').val(),
 			password = $(this).find('input[name="password"]').val(),
 			avatar_base64 = $(this).find('input[name="avatar_base64"]').val(),
-			company_name = $(this).find('input[name="company_name"]').val(),
-			company_website = $(this).find('input[name="company_website"]').val(),
-			hash = /hash=([^&]+)/.exec(window.location.search),
 			$error = $(this).find('.alert-danger');
-
-		hash = _.isArray(hash) ? hash[1] : undefined;
 
 		$error.html('').hide();
 
@@ -91,6 +90,26 @@ $(function() {
 			$error.html('Please enter your name').show();
 			return false;
 		}
+
+		nextStep();
+
+		return false;
+	});
+
+	// Step 2
+	$('form.step-2').on('submit', function() {
+		var form1 = $('form.step-1'),
+			name = form1.find('input[name="name"]').val(),
+			email = form1.find('input[name="email"]').val(),
+			password = form1.find('input[name="password"]').val(),
+			avatar_base64 = form1.find('input[name="avatar_base64"]').val(),
+			hash = /hash=([^&]+)/.exec(window.location.search),
+			$error = $(this).find('.alert-danger'),
+			company_name = $(this).find('input[name="company_name"]').val(),
+			company_website = $(this).find('input[name="company_website"]').val(),
+			company_logo = $(this).find('input[name="form-img_base64"]').val();
+
+		hash = _.isArray(hash) ? hash[1] : undefined;
 
 		if (!company_name.length) {
 			$error.html('Please enter your company name').show();
@@ -114,6 +133,7 @@ $(function() {
 			password: password,
 			companyName: company_name,
 			companyWebsite: company_website,
+			companyLogo: company_logo,
 			companyInviteHash: hash
 		}, {
 			success: function(model, d) {
@@ -126,16 +146,6 @@ $(function() {
 			}
 		});
 
-		return false;
-	});
-
-	// Step 2
-	var questionPicker = new ManagePollsView();
-	$('.question-picker-container').html(questionPicker.$el);
-	questionPicker.render();
-
-	$('form.step-2').on('submit', function() {
-		nextStep();
 		return false;
 	});
 
