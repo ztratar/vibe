@@ -10,7 +10,7 @@
 			window.Vibe = window.Vibe || {};
 
 			{% if env == 'development' %}
-			window.fayeServerRoute = 'http://localhost:{{ port }}/faye';
+			window.fayeServerRoute = 'http://localhost:3000/faye';
 			window.Vibe.serverUrl = '/';
 			{% else %}
 			window.fayeServerRoute = 'https://live.getvibe.com/faye';
