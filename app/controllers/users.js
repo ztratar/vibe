@@ -400,7 +400,7 @@ exports.update = function(req, res, next){
 		if (body.name) user.name = body.name;
 		if (body.avatar) user.avatar = body.avatar;
 		if (body.isAdmin !== undefined) user.isAdmin = body.isAdmin;
-		if (body.email) user.startChangeEmail(body.email);
+		if (body.email && body.email !== user.email) user.startChangeEmail(body.email);
 		if (body.tutorial) user.tutorial = body.tutorial;
 
 		// Ensure current user for password changes
