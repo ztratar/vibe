@@ -8,7 +8,8 @@ var QuestionInstanceSchema = new Schema({
 	question: {
 		type: Schema.Types.ObjectId,
 		ref: 'Question',
-		required: true
+		required: true,
+		index: true
 	},
 	time_sent: { type: Date, default: Date.now },
 	time_updated: { type: Date, default: Date.now },

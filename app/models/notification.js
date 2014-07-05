@@ -5,14 +5,25 @@ var mongoose = require('mongoose'),
 
 // Notification Schema
 var NotificationSchema = new Schema({
-	for_user: { type: Schema.Types.ObjectId, ref: 'User' },
+	for_user: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+		index: true
+	},
 	read: { type: Boolean, default: false },
 	type: { type: String, required: true },
 	img: { type: String, default: '' },
 	data: { type: Schema.Types.Mixed },
 	time_created: { type: Date, default: Date.now },
-	time_updated: { type: Date, default: Date.now },
-	cluster_tag: { type: String }
+	time_updated: {
+		type: Date,
+		default: Date.now,
+		index: true
+	},
+	cluster_tag: {
+		type: String,
+		index: true
+	}
 });
 
 // Validations

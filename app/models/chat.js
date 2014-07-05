@@ -10,8 +10,16 @@ var ChatSchema = new Schema({
 		name: { type: String, required: true },
 		avatar: { type: String, required: true }
 	},
-	question: { type: Schema.Types.ObjectId, ref: 'Question' },
-	feedback: { type: Schema.Types.ObjectId, ref: 'Feedback' },
+	question: {
+		type: Schema.Types.ObjectId,
+		ref: 'Question',
+		index: true
+	},
+	feedback: {
+		type: Schema.Types.ObjectId,
+		ref: 'Feedback',
+		index: true
+	},
 	body: { type: String },
 	time_created: { type: Date, default: Date.now },
 	votes: { type: Array, default: [] },

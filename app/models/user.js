@@ -18,7 +18,12 @@ var mongoose = require('mongoose'),
  */
 var UserSchema = new Schema({
 	name: String,
-	email: { type: String, lowercase: true, trim: true },
+	email: {
+		type: String,
+		lowercase: true,
+		trim: true,
+		index: true
+	},
 	avatar_v: { type: Number, default: 0 },
 	avatar: { type: String, default: '' },
 
@@ -30,7 +35,11 @@ var UserSchema = new Schema({
 	isAdmin: { type: Boolean, default: false },
 	isSuperAdmin: { type: Boolean, default: false },
 
-	company: { type: Schema.Types.ObjectId, ref: 'Company' },
+	company: {
+		type: Schema.Types.ObjectId,
+		ref: 'Company',
+		index: true
+	},
 	provider: String,
 	active: { type: Boolean, default: true },
 
