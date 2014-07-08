@@ -10058,6 +10058,24 @@ html {
 .post-overlay-view .post-wrapper .new-post .input-wrap .v-centered {
   cursor: text;
 }
+.post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.16s ease-out 0.02s;
+  transition: opacity 0.16s ease-out 0.02s;
+}
+.post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap .identity {
+  background: #4379B1;
+  display: inline-block;
+  padding: 14px 18px 14px;
+  margin-top: -14px;
+  border-radius: 8px;
+}
+.post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap i {
+  font-size: 34px;
+}
 .post-overlay-view .post-wrapper .new-post .input-wrap textarea {
   width: 100%;
   color: white;
@@ -10071,7 +10089,7 @@ html {
   text-align: center;
   resize: none;
   overflow: hidden;
-  margin: 0 0 -40px 0;
+  margin: 32px 0 0 0;
 }
 @media (max-width: 480px) {
   .post-overlay-view .post-wrapper .new-post .input-wrap textarea {
@@ -10134,6 +10152,7 @@ html {
 }
 .overlay-container.expand .post-overlay-view .post-wrapper .new-post {
   height: 500px;
+  border-radius: 8px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   -webkit-animation: downSway 1000ms linear both;
   animation: downSway 1000ms linear both;
@@ -10163,6 +10182,9 @@ html {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+.overlay-container.expand .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap {
+  opacity: 1;
 }
 .feedback-approval-view {
   text-align: left;

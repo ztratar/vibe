@@ -368,6 +368,22 @@ exports.getPending = function(req, res) {
 };
 
 /*
+ * GET /api/users/admins
+ *
+ * Get the company admins
+ */
+exports.getAdmins = function(req, res, cb) {
+	User.find({
+		company: req.user.company._id,
+		isAdmin: true
+	}, function(err, admins) {
+		return cb(null, _.map(admins, function(admin) {
+			return admin.stripInfo();
+		}));
+	});
+};
+
+/*
  * PUT /api/users
  *
  * Edit the user specified

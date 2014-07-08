@@ -1,5 +1,7 @@
 var env = process.env.NODE_ENV || 'development',
-	config = require('../../config/config')[env];
+	config = require('../../config/config')[env],
+	async = require('async'),
+	users = require('./users')();
 
 /*
  * STATIC PAGE LOAD - Index & Splash
@@ -11,11 +13,23 @@ exports.index = function(req, res) {
 			res.redirect('/login');
 		}
 
-		res.render('home/index', {
-			env: process.env.NODE_ENV || 'development',
-			config: config,
-			currentUser: req.user,
-			sessionID: req.sessionID
+		async.parallel([
+			function(cb) {
+				users.getAdmins(req, null, function(err, admins) {
+					if (err) return cb(err);
+					cb(null, admins)
+				});
+			}
+		], function(err, results) {
+			res.render('home/index', {
+				env: process.env.NODE_ENV || 'development',
+				config: config,
+				currentUser: req.user,
+				sessionID: req.sessionID,
+				data: {
+					admins: results[0]
+				}
+			});
 		});
 	} else {
 		res.render('splash/index', {

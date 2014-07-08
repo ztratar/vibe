@@ -29,6 +29,7 @@ module.exports = function (app, passport) {
 	app.get('/api/users', s.requireLogin, c.users.get);
 	app.get('/api/users/me', s.requireLogin, c.users.getCurrentUser);
 	app.get('/api/users/pending', s.requireAdmin, c.users.getPending);
+	app.get('/api/users/admins', s.requireLogin, c.users.getAdmins);
 	app.get('/api/meta_questions', s.requireLogin, c.meta_questions.index);
 	app.get('/api/meta_questions/suggested', s.requireLogin, c.meta_questions.suggested);
 	app.get('/api/meta_questions/:meta_question', s.requireLogin, c.meta_questions.get);

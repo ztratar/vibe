@@ -4,6 +4,7 @@
 	<script>
 		window.Vibe._data_.currentUser = {{ JSON.stringify(currentUser.stripInfo()) }};
 		window.Vibe._data_.sessionID = '{{ sessionID }}';
+		window.Vibe._data_.admins = {{ JSON.stringify(data.admins) }};
 
 		window.isCordova = false;
 	</script>

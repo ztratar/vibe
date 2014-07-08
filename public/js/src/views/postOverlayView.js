@@ -1,5 +1,6 @@
 import 'backbone';
 import 'autosize';
+import Users from 'models/users';
 import Feedback from 'models/feedback';
 import Analytics from 'helpers/analytics';
 
@@ -20,7 +21,11 @@ var PostOverlayView = Backbone.View.extend({
 	},
 
 	render: function() {
-		var that = this;
+		var that = this,
+			adminNames;
+
+		this.admins = new Users(window.Vibe._data_.admins);
+		adminNames = this.admins.getNames();
 
 		window.Vibe.appRouter.screenRouter.disableScreenScroll();
 		setTimeout(function() {
@@ -50,7 +55,8 @@ var PostOverlayView = Backbone.View.extend({
 		}, 200);
 
 		this.$el.html(this.template({
-			maxTextLength: this.MAX_TEXT_LENGTH
+			maxTextLength: this.MAX_TEXT_LENGTH,
+			adminNames: adminNames
 		}));
 
 		this.$textarea = this.$('textarea');
