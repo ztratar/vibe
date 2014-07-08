@@ -8646,16 +8646,16 @@ html {
 }
 @media (max-width: 480px) {
   .chat-view .chat-scroll-container .chat-empty-state .media {
-    width: 280px;
+    width: 254px;
   }
   .chat-view .chat-scroll-container .chat-empty-state .media i {
     font-size: 60px;
-    margin-right: 18px;
+    margin-right: 10px;
     height: 74px;
     line-height: 87px;
   }
   .chat-view .chat-scroll-container .chat-empty-state .media h4 {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 22px;
   }
   .chat-view .chat-scroll-container .chat-empty-state .media p {
@@ -10178,8 +10178,20 @@ html {
   margin-top: -14px;
   border-radius: 8px;
 }
+@media (max-width: 480px) {
+  .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap .identity {
+    padding: 11px 18px 11px;
+    font-size: 12px;
+  }
+}
 .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap i {
   font-size: 34px;
+}
+@media (max-width: 480px) {
+  .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap i {
+    font-size: 26px;
+    line-height: 30px;
+  }
 }
 .post-overlay-view .post-wrapper .new-post .input-wrap textarea {
   width: 100%;
@@ -10199,7 +10211,7 @@ html {
 @media (max-width: 480px) {
   .post-overlay-view .post-wrapper .new-post .input-wrap textarea {
     font-size: 18px;
-    margin: 0 0 -12px 0;
+    margin: 0 0 -31px 0;
     padding: 24px;
   }
 }
@@ -10251,8 +10263,8 @@ html {
 }
 @media (max-width: 480px) {
   .overlay-container.expand .post-overlay-view .post-wrapper .container {
-    -webkit-transform: translate3d(0, 10px, 0);
-    transform: translate3d(0, 10px, 0);
+    -webkit-transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 20px, 0);
   }
 }
 .overlay-container.expand .post-overlay-view .post-wrapper .new-post {

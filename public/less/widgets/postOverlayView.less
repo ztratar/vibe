@@ -68,10 +68,20 @@
 						padding: 14px 18px 14px;
 						margin-top: -14px;
 						border-radius: 8px;
+
+						@media (max-width: @screen-xs) {
+							padding: 11px 18px 11px;
+							font-size: 12px;
+						}
 					}
 
 					i {
 						font-size: 34px;
+
+						@media (max-width: @screen-xs) {
+							font-size: 26px;
+							line-height: 30px;
+						}
 					}
 				}
 
@@ -92,7 +102,7 @@
 
 					@media (max-width: @screen-xs) {
 						font-size: 18px;
-						margin: 0 0 -12px 0;
+						margin: 0 0 -31px 0;
 						padding: 24px;
 					}
 
@@ -146,7 +156,7 @@
 			}
 
 			@media (max-width: @screen-xs) {
-				.translate3d(0, 10px, 0);
+				.translate3d(0, 20px, 0);
 			}
 		}
 
