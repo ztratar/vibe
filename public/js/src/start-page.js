@@ -17,4 +17,11 @@ require.config({
 	}
 });
 
-require(['pages/'+window.pageName]);
+require([
+	'pages/admin_invite_company',
+	'pages/forgot_password',
+	'pages/login',
+	'pages/register',
+	'pages/register_from_invite',
+	'pages/reset_password'
+]);

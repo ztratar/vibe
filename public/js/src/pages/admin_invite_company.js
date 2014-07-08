@@ -1,6 +1,10 @@
 import 'jquery';
 
 $(function() {
+	if (window.pageName !== 'admin_invite_company') {
+		return;
+	}
+
 	$('form.invite_company').on('submit', function() {
 		var email = $(this).find('input[name="email"]').val(),
 			company_name = $(this).find('input[name="company_name"]').val(),

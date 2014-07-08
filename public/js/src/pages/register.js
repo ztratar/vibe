@@ -10,6 +10,10 @@ import imageInputHelper from 'helpers/imageInputHelper';
 import Analytics from 'helpers/analytics';
 
 $(function() {
+	if (window.pageName !== 'register') {
+		return;
+	}
+
 	var $steps = $('ul.steps li'),
 		nextStep = function() {
 			var $activeForm = $('form.active:not(.old)'),

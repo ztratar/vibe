@@ -1,6 +1,10 @@
 import 'jquery';
 
 $(function() {
+	if (window.pageName !== 'login') {
+		return;
+	}
+
 	$('input[name="email"]').focus();
 	$('form.login').on('submit', function() {
 		var email = $(this).find('input[name="email"]').val(),

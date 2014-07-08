@@ -1,6 +1,10 @@
 import 'jquery';
 
 $(function() {
+	if (window.pageName !== 'forgot_password') {
+		return;
+	}
+
 	$('form.forgot_password').on('submit', function() {
 		var email = $(this).find('input[name="email"]').val(),
 			$error = $(this).find('.alert-danger');

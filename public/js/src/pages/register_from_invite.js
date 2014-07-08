@@ -4,6 +4,10 @@ import User from 'models/user';
 import avatarInputHelper from 'helpers/avatarInputHelper';
 
 $(function() {
+	if (window.pageName !== 'register_from_invite') {
+		return;
+	}
+
 	var email = /email=([^&]+)/.exec(window.location.search),
 	email = _.isArray(email) ? email[1] : null;
 

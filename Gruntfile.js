@@ -93,7 +93,17 @@ module.exports = function(grunt) {
 					baseUrl: 'public/js/build',
 					mainConfigFile: 'public/js/build.js',
 					name: 'vibe',
-					out: 'public/js/all.js',
+					out: 'public/js/production/all.js',
+					preserveLicenseComments: false,
+					include: ['../libs/require.js']
+				}
+			},
+			pages: {
+				options: {
+					baseUrl: 'public/js/build',
+					mainConfigFile: 'public/js/build.js',
+					name: 'start-page',
+					out: 'public/js/production/pages.js',
 					preserveLicenseComments: false,
 					include: ['../libs/require.js']
 				}

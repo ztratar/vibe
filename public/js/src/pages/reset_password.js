@@ -1,6 +1,10 @@
 import 'jquery';
 
 $(function() {
+	if (window.pageName !== 'reset_password') {
+		return;
+	}
+
 	var $resetForm = $('form.reset_password'),
 		$error = $resetForm.find('.alert-danger');
 
