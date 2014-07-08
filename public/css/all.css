@@ -11219,6 +11219,16 @@ html {
     max-width: 240px;
   }
 }
+.flow-step-view .icon-holder {
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
+  margin: 0 auto;
+}
+.flow-step-view .icon-holder i {
+  font-size: 32px;
+  line-height: 85px;
+}
 .flow-step-view h3 {
   font-weight: 600;
   font-size: 32px;

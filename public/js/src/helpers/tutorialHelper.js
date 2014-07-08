@@ -1,6 +1,42 @@
 import FlowStepView from 'views/flowStepView';
+import Cookies from 'helpers/cookies';
 
 var TutorialHelper = {
+
+	demoIntro: function() {
+		if (Cookies.get('demo_shown') === 'true') {
+			return;
+		}
+
+		var flowStepView = new FlowStepView({
+			name: 'demo_intro',
+			steps: [{
+				icon: '#61875',
+				title: 'Welcome to Demo, Inc',
+				body: 'Vibe is the best way to stay aware of what your team really thinks and funnel the best ideas into group-oriented action.'
+			}, {
+				icon: '#61804',
+				iconbg: '#2f557c',
+				title: 'An anonymous suggestion box',
+				body: 'Lets employees tell you how they really feel -- no awkwardness. Did they make an interesting suggestion? One click can turn it into a group discussion.'
+			}, {
+				icon: '#61753',
+				iconbg: '#E69D30',
+				title: 'Things change fast',
+				body: 'So we designed a fun poll system that keeps pace. It\'s super light-weight and gives your team a constant stream of insights.'
+			}, {
+				icon: '#61725',
+				iconbg: '#B93D3D',
+				title: 'Time shouldn\'t be wasted',
+				body: 'Vibe stays out of the way when you\'re in crunch mode. All actions are bite-sized and can be accessed anywhere, even your phone.'
+			}],
+			onFinish: function() {
+				Cookies.set('demo_shown', 'true', 365);
+			}
+		});
+
+		window.Vibe.appView.showOverlay(flowStepView);
+	},
 
 	firstTimeUser: function() {
 		if (window.Vibe.user.get('isAdmin')) {

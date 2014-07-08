@@ -5,6 +5,11 @@
 			<div class="transparent-modal-content step-<%= ind %>">
 				<% if (step.img) { %>
 				<img src="<%= step.img %>">
+	 			<% } %>
+				<% if (step.icon) { %>
+				<div class="icon-holder" style="background: <%= step.iconbg || 'rgba(0,0,0,0.24)' %>">
+					<i class="icon">&<%= step.icon %>;</i>
+				</div>
 				<% } %>
 				<% if (step.title) { %>
 				<h3><%= step.title %></h3>

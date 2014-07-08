@@ -9,7 +9,7 @@ import ModelCache from 'modelCache';
 import User from 'models/user';
 import AppView from 'views/AppView';
 import LoginView from 'views/loginView';
-import DemoIntroView from 'views/demoIntroView';
+import TutorialHelper from 'helpers/tutorialHelper';
 
 window.Vibe = window.Vibe || {};
 
@@ -52,8 +52,7 @@ window.Vibe.run = function() {
 		renderViews();
 
 		if (window.Vibe.user.get('email') === 'demo@getvibe.com') {
-			var demoIntroView = new DemoIntroView();
-			window.Vibe.appView.showOverlay(demoIntroView);
+			TutorialHelper.demoIntro();
 		}
 	}
 };
