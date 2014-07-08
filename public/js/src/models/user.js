@@ -39,9 +39,12 @@ var User = BaseModel.extend({
 	getAvatar: function() {
 		var avatar = this.get('avatar');
 
+		console.log('before',avatar);
 		if (avatar.indexOf('data:image') === -1) {
+			console.log('data image not found', avatar, window.Vibe.config.cloudfrontDomain, avatar.indexOf('data:image'));
 			return window.Vibe.config.cloudfrontDomain + avatar;
 		} else {
+			console.log('else', avatar);
 			return avatar;
 		}
 	},
