@@ -1,6 +1,7 @@
 import 'underscore';
 import 'backbone';
 
+import BaseView from 'views/baseView';
 import ConfirmDialogView from 'views/confirmDialogView';
 import PostChatView from 'views/postChatView';
 import TimeSeriesChartView from 'views/timeSeriesChartView';
@@ -12,7 +13,7 @@ module actionBarTemplate from 'text!templates/postQuestionItemActionBar.html';
 
 var PostChatView = require('views/postChatView');
 
-var PostQuestionItemView = Backbone.View.extend({
+var PostQuestionItemView = BaseView.extend({
 
 	className: 'post-question-item-view',
 
@@ -20,8 +21,8 @@ var PostQuestionItemView = Backbone.View.extend({
 	actionBarTemplate: _.template(actionBarTemplate),
 
 	events: {
-		'click ul.answers a': 'vote',
-		'click a.discuss': 'discuss'
+		'tap ul.answers a': 'vote',
+		'tap a.discuss': 'discuss'
 	},
 
 	initialize: function(opts) {
@@ -64,6 +65,8 @@ var PostQuestionItemView = Backbone.View.extend({
 		this.$actionBarContainer.html(this.actionBarTemplate({
 			numUnread: this.numUnread
 		}));
+
+		this.delegateEvents();
 	},
 
 	renderChart: function() {

@@ -43,7 +43,7 @@ module.exports = function(grunt) {
 				filter: 'isFile'
 			},
 			'cordova-js': {
-				src: 'public/js/all.js',
+				src: 'public/js/production/all.js',
 				dest: 'vibe_app/www/js/all.js'
 			},
 			'cordova-css': {

@@ -1,23 +1,24 @@
 import 'underscore';
 import 'backbone';
 
+import BaseView from 'views/baseView';
 import ConfirmDialogView from 'views/confirmDialogView';
 import PostChatView from 'views/postChatView';
 import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/feedbackItemView.html';
 
-var FeedbackItemView = Backbone.View.extend({
+var FeedbackItemView = BaseView.extend({
 
 	className: 'feedback-item-view',
 
 	template: _.template(template),
 
 	events: {
-		'click a.agree': 'agree',
-		'click a.agreed': 'undoAgree',
-		'click a.discuss': 'discuss',
-		'click a.pull-down': 'adminPullDown'
+		'tap a.agree': 'agree',
+		'tap a.agreed': 'undoAgree',
+		'tap a.discuss': 'discuss',
+		'tap a.pull-down': 'adminPullDown'
 	},
 
 	initialize: function(opts) {
@@ -56,6 +57,7 @@ var FeedbackItemView = Backbone.View.extend({
 
 		this.$score = this.$('.score');
 
+		this.delegateEvents();
 		return this;
 	},
 

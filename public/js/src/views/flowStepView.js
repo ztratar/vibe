@@ -1,15 +1,16 @@
 import 'backbone';
 import 'underscore';
+import BaseView from 'views/baseView';
 module template from 'text!templates/flowStepView.html';
 
-var FlowStepView = Backbone.View.extend({
+var FlowStepView = BaseView.extend({
 
 	className: 'flow-step-view',
 
 	template: _.template(template),
 
 	events: {
-		'click a.next': 'nextStep'
+		'tap a.next': 'nextStep'
 	},
 
 	initialize: function(opts) {
@@ -34,6 +35,8 @@ var FlowStepView = Backbone.View.extend({
 		this.$el.addClass(this.name);
 		this.$('.pane:eq(0)').addClass('active');
 		this.$nextButton = this.$('a.next');
+
+		this.delegateEvents();
 
 		return this;
 	},

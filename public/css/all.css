@@ -8306,6 +8306,7 @@ html {
   z-index: 190;
   opacity: 0;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   visibility: hidden;
   pointer-events: none;
   -webkit-transition: background 0.16s ease-out;
@@ -8552,6 +8553,7 @@ html {
 .chat-view .chat-scroll-container {
   padding: 16px 24px;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   height: calc(100% - 137px);
 }
 @media (max-width: 480px) {

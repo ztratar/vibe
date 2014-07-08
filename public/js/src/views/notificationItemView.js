@@ -1,11 +1,12 @@
 import 'backbone';
 import 'underscore';
+import BaseView from 'views/baseView';
 import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/notificationItemView.html';
 module moment from 'moment';
 
-var NotificationItemView = Backbone.View.extend({
+var NotificationItemView = BaseView.extend({
 
 	tagName: 'li',
 
@@ -14,7 +15,7 @@ var NotificationItemView = Backbone.View.extend({
 	template: _.template(template),
 
 	events: {
-		'click a': 'clicked'
+		'tap a': 'clicked'
 	},
 
 	initialize: function(opts) {
@@ -75,6 +76,8 @@ var NotificationItemView = Backbone.View.extend({
 		}
 
 		this.$el.html(this.template(templateDate));
+
+		this.delegateEvents();
 
 		return this;
 	},

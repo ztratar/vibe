@@ -18,6 +18,10 @@
 			window.fayeServerRoute = 'https://live.getvibe.com/faye';
 			window.staticRoute = window.location.pathname.replace('index.html', '');
 
+			window.Vibe.config = {
+				cloudfrontDomain: 'https://d3fqdte7vdetyg.cloudfront.net/'
+			};
+
 			window.Vibe._data_ = {};
 
 			window.isCordova = true;

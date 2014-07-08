@@ -1,5 +1,6 @@
 import 'backbone';
 
+import BaseView from 'views/baseView';
 import Chat from 'models/chat';
 import Chats from 'models/chats';
 import Analytics from 'helpers/analytics';
@@ -9,7 +10,7 @@ module chatTemplate from 'text!templates/chatItem.html';
 module chatEmptyStateTemplate from 'text!templates/chatEmptyState.html';
 module loaderTemplate from 'text!templates/loader.html';
 
-var ChatView = Backbone.View.extend({
+var ChatView = BaseView.extend({
 
 	className: 'chat-view',
 
@@ -20,8 +21,8 @@ var ChatView = Backbone.View.extend({
 
 	events: {
 		'keydown form input': 'newChat',
-		'click form button': 'newChat',
-		'click .close-chat': 'closeChat'
+		'tap form button': 'newChat',
+		'tap .close-chat': 'closeChat'
 	},
 
 	initialize: function(opts) {
@@ -92,6 +93,8 @@ var ChatView = Backbone.View.extend({
 			'eventCategory': 'chat',
 			'eventAction': 'loaded'
 		});
+
+		this.delegateEvents();
 
 		return this;
 	},

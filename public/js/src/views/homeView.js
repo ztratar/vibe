@@ -1,5 +1,6 @@
 import 'backbone';
 
+import BaseView from 'views/baseView';
 import Posts from 'models/posts';
 import PostsView from 'views/postsView';
 import PostOverlayView from 'views/postOverlayView';
@@ -11,15 +12,15 @@ module template from 'text!templates/homeView.html';
 module newChartsLockedTemplate from 'text!templates/newChartsLocked.html';
 module surveySummaryCardTemplate from 'text!templates/surveySummaryCard.html';
 
-var HomeView = Backbone.View.extend({
+var HomeView = BaseView.extend({
 
 	className: 'home-view',
 
 	template: _.template(template),
 
 	events: {
-		'click a.new-post': 'newPost',
-		'click a.manage-polls': 'managePolls'
+		'tap a.new-post': 'newPost',
+		'tap a.manage-polls': 'managePolls'
 	},
 
 	initialize: function() {
@@ -44,6 +45,8 @@ var HomeView = Backbone.View.extend({
 		this.postsView.render();
 
 		this.infScrollHandler();
+
+		this.delegateEvents();
 
 		return this;
 	},
