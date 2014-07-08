@@ -1,0 +1,5 @@
+{% if env == 'development' %}
+<script data-main="js/build/start-page" src="/js/libs/require.js"></script>
+{% else %}
+<script src="/js/production/pages.js"></script>
+{% endif %}

@@ -18,7 +18,10 @@ exports.index = function(req, res) {
 			sessionID: req.sessionID
 		});
 	} else {
-		res.render('splash/index');
+		res.render('splash/index', {
+			env: process.env.NODE_ENV || 'development',
+			config: config
+		});
 	}
 };
 

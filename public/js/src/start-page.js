@@ -21,6 +21,7 @@ require([
 	'pages/admin_invite_company',
 	'pages/forgot_password',
 	'pages/login',
+	'pages/splash',
 	'pages/register',
 	'pages/register_from_invite',
 	'pages/reset_password'
