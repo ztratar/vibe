@@ -9671,7 +9671,11 @@ html {
 }
 .manage-polls-view.as-modal .vibe-modal-header p {
   opacity: 0.9;
-  display: none;
+}
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .vibe-modal-header p {
+    display: none;
+  }
 }
 .manage-polls-view.as-modal .close-modal {
   display: block;
@@ -9695,27 +9699,44 @@ html {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 0;
   margin: 0px -15px 0;
-  width: auto;
   position: relative;
+  padding: 15px;
+}
+.manage-polls-view.as-modal .add-poll .form-group {
+  width: calc(100% - 105px);
+  margin: 0 10px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+.manage-polls-view.as-modal .add-poll .form-group input {
+  width: 100%;
+}
+.manage-polls-view.as-modal .add-poll button.btn {
+  width: 90px;
 }
 @media (max-width: 480px) {
   .manage-polls-view.as-modal .add-poll {
     margin: 0;
     padding: 8px;
+    width: auto;
   }
   .manage-polls-view.as-modal .add-poll .form-group {
     margin: 0 68px 0 0;
+    width: auto;
+    display: block;
   }
-  .manage-polls-view.as-modal .add-poll button {
+  .manage-polls-view.as-modal .add-poll button.btn {
     height: 46px;
     padding: 8px 14px;
     font-size: 16px;
     position: absolute;
     right: 8px;
     top: 8px;
+    width: auto;
   }
 }
 .manage-polls-view.as-modal .add-poll input {
+  width: 100%;
   background: #191c1e;
   border-color: #191c1e;
 }

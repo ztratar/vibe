@@ -57,7 +57,10 @@
 
 			p {
 				opacity: 0.9;
-				display: none;
+
+				@media (max-width: @screen-xs) {
+					display: none;
+				}
 			}
 		}
 
@@ -71,28 +74,48 @@
 			.stdBoxShadow();
 			border-radius: 0;
 			margin: 0px -15px 0;
-			width: auto;
 			position: relative;
+			padding: 15px;
+
+			.form-group {
+				width: calc(~"100% - 105px");
+				margin: 0 10px 0 0;
+				display: inline-block;
+				vertical-align: middle;
+
+				input {
+					width: 100%;
+				}
+			}
+
+			button.btn {
+				width: 90px;
+			}
 
 			@media (max-width: @screen-xs) {
 				margin: 0;
 				padding: 8px;
+				width: auto;
 
 				.form-group {
 					margin: 0 68px 0 0;
+					width: auto;
+					display: block;
 				}
 
-				button {
+				button.btn {
 					height: 46px;
 					padding: 8px 14px;
 					font-size: 16px;
 					position: absolute;
 					right: 8px;
 					top: 8px;
+					width: auto;
 				}
 			}
 
 			input {
+				width: 100%;
 				background: darken(@vibe-grey-dark, 8%);
 				border-color: darken(@vibe-grey-dark, 8%);
 				.placeholderTextColor(#444);

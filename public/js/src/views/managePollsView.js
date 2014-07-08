@@ -17,7 +17,7 @@ var ManagePollsView = Backbone.View.extend({
 	events: {
 		'keydown form input': 'addPoll',
 		'click form button': 'addPoll',
-		'click a.close-modal': 'closeModal'
+		'click a.close-modal': 'remove'
 	},
 
 	initialize: function(opts) {
@@ -157,7 +157,7 @@ var ManagePollsView = Backbone.View.extend({
 		}
 	},
 
-	closeModal: function() {
+	remove: function() {
 		this.trigger('remove');
 	}
 
