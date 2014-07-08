@@ -1,16 +1,17 @@
 import 'backbone';
+import BaseView from 'views/baseView';
 
 module template from 'text!templates/confirmDialogView.html';
 
-var ConfirmDialogView = Backbone.View.extend({
+var ConfirmDialogView = BaseView.extend({
 
 	className: 'confirm-dialog-view close-modal',
 
 	template: _.template(template),
 
 	events: {
-		'click a.cancel': 'cancel',
-		'click a.confirm': 'confirm'
+		'tap a.cancel': 'cancel',
+		'tap a.confirm': 'confirm'
 	},
 
 	initialize: function(opts) {
@@ -41,6 +42,8 @@ var ConfirmDialogView = Backbone.View.extend({
 				this.$textarea.focus();
 			}, this), 200);
 		}
+
+		this.delegateEvents();
 	},
 
 	cancel: function() {

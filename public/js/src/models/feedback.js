@@ -16,15 +16,15 @@ var Feedback = BaseModel.extend({
 		}
 	},
 
-	approve: function() {
+	sendToAll: function() {
 		this.save({
 			status: 'approved'
 		});
 	},
 
-	reject: function(reasonVal) {
+	archive: function(reasonVal) {
 		this.save({
-			status: 'rejected',
+			status: 'archived',
 			status_change_reason: reasonVal
 		});
 	},

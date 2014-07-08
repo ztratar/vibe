@@ -9,7 +9,7 @@ var FeedbackSchema = new Schema({
 	time_created: { type: Date, default: Date.now },
 	status: {
 		type: String,
-		enum: ['pending', 'approved', 'rejected'],
+		enum: ['pending', 'approved', 'archived', 'pulled'],
 		default: 'pending',
 		index: true
 	},

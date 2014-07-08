@@ -7,9 +7,9 @@
 		<span class="fake-img img-question">
 			<i class="icon">&#61753;</i>
 		</span>
-	<% } else if (model.type === 'feedback-rejected') { %>
-		<span class="fake-img img-feedback-rejected">
-			<i class="icon">&#61733;</i>
+	<% } else if (model.type === 'feedback-archived') { %>
+		<span class="fake-img img-feedback-archived">
+			<i class="icon">&#61698;</i>
 		</span>
 	<% } else if (model.type === 'feedback-approved') { %>
 		<span class="fake-img img-feedback-approved">
@@ -29,8 +29,11 @@
 				<strong><%- model.data.user %></strong> just asked a question: "<%- model.data.question %>"
 			<% } else if (model.type === 'question-vote') { %>
 				<strong><%- numPeopleString %></strong> voted on "<%= model.data.question %>"
-			<% } else if (model.type === 'feedback-rejected') { %>
-				Sorry, your suggestion wasn't selected to send to everyone because "<%= model.data.reason %>"
+			<% } else if (model.type === 'feedback-archived') { %>
+				Your suggestion was read and archived
+				<% if (model.data.reason && model.data.reason.length) { %>
+					with the note "<%= model.data.reason %>"
+				<% } %>
 			<% } else if (model.type === 'feedback-approved') { %>
 				Congratulations, your feedback was just sent to everyone!
 			<% } else if (model.type === 'feedback-agree') { %>

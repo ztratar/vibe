@@ -8386,8 +8386,8 @@ html {
 .notifications-container .notifications-view li a .fake-img.img-question {
   background: #e69d30;
 }
-.notifications-container .notifications-view li a .fake-img.img-feedback-rejected {
-  background: #b93d3d;
+.notifications-container .notifications-view li a .fake-img.img-feedback-archived {
+  background: #223e59;
 }
 .notifications-container .notifications-view li a .fake-img.img-feedback-approved {
   background: #5388be;
@@ -10391,7 +10391,7 @@ html {
   top: 14px;
   width: 100px;
 }
-.feedback-approval-view ul li a.disapprove {
+.feedback-approval-view ul li a.archive {
   right: 0px;
 }
 @media (max-width: 768px) {

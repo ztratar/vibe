@@ -56,8 +56,11 @@ function addNotificationTemplateVars(currentUser, notifications) {
 		} else if (notifications[i].type === 'question-vote') {
 			notifications[i].notifBody = notifications[i].numPeopleString + ' voted on "' + notifications[i].data.question + '"';
 			notifications[i].link = serverUrl + 'questions/' + notifications[i].data.questionId;
-		} else if (notifications[i].type === 'feedback-rejected') {
-			notifications[i].notifBody = 'Sorry, your suggestion wasn\'t selected to send to everyone because "' + notifications[i].data.reason + '"';
+		} else if (notifications[i].type === 'feedback-archived') {
+			notifications[i].notifBody = 'Your suggestion was read and archived';
+			if (notifications[i].data.reason && notifications[i].data.reason.length) {
+				notifications[i].notifBody += ' with the note "' + _.escape(notifications[i].data.reason) + '"';
+			}
 			notifications[i].link = serverUrl;
 		} else if (notifications[i].type === 'feedback-approved') {
 			notifications[i].notifBody = 'Congratulations, your feedback was just sent to everyone!';

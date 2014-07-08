@@ -49,10 +49,8 @@ NotificationSchema.methods = {
 					&& bd.questionId) {
 				return true;
 			}
-		} else if (this.type === 'feedback-rejected') {
-			if (bd.reason && bd.reason.length) {
-				return true;
-			}
+		} else if (this.type === 'feedback-archived') {
+			return true;
 		} else if (this.type === 'feedback-approved') {
 			return true;
 		} else if (this.type === 'feedback-agree') {

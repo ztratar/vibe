@@ -193,11 +193,11 @@ exports.create = function(req, res, next) {
 /*
  * PUT /api/feedback/:feedback
  *
- * Update feedback. Used to approve and disapprove
+ * Update feedback. Used to send and archive
  * of individual items.
  *
  * Query vars:
- *  	approved (Boolean): The feedback should be approved
+ *  	status (String): The feedback should be sent or archived
  */
 exports.update = function(req, res, next) {
 	if (!req.isAuthenticated()) {
@@ -216,11 +216,11 @@ exports.update = function(req, res, next) {
 			&& req.body.status !== req.feedback.status) {
 		if (req.body.status === 'approved') {
 			exports.approve(req, res, next);
-		} else if (req.body.status === 'rejected') {
-			exports.disapprove(req, res, next);
+		} else if (req.body.status === 'archived') {
+			exports.archive(req, res, next);
 		} else {
 			res.send({
-				error: 'Approval must be rejected or approved'
+				error: 'Approval must be archived or sent out'
 			});
 		}
 	} else {
@@ -335,8 +335,7 @@ exports.delete = function(req, res) {
 		});
 	}
 
-	req.feedback.status = 'rejected';
-	req.feedback.status_change_reason = 'pulled';
+	req.feedback.status = 'pulled';
 	req.feedback.status_changed_by = req.user._id;
 	req.feedback.time_status_changed = Date.now();
 
@@ -392,26 +391,20 @@ exports.approve = function(req, res, next) {
 /*
  * INTERNAL
  *
- * Admins disapprove of the feedback with a
+ * Admins archive of the feedback with an options
  * given reason, which is then notified to the
  * creator. If the feedback was already approved,
  * the posts sent out will be retraced and chat
  * calls disabled.
  */
-exports.disapprove = function(req, res, next) {
+exports.archive = function(req, res, next) {
 	if (!req.user.isAdmin) {
 		return res.send(500, {
 			error: 'You must be an admin to do this'
 		});
 	}
 
-	if (!req.body.status_change_reason || !req.body.status_change_reason.length) {
-		return res.send(500, {
-			error: 'Please provide a reason. Anything works!'
-		});
-	}
-
-	req.feedback.status = 'rejected';
+	req.feedback.status = 'archived';
 	req.feedback.status_change_reason = req.body.status_change_reason;
 	req.feedback.status_changed_by = req.user._id;
 	req.feedback.time_status_changed = Date.now();
@@ -423,7 +416,7 @@ exports.disapprove = function(req, res, next) {
 
 		notificationsController.send({
 			for_user: req.feedback.creator,
-			type: 'feedback-rejected',
+			type: 'feedback-archived',
 			data: {
 				reason: req.body.status_change_reason
 			}

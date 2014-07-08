@@ -1,19 +1,20 @@
 import 'backbone';
+import BaseView from 'views/baseView';
 import Analytics from 'helpers/analytics';
 import ConfirmDialogView from 'views/confirmDialogView';
 
 module moment from 'moment';
 module template from 'text!templates/feedbackApprovalItemView.html';
 
-var FeedbackApprovalItemView = Backbone.View.extend({
+var FeedbackApprovalItemView = BaseView.extend({
 
 	tagName: 'li',
 
 	template: _.template(template),
 
 	events: {
-		'click a.approve': 'approve',
-		'click a.disapprove': 'reject'
+		'tap a.send-to-all': 'sendToAll',
+		'tap a.archive': 'archive'
 	},
 
 	initialize: function(opts) {
@@ -32,31 +33,35 @@ var FeedbackApprovalItemView = Backbone.View.extend({
 				time_created: moment(this.model.get('time_created')).fromNow()
 			}));
 		}
+
+		this.delegateEvents();
+
 		return this;
 	},
 
-	approve: function() {
+	sendToAll: function() {
 		Analytics.log({
 			'eventCategory': 'post',
-			'eventAction': 'approved'
+			'eventAction': 'sent-to-all'
 		});
 
-		this.model.approve();
+		this.model.sendToAll();
 		return false;
 	},
 
-	reject: function() {
+	archive: function() {
 		var that = this,
 			confirmDialog = new ConfirmDialogView({
-				title: 'Please give a reason',
+				title: 'Any thoughts?',
 				body: 'We will forward it on!',
 				textarea: true,
+				confirmText: 'Done',
 				onConfirm: function(reasonVal) {
-					that.model.reject(reasonVal);
+					that.model.archive(reasonVal);
 
 					Analytics.log({
 						'eventCategory': 'post',
-						'eventAction': 'rejected',
+						'eventAction': 'archived',
 						'eventLabel': reasonVal
 					});
 				}
@@ -64,7 +69,7 @@ var FeedbackApprovalItemView = Backbone.View.extend({
 
 		Analytics.log({
 			'eventCategory': 'post',
-			'eventAction': 'reject-clicked'
+			'eventAction': 'archive-clicked'
 		});
 
 		window.Vibe.appView.showOverlay(confirmDialog);
