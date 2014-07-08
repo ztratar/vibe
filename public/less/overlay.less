@@ -5,7 +5,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 200;
+	z-index: -1;
 	opacity: 1;
 	overflow-y: scroll;
 	visibility: hidden;
@@ -30,6 +30,7 @@
 	}
 
 	&.expand {
+		z-index: 200;
 		pointer-events: auto;
 		visibility: visible;
 		background: rgba(6, 11, 29, 0.84);
