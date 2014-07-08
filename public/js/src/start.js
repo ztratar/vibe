@@ -10,7 +10,8 @@ require.config({
 		moment: '../libs/moment',
 		autosize: '../libs/jquery.autosize',
 		faye: '../libs/faye-browser',
-		hammer: '../libs/hammer'
+		hammer: '../libs/hammer',
+		jqueryHammer: '../libs/jquery.hammer'
 	},
 	shim: {
 		d3: {

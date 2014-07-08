@@ -8,10 +8,11 @@ var User = BaseModel.extend({
 	defaults: {
 		name: '',
 		email: '',
-		avatar: '/img/default_avatar.png',
+		avatar: 'default_avatar.png',
 		company: {
 			name: ''
-		}
+		},
+		tutorial: {}
 	},
 
 	initialize: function(opts) {
@@ -39,12 +40,9 @@ var User = BaseModel.extend({
 	getAvatar: function() {
 		var avatar = this.get('avatar');
 
-		console.log('before',avatar);
 		if (avatar.indexOf('data:image') === -1) {
-			console.log('data image not found', avatar, window.Vibe.config.cloudfrontDomain, avatar.indexOf('data:image'));
 			return window.Vibe.config.cloudfrontDomain + avatar;
 		} else {
-			console.log('else', avatar);
 			return avatar;
 		}
 	},
@@ -87,6 +85,11 @@ var User = BaseModel.extend({
 
 	setTutorialFinished: function(tutName) {
 		var tutorial = this.get('tutorial');
+
+		if (typeof tutorial === 'string') {
+			tutorial = {};
+		}
+
 		tutorial[tutName] = true;
 
 		this.save({

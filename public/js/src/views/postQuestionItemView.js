@@ -56,6 +56,7 @@ var PostQuestionItemView = BaseView.extend({
 
 		_.delay(_.bind(function() {
 			this.renderChart();
+			this.delegateEvents();
 		}, this), this.chartDelay);
 
 		this.renderActionBar();
