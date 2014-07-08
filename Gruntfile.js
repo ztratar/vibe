@@ -102,7 +102,7 @@ module.exports = function(grunt) {
 				options: {
 					baseUrl: 'public/js/build',
 					mainConfigFile: 'public/js/build.js',
-					name: 'start-page',
+					name: 'page',
 					out: 'public/js/production/pages.js',
 					preserveLicenseComments: false,
 					include: ['../libs/require.js']

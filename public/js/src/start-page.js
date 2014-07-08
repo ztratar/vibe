@@ -1,6 +1,7 @@
 require.config({
 	baseUrl: '/js/build',
 	paths: {
+		modernizr: '../libs/modernizr',
 		text: '../libs/text',
 		jquery: '../libs/jquery',
 		underscore: '../libs/underscore',
@@ -8,7 +9,8 @@ require.config({
 		d3: '../libs/d3',
 		moment: '../libs/moment',
 		autosize: '../libs/jquery.autosize',
-		faye: '../libs/faye-browser'
+		faye: '../libs/faye-browser',
+		hammer: '../libs/hammer'
 	},
 	shim: {
 		d3: {
@@ -17,12 +19,4 @@ require.config({
 	}
 });
 
-require([
-	'pages/admin_invite_company',
-	'pages/forgot_password',
-	'pages/login',
-	'pages/splash',
-	'pages/register',
-	'pages/register_from_invite',
-	'pages/reset_password'
-]);
+require(['page']);

@@ -1,28 +1,36 @@
-{% extends '../layouts/page-centered.html' %}
+{% extends '../layouts/default.html' %}
 
 {% block content %}
-	<div class="max-400">
-		<h1 class="sub-header no-top-margin">Log in</h2>
-		<form action="/api/login" method="post" class="login form-horizontal">
-			<div class="alert alert-block alert-danger"></div>
-			<div class="form-group form-group-lg">
-				<input class="form-control input-lg" id="email" type="text" name="email" placeholder="Email">
+<div class="page-header">
+	<a href="/" class="btn btn-default btn-lg back"><i class="icon">&#61760</i><span> Back home</span></a>
+</div>
+<div class="page-content v-centered">
+	<div class="content-container text-center">
+		<div class="max-400">
+			<h1 class="sub-header no-top-margin">Log in</h2>
+			<form action="/api/login" method="post" class="login form-horizontal">
+				<div class="alert alert-block alert-danger"></div>
+				<div class="form-group form-group-lg">
+					<input class="form-control input-lg" id="email" type="text" name="email" placeholder="Email">
+				</div>
+				<div class="form-group form-group-lg">
+					<input class="form-control input-lg" id="password" type="password" name="password" placeholder="Password">
+				</div>
+				<div class="form-actions form-actions-lg">
+					<button type="submit" class="btn btn-lg btn-success">Login</button>
+				</div>
+			</form>
+			<div class="clearfix bottom-links">
+				<a href="/forgot_password" class="pull-left">Forgot Password?</a>
+				<span class="pull-right">No account? <a href="/#access">Request Access</a></span>
 			</div>
-			<div class="form-group form-group-lg">
-				<input class="form-control input-lg" id="password" type="password" name="password" placeholder="Password">
-			</div>
-			<div class="form-actions form-actions-lg">
-				<button type="submit" class="btn btn-lg btn-success">Login</button>
-			</div>
-		</form>
-		<div class="clearfix bottom-links">
-			<a href="/forgot_password" class="pull-left">Forgot Password?</a>
-			<span class="pull-right">No account? <a href="/#access">Request Access</a></span>
 		</div>
 	</div>
+</div>
 
-	<script>
-		window.pageName = 'login';
-	</script>
-	{% include '../includes/pages-js.html' %}
+<script>
+	window.pageName = 'login';
+</script>
+{% include '../includes/pages-js.html' %}
+
 {% endblock %}

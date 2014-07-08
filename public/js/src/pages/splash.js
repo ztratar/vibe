@@ -2,6 +2,10 @@ import 'jquery';
 import 'underscore';
 
 $(function() {
+	if (window.pageName !== 'splash') {
+		return;
+	}
+
 	var showRequestAccessForm = function() {
 			$('.splash-intro').addClass('page-hide');
 			$('.splash-request-access').removeClass('page-hide');
