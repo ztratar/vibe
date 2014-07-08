@@ -9641,15 +9641,34 @@ html {
     margin-left: 0;
   }
 }
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal {
+    padding: 0;
+    margin: 18px;
+    width: auto;
+  }
+}
 .manage-polls-view.as-modal .vibe-modal-header {
   text-align: left;
   padding: 0 9px;
 }
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .vibe-modal-header {
+    padding: 0 12px;
+  }
+}
 .manage-polls-view.as-modal .vibe-modal-header h3 {
   font-weight: 600;
 }
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .vibe-modal-header h3 {
+    margin: 13px 0;
+    font-size: 24px;
+  }
+}
 .manage-polls-view.as-modal .vibe-modal-header p {
   opacity: 0.9;
+  display: none;
 }
 .manage-polls-view.as-modal .close-modal {
   display: block;
@@ -9672,8 +9691,26 @@ html {
   background: #363a3f;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 0;
-  margin: 20px -15px 0;
+  margin: 0px -15px 0;
   width: auto;
+  position: relative;
+}
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .add-poll {
+    margin: 0;
+    padding: 8px;
+  }
+  .manage-polls-view.as-modal .add-poll .form-group {
+    margin: 0 68px 0 0;
+  }
+  .manage-polls-view.as-modal .add-poll button {
+    height: 46px;
+    padding: 8px 14px;
+    font-size: 16px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
 }
 .manage-polls-view.as-modal .add-poll input {
   background: #191c1e;
@@ -9693,12 +9730,25 @@ html {
 .manage-polls-view.as-modal .add-poll input:-ms-input-placeholder {
   color: #444444;
 }
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .add-poll input {
+    padding: 12px;
+    height: 46px;
+    font-size: 16px;
+  }
+}
 .manage-polls-view.as-modal .list-header {
   background: #363a3f;
   border-radius: 0;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   margin: 0 -15px;
   padding: 10px 24px;
+}
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .list-header {
+    margin: 0;
+    padding: 10px 12px;
+  }
 }
 .manage-polls-view.as-modal .list-header h4 {
   color: rgba(255, 255, 255, 0.3);
@@ -9707,9 +9757,19 @@ html {
   margin: 0 -15px;
   padding: 0;
 }
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .question-list-view {
+    margin: 0;
+  }
+}
 .manage-polls-view.as-modal .question-list-view > li {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding: 14px 24px;
+}
+@media (max-width: 480px) {
+  .manage-polls-view.as-modal .question-list-view > li {
+    padding: 4px 12px;
+  }
 }
 .steps-wrapper {
   position: absolute;
@@ -9961,24 +10021,51 @@ html {
   top: 28px;
   right: 15px;
 }
+@media (max-width: 480px) {
+  .question-list-view > li a.x-action {
+    display: none;
+  }
+}
 .question-list-view > li .question-col {
   padding: 7px 295px 6px 0;
   min-height: 62px;
+}
+@media (max-width: 480px) {
+  .question-list-view > li .question-col {
+    padding: 7px 74px 6px 0;
+  }
 }
 .question-list-view > li .question-col h3 {
   margin: 0;
   font-size: 18px;
   line-height: 24px;
 }
+@media (max-width: 480px) {
+  .question-list-view > li .question-col h3 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
 .question-list-view > li .question-col span.last-sent {
   font-size: 13px;
   font-style: italic;
   opacity: 0.3;
 }
+@media (max-width: 480px) {
+  .question-list-view > li .question-col span.last-sent {
+    font-size: 10px;
+  }
+}
 .question-list-view > li .save-col {
   position: absolute;
   right: 65px;
   top: 22px;
+}
+@media (max-width: 480px) {
+  .question-list-view > li .save-col {
+    right: 8px;
+    top: 13px;
+  }
 }
 .question-list-view > li .save-col a.save-question {
   padding: 11px 18px 11px;
@@ -9988,15 +10075,33 @@ html {
   margin-top: -4px;
   font-weight: 400;
 }
+@media (max-width: 480px) {
+  .question-list-view > li .save-col a.save-question {
+    width: 66px;
+    padding: 11px 0;
+  }
+}
 .question-list-view > li .send-now-col {
   position: absolute;
   right: 65px;
   top: 22px;
 }
+@media (max-width: 480px) {
+  .question-list-view > li .send-now-col {
+    right: 8px;
+    top: 13px;
+  }
+}
 .question-list-view > li .send-now-col a {
   padding: 11px 18px 11px;
   font-weight: 600;
   width: 116px;
+}
+@media (max-width: 480px) {
+  .question-list-view > li .send-now-col a {
+    width: 66px;
+    padding: 11px 0;
+  }
 }
 .post-overlay-view {
   position: absolute;

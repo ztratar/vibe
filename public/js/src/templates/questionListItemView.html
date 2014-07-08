@@ -7,8 +7,11 @@
 <% if (question_type === 'suggested') { %>
 <div class="save-col">
 	<a href="#" class="btn btn-info action save-question">
-		<i class="icon">&#61943;</i>
-		Save to my polls
+		<span class="visible-xs">Save</span>
+		<span class="hidden-xs">
+			<i class="icon">&#61943;</i>
+			Save to my polls
+		</span>
 	</a>
 </div>
 <% } else { %>
@@ -17,7 +20,10 @@
 </a>
 <div class="send-now-col">
 	<% if (!sentInLastDay) { %>
-	<a href="#" class="btn btn-success send-now">Send now</a>
+	<a href="#" class="btn btn-success send-now">
+		<span class="hidden-xs">Send now</span>
+		<span class="visible-xs">Send</span>
+	</a>
 	<% } else { %>
 	<a href="#" class="btn btn-success send-now" disabled="disabled">Sent!</a>
 	<% } %>

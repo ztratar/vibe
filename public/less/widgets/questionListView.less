@@ -14,22 +14,39 @@
 			opacity: 0.5;
 			top: 28px;
 			right: 15px;
+
+			@media (max-width: @screen-xs) {
+				display: none;
+			}
 		}
 
 		.question-col {
 			padding: 7px 295px 6px 0;
 			min-height: 62px;
 
+			@media (max-width: @screen-xs) {
+				padding: 7px 74px 6px 0;
+			}
+
 			h3 {
 				margin: 0;
 				font-size: 18px;
 				line-height: 24px;
+
+				@media (max-width: @screen-xs) {
+					font-size: 16px;
+					line-height: 20px;
+				}
 			}
 
 			span.last-sent {
 				font-size: 13px;
 				font-style: italic;
 				opacity: 0.3;
+
+				@media (max-width: @screen-xs) {
+					font-size: 10px;
+				}
 			}
 		}
 
@@ -37,6 +54,11 @@
 			position: absolute;
 			right: 65px;
 			top: 22px;
+
+			@media (max-width: @screen-xs) {
+				right: 8px;
+				top: 13px;
+			}
 
 			a.save-question {
 				padding: 11px 18px 11px;
@@ -46,6 +68,11 @@
 					margin-top: -4px;
 					font-weight: 400;
 				}
+
+				@media (max-width: @screen-xs) {
+					width: 66px;
+					padding: 11px 0;
+				}
 			}
 		}
 
@@ -54,10 +81,20 @@
 			right: 65px;
 			top: 22px;
 
+			@media (max-width: @screen-xs) {
+				right: 8px;
+				top: 13px;
+			}
+
 			a {
 				padding: 11px 18px 11px;
 				font-weight: 600;
 				width: 116px;
+
+				@media (max-width: @screen-xs) {
+					width: 66px;
+					padding: 11px 0;
+				}
 			}
 		}
 	}
