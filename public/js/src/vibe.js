@@ -34,6 +34,15 @@ window.Vibe.run = function() {
 	// Load in data, such as user
 	if (window.isCordova) {
 		window.Vibe.user = new User();
+
+		$.ajax({
+			type: 'GET',
+			url: '/api/users/admins',
+			success: function(data) {
+				window.Vibe._data_.admins = data;
+			}
+		});
+
 		window.Vibe.user.fetchCurrentUser(function() {
 			renderViews();
 		}, function() {

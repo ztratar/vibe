@@ -377,9 +377,14 @@ exports.getAdmins = function(req, res, cb) {
 		company: req.user.company._id,
 		isAdmin: true
 	}, function(err, admins) {
-		return cb(null, _.map(admins, function(admin) {
+		var mappedUsers = _.map(admins, function(admin) {
 			return admin.stripInfo();
-		}));
+		});
+		if (!res) {
+			return cb(null, mappedUsers);
+		} else {
+			res.send(mappedUsers);
+		}
 	});
 };
 
