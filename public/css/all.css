@@ -9539,6 +9539,10 @@ html {
 .login-view {
   margin: 100px 18px 0;
 }
+.login-view button.hit {
+  -webkit-animation: bounceHit 0.32s linear;
+  animation: bounceHit 0.32s linear;
+}
 .manage-team-view .settings-group {
   text-align: left;
 }
