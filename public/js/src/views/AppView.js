@@ -59,6 +59,8 @@ var AppView = Backbone.View.extend({
 		this.$notificationsContainer.html(this.notificationsView.$el);
 		this.notificationsView.render();
 
+		this.$shadowTextarea = this.$('#shadow-textarea');
+
 		this.changeUnreadNotificationsNum();
 	},
 
@@ -120,6 +122,12 @@ var AppView = Backbone.View.extend({
 
 			that.$overlayContainer.addClass('expand');
 
+			if (opts.afterRender && typeof opts.afterRender === 'function') {
+				_.delay(function() {
+					opts.afterRender();
+				}, 5);
+			}
+
 			_.delay(function() {
 				if (opts.afterAnimate && typeof opts.afterAnimate === 'function') {
 					opts.afterAnimate();
@@ -171,6 +179,11 @@ var AppView = Backbone.View.extend({
 	openNotifications: function() {
 		this.notifications.markAllRead();
 		this.$notificationsContainer.addClass('expand');
+
+		if (window.isCordova) {
+			window.Vibe.appRouter.screenRouter.currentScreen.hide();
+		}
+
 		this.headerView.setButtons({
 			title: 'Notifications',
 			leftAction: {
@@ -198,6 +211,10 @@ var AppView = Backbone.View.extend({
 
 		this.$notificationsContainer.removeClass('expand');
 		window.Vibe.appView.headerView.setHomeButtons();
+
+		if (window.isCordova) {
+			window.Vibe.appRouter.screenRouter.currentScreen.show();
+		}
 
 		this.headerView.animateToNewComponents('fade');
 
@@ -235,6 +252,18 @@ var AppView = Backbone.View.extend({
 				}, 420);
 			}
 		}, timeToRead);
+	},
+
+	disableScroll: function() {
+		$('body').on('touchmove.disScroll scroll.disScroll', function(ev) {
+			ev.preventDefault();
+			ev.stopPropagation();
+			return false;
+		});
+	},
+
+	enableScroll: function() {
+		$('body').off('touchmove.disScroll scroll.disScroll');
 	}
 
 });

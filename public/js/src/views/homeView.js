@@ -66,9 +66,17 @@ var HomeView = BaseView.extend({
 
 		window.Vibe.appView.showOverlay(postOverlayView, {
 			showTopBar: true,
+			afterRender: function() {
+				if (window.isCordova) {
+					postOverlayView.$textarea.focus();
+				}
+			},
 			afterAnimate: function() {
 				_.delay(function() {
 					postOverlayView.$textarea.focus();
+					_.delay(function() {
+						postOverlayView.$textarea.focus();
+					}, 230);
 				}, 230);
 			}
 		});

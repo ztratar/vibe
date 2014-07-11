@@ -1,0 +1,15 @@
+{
+    "version": "2.0.8",
+    "name": "com.appsee.plugin",
+    "cordova_name": "Appsee",
+    "description": "Appsee Mobile Analytics",
+    "license": "Commercial",
+    "keywords": [
+        "analytics",
+        "appsee"
+    ],
+    "platforms": [
+        "ios"
+    ],
+    "engines": []
+}

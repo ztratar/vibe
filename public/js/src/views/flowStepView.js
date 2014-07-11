@@ -10,7 +10,8 @@ var FlowStepView = BaseView.extend({
 	template: _.template(template),
 
 	events: {
-		'tap a.next': 'nextStep'
+		'tap a.next': 'nextStep',
+		'swipeleft': 'nextStep'
 	},
 
 	initialize: function(opts) {
@@ -74,7 +75,7 @@ var FlowStepView = BaseView.extend({
 		if (step > prevStep) {
 			this.$('.pane.active').addClass('done');
 		} else {
-			this.$('.pane.active').removeClass('active');
+			this.$('.pane.active').removeClass('active').removeClass('done');
 		}
 
 		this.$('.pane:eq(' + step + ')').addClass('active');

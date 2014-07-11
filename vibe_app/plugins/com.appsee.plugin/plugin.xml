@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  id="com.appsee.plugin" version="2.0.8">
+  <name>Appsee</name>
+  <description>Appsee Mobile Analytics</description>
+  <license>Commercial</license>
+  <keywords>analytics,appsee</keywords>
+  <js-module src="www/Appsee.js" name="Appsee">
+    <clobbers target="Appsee" />
+  </js-module>
+
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="Appsee">
+        <param name="ios-package" value="CDVAppsee"/>
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/CDVAppsee.h" />
+    <source-file src="src/ios/CDVAppsee.m" />
+
+    <framework src="AVFoundation.framework" />
+    <framework src="CoreGraphics.framework" />
+    <framework src="CoreMedia.framework" />
+    <framework src="CoreVideo.framework" />
+    <framework src="QuartzCore.framework" />
+    <framework src="SystemConfiguration.framework" />
+
+    <!-- 
+    <framework src="src/ios/Appsee.framework" custom="true"/>
+   -->
+   <source-file src="src/ios/Appsee.framework/Versions/A/Appsee" framework="true" />
+   <header-file src="src/ios/Appsee.framework/Versions/A/Headers/Appsee.h" />
+
+  </platform> 
+</plugin>

@@ -7973,8 +7973,15 @@ form.form-horizontal-top button.btn {
   animation: popZoomBig 0.32s linear 0s;
 }
 .header-view .header-components a img {
+  margin-top: -2px;
   width: 32px;
   height: 32px;
+}
+@media (max-width: 480px) {
+  .header-view .header-components a img {
+    width: 28px;
+    height: 28px;
+  }
 }
 .header-view .header-components a i {
   font-size: 28px;
@@ -8149,10 +8156,11 @@ html {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  z-index: -1;
+  bottom: 100%;
+  z-index: -10;
   opacity: 1;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   visibility: hidden;
   pointer-events: none;
   -webkit-transition: background 0.16s ease-out;
@@ -8176,6 +8184,7 @@ html {
 }
 .overlay-container.expand {
   z-index: 200;
+  bottom: 0;
   pointer-events: auto;
   visibility: visible;
   background: rgba(6, 11, 29, 0.84);
@@ -8303,7 +8312,7 @@ html {
   top: 64px;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 100%;
   z-index: -1;
   opacity: 0;
   overflow-y: scroll;
@@ -8319,6 +8328,7 @@ html {
   visibility: visible;
   background: rgba(6, 11, 29, 0.97);
   opacity: 1;
+  bottom: 0;
 }
 .notifications-container .notifications-view ul {
   list-style: none;
@@ -9931,7 +9941,7 @@ html {
   left: 0;
   right: 0;
   top: -100px;
-  z-index: 400;
+  z-index: -5;
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
@@ -9955,6 +9965,7 @@ html {
   padding: 24px 40px;
 }
 .notif-holder.show-notif {
+  z-index: 400;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -10197,6 +10208,14 @@ html {
   -webkit-transition: opacity 0.16s ease-out 0.02s;
   transition: opacity 0.16s ease-out 0.02s;
 }
+@media (max-width: 480px) {
+  .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: left;
+  }
+}
 .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap .identity {
   background: #4379B1;
   display: inline-block;
@@ -10206,7 +10225,8 @@ html {
 }
 @media (max-width: 480px) {
   .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap .identity {
-    padding: 11px 18px 11px;
+    background: transparent;
+    padding: 8px 15px 12px;
     font-size: 12px;
   }
 }
@@ -10236,9 +10256,11 @@ html {
 }
 @media (max-width: 480px) {
   .post-overlay-view .post-wrapper .new-post .input-wrap textarea {
-    font-size: 18px;
-    margin: 0 0 -31px 0;
+    font-size: 20px;
+    margin: 0;
     padding: 24px;
+    font-weight: 600;
+    line-height: 24px;
   }
 }
 .post-overlay-view .post-wrapper .new-post .input-wrap textarea:focus {
@@ -10253,9 +10275,7 @@ html {
 }
 @media (max-width: 480px) {
   .post-overlay-view .post-wrapper .new-post .input-wrap .messaging {
-    font-size: 9px;
-    bottom: 15px;
-    left: 15px;
+    display: none;
   }
 }
 .post-overlay-view .post-wrapper .new-post .input-wrap .length-marker {
@@ -10266,8 +10286,8 @@ html {
 }
 @media (max-width: 480px) {
   .post-overlay-view .post-wrapper .new-post .input-wrap .length-marker {
-    font-size: 9px;
-    bottom: 15px;
+    font-size: 11px;
+    bottom: 12px;
     right: 15px;
   }
 }
@@ -10289,8 +10309,10 @@ html {
 }
 @media (max-width: 480px) {
   .overlay-container.expand .post-overlay-view .post-wrapper .container {
-    -webkit-transform: translate3d(0, 20px, 0);
-    transform: translate3d(0, 20px, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transition: all 0s;
+    transition: all 0s;
   }
 }
 .overlay-container.expand .post-overlay-view .post-wrapper .new-post {
@@ -10312,14 +10334,27 @@ html {
 }
 @media (max-width: 480px) {
   .overlay-container.expand .post-overlay-view .post-wrapper .new-post {
-    height: 220px;
+    top: -20px;
+    padding: 20px 8px;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    height: calc(100% - 196px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    -webkit-animation: downSwaySmall 1000ms linear both;
-    animation: downSwaySmall 1000ms linear both;
+    -webkit-animation: none;
+    animation: none;
+    -webkit-transition: all 0s;
+    transition: all 0s;
   }
 }
 .overlay-container.expand .post-overlay-view .post-wrapper .new-post .initButtonText {
   opacity: 0;
+}
+@media (max-width: 480px) {
+  .overlay-container.expand .post-overlay-view .post-wrapper .new-post .initButtonText {
+    -webkit-transition: all 0s;
+    transition: all 0s;
+  }
 }
 .overlay-container.expand .post-overlay-view .post-wrapper .new-post .input-wrap {
   opacity: 1;
@@ -10406,7 +10441,7 @@ html {
     width: 49%;
     float: left;
   }
-  .feedback-approval-view ul li a.disapprove {
+  .feedback-approval-view ul li a.archive {
     float: right;
   }
 }

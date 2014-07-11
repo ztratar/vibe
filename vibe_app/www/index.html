@@ -31,6 +31,22 @@
 		<script>
 			document.addEventListener("deviceready", function() {
 				require(['vibe']);
+
+				Keyboard.hideFormAccessoryBar(true);
+				Keyboard.automaticScrollToTopOnHiding = true;
+				Keyboard.onshowing = function() {
+					document.body.scrollTop = 0;
+					for (var i = 0; i <= 60; i++) {
+						setTimeout(function() {
+							document.body.scrollTop = 0;
+						}, i * 16.6);
+					}
+				};
+				Keyboard.onshow = function() {
+					document.body.scrollTop = 0;
+				};
+
+				window.Appsee.start("4f3e7a4378e7410791af2a0e75081fb1");
 			}, false);
 		</script>
 	</body>

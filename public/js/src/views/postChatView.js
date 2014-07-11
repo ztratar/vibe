@@ -1,6 +1,7 @@
 import 'backbone';
 import 'require';
 
+import BaseView from 'views/baseView';
 import FeedbackItemView from 'views/feedbackItemView';
 import PostQuestionItemView from 'views/postQuestionItemView';
 import ChatView from 'views/chatView';
@@ -11,11 +12,15 @@ module template from 'text!templates/postChatView.html';
 var FeedbackItemView = require('views/feedbackItemView'),
 	PostQuestionItemView = require('views/postQuestionItemView');
 
-var PostChatView = Backbone.View.extend({
+var PostChatView = BaseView.extend({
 
 	className: 'post-chat-view',
 
 	template: _.template(template),
+
+	events: {
+		'tap .close-modal': 'remove'
+	},
 
 	initialize: function(opts) {
 		if (opts.post) {
@@ -67,6 +72,8 @@ var PostChatView = Backbone.View.extend({
 			carousel.setPaneDimensions();
 		}, 280);
 
+		this.delegateEvents();
+
 		return this;
 	},
 
@@ -107,6 +114,9 @@ var PostChatView = Backbone.View.extend({
 	},
 
 	remove: function() {
+		if (this.removing) return;
+		this.removing = true;
+
 		this.once('remove-done', _.bind(function() {
 			window.Vibe.appRouter.navigate(this.closeUrl);
 			this.chatView.closeChat();

@@ -11,4 +11,11 @@
 	<icon src="icon.png" />
     <access origin="*" />
 	<preference name="DisallowOverscroll" value="true" />
+	<preference name="StatusBarStyle" value="lightcontent" />
+	<feature name="Keyboard">
+		<param name="ios-package" value="CDVKeyboard" onload="true" />
+	</feature>
+	<preference name="HideKeyboardFormAccessoryBar" value="true" />
+	<preference name="KeyboardShrinksView" value="true" />
+	<preference name="KeyboardDisplayRequiresUserAction" value="false" />
 </widget>

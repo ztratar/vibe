@@ -1,12 +1,13 @@
 import 'backbone';
 import 'autosize';
+import BaseView from 'views/baseView';
 import Users from 'models/users';
 import Feedback from 'models/feedback';
 import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/postOverlayView.html';
 
-var PostOverlayView = Backbone.View.extend({
+var PostOverlayView = BaseView.extend({
 
 	className: 'post-overlay-view',
 
@@ -28,6 +29,11 @@ var PostOverlayView = Backbone.View.extend({
 		adminNames = this.admins.getNames();
 
 		window.Vibe.appRouter.screenRouter.disableScreenScroll();
+
+		if (window.isCordova) {
+			window.Vibe.appView.disableScroll();
+		}
+
 		setTimeout(function() {
 			window.Vibe.appView.headerView.setButtons({
 				title: '',
@@ -63,6 +69,14 @@ var PostOverlayView = Backbone.View.extend({
 		this.$lengthMarker = this.$('.length-marker');
 
 		this.$textarea.autosize();
+
+		if (window.isCordova) {
+			this.$textarea.focus();
+		}
+
+		$(window).on('resize', _.bind(function() {
+			this.$textarea.autosize();
+		}, this));
 
 		return this;
 	},
@@ -144,6 +158,10 @@ var PostOverlayView = Backbone.View.extend({
 
 	remove: function() {
 		window.Vibe.appRouter.screenRouter.enableScreenScroll();
+
+		if (window.isCordova) {
+			window.Vibe.appView.enableScroll();
+		}
 
 		window.Vibe.appView.headerView.setHomeButtons();
 		window.Vibe.appView.headerView.animateToNewComponents('slideDown');
