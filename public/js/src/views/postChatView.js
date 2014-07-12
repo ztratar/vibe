@@ -19,7 +19,7 @@ var PostChatView = BaseView.extend({
 	template: _.template(template),
 
 	events: {
-		'tap .close-modal': 'remove'
+		'tap .close-modal': 'tapRemove'
 	},
 
 	initialize: function(opts) {
@@ -45,6 +45,8 @@ var PostChatView = BaseView.extend({
 	},
 
 	render: function() {
+		var that = this;
+
 		this.$el.html(this.template());
 
 		this.$sectionWrapper = this.$('.post-chat-view-section-wrapper');
@@ -59,6 +61,11 @@ var PostChatView = BaseView.extend({
 			paneSelector: '.pane',
 			isEnabled: function() {
 				return ($(window).width() <= 767);
+			},
+			onPaneShow: function(index, animate) {
+				if (index === 1) {
+					that.chatView.$input.focus();
+				}
 			}
 		});
 		carousel.init();
@@ -111,6 +118,13 @@ var PostChatView = BaseView.extend({
 
 		this.$chatContainer.html(this.chatView.$el);
 		this.chatView.render();
+	},
+
+	tapRemove: function(ev) {
+		var $target = $(ev.target);
+		if ($target.hasClass('close-modal')) {
+			this.remove();
+		}
 	},
 
 	remove: function() {

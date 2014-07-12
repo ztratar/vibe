@@ -59,8 +59,6 @@ var AppView = Backbone.View.extend({
 		this.$notificationsContainer.html(this.notificationsView.$el);
 		this.notificationsView.render();
 
-		this.$shadowTextarea = this.$('#shadow-textarea');
-
 		this.changeUnreadNotificationsNum();
 	},
 

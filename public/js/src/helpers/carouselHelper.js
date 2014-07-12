@@ -52,6 +52,10 @@ var CarouselHelper = function(element, opts) {
 
 		var offset = -((100/pane_count)*current_pane);
 		setContainerOffset(offset, animate);
+
+		if (typeof opts.onPaneShow === 'function') {
+			opts.onPaneShow(index, animate);
+		}
 	};
 
 	function setContainerOffset(percent, animate) {

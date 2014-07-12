@@ -69,7 +69,9 @@ var ChatView = BaseView.extend({
 		this.$chatsLoaderContainer = this.$('.chats-loader-container');
 
 		_.delay(function() {
-			that.$input.focus();
+			if (!window.isCordova) {
+				that.$input.focus();
+			}
 		}, 100);
 
 		this.addAll();

@@ -25,11 +25,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"CDVKeyboard\" /></feature>",
+                            "xml": "<feature name=\"Appsee\"><param name=\"ios-package\" value=\"CDVAppsee\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Appsee\"><param name=\"ios-package\" value=\"CDVAppsee\" /></feature>",
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -81,10 +81,10 @@
         "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "org.vibeapp.vibe"
         },
-        "org.apache.cordova.labs.keyboard": {
+        "com.appsee.plugin": {
             "PACKAGE_NAME": "org.vibeapp.vibe"
         },
-        "com.appsee.plugin": {
+        "com.ionic.keyboard": {
             "PACKAGE_NAME": "org.vibeapp.vibe"
         }
     },
