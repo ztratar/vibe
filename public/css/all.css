@@ -7402,6 +7402,9 @@ label.input-lg {
 .form-actions.form-actions-lg {
   margin: 24px 0 0 0;
 }
+button {
+  outline: none !important;
+}
 .form-step-wrapper {
   position: relative;
 }
@@ -9548,6 +9551,10 @@ html {
   margin: 100px 18px 0;
 }
 .login-view button.hit {
+  -webkit-animation: bounceHit 0.32s linear;
+  animation: bounceHit 0.32s linear;
+}
+.login-page button.hit {
   -webkit-animation: bounceHit 0.32s linear;
   animation: bounceHit 0.32s linear;
 }
