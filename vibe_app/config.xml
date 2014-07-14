@@ -14,7 +14,7 @@
 	<preference name="StatusBarStyle" value="lightcontent" />
 	<preference name="KeyboardDisplayRequiresUserAction" value="false" />
 	<feature name="Keyboard">
-            <param name="ios-package" value="IonicKeyboard" onload="true" />
+		<param name="ios-package" value="IonicKeyboard" onload="true" />
 	</feature>
 	<preference name="HideKeyboardFormAccessoryBar" value="true" />
 </widget>

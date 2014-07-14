@@ -66,6 +66,7 @@ var HomeView = BaseView.extend({
 
 		window.Vibe.appView.showOverlay(postOverlayView, {
 			showTopBar: true,
+			noAnimation: window.isCordova,
 			afterRender: function() {
 				if (window.isCordova) {
 					postOverlayView.$textarea.focus();

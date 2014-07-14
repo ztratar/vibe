@@ -113,9 +113,17 @@ var AppView = Backbone.View.extend({
 		this.$overlayViewContainer.html(view.$el);
 		view.render();
 
+		if (opts.noAnimation) {
+			this.$overlayContainer.hide()
+		}
+
 		_.defer(function() {
 			if (opts.showTopBar) {
 				that.$overlayContainer.addClass('show-top-bar');
+			}
+
+			if (opts.noAnimation) {
+				that.$overlayContainer.show()
 			}
 
 			that.$overlayContainer.addClass('expand');

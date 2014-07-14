@@ -13,7 +13,7 @@ var LoginView = BaseView.extend({
 	events: {
 		'tap input': 'tapInputField',
 		'submit form': 'submitLogin',
-		'tap button': 'submitLogin'
+		'touchstart button': 'submitLogin'
 	},
 
 	initialize: function(opts) {
@@ -80,7 +80,7 @@ var LoginView = BaseView.extend({
 			},
 			success: function(d) {
 				if (d.error) {
-					$button.attr('disabled', '');
+					$button.attr('disabled', false);
 					$button.html('Log In');
 					$error.html(d.error).show();
 					return false;
