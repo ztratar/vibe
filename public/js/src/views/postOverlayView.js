@@ -62,7 +62,8 @@ var PostOverlayView = BaseView.extend({
 
 		this.$el.html(this.template({
 			maxTextLength: this.MAX_TEXT_LENGTH,
-			adminNames: adminNames
+			adminNames: adminNames,
+			adminAvatar: this.admins.first().getAvatar()
 		}));
 
 		this.$textarea = this.$('textarea');
@@ -74,11 +75,40 @@ var PostOverlayView = BaseView.extend({
 			this.$textarea.focus();
 		}
 
-		$(window).on('resize', _.bind(function() {
-			this.$textarea.autosize();
-		}, this));
+		$(window)
+			.off('resize.postOverlay')
+			.on('resize.postOverlay', _.bind(function() {
+				this.$textarea.autosize();
+				this.positionModal();
+			}, this));
 
 		return this;
+	},
+
+	positionModal: function() {
+		var offset;
+
+		if ($('.overlay-container').hasClass('expand')) {
+			console.log('has expand!');
+			var screenHeight = this.$el.height(),
+				windowHeight = screenHeight + 64,
+				postHeight = 500;
+
+			if (windowHeight < 570) {
+				postHeight = 360;
+			} else if (windowHeight < 650) {
+				postHeight = 440;
+			}
+
+			offset = Math.round((screenHeight - postHeight)/2);
+		} else {
+			console.log('no has expand!');
+			offset = 122;
+		}
+
+		this.$container = this.$container || this.$('.container');
+		this.$container.css('transform', 'translate3d(0, '+offset+'px, 0)');
+		this.$container.css('-webkit-transform', 'translate3d(0, '+offset+'px, 0)');
 	},
 
 	changeLengthMarker: function(ev) {

@@ -73,6 +73,7 @@ var HomeView = BaseView.extend({
 				}
 			},
 			afterAnimate: function() {
+				postOverlayView.positionModal();
 				_.delay(function() {
 					postOverlayView.$textarea.focus();
 					_.delay(function() {

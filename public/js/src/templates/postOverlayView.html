@@ -8,7 +8,13 @@
 			<div class="input-wrap">
 				<div class="identity-wrap">
 					<div class="identity">
-						Anonymous <i class="icon">&#61812;</i> <%= adminNames %>
+						<img src="<%= window.staticRoute %>img/anonymous.png">
+						<span class="anony-name">Anonymous</span>
+						<i class="icon">&#61812;</i>
+						<span class="admin-layer">
+							<%= adminNames %>
+							<img src="<%= adminAvatar %>">
+						</span>
 					</div>
 				</div>
 				<div class="v-centered">

@@ -62,11 +62,49 @@
 					opacity: 0;
 					.transition(opacity .16s ease-out .02s);
 
+					img {
+						width: 32px;
+						height: 32px;
+						border-radius: 100px;
+						display: inline-block;
+						margin: -12px 8px -7px 0px;
+
+						@media (max-width: @screen-xs) {
+							width: 24px;
+							height: 24px;
+							margin-top: -9px;
+							margin-right: 0;
+						}
+					}
+
+					.admin-layer {
+						@media (max-width: @screen-xs) {
+							position: relative;
+							padding: 0 0 0 34px;
+							font-family: 'Lato', 'Helvetica Neue';
+						}
+
+						img {
+							margin-left: 8px;
+							margin-right: 0;
+
+							@media (max-width: @screen-xs) {
+								position: absolute;
+								left: -7px;
+								top: 4px;
+							}
+						}
+					}
+
 					@media (max-width: @screen-xs) {
 						position: absolute;
 						bottom: 0;
 						left: 0;
 						text-align: left;
+
+						span.anony-name {
+							display: none;
+						}
 					}
 
 					.identity {
@@ -75,12 +113,13 @@
 						padding: 14px 18px 14px;
 						margin-top: -14px;
 						border-radius: 8px;
+						font-family: 'Lato-Bold', 'Lato', 'Helvetica Neue';
 
 						@media (max-width: @screen-xs) {
 							background: transparent;
-							padding: 8px 15px 12px;
+							padding: 8px 0px 12px 8px;
 							font-size: 12px;
-							max-width: 240px;
+							max-width: 250px;
 							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
@@ -102,7 +141,6 @@
 					color: white;
 					font-family: 'Lato', 'Helvetica Neue';
 					background: transparent;
-					font-weight: 500;
 					font-size: 28px;
 					border: none;
 					padding: 24px 60px;
@@ -114,10 +152,10 @@
 
 					@media (max-width: @screen-xs) {
 						font-size: 20px;
-						margin: 0;
+						margin: 20px 0 0 0;
 						padding: 24px;
-						font-weight: 600;
 						line-height: 24px;
+						text-rendering: optimizeSpeed;
 					}
 
 					&:focus {
@@ -146,7 +184,7 @@
 					@media (max-width: @screen-xs) {
 						font-size: 11px;
 						bottom: 12px;
-						right: 15px;
+						right: 8px;
 					}
 				}
 			}
@@ -157,18 +195,8 @@
 .overlay-container.expand .post-overlay-view {
 	.post-wrapper {
 		.container {
-			.translate3d(0, calc(~"50% - 250px"), 0);
-
-			@media (max-height: 650px) {
-				.translate3d(0, calc(~"50% - 220px"), 0);
-			}
-
-			@media (max-height: 570px) {
-				.translate3d(0, calc(~"50% - 180px"), 0);
-			}
-
 			@media (max-width: @screen-xs) {
-				.translate3d(0, 0, 0);
+				.translate3d(0, 0, 0) !important;
 				.transition(~"all 0s");
 			}
 		}
