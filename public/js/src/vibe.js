@@ -21,34 +21,37 @@ window.Vibe.run = function() {
 	window.Vibe.modelCache = new ModelCache();
 
 	var renderViews = function() {
-		// Start the app visuals
-		window.Vibe.appView = new AppView();
-		window.Vibe.appView.render();
+			// Start the app visuals
+			window.Vibe.appView = new AppView();
+			window.Vibe.appView.render();
 
-		window.Vibe.appView.run();
+			window.Vibe.appView.run();
 
-		// inits window.Vibe.appRouter
-		Router.init();
-	};
+			// inits window.Vibe.appRouter
+			Router.init();
+		},
+		getAdmins = function() {
+			$.ajax({
+				type: 'GET',
+				url: window.Vibe.serverUrl + 'api/users/admins',
+				success: function(data) {
+					window.Vibe._data_.admins = data;
+				}
+			});
+		};
 
 	// Load in data, such as user
 	if (window.isCordova) {
 		window.Vibe.user = new User();
 
-		$.ajax({
-			type: 'GET',
-			url: '/api/users/admins',
-			success: function(data) {
-				window.Vibe._data_.admins = data;
-			}
-		});
-
 		window.Vibe.user.fetchCurrentUser(function() {
+			getAdmins();
 			renderViews();
 		}, function() {
 			var loginView = new LoginView({
 				loginCallback: function() {
 					window.Vibe.user.fetchCurrentUser(function() {
+						getAdmins();
 						renderViews();
 					});
 				}
