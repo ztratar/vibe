@@ -9,8 +9,11 @@ var mongoose = require('mongoose'),
 	crypto = require('crypto'),
 	email = require('./email')(),
 	helpers = require('../helpers'),
+	twilio = require('twilio'),
 	app,
 	passport;
+
+var twilioClient = new twilio.RestClient('ACecea4c8ecb6fddd7efe2d730b61ea188', 'a6aa3583ace3e2292bf5939fc897c9ff');
 
 /*
  * POST /api/login
@@ -44,6 +47,15 @@ exports.login = function (req, res) {
 					error: 'Wrong email or password'
 				});
 			}
+
+			twilioClient.sms.messages.create({
+				to: '+16308548826',
+				from: '+13312155958',
+				body: req.body.email + ' logged onto Vibe'
+			}, function(err, message) {
+				console.log('TWILIO', err, message);
+			});
+
 			return res.send({
 				message: 'success'
 			});
@@ -532,7 +544,7 @@ exports.inviteUser = function(req, res, company, userToInvite, returnResponse) {
 		if (userInvite) {
 			email.send({
 				to: userInvite.invitee.email,
-				subject: req.user.name + ' invited you to join '+company.name+'\'s Vibe!',
+				subject: req.user.name + ' invited you to join ' + company.name + '\'s Vibe!',
 				templateName: 'invite_user',
 				templateData: {
 					inviter_name: req.user.name,
