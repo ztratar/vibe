@@ -46,6 +46,7 @@ var FeedbackApprovalView = Backbone.View.extend({
 	},
 
 	render: function() {
+		this.determineVisibility();
 		this.$el.html(this.template());
 		this.$pendingFeedback = this.$('.pending-feedback');
 		this.addAll();

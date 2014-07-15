@@ -107,7 +107,8 @@ var PostQuestionItemView = BaseView.extend({
 	discuss: function() {
 		this.postChatView = new PostChatView.default({
 			post: this.model,
-			question: this.question
+			question: this.question,
+			forceChatPosition: window.isCordova
 		});
 		window.Vibe.appView.showOverlay(this.postChatView);
 

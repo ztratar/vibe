@@ -99,7 +99,8 @@ var FeedbackItemView = BaseView.extend({
 	discuss: function() {
 		this.postChatView = new PostChatView({
 			post: this.model,
-			feedback: this.feedback
+			feedback: this.feedback,
+			forceChatPosition: window.isCordova
 		});
 		window.Vibe.appView.showOverlay(this.postChatView);
 

@@ -23,6 +23,8 @@ var LoginView = BaseView.extend({
 	},
 
 	render: function() {
+		var that = this;
+
 		this.$el.html(this.template());
 
 		_.delay(function() {

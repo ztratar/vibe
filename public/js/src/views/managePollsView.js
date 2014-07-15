@@ -1,23 +1,26 @@
 import 'backbone';
 import 'underscore';
 
+import BaseView from 'views/baseView';
 import Question from 'models/question';
 import Questions from 'models/questions';
 import QuestionListView from 'views/questionListView';
 import Analytics from 'helpers/analytics';
 
+module loaderTemplate from 'text!templates/loader.html';
 module template from 'text!templates/managePollsView.html';
 
-var ManagePollsView = Backbone.View.extend({
+var ManagePollsView = BaseView.extend({
 
 	className: 'manage-polls-view',
 
 	template: _.template(template),
+	loaderTemplate: _.template(loaderTemplate),
 
 	events: {
 		'keydown form input': 'addPoll',
-		'click form button': 'addPoll',
-		'click a.close-modal': 'remove'
+		'tap form button': 'addPoll',
+		'tap a.close-modal': 'remove'
 	},
 
 	initialize: function(opts) {
@@ -59,6 +62,9 @@ var ManagePollsView = Backbone.View.extend({
 
 		this.selectedQuestions.on('all', this.determineSelectedListHeaderDisplay, this);
 		this.suggestedQuestions.on('all', this.determineSuggestedListHeaderDisplay, this);
+
+		this.selectedQuestions.on('all', this.determineLoader, this);
+		this.suggestedQuestions.on('all', this.determineLoader, this);
 	},
 
 	render: function() {
@@ -79,15 +85,22 @@ var ManagePollsView = Backbone.View.extend({
 		this.suggestedQuestions.fetch();
 
 		this.$addPollInput = this.$('.add-poll input');
+		this.$loaderContainer = this.$('.loader-container');
 
 		_.delay(function() {
-			that.$addPollInput.focus();
+			if (!window.isCordova) {
+				that.$addPollInput.focus();
+			}
 		}, 180);
 
 		Analytics.log({
 			eventCategory: 'question',
 			eventAction: 'manage-section-loaded'
 		});
+
+		this.delegateEvents();
+
+		this.showLoader();
 
 		return this;
 	},
@@ -157,8 +170,36 @@ var ManagePollsView = Backbone.View.extend({
 		}
 	},
 
-	remove: function() {
+	determineLoader: function() {
+		if (this.selectedQuestions.length === 0
+				&& this.suggestedQuestions.length === 0) {
+			this.showLoader();
+		} else {
+			this.removeLoader();
+		}
+	},
+
+	showLoader: function() {
+		if (this.$loaderContainer) {
+			this.$loaderContainer.html(this.loaderTemplate({ useDark: false }));
+			this.$loaderContainer.show();
+		}
+	},
+
+	removeLoader: function() {
+		if (this.$loaderContainer) {
+			this.$loaderContainer.html('').hide();
+		}
+	},
+
+	remove: function(ev) {
 		this.trigger('remove');
+
+		if (ev && typeof ev.stopPropagation === 'function') {
+			ev.stopPropagation();
+		}
+
+		return false;
 	}
 
 });

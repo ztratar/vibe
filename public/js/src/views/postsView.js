@@ -43,18 +43,24 @@ var PostsView = Backbone.View.extend({
 
 		this.$posts = this.$('.posts-view');
 		this.$newPostsButton = this.$('.new-posts-button');
-		this.$postsLoaderContainer = this.$('.post-loader-container');
+		this.$postsLoaderContainer = this.$('.posts-loader-container');
+
+		if (!this.posts.length) {
+			this.showLoader();
+		}
 
 		this.addAll();
 
 		return this;
 	},
 
-	addAll: function() {
+	addAll: function(ev) {
 		if (this.posts.length) {
+			this.showLoader();
 			this.$posts.html('');
 			this.posts.each(this.addOne, this);
-		} else {
+		} else if (ev) {
+			this.removeLoader();
 			this.isEmpty = true;
 			this.$posts.html(this.emptyTemplate());
 		}

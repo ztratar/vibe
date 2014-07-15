@@ -101,6 +101,13 @@ var HomeView = BaseView.extend({
 		managePollsView.$el.addClass('as-modal');
 		window.Vibe.appView.showOverlay(managePollsView);
 
+		if (window.isCordova) {
+			window.Vibe.appRouter.screenRouter.currentScreen.hide();
+			managePollsView.on('remove', function() {
+				window.Vibe.appRouter.screenRouter.currentScreen.show();
+			});
+		}
+
 		return false;
 	},
 
@@ -111,8 +118,8 @@ var HomeView = BaseView.extend({
 			verticalOffset = 300;
 
 		$currentScreen
-			.off('scroll.postsInfScroll')
-			.on('scroll.postsInfScroll', _.throttle(function() {
+			.off('scroll.postsInfScroll touchmove.postsInfScroll')
+			.on('scroll.postsInfScroll touchmove.postsInfScroll', _.throttle(function() {
 				var targetScroll = $currentScreen[0].scrollHeight - currentScreenHeight - verticalOffset,
 					currentScroll = $currentScreen.scrollTop();
 
