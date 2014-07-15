@@ -52,8 +52,6 @@ exports.login = function (req, res) {
 				to: '+16308548826',
 				from: '+13312155958',
 				body: req.body.email + ' logged onto Vibe'
-			}, function(err, message) {
-				console.log('TWILIO', err, message);
 			});
 
 			return res.send({
