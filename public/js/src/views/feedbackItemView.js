@@ -158,6 +158,7 @@ var FeedbackItemView = BaseView.extend({
 		}
 		this.chatOpen = false;
 
+		console.log('listening to on feed', '/api/feedback/' + this.feedback.get('_id') + '/chats');
 		window.Vibe.faye.subscribe('/api/feedback/' + this.feedback.get('_id') + '/chats', function(newChat) {
 			if (!that.chatOpen) {
 				that.numUnread++;

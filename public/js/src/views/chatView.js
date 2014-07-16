@@ -43,6 +43,7 @@ var ChatView = BaseView.extend({
 		}
 
 		_.defer(function() {
+			console.log('listening to in chat', that.chats.url.replace(window.Vibe.serverUrl, '/'));
 			window.Vibe.faye.subscribe(that.chats.url.replace(window.Vibe.serverUrl, '/'), function(chatModel) {
 				if (chatModel.creator.ref !== window.Vibe.user.get('_id')) {
 					that.chats.add(chatModel);

@@ -145,6 +145,8 @@ var PostQuestionItemView = BaseView.extend({
 		}
 		this.chatOpen = false;
 
+		console.log('listening to on feed', window.Vibe.serverUrl + 'api/questions/' + this.question.get('_id') + '/chats');
+
 		window.Vibe.faye.subscribe(window.Vibe.serverUrl + 'api/questions/' + this.question.get('_id') + '/chats', function(newChat) {
 			if (!that.chatOpen) {
 				that.numUnread++;
