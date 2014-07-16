@@ -38,6 +38,10 @@ var FeedbackItemView = BaseView.extend({
 		this.initChat();
 
 		window.Vibe.faye.subscribe('/api/feedback/' + this.feedback.get('_id') + '/vote_change', function(newNumVotes) {
+			if (newNumVotes === that.feedback.get('num_votes')) {
+				return;
+			}
+
 			that.feedback.set({
 				'num_votes': newNumVotes
 			});

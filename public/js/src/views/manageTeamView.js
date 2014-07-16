@@ -24,11 +24,11 @@ var ManageTeamView = Backbone.View.extend({
 		var that = this;
 
 		this.pendingUsers = new Users();
-		this.pendingUsers.url = '/api/users/pending';
+		this.pendingUsers.url = window.Vibe.serverUrl + 'api/users/pending';
 		this.pendingUsers.on('all', this.renderPendingUsers, this);
 
 		this.users = new Users();
-		this.users.url = '/api/users';
+		this.users.url = window.Vibe.serverUrl + 'api/users';
 
 		this.userListView = new UserListView({
 			users: this.users,

@@ -35,11 +35,21 @@
 		&.pop {
 			-webkit-animation: popZoom 0.32s linear 0s forwards;
 			animation: popZoom 0.32s linear 0s forwards;
+
+			@media (max-width: @screen-xs) {
+				-webkit-animation: popZoomMobile 0.32s linear 0s forwards;
+				animation: popZoomMobile 0.32s linear 0s forwards;
+			}
 		}
 
 		&.pop-reverse {
 			-webkit-animation: popZoomReverse 0.32s linear 0s forwards;
 			animation: popZoomReverse 0.32s linear 0s forwards;
+
+			@media (max-width: @screen-xs) {
+				-webkit-animation: popZoomMobileReverse 0.32s linear 0s forwards;
+				animation: popZoomMobileReverse 0.32s linear 0s forwards;
+			}
 		}
 	}
 

@@ -7616,7 +7616,7 @@ form.form-horizontal-top button.btn {
     background: rgba(47, 85, 124, 0.64);
   }
   form.form-horizontal-top .form-group {
-    width: calc(100% - 70px);
+    width: calc(100% - 80px);
     margin: 0 6px 0 0;
   }
   form.form-horizontal-top .form-group input {
@@ -7934,6 +7934,7 @@ form.form-horizontal-top button.btn {
   text-align: center;
   pointer-events: none;
   opacity: 1;
+  text-rendering: optimizeSpeed;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transition: all 0.18s ease-in-out;
@@ -9312,7 +9313,6 @@ html {
 }
 .settings-view {
   text-align: left;
-  padding: 15px;
 }
 .settings-view a.settings-item-row {
   cursor: pointer;
@@ -10598,6 +10598,94 @@ html {
     transform: scale(1, 1);
   }
 }
+@keyframes popZoomMobile {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  30% {
+    -webkit-transform: scale(1.16, 1.16);
+    -ms-transform: scale(1.16, 1.16);
+    transform: scale(1.16, 1.16);
+  }
+  70% {
+    -webkit-transform: scale(0.94, 0.94);
+    -ms-transform: scale(0.94, 0.94);
+    transform: scale(0.94, 0.94);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-webkit-keyframes popZoomMobile {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  30% {
+    -webkit-transform: scale(1.16, 1.16);
+    -ms-transform: scale(1.16, 1.16);
+    transform: scale(1.16, 1.16);
+  }
+  70% {
+    -webkit-transform: scale(0.94, 0.94);
+    -ms-transform: scale(0.94, 0.94);
+    transform: scale(0.94, 0.94);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@keyframes popZoomMobileReverse {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  30% {
+    -webkit-transform: scale(0.89, 0.89);
+    -ms-transform: scale(0.89, 0.89);
+    transform: scale(0.89, 0.89);
+  }
+  70% {
+    -webkit-transform: scale(1.04, 1.04);
+    -ms-transform: scale(1.04, 1.04);
+    transform: scale(1.04, 1.04);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-webkit-keyframes popZoomMobileReverse {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  30% {
+    -webkit-transform: scale(0.89, 0.89);
+    -ms-transform: scale(0.89, 0.89);
+    transform: scale(0.89, 0.89);
+  }
+  70% {
+    -webkit-transform: scale(1.04, 1.04);
+    -ms-transform: scale(1.04, 1.04);
+    transform: scale(1.04, 1.04);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
 .posts-view-wrap .new-posts-button {
   width: 100%;
   font-size: 18px;
@@ -11064,9 +11152,21 @@ html {
   -webkit-animation: popZoom 0.32s linear 0s forwards;
   animation: popZoom 0.32s linear 0s forwards;
 }
+@media (max-width: 480px) {
+  .feedback-item-view .score.pop {
+    -webkit-animation: popZoomMobile 0.32s linear 0s forwards;
+    animation: popZoomMobile 0.32s linear 0s forwards;
+  }
+}
 .feedback-item-view .score.pop-reverse {
   -webkit-animation: popZoomReverse 0.32s linear 0s forwards;
   animation: popZoomReverse 0.32s linear 0s forwards;
+}
+@media (max-width: 480px) {
+  .feedback-item-view .score.pop-reverse {
+    -webkit-animation: popZoomMobileReverse 0.32s linear 0s forwards;
+    animation: popZoomMobileReverse 0.32s linear 0s forwards;
+  }
 }
 .feedback-item-view .action-bar {
   background: #5a93cc;
