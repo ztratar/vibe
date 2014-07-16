@@ -133,17 +133,27 @@ exports.newChat = function(req, res, next){
 		notificationsController.sendToUsers(sendNotificationsTo, {
 			type: 'feedback-chat',
 			cluster_tag: 'feedback-chat_' + req.feedback._id,
-			cluster_query: {
-				$addToSet: {
-					'data.users': {
-						_id: req.user._id,
-						avatar: req.user.avatar,
-						name: req.user.name
-					}
-				},
-				$set: {
-					'data.first_user_id': req.user._id
+			cluster_query: function(notification) {
+				var users = notification.data.users,
+					baseQuery = {
+						$set: {
+							'data.first_user_id': req.user._id
+						}
+					};
+
+				if (!_.contains(_.map(users, function(user) {
+					return user._id.toString();
+				}), req.user._id.toString())) {
+					baseQuery.$addToSet = {
+						'data.users': {
+							_id: req.user._id.toString(),
+							avatar: req.user.avatar,
+							name: req.user.name
+						}
+					};
 				}
+
+				return baseQuery;
 			},
 			data: {
 				users: [{

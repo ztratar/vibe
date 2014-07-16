@@ -123,9 +123,14 @@ exports.send = function(notifOpts, cb) {
 		// If notification exists, get process for clustering
 		// based on type
 		if (notification && notifOpts.cluster_query) {
+			if (typeof notifOpts.cluster_query === 'function') {
+				notifOpts.cluster_query = notifOpts.cluster_query(notification);
+			}
+
 			notifOpts.cluster_query.$set = notifOpts.cluster_query.$set || {};
 			notifOpts.cluster_query.$set.read = false;
 			notifOpts.cluster_query.$set.time_updated = Date.now();
+
 			notification.update(notifOpts.cluster_query, function(err, numAffected) {
 				Notification.findById(notification._id, function(err, notification) {
 					asyncCb(null, notification);
