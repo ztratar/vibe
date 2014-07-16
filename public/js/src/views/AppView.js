@@ -13,7 +13,7 @@ module surveyTemplate from 'text!templates/surveyNotification.html';
 
 var AppView = Backbone.View.extend({
 
-	el: 'body',
+	el: '#vibe-app',
 
 	className: 'vibe-app app-view',
 

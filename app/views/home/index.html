@@ -1,6 +1,7 @@
 {% extends '../layouts/default.html' %}
 
 {% block content %}
+	<div id="vibe-app"></div>
 	<script>
 		window.Vibe._data_.currentUser = {{ JSON.stringify(currentUser.stripInfo()) }};
 		window.Vibe._data_.sessionID = '{{ sessionID }}';

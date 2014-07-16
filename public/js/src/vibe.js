@@ -56,7 +56,7 @@ window.Vibe.run = function() {
 					});
 				}
 			});
-			$('body').html(loginView.$el);
+			$('#vibe-app').html(loginView.$el);
 			loginView.render();
 		});
 	} else {
