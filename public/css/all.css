@@ -8451,6 +8451,11 @@ html {
     font-size: 14px;
   }
 }
+@media (max-width: 480px) {
+  html.keyboard-shown .chat-view {
+    bottom: 200px;
+  }
+}
 .chat-view {
   max-width: 580px;
   height: 524px;
@@ -8469,7 +8474,7 @@ html {
     bottom: 0;
     right: 0;
     left: 50%;
-    margin: 24px;
+    margin: 40px 18px;
   }
 }
 .chat-view .chat-header {
@@ -8485,6 +8490,12 @@ html {
   position: relative;
   z-index: 1000;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 480px) {
+  .chat-view .chat-header {
+    height: 10px;
+    padding: 4px 24px;
+  }
 }
 .chat-view .chat-header a.close-chat {
   position: absolute;
@@ -8505,8 +8516,8 @@ html {
 }
 @media (max-width: 480px) {
   .chat-view .chat-header a.close-chat {
-    top: 9px;
-    right: 9px;
+    top: -9px;
+    right: -9px;
   }
 }
 .chat-view .chat-header a.close-chat:hover {
@@ -8592,7 +8603,7 @@ html {
 }
 @media (max-width: 480px) {
   .chat-view .chat-scroll-container {
-    height: calc(100% - 100px);
+    height: calc(100% - 60px);
     padding: 8px;
   }
 }
@@ -10704,7 +10715,7 @@ html {
 }
 @media (max-width: 480px) {
   .posts-view > div h4 {
-    font-size: 20px;
+    font-size: 19px;
     padding: 22px 18px;
   }
 }
@@ -10717,7 +10728,7 @@ html {
   }
 }
 .posts-loader-container > div {
-  background: #0e2133;
+  background: #122b43;
   border-radius: 8px;
   padding: 40px;
   margin-bottom: 40px;

@@ -63,7 +63,12 @@ var PostChatView = BaseView.extend({
 				return ($(window).width() <= 767);
 			},
 			onPaneShow: function(index, animate) {
-				if (index === 1) {
+				if (index === 0) {
+					if (window.isCordova) {
+						cordova.plugins.Keyboard.close();
+					}
+				}
+				if (index === 1 && !window.isCordova) {
 					that.chatView.$input.focus();
 				}
 			}
@@ -77,6 +82,10 @@ var PostChatView = BaseView.extend({
 		_.delay(function() {
 			window.carousel = carousel;
 			carousel.setPaneDimensions();
+
+			if (window.isCordova) {
+				window.Vibe.appRouter.screenRouter.currentScreen.hide();
+			}
 		}, 280);
 
 		this.delegateEvents();
@@ -130,6 +139,10 @@ var PostChatView = BaseView.extend({
 	remove: function() {
 		if (this.removing) return;
 		this.removing = true;
+
+		if (window.isCordova) {
+			window.Vibe.appRouter.screenRouter.currentScreen.show();
+		}
 
 		this.once('remove-done', _.bind(function() {
 			window.Vibe.appRouter.navigate(this.closeUrl);

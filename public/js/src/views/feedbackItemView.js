@@ -102,7 +102,9 @@ var FeedbackItemView = BaseView.extend({
 			feedback: this.feedback,
 			forceChatPosition: window.isCordova
 		});
-		window.Vibe.appView.showOverlay(this.postChatView);
+		window.Vibe.appView.showOverlay(this.postChatView, {
+			noAnimation: window.isCordova
+		});
 
 		this.markChatOpened();
 

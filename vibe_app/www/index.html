@@ -31,11 +31,14 @@
 		<script src="js/all.js"></script>
 		<script>
 			document.addEventListener("deviceready", function() {
+				var $html = $('html');
+
 				require(['vibe']);
 
 				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
 				var keyboardShowHandler = function() {
+					$html.addClass('keyboard-shown');
 					cordova.plugins.Keyboard.disableScroll(true);
 					document.body.scrollTop = 0;
 					for (var i = 0; i <= 150; i++) {
@@ -51,6 +54,7 @@
 
 				var keyboardHideHandler = function(e) {
 					// ensure closed -- forces viewport to consider the keyboard closed
+					$html.removeClass('keyboard-shown');
 					cordova.plugins.Keyboard.close();
 				};
 

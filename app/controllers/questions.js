@@ -343,11 +343,9 @@ exports.newChat = function(req, res, next){
 	}, function(err, chat) {
 		if (err) return helpers.sendError(res, err);
 
-		console.log(req.question.chat.users_participating, req.user._id);
 		var sendNotificationsTo = _.filter(req.question.chat.users_participating, function(user) {
 			return (user.toString() !== req.user._id.toString());
 		});
-		console.log(sendNotificationsTo);
 
 		req.question.incrementUnreadCountsAndMarkParticipation(req.user);
 

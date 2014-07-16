@@ -44,10 +44,8 @@ var ChatView = BaseView.extend({
 
 		_.defer(function() {
 			window.Vibe.faye.subscribe(that.chats.url.replace(window.Vibe.serverUrl, '/'), function(chatModel) {
-				that.chats.add(chatModel);
-
-				if (chatModel.creator.ref === window.Vibe.user.get('_id')) {
-					that.scrollToBottom();
+				if (chatModel.creator.ref !== window.Vibe.user.get('_id')) {
+					that.chats.add(chatModel);
 				}
 			});
 			that.chats.fetch({
@@ -181,6 +179,8 @@ var ChatView = BaseView.extend({
 		});
 
 		this.$input.val('');
+		that.chats.add(chat);
+		that.scrollToBottom();
 
 		Analytics.log({
 			'eventCategory': 'chat',

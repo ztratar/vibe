@@ -110,7 +110,9 @@ var PostQuestionItemView = BaseView.extend({
 			question: this.question,
 			forceChatPosition: window.isCordova
 		});
-		window.Vibe.appView.showOverlay(this.postChatView);
+		window.Vibe.appView.showOverlay(this.postChatView, {
+			noAnimation: window.isCordova
+		});
 
 		this.markChatOpened();
 
