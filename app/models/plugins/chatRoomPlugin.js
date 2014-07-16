@@ -38,7 +38,7 @@ var ChatRoomPlugin = function(schema, options) {
 		incrementUnreadCountsAndMarkParticipation: function(user) {
 			var updateObj = {
 					$addToSet: {
-						'chat.users_participating': user._id
+						'chat.users_participating': user._id.toString()
 					},
 					$inc: {}
 				},
