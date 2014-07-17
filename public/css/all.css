@@ -9574,6 +9574,15 @@ html {
   -webkit-animation: bounceHit 0.32s linear;
   animation: bounceHit 0.32s linear;
 }
+.forgot-password-view,
+.request-access-view {
+  margin: 220px 18px 0;
+}
+.forgot-password-view button.hit,
+.request-access-view button.hit {
+  -webkit-animation: bounceHit 0.32s linear;
+  animation: bounceHit 0.32s linear;
+}
 .manage-team-view .settings-group {
   text-align: left;
 }

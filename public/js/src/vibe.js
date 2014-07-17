@@ -8,7 +8,6 @@ import ScreenRouter from 'screenRouter';
 import ModelCache from 'modelCache';
 import User from 'models/user';
 import AppView from 'views/AppView';
-import LoginView from 'views/loginView';
 import TutorialHelper from 'helpers/tutorialHelper';
 
 window.Vibe = window.Vibe || {};
@@ -26,9 +25,6 @@ window.Vibe.run = function() {
 			window.Vibe.appView.render();
 
 			window.Vibe.appView.run();
-
-			// inits window.Vibe.appRouter
-			Router.init();
 		},
 		getAdmins = function() {
 			$.ajax({
@@ -44,29 +40,24 @@ window.Vibe.run = function() {
 	if (window.isCordova) {
 		window.Vibe.user = new User();
 
+		Router.init(true);
 		window.Vibe.user.fetchCurrentUser(function() {
 			getAdmins();
 			renderViews();
 		}, function() {
-			var loginView = new LoginView({
-				loginCallback: function() {
-					window.Vibe.user.fetchCurrentUser(function() {
-						getAdmins();
-						renderViews();
-					});
-				}
-			});
-			$('#vibe-app').html(loginView.$el);
-			loginView.render();
+			window.Vibe.appRouter.navigate('/login', true);
 		});
 	} else {
 		window.Vibe.user = new User(window.Vibe._data_.currentUser);
 		renderViews();
+		Router.init();
 
 		if (window.Vibe.user.get('email') === 'demo@getvibe.com') {
 			TutorialHelper.demoIntro();
 		}
 	}
+
+	// inits window.Vibe.appRouter
 };
 
 window.Vibe.run();

@@ -15,6 +15,8 @@ import SettingsEditFieldView from 'views/settingsEditFieldView';
 import ManageTeamView from 'views/manageTeamView';
 import ManagePollsView from 'views/managePollsView';
 import PostChatView from 'views/postChatView';
+import LoginView from 'views/loginView';
+import ForgotPasswordView from 'views/forgotPasswordView';
 
 var Router = Backbone.Router.extend({
 
@@ -40,7 +42,12 @@ var Router = Backbone.Router.extend({
 		'question/:id': 'question',
 		'feedback/:id': 'feedback',
 		'question/:id/chat': 'question',
-		'feedback/:id/chat': 'feedback'
+		'feedback/:id/chat': 'feedback',
+
+		// Mobile routes
+		'login': 'login',
+		'forgotPassword': 'forgotPassword',
+		'requestAccess': 'requestAccess'
 	},
 
 	index: function() {
@@ -403,6 +410,36 @@ var Router = Backbone.Router.extend({
 			forceChatPosition: (window.Backbone.history.fragment.indexOf('/chat') !== -1)
 		});
 		window.Vibe.appView.showOverlay(postChatView);
+	},
+
+
+	// Cordova only pages
+
+	login: function() {
+		if (!window.isCordova) return;
+
+		var loginView = new LoginView({
+			loginCallback: function() {
+				window.Vibe.user.fetchCurrentUser(function() {
+					getAdmins();
+					renderViews();
+				});
+			}
+		});
+		$('#vibe-app').html(loginView.$el);
+		loginView.render();
+	},
+
+	forgotPassword: function() {
+		if (!window.isCordova) return;
+
+		var forgotPasswordView = new ForgotPasswordView();
+		$('#vibe-app').html(forgotPasswordView.$el);
+		forgotPasswordView.render();
+	},
+
+	requestAccess: function() {
+
 	}
 
 });
@@ -443,14 +480,16 @@ _.extend(Router.prototype, {
 
 });
 
-var initRouter = function() {
+var initRouter = function(doNotPushState) {
 	window.Vibe.appRouter = new Router();
 
 	window.Vibe.appRouter.once('loaded', function() {
 		window.Vibe.appView.headerView.renderCurrentComponents();
 	});
 
-	window.Vibe.appRouter.index();
+	if (!doNotPushState) {
+		window.Vibe.appRouter.index();
+	}
 
 	Backbone.history.start({
 		pushState: true,

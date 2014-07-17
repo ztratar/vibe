@@ -13,7 +13,9 @@ var LoginView = BaseView.extend({
 	events: {
 		'tap input': 'tapInputField',
 		'submit form': 'submitLogin',
-		'touchstart button': 'submitLogin'
+		'touchstart button': 'submitLogin',
+		'tap a.forgot-pass': 'forgotPassword',
+		'tap a.request-access': 'requestAccess'
 	},
 
 	initialize: function(opts) {
@@ -30,6 +32,8 @@ var LoginView = BaseView.extend({
 		_.delay(function() {
 			that.$('input[name="email"]').focus();
 		}, 200);
+
+		this.delegateEvents();
 
 		return this;
 	},
@@ -94,6 +98,16 @@ var LoginView = BaseView.extend({
 			}
 		});
 
+		return false;
+	},
+
+	forgotPassword: function() {
+		window.Vibe.appRouter.navigate('/forgotPassword', true);
+		return false;
+	},
+
+	requestAccess: function () {
+		window.Vibe.appRouter.navigate('/requestAccess', true);
 		return false;
 	}
 

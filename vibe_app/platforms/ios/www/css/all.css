@@ -8889,16 +8889,10 @@ html {
 }
 .time-series-chart-view {
   height: 260px;
-  margin: 0 60px 0 0;
 }
 @media (max-width: 550px) {
   .time-series-chart-view {
     height: 100%;
-  }
-}
-@media (max-width: 480px) {
-  .time-series-chart-view {
-    margin: 0 42px 0 0;
   }
 }
 .time-series-chart-view svg {
@@ -9569,10 +9563,14 @@ html {
     font-size: 12px;
   }
 }
-.login-view {
+.login-view,
+.forgot-password-view,
+.request-access-view {
   margin: 100px 18px 0;
 }
-.login-view button.hit {
+.login-view button.hit,
+.forgot-password-view button.hit,
+.request-access-view button.hit {
   -webkit-animation: bounceHit 0.32s linear;
   animation: bounceHit 0.32s linear;
 }
@@ -10797,7 +10795,7 @@ html {
   margin: 0 0 0 -2px;
 }
 .posts-view > div h4 {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 600;
   padding: 40px 60px;
 }
@@ -10916,6 +10914,53 @@ html {
 .post-question-item-view h4 {
   margin-top: 0;
   margin-bottom: 0;
+  padding: 0 60px 42px !important;
+}
+@media (max-width: 480px) {
+  .post-question-item-view h4 {
+    padding: 0 18px 24px !important;
+  }
+}
+.post-question-item-view p.sub-text {
+  color: #FFDEC0;
+  padding: 42px 0 0 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  opacity: .8;
+}
+.post-question-item-view p.sub-text strong {
+  color: #FFEFE0;
+}
+.post-question-item-view p.sub-text i {
+  color: white;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.post-question-item-view p.sub-text .user-sep-lg {
+  display: inline;
+}
+@media (max-width: 480px) {
+  .post-question-item-view p.sub-text .user-sep-lg {
+    display: none;
+  }
+}
+.post-question-item-view p.sub-text .user-sep {
+  display: none;
+}
+@media (max-width: 480px) {
+  .post-question-item-view p.sub-text .user-sep {
+    display: inline;
+  }
+}
+@media (max-width: 480px) {
+  .post-question-item-view p.sub-text {
+    font-size: 10px;
+    padding: 22px 8px 8px;
+    margin: 0;
+  }
+  .post-question-item-view p.sub-text span.user {
+    margin-right: 24px;
+  }
 }
 .post-question-item-view ul.answers {
   margin: 0;
