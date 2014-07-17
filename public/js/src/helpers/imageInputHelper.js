@@ -1,4 +1,6 @@
 import 'jquery';
+import 'exifRestorer';
+import iOSHelper from 'helpers/iosHelper';
 
 var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 
@@ -8,6 +10,8 @@ var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 		maxWidth: 320,
 		imageType: 'image/png'
 	}, opts);
+
+	var URL = window.URL || window.webkitURL;
 
 	// Uses filereader, which is supported in most
 	// modern browsers.
@@ -26,8 +30,6 @@ var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 					var maxRatio = opts.maxWidth / opts.maxHeight;
 
 					if (tempRatio > maxRatio) {
-						// image is more width wise, which means width
-						// will be the constraining factor
 						if (tempW > opts.maxWidth) {
 							tempW = opts.maxWidth;
 							tempH = tempW / tempRatio;
@@ -41,13 +43,20 @@ var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 
 					var canvas = document.createElement('canvas');
 
-					canvas.width = Math.min(tempW, opts.maxWidth);
-					canvas.height = Math.min(tempH, opts.maxHeight);
+					canvas.width = tempW;
+					canvas.height = tempH;
 
 					var ctx = canvas.getContext("2d");
-					ctx.drawImage(this, 0, 0, tempImg.width, tempImg.height, 0, 0, tempW, tempH);
+
+					iOSHelper.drawImageIOSFix(ctx, this, 0, 0, tempImg.width, tempImg.height, 0, 0, tempW, tempH);
 
 					var dataURL = canvas.toDataURL(opts.imageType);
+
+					dataURL = ExifRestorer.restore(e.target.result, dataURL);
+					if (dataURL.indexOf(opts.imageType) === -1) {
+						dataURL = 'data:' + opts.imageType + ';base64,' + dataURL;
+					}
+
 					$(imgElem).attr("src", dataURL);
 					$(textInput).val(dataURL);
 					$(fileInput).trigger('image-helper-done');

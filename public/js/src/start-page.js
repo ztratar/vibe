@@ -11,7 +11,8 @@ require.config({
 		autosize: '../libs/jquery.autosize',
 		faye: '../libs/faye-browser',
 		hammer: '../libs/hammer',
-		jqueryHammer: '../libs/jquery.hammer'
+		jqueryHammer: '../libs/jquery.hammer',
+		exifRestorer: '../libs/exifrestorer'
 	},
 	shim: {
 		d3: {

@@ -72,7 +72,11 @@
                             "xml": "false",
                             "count": 1
                         }
-                    ]
+                    ],
+                    "ImageIO.framework": [],
+                    "CoreLocation.framework": [],
+                    "AssetsLibrary.framework": [],
+                    "MobileCoreServices.framework": []
                 }
             }
         }

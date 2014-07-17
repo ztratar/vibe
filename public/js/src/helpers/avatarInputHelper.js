@@ -1,4 +1,6 @@
 import 'jquery';
+import 'exifRestorer';
+import iOSHelper from 'helpers/iosHelper';
 
 var avatarInputHelper = function(fileInput, imgElem, textInput) {
 	// Uses filereader, which is supported in most
@@ -11,6 +13,7 @@ var avatarInputHelper = function(fileInput, imgElem, textInput) {
 				var tempImg = new Image();
 
 				tempImg.src = e.target.result;
+
 				tempImg.onload = function() {
 					var SQUARE_WIDTH = 120;
 					var tempW = tempImg.width;
@@ -20,34 +23,26 @@ var avatarInputHelper = function(fileInput, imgElem, textInput) {
 
 					if (tempW > tempH) {
 						tempW = tempH;
-						//tempW *= SQUARE_WIDTH / tempH;
-
 						startX = (tempImg.width - tempImg.height) / 2;
 					} else {
 						tempH = tempW;
-						//tempW = SQUARE_WIDTH;
-						//tempH *= SQUARE_WIDTH / tempW;
-
 						startY = (tempImg.height - tempImg.width) / 2;
 					}
 
 					var canvas = document.createElement('canvas');
-					/*canvas.width = tempW;
-					canvas.height = tempH;
-
-					var ctx = canvas.getContext("2d");
-					ctx.drawImage(this, startX, startY, tempW, tempH, 0, 0, tempW, tempH);
-					ctx.scale(SQUARE_WIDTH / tempW, SQUARE_WIDTH / tempH);*/
 
 					canvas.width = SQUARE_WIDTH;
 					canvas.height = SQUARE_WIDTH;
 
 					var ctx = canvas.getContext("2d");
-					ctx.drawImage(this, startX, startY, tempW, tempH, 0, 0, SQUARE_WIDTH, SQUARE_WIDTH);
-					//ctx.scale(SQUARE_WIDTH / tempW, SQUARE_WIDTH / tempH);
 
+					iOSHelper.drawImageIOSFix(ctx, this, startX, startY, tempW, tempH, 0, 0, SQUARE_WIDTH, SQUARE_WIDTH);
 
 					var dataURL = canvas.toDataURL("image/jpeg");
+
+					dataURL = ExifRestorer.restore(e.target.result, dataURL);
+					dataURL = 'data:image/jpeg;base64,' + dataURL;
+
 					$(imgElem).attr("src", dataURL);
 					$(textInput).val(dataURL);
 					$(fileInput).trigger('avatar-helper-done');
