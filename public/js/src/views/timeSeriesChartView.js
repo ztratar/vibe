@@ -33,6 +33,11 @@ var TimeSeriesChartView = Backbone.View.extend({
 		this.model.on('newAnswer', this.addNewAnswer, this);
 
 		this.answerData = this.model.get('answer_data');
+
+		if (this.answerData.length > 4) {
+			this.answerData = _.last(this.answerData, 4);
+		}
+
 		this.forceSmallChart = opts.forceSmallChart || false;
 
 		$(window).on('resize', _.throttle(function() {
