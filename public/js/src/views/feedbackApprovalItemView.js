@@ -72,10 +72,15 @@ var FeedbackApprovalItemView = BaseView.extend({
 			'eventAction': 'archive-clicked'
 		});
 
-		window.Vibe.appView.showOverlay(confirmDialog);
+		window.Vibe.appView.showOverlay(confirmDialog, {
+			noAnimation: window.isCordova
+		});
 
 		ev.preventDefault();
 		ev.stopPropagation();
+
+		ev.gesture.preventDefault();
+		ev.gesture.stopPropagation();
 
 		return false;
 	}

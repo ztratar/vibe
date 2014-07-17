@@ -76,12 +76,11 @@ CompanySchema.methods = {
 			imgType = 'image/jpeg';
 		}
 
-		imgBuffer = new Buffer(company[fieldName].replace(/^data:image\/\w+;base64,/, ""),'base64');
+		imgBuffer = company[fieldName].replace(/^data:image\/\w+;base64,/, "");
 
 		helpers.setHostedFile({
 			'Key': imgKey,
-			'Body': imgBuffer,
-			'ContentLength': imgBuffer.length,
+			'Body': helpers.base64DecToArr(imgBuffer, 1),
 			'ContentType': imgType,
 			'ACL': 'public-read'
 		}, function(err, url) {

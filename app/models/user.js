@@ -183,12 +183,11 @@ UserSchema.methods = {
 			return;
 		}
 
-		imgBuffer = new Buffer(user.avatar.replace(/^data:image\/\w+;base64,/, ""),'base64');
+		imgBuffer = user.avatar.replace(/^data:image\/\w+;base64,/, "");
 
 		helpers.setHostedFile({
 			'Key': avatarKey,
-			'Body': imgBuffer,
-			'ContentLength': imgBuffer.length,
+			'Body': helpers.base64DecToArr(imgBuffer, 1),
 			'ContentType': 'image/jpeg',
 			'ACL': 'public-read'
 		}, function(err, url) {
