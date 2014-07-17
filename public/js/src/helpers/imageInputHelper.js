@@ -1,9 +1,13 @@
 import 'jquery';
-import 'exifRestorer';
-import iOSHelper from 'helpers/iosHelper';
+
+module loadImage from 'load-image';
+import 'load-image-ios';
+import 'load-image-orientation';
+import 'load-image-meta';
+import 'load-image-exif';
+import 'load-image-exif-map';
 
 var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
-
 	opts = opts || {};
 	opts = _.extend({
 		maxHeight: 200,
@@ -11,59 +15,31 @@ var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 		imageType: 'image/png'
 	}, opts);
 
-	var URL = window.URL || window.webkitURL;
-
-	// Uses filereader, which is supported in most
-	// modern browsers.
 	$(fileInput).change(function(){
-		if (this.files && this.files[0]) {
-			var FR = new FileReader();
+		var that = this;
 
-			FR.onload = function(e) {
-				var tempImg = new Image();
+		loadImage.parseMetaData(
+			this.files[0],
+			function(data) {
+				var orientation = data.exif ? data.exif.get('Orientation') : false;
 
-				tempImg.src = e.target.result;
-				tempImg.onload = function() {
-					var tempW = tempImg.width;
-					var tempH = tempImg.height;
-					var tempRatio = tempW / tempH;
-					var maxRatio = opts.maxWidth / opts.maxHeight;
-
-					if (tempRatio > maxRatio) {
-						if (tempW > opts.maxWidth) {
-							tempW = opts.maxWidth;
-							tempH = tempW / tempRatio;
-						}
-					} else {
-						if (tempH > opts.maxHeight) {
-							tempH = opts.maxHeight;
-							tempW = tempH * tempRatio;
-						}
+				loadImage(
+					that.files[0],
+					function(canvas) {
+						var dataURL = canvas.toDataURL(opts.imageType);
+						$(imgElem).attr("src", dataURL);
+						$(textInput).val(dataURL);
+						$(fileInput).trigger('avatar-helper-done');
+					},
+					{
+						contain: true,
+						maxWidth: opts.maxWidth,
+						maxHeight: opts.maxHeight,
+						orientation: orientation
 					}
-
-					var canvas = document.createElement('canvas');
-
-					canvas.width = tempW;
-					canvas.height = tempH;
-
-					var ctx = canvas.getContext("2d");
-
-					iOSHelper.drawImageIOSFix(ctx, this, 0, 0, tempImg.width, tempImg.height, 0, 0, tempW, tempH);
-
-					var dataURL = canvas.toDataURL(opts.imageType);
-
-					dataURL = ExifRestorer.restore(e.target.result, dataURL);
-					if (dataURL.indexOf(opts.imageType) === -1) {
-						dataURL = 'data:' + opts.imageType + ';base64,' + dataURL;
-					}
-
-					$(imgElem).attr("src", dataURL);
-					$(textInput).val(dataURL);
-					$(fileInput).trigger('image-helper-done');
-				};
-			};
-			FR.readAsDataURL(this.files[0]);
-		}
+				);
+			}
+		);
 	});
 };
 

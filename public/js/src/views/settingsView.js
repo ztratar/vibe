@@ -38,7 +38,7 @@ var SettingsView = Backbone.View.extend({
 		var $avatarInput = this.$('#avatar-input'),
 			$avatarText = this.$('input[name="avatar_base64"]');
 
-		avatarInputHelper($avatarInput, this.$('avatar-img'), $avatarText);
+		avatarInputHelper($avatarInput, this.$('.avatar-img'), $avatarText);
 
 		$avatarInput.on('avatar-helper-done', _.bind(function() {
 			var avatarVal = $avatarText.val();

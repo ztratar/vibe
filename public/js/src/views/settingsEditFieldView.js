@@ -1,7 +1,5 @@
 import 'backbone';
 import 'underscore';
-import 'exifRestorer';
-import iOSHelper from 'helpers/iosHelper';
 
 import imageInputHelper from 'helpers/imageInputHelper';
 
@@ -154,79 +152,6 @@ var SettingsEditFieldView = Backbone.View.extend({
 		} else {
 			this.$('input').prop('disabled', false);
 			this.$form.removeClass('loading');
-		}
-	},
-
-	uploadPic: function(ev) {
-		var that = this;
-
-		console.log('upload pic triggered');
-
-		if (window.isCordova) {
-			ev.stopPropagation();
-			ev.preventDefault();
-
-			window.navigator.camera.getPicture(function(data) {
-				var img = new Image();
-				img.src = data;
-				img.onload = function() {
-					var tempW = img.width;
-					var tempH = img.height;
-					var tempRatio = tempW / tempH;
-					var maxRatio = that.maxWidth / that.maxHeight;
-
-					if (tempRatio > maxRatio) {
-						// image is more width wise, which means width
-						// will be the constraining factor
-						if (tempW > that.maxWidth) {
-							tempW = that.maxWidth;
-							tempH = tempW / tempRatio;
-						}
-					} else {
-						if (tempH > that.maxHeight) {
-							tempH = that.maxHeight;
-							tempW = tempH * tempRatio;
-						}
-					}
-
-					var canvas = document.createElement('canvas');
-
-					canvas.width = tempW;
-					canvas.height = tempH;
-
-					var ctx = canvas.getContext("2d");
-
-					console.log({
-						imgWidth: img.width,
-						imgHeight: img.height,
-						tempW: tempW,
-						tempH: tempH
-					});
-
-					console.log('about to draw', this.src.length, this.src.slice(0, 40));
-
-					iOSHelper.drawImageIOSFix(ctx, this, 0, 0, img.width, img.height, 0, 0, tempW, tempH);
-
-					var dataURL = canvas.toDataURL(that.imageType);
-
-					console.log('before', dataURL.length, dataURL.slice(0, 40));
-					dataURL = ExifRestorer.restore(img.src, dataURL);
-
-					if (dataURL.indexOf(that.imageType) === -1) {
-						dataURL = 'data:' + that.imageType + ';base64,' + dataURL;
-					}
-					console.log('after', dataURL.length, dataURL.slice(0, 40));
-					that.$('.form-img').attr("src", dataURL);
-					that.$('input[name="form-img_base64"]').val(dataURL);
-				};
-			}, function(err) {
-				console.log('err :(');
-			}, {
-				targetWidth: that.maxWidth,
-				destinationType: 1
-			});
-
-			return false;
 		}
 	}
 
