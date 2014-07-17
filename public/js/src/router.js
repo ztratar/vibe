@@ -21,6 +21,10 @@ import ForgotPasswordView from 'views/forgotPasswordView';
 var Router = Backbone.Router.extend({
 
 	initialize: function() {
+		this.initScreens();
+	},
+
+	initScreens: function() {
 		this.screenRouter = new ScreenRouter();
 		this.screenRouter.initCurrentScreen();
 	},
@@ -421,8 +425,11 @@ var Router = Backbone.Router.extend({
 		var loginView = new LoginView({
 			loginCallback: function() {
 				window.Vibe.user.fetchCurrentUser(function() {
-					getAdmins();
-					renderViews();
+					window.Vibe.getAdmins();
+					window.Vibe.renderViews();
+
+					window.Vibe.appRouter.initScreens();
+					window.Vibe.appRouter.navigate('/', true);
 				});
 			}
 		});

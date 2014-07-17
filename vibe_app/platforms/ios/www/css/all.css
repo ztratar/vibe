@@ -9563,18 +9563,23 @@ html {
     font-size: 12px;
   }
 }
-.login-view,
-.forgot-password-view,
-.request-access-view {
+.login-view {
   margin: 100px 18px 0;
 }
-.login-view button.hit,
-.forgot-password-view button.hit,
-.request-access-view button.hit {
+.login-view button.hit {
   -webkit-animation: bounceHit 0.32s linear;
   animation: bounceHit 0.32s linear;
 }
 .login-page button.hit {
+  -webkit-animation: bounceHit 0.32s linear;
+  animation: bounceHit 0.32s linear;
+}
+.forgot-password-view,
+.request-access-view {
+  margin: 220px 18px 0;
+}
+.forgot-password-view button.hit,
+.request-access-view button.hit {
   -webkit-animation: bounceHit 0.32s linear;
   animation: bounceHit 0.32s linear;
 }
@@ -11417,21 +11422,21 @@ html {
   min-height: 348px;
   border-radius: 6px 0 0 6px;
 }
+.post-chat-view .post-section .post-question-item-view p.sub-text {
+  margin: 0;
+  padding: 0 0 8px;
+}
 .post-chat-view .post-section .post-question-item-view h4 {
   font-weight: 600;
   margin: 0 22px 24px;
+  padding: 0 !important;
 }
 .post-chat-view .post-section .post-question-item-view .vote-results-container {
   height: 220px;
 }
 .post-chat-view .post-section .post-question-item-view .vote-results-container .time-series-chart-view {
   height: 220px;
-  margin: 0 48px 0 0;
-}
-.post-chat-view .post-section .post-question-item-view .vote-results-container .time-series-chart-view .percentage-tooltip {
-  width: 54px;
-  font-size: 16px;
-  padding: 4px 0 6px;
+  margin: 0;
 }
 .post-chat-view .post-section .post-question-item-view .action-bar {
   display: none;

@@ -19,37 +19,38 @@ window.Vibe.run = function() {
 	// Set up the data cache
 	window.Vibe.modelCache = new ModelCache();
 
-	var renderViews = function() {
-			// Start the app visuals
-			window.Vibe.appView = new AppView();
-			window.Vibe.appView.render();
+	window.Vibe.renderViews = function() {
+		// Start the app visuals
+		window.Vibe.appView = new AppView();
+		window.Vibe.appView.render();
 
-			window.Vibe.appView.run();
-		},
-		getAdmins = function() {
-			$.ajax({
-				type: 'GET',
-				url: window.Vibe.serverUrl + 'api/users/admins',
-				success: function(data) {
-					window.Vibe._data_.admins = data;
-				}
-			});
-		};
+		window.Vibe.appView.run();
+	};
+	window.Vibe.getAdmins = function() {
+		$.ajax({
+			type: 'GET',
+			url: window.Vibe.serverUrl + 'api/users/admins',
+			success: function(data) {
+				window.Vibe._data_.admins = data;
+			}
+		});
+	};
 
 	// Load in data, such as user
 	if (window.isCordova) {
 		window.Vibe.user = new User();
 
-		Router.init(true);
 		window.Vibe.user.fetchCurrentUser(function() {
-			getAdmins();
-			renderViews();
+			window.Vibe.getAdmins();
+			window.Vibe.renderViews();
+			Router.init(true);
 		}, function() {
+			Router.init(true);
 			window.Vibe.appRouter.navigate('/login', true);
 		});
 	} else {
 		window.Vibe.user = new User(window.Vibe._data_.currentUser);
-		renderViews();
+		window.Vibe.renderViews();
 		Router.init();
 
 		if (window.Vibe.user.get('email') === 'demo@getvibe.com') {

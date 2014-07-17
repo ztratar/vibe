@@ -11,7 +11,6 @@ var LoginView = BaseView.extend({
 	template: _.template(template),
 
 	events: {
-		'tap input': 'tapInputField',
 		'submit form': 'submitLogin',
 		'touchstart button': 'submitLogin',
 		'tap a.forgot-pass': 'forgotPassword',
@@ -36,17 +35,6 @@ var LoginView = BaseView.extend({
 		this.delegateEvents();
 
 		return this;
-	},
-
-	tapInputField: function(ev) {
-		var $target = $(ev.target);
-
-		$target.focus();
-
-		ev.stopPropagation();
-		ev.preventDefault();
-
-		return false;
 	},
 
 	submitLogin: function() {
