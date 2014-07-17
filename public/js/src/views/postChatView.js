@@ -90,6 +90,12 @@ var PostChatView = BaseView.extend({
 
 		this.delegateEvents();
 
+		if (!window.isCordova) {
+			_.delay(function() {
+				that.chatView.$input.focus();
+			}, 420);
+		}
+
 		return this;
 	},
 
