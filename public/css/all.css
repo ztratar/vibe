@@ -10913,6 +10913,11 @@ html {
 .confirm-dialog-view .vibe-modal {
   max-width: 520px;
 }
+@media (max-width: 480px) {
+  .confirm-dialog-view {
+    margin-bottom: 180px;
+  }
+}
 .post-question-item-view {
   background: #e69d30;
 }

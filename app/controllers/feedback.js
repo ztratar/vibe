@@ -97,7 +97,7 @@ exports.getChats = function(req, res, next){
  */
 exports.leaveChatRoom = function(req, res, next) {
 	req.feedback.leaveChat(req.user);
-	res.send(req.feedback.stripInfo());
+	res.send(req.feedback.stripInfo(req.user));
 };
 
 /*

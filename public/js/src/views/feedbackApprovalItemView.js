@@ -49,7 +49,7 @@ var FeedbackApprovalItemView = BaseView.extend({
 		return false;
 	},
 
-	archive: function() {
+	archive: function(ev) {
 		var that = this,
 			confirmDialog = new ConfirmDialogView({
 				title: 'Any thoughts?',
@@ -73,6 +73,9 @@ var FeedbackApprovalItemView = BaseView.extend({
 		});
 
 		window.Vibe.appView.showOverlay(confirmDialog);
+
+		ev.preventDefault();
+		ev.stopPropagation();
 
 		return false;
 	}
