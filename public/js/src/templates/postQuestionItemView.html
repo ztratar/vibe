@@ -1,4 +1,10 @@
+<p class="sub-text">
+	<strong><%- userSent.get('name') %></strong><span class="user-sep-lg"> asked </span><span class="user-sep"> &ndash; </span><%- timeSent %>
+	&ndash; <strong class="percentage-voted"><%- question.getLatestCompletionPercentage()*100 %>%</strong> voted
+</p>
+
 <h4><%- question.get('body') %></h4>
+
 <div class="vote-results-container <%- question.get('current_user_voted') ? 'voted' : '' %>">
 	<ul class="answers">
 		<li class="top-left">
@@ -32,4 +38,5 @@
 	</ul>
 	<div class="chart-container"></div>
 </div>
+
 <div class="action-bar clearfix"></div>

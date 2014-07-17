@@ -4,13 +4,9 @@ import 'underscore';
 module moment from 'moment';
 module d3 from 'd3';
 
-module percentageTooltipTemplate from 'text!templates/percentageTooltipTemplate.html';
-
 var TimeSeriesChartView = Backbone.View.extend({
 
 	className: 'time-series-chart-view',
-
-	percentageTooltipTemplate: _.template(percentageTooltipTemplate),
 
 	chartSettings: {
 		chartMargin: 80,
@@ -53,7 +49,6 @@ var TimeSeriesChartView = Backbone.View.extend({
 				this.addPoint(this.answerData[i]);
 			}
 			this.renderAxisText();
-			this.renderCompletionPercentageTooltip();
 		}
 	},
 
@@ -241,10 +236,6 @@ var TimeSeriesChartView = Backbone.View.extend({
 
 		newPoint = this.getPoint(this.numPoints, lastData);
 
-		if (this.$percentageTooltip) {
-			this.$percentageTooltip.remove();
-		}
-
 		_.delay(function() {
 			lastLine.attr('class', 'anim');
 			lastCircle.attr('class', 'anim');
@@ -257,53 +248,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 				.attr('x2', newPoint.x)
 				.attr('y2', newPoint.y)
 				.duration(800);
-
-			_.delay(function() {
-				that.renderCompletionPercentageTooltip();
-			}, 800);
 		}, 300);
-	},
-
-	renderCompletionPercentageTooltip: function() {
-		var lastCircle = _.last(this.circles)[0],
-			$circleElem = $(lastCircle),
-			circlePos = $circleElem.position(),
-			circleHeight = $circleElem.height(),
-			widthOffset,
-			topOffset;
-
-		if (this.$percentageTooltip) {
-			this.$percentageTooltip.remove();
-		}
-
-		this.$el.append(this.percentageTooltipTemplate({
-			percentage: Math.ceil(this.getLatestCompletionPercentage()*100)
-		}));
-
-		this.$percentageTooltip = this.$('.percentage-tooltip');
-
-		if (this.useSmallVersion()) {
-			widthOffset = 25;
-			topOffset = 32;
-		} else {
-			widthOffset = 36;
-			topOffset = 38;
-		}
-
-		this.$percentageTooltip.css({
-			top: circlePos.top + circleHeight + topOffset,
-			left: circlePos.left + widthOffset
-		});
-
-		_.delay(_.bind(function() {
-			this.$percentageTooltip.addClass('fadeIn');
-		}, this), 100);
-	},
-
-	getLatestCompletionPercentage: function() {
-		var lastData = _.last(this.answerData);
-
-		return lastData.num_completed / lastData.num_sent_to;
 	}
 
 });

@@ -19,7 +19,11 @@ var QuestionSchema = new Schema({
 	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	time_created: { type: Date, default: Date.now },
 	time_last_sent: { type: Date },
-	user_last_sent: { type: String },
+	user_last_sent: {
+		id: { type: Schema.Types.ObjectId, ref: 'User' },
+		name: { type: String },
+		avatar: { type: String }
+	},
 	question_instance: [QuestionInstanceSchema]
 });
 

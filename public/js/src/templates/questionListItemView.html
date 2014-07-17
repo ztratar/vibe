@@ -1,7 +1,7 @@
 <div class="question-col">
 	<h3><%- model.body %></h3>
 	<span class="last-sent">
-		Last sent <%- lastSentString %> <% if (model.user_last_sent) { %>by <%- model.user_last_sent %><% } %>
+		Last sent <%- lastSentString %> <% if (model.user_last_sent) { %>by <%- model.user_last_sent.name %><% } %>
 	</span>
 </div>
 <% if (question_type === 'suggested') { %>

@@ -453,7 +453,11 @@ exports.send = function(req, res, questionId, next) {
 			num_sent_to: users.length
 		}, function(err, questionInstance) {
 			question.time_last_sent = Date.now();
-			question.user_last_sent = req.user.name;
+			question.user_last_sent = {
+				id: req.user._id,
+				name: req.user.name,
+				avatar: req.user.avatar
+			};
 			question.save();
 
 			notificationsController.sendToCompany(req, {

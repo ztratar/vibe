@@ -58,6 +58,14 @@ var Question = BaseModel.extend({
 		this.save({}, {
 			url: this.url() + '/leave_chat'
 		});
+	},
+
+	getLatestCompletionPercentage: function(offset) {
+		offset = offset || 0;
+
+		var lastData = _.last(this.get('answer_data'));
+
+		return (lastData.num_completed + offset) / lastData.num_sent_to;
 	}
 
 });

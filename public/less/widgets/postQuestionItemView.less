@@ -4,6 +4,55 @@
 	h4 {
 		margin-top: 0;
 		margin-bottom: 0;
+		padding: 0 60px 42px !important;
+
+		@media (max-width: @screen-xs) {
+			padding: 0 18px 24px !important;
+		}
+	}
+
+	p.sub-text {
+		color: #FFDEC0;
+		padding: 42px 0 0 0;
+		font-size: 12px;
+		text-transform: uppercase;
+		opacity: .8;
+
+		strong {
+			color: #FFEFE0;
+		}
+
+		i {
+			color: white;
+			margin-right: 10px;
+			vertical-align: middle;
+		}
+
+		.user-sep-lg {
+			display: inline;
+
+			@media (max-width: @screen-xs) {
+				display: none;
+			}
+		}
+
+		.user-sep {
+			display: none;
+
+			@media (max-width: @screen-xs) {
+				display: inline;
+			}
+		}
+
+		@media (max-width: @screen-xs) {
+			font-size: 10px;
+			padding: 22px 8px 8px;
+			margin: 0;
+
+			span.user {
+				margin-right: 24px;
+			}
+		}
 	}
 
 	ul.answers {

@@ -1,6 +1,7 @@
 import 'underscore';
 import 'backbone';
 
+import User from 'models/user';
 import BaseView from 'views/baseView';
 import ConfirmDialogView from 'views/confirmDialogView';
 import PostChatView from 'views/postChatView';
@@ -35,8 +36,11 @@ var PostQuestionItemView = BaseView.extend({
 			this.question.once('change', this.render, this);
 		}
 
+		this.question.on('newAnswer', this.increaseCompletionPercentage, this);
+
 		this.chartDelay = opts.chartDelay || 0;
 		this.forceSmallChart = opts.forceSmallChart || false;
+		this.numCompletionUpped = 0;
 
 		this.initChat();
 	},
@@ -47,12 +51,15 @@ var PostQuestionItemView = BaseView.extend({
 		}
 
 		this.$el.html(this.template({
-			question: this.question
+			question: this.question,
+			userSent: new User(this.question.get('user_last_sent')),
+			timeSent: moment(this.question.get('time_last_sent')).fromNow()
 		}));
 
 		this.$voteResultsContainer = this.$('.vote-results-container');
 		this.$chartContainer = this.$('.chart-container');
 		this.$actionBarContainer = this.$('.action-bar');
+		this.$percentage = this.$('.percentage-voted');
 
 		_.delay(_.bind(function() {
 			this.renderChart();
@@ -87,6 +94,15 @@ var PostQuestionItemView = BaseView.extend({
 
 		this.$chartContainer.html(this.chartView.$el);
 		this.chartView.render();
+	},
+
+	increaseCompletionPercentage: function() {
+		this.numCompletionUpped++;
+		this.renderCompletionPercentage();
+	},
+
+	renderCompletionPercentage: function() {
+		this.$percentage.html((this.question.getLatestCompletionPercentage(this.numCompletionUpped) * 100) + '%');
 	},
 
 	vote: function(ev) {
