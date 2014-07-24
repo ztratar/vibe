@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -89,6 +93,9 @@
             "PACKAGE_NAME": "org.vibeapp.vibe"
         },
         "com.ionic.keyboard": {
+            "PACKAGE_NAME": "org.vibeapp.vibe"
+        },
+        "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "org.vibeapp.vibe"
         }
     },

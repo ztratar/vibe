@@ -36,8 +36,8 @@
 
 				require(['vibe']);
 
+				// Keyboard Stuff
 				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
 				var keyboardShowHandler = function() {
 					$html.addClass('keyboard-shown');
 					cordova.plugins.Keyboard.disableScroll(true);
@@ -52,15 +52,44 @@
 						cordova.plugins.Keyboard.disableScroll(false);
 					}, 600);
 				};
-
 				var keyboardHideHandler = function(e) {
 					// ensure closed -- forces viewport to consider the keyboard closed
 					$html.removeClass('keyboard-shown');
 					cordova.plugins.Keyboard.close();
 				};
-
 				window.addEventListener('native.keyboardshow', keyboardShowHandler);
 				window.addEventListener('native.keyboardhide', keyboardHideHandler);
+
+				// Puhs Notification Stuff
+				var pushNotification = window.plugins.pushNotification;
+				if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+					// TODO; Android push notifs
+					pushNotification.register(
+						successHandler,
+						errorHandler,
+						{
+							"senderID":"replace_with_sender_id",
+							"ecb":"onNotification"
+						}
+					);
+				} else {
+					var tokenHandler = function(result) {
+							console.log('device token' + result);
+						},
+						errorHandler = function() {
+
+						};
+					pushNotification.register(
+						tokenHandler,
+						errorHandler,
+						{
+							"badge":"true",
+							"sound":"true",
+							"alert":"true",
+							"ecb":"onNotificationAPN"
+						}
+					);
+				}
 
 				window.Appsee.start("4f3e7a4378e7410791af2a0e75081fb1");
 			}, false);

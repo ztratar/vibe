@@ -27,6 +27,9 @@
     <feature name="Appsee">
         <param name="ios-package" value="CDVAppsee" />
     </feature>
+    <feature name="PushPlugin">
+        <param name="ios-package" value="PushPlugin" />
+    </feature>
     <name>Vibe</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
