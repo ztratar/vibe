@@ -18,7 +18,7 @@ var parseController = {
 		var data;
 
 		// Check for installation
-		parseController.getInstallationForDeviceToken(deviceToken, function(result) {
+		parseController.getInstallationForDeviceToken(deviceToken, function(err, result) {
 			console.log('result RESULT', result);
 
 			result = result.results;
