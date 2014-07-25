@@ -7,80 +7,13 @@ var _ = require('underscore'),
 	Notification = mongoose.model('Notification'),
 	config = require('../../config/config')[env],
 	sendgrid = require('sendgrid')('getvibe', 'ivREB7QmZuusFMX7'),
-	helpers = require('../helpers'),
-	app,
-	serverUrl = process.env === 'development' ? 'http://localhost:3000/' : 'https://getvibe.com/';
+	app;
 
 function addNotificationTemplateVars(currentUser, notifications) {
 	for (var i = 0; i < notifications.length; i++) {
-		notifications[i] = notifications[i].toObject();
-
-		if (notifications[i].data && notifications[i].data.num_people) {
-			notifications[i].numPeopleString = helpers.getNumPeopleString(notifications[i].data.num_people);
-		}
-
-		var users = notifications.data ? notifications[i].data.users : [],
-			firstUserId = notifications[i].data ? notifications[i].data.first_user_id : '',
-			firstUser,
-			adhocSortedUsers;
-
-		if (users && users.length) {
-			users = _.filter(users, function(user) {
-				return (user._id.toString() !== currentUser._id.toString());
-			});
-			users = _.compact(users);
-			firstUser = _.find(users, function(user) {
-				return user._id === firstUserId;
-			}) || users[0];
-
-			// Move first user to the 0th position
-			adhocSortedUsers = _.without(users, firstUser);
-			adhocSortedUsers = [firstUser].concat(adhocSortedUsers);
-
-			if (adhocSortedUsers.length) {
-				notifications[i].peopleString = helpers.getUsersListString(adhocSortedUsers);
-			} else {
-				notifications[i].peopleString = '';
-			}
-			notifications[i].img = config.AWS.cloudfrontDomain + firstUser.avatar;
-		}
-
-		if (!notifications[i].img) {
-			notifications[i].img = serverUrl + 'img/notifications/' + notifications[i].type + '.jpg';
-		}
-
-		if (notifications[i].type === 'question') {
-			notifications[i].notifBody = notifications[i].data.user + ' just asked a question: "' + notifications[i].data.question + '"';
-			notifications[i].img = config.AWS.cloudfrontDomain + notifications[i].img;
-			notifications[i].link = serverUrl + 'questions/' + notifications[i].data.questionId;
-		} else if (notifications[i].type === 'question-vote') {
-			notifications[i].notifBody = notifications[i].numPeopleString + ' voted on "' + notifications[i].data.question + '"';
-			notifications[i].link = serverUrl + 'questions/' + notifications[i].data.questionId;
-		} else if (notifications[i].type === 'feedback-archived') {
-			notifications[i].notifBody = 'Your suggestion was read and archived';
-			if (notifications[i].data.reason && notifications[i].data.reason.length) {
-				notifications[i].notifBody += ' with the note "' + _.escape(notifications[i].data.reason) + '"';
-			}
-			notifications[i].link = serverUrl;
-		} else if (notifications[i].type === 'feedback-approved') {
-			notifications[i].notifBody = 'Congratulations, your feedback was just sent to everyone!';
-			notifications[i].link = serverUrl;
-		} else if (notifications[i].type === 'feedback-agree') {
-			notifications[i].notifBody = notifications[i].numPeopleString + ' agreed with the suggestion "' + notifications[i].data.feedback + '"';
-			notifications[i].link = serverUrl + 'feedback/' + notifications[i].data.feedbackId;
-		} else if (notifications[i].type === 'question-chat') {
-			notifications[i].notifBody = notifications[i].peopleString + ' chatting on "' + notifications[i].data.question + '"';
-			notifications[i].link = serverUrl + 'questions/' + notifications[i].data.questionId;
-		} else if (notifications[i].type === 'feedback-chat') {
-			notifications[i].notifBody = notifications[i].peopleString + ' chatting on "' + notifications[i].data.feedback + '"';
-			notifications[i].link = serverUrl + 'feedback/' + notifications[i].data.feedbackId;
-		}
-
-		if (notifications[i].notifBody.length > 80) {
-			notifications[i].notifBody = notifications[i].notifBody.slice(0,77) + '...';
-		}
-
-		notifications[i].timeAgo = moment(notifications.time_updated).fromNow();
+		var tempNotification = notifications[i].toObject();
+		_.extend(tempNotification, notifications[i].getCalculatedData(currentUser._id));
+		notifications[i] = tempNotification;
 	}
 
 	return notifications;

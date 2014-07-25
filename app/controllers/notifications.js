@@ -168,12 +168,10 @@ exports.send = function(notifOpts, cb) {
 		var notifUrl = '/api/users/' + notifOpts.for_user.toString() + '/notifications';
 		live.send(notifUrl, notification);
 
-		console.log('sending push', 'user-' + notifOpts.for_user.toString());
-
 		parseApp.sendPush({
 			channels: ['user-' + notifOpts.for_user.toString()],
 			data: {
-				alert: 'Test'
+				alert: notification.getCalculatedData(notifOpts.for_user).notifBody
 			}
 		});
 
