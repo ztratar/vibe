@@ -46,7 +46,9 @@ function parseRequest(method, path, data, callback, contentType) {
 
 	var headers = {
 		Authorization: auth,
-		Connection: 'Keep-alive'
+		Connection: 'Keep-alive',
+		'X-Parse-Application-Id': parseApp._application_id,
+		'X-Parse-Master-Key': parseApp._master_key
 	};
 
 	var body = null;
