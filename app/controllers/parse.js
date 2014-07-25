@@ -2,7 +2,7 @@ var qs = require('querystring'),
 	https = require('https'),
 	ParseAPI = require('node-parse-api'),
 	Parse = ParseAPI.Parse,
-	parseApp = new Parse('wKLFQwfrUOHY7DeJefZ7Wx3H9Jzrc0mX2eNdBMeX', 'yEDca6g7VODPX6PopDoBKtOzBiSmt9BpysTuHXpz');
+	parseApp = new Parse('wKLFQwfrUOHY7DeJefZ7Wx3H9Jzrc0mX2eNdBMeX', 'xYWR0StMPwShnkCMiIJJL6AyooRrDOB8cuio08DR');
 
 qs.escape = function(q){ return q; };
 
@@ -20,6 +20,8 @@ var parseController = {
 		// Check for installation
 		parseController.getInstallationForDeviceToken(deviceToken, function(result) {
 			console.log('result', result);
+
+			result = result.results;
 
 			if (result.length) {
 				// Installation exists. Update it
