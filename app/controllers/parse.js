@@ -19,7 +19,7 @@ var parseController = {
 
 		// Check for installation
 		parseController.getInstallationForDeviceToken(deviceToken, function(result) {
-			console.log('result', result);
+			console.log('result RESULT', result);
 
 			result = result.results;
 
@@ -43,8 +43,6 @@ var parseController = {
 // Stoeln from node-parse-api... gross
 function parseRequest(method, path, data, callback, contentType) {
 	var auth = 'Basic ' + new Buffer(parseApp._application_id + ':' + parseApp._master_key).toString('base64');
-
-	console.log('parse app id', parseApp._application_id);
 
 	var headers = {
 		Authorization: auth,
@@ -85,7 +83,6 @@ function parseRequest(method, path, data, callback, contentType) {
 	};
 
 	var req = https.request(options, function (res) {
-		console.log('res', res);
 
 		if (!callback) {
 			return;
