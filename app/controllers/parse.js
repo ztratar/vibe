@@ -1,6 +1,9 @@
-var ParseAPI = require('node-parse-api'),
+var qs = require('querystring'),
+	ParseAPI = require('node-parse-api'),
 	Parse = ParseAPI.Parse,
 	parseApp = new Parse('wKLFQwfrUOHY7DeJefZ7Wx3H9Jzrc0mX2eNdBMeX', 'yEDca6g7VODPX6PopDoBKtOzBiSmt9BpysTuHXpz');
+
+qs.escape = function(q){ return q; };
 
 var parseController = {
 
