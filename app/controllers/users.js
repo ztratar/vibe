@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
 	Async = require('async'),
 	crypto = require('crypto'),
 	email = require('./email')(),
-	parseApp = require('./parse'),
+	parseController = require('./parse'),
 	helpers = require('../helpers'),
 	twilio = require('twilio'),
 	app,
@@ -436,7 +436,7 @@ exports.update = function(req, res, next){
 		if (body.tutorial) user.tutorial = body.tutorial;
 		if (body.device_token && user._id.toString() === req.user._id.toString()) {
 			user.device_token = body.device_token;
-			parseApp.insertInstallationDataWithChannels(
+			parseController.insertOrUpdateInstallationDataWithChannels(
 				'ios',
 				user.device_token,
 				[

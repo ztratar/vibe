@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	helpers = require('../helpers'),
 	email = require('./email')(),
 	live = require('../live')(),
-	parseApp = require('./parse'),
+	parseApp = require('./parse').app,
 	app;
 
 /*
