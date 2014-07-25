@@ -11,15 +11,7 @@ var parseController = {
 	app: parseApp,
 
 	getInstallationForDeviceToken: function(deviceToken, callback) {
-		var data = {
-				where: {
-					deviceToken: deviceToken
-				}
-			};
-
-		console.log('using data', data);
-
-		parseRequest.call(ParseAPI, 'GET', '/1/installations', data, callback);
+		parseRequest.call(ParseAPI, 'GET', '/1/installations?where={"deviceToken":"'+deviceToken+'"}', {}, callback);
 	},
 
 	insertOrUpdateInstallationDataWithChannels: function(deviceType, deviceToken, channels, callback) {
