@@ -11,7 +11,7 @@ var parseController = {
 	app: parseApp,
 
 	getInstallationForDeviceToken: function(deviceToken, callback) {
-		parseRequest.call(ParseAPI, 'GET', '/1/installations?where={"deviceToken":"'+deviceToken+'"}', {}, callback);
+		parseRequest.call(ParseAPI, 'GET', '/1/installations?where={"deviceToken":"'+deviceToken+'"}', null, callback);
 	},
 
 	insertOrUpdateInstallationDataWithChannels: function(deviceType, deviceToken, channels, callback) {
@@ -83,6 +83,8 @@ function parseRequest(method, path, data, callback, contentType) {
 	};
 
 	var req = https.request(options, function (res) {
+		console.log('res', res);
+
 		if (!callback) {
 			return;
 		}
