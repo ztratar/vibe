@@ -7,10 +7,11 @@ var parseController = {
 	app: parseApp,
 
 	getInstallationForDeviceToken: function(deviceToken, callback) {
-		var data;
-		data.where = {
-			deviceToken: deviceToken
-		};
+		var data = {
+				where: {
+					deviceToken: deviceToken
+				}
+			};
 		parseRequest.call(ParseAPI, 'GET', '/1/installations', data, callback);
 	},
 
