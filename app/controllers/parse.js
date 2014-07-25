@@ -1,4 +1,5 @@
 var qs = require('querystring'),
+	https = require('https'),
 	ParseAPI = require('node-parse-api'),
 	Parse = ParseAPI.Parse,
 	parseApp = new Parse('wKLFQwfrUOHY7DeJefZ7Wx3H9Jzrc0mX2eNdBMeX', 'yEDca6g7VODPX6PopDoBKtOzBiSmt9BpysTuHXpz');
@@ -41,7 +42,10 @@ var parseController = {
 // Parse.com https api request
 // Stoeln from node-parse-api... gross
 function parseRequest(method, path, data, callback, contentType) {
-	var auth = 'Basic ' + new Buffer(this._application_id + ':' + this._master_key).toString('base64');
+	var auth = 'Basic ' + new Buffer(Parse._application_id + ':' + Parse._master_key).toString('base64');
+
+	console.log('parse app id', Parse._application_id);
+
 	var headers = {
 		Authorization: auth,
 		Connection: 'Keep-alive'
@@ -71,14 +75,14 @@ function parseRequest(method, path, data, callback, contentType) {
 	}
 
 	var options = {
-		host: this._api_host,
-		port: this._api_port,
+		host: 'api.parse.com',
+		port: 443,
 		headers: headers,
 		path: path,
 		method: method
 	};
 
-	var req = this._api_protocol.request(options, function (res) {
+	var req = https.request(options, function (res) {
 		if (!callback) {
 			return;
 		}
