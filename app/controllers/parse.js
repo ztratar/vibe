@@ -14,7 +14,7 @@ var parseController = {
 		parseRequest.call(ParseAPI, 'GET', '/1/installations', data, callback);
 	},
 
-	insertOrUpdateInstallationWithChannels: function(deviceType, deviceToken, channels, callback) {
+	insertOrUpdateInstallationDataWithChannels: function(deviceType, deviceToken, channels, callback) {
 		var data;
 
 		// Check for installation

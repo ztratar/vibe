@@ -442,7 +442,8 @@ exports.update = function(req, res, next){
 				[
 					'user-' + user._id.toString(),
 					'company-' + user.company._id.toString()
-				]
+				],
+				function() {}
 			);
 		}
 
