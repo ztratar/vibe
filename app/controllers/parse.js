@@ -16,6 +16,9 @@ var parseController = {
 					deviceToken: deviceToken
 				}
 			};
+
+		console.log('using data', data);
+
 		parseRequest.call(ParseAPI, 'GET', '/1/installations', data, callback);
 	},
 
@@ -24,8 +27,11 @@ var parseController = {
 
 		// Check for installation
 		parseController.getInstallationForDeviceToken(deviceToken, function(result) {
+			console.log('result', result);
+
 			if (result.length) {
 				// Installation exists. Update it
+				console.log('objectId', result[0].objectId);
 				parseRequest.call(ParseAPI, 'PUT', '/1/installations/' + result[0].objectId, {
 					channels: channels
 				}, callback);
