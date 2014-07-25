@@ -42,9 +42,9 @@ var parseController = {
 // Parse.com https api request
 // Stoeln from node-parse-api... gross
 function parseRequest(method, path, data, callback, contentType) {
-	var auth = 'Basic ' + new Buffer(Parse._application_id + ':' + Parse._master_key).toString('base64');
+	var auth = 'Basic ' + new Buffer(parseApp._application_id + ':' + parseApp._master_key).toString('base64');
 
-	console.log('parse app id', Parse._application_id);
+	console.log('parse app id', parseApp._application_id);
 
 	var headers = {
 		Authorization: auth,
