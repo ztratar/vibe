@@ -19,13 +19,10 @@ var parseController = {
 
 		// Check for installation
 		parseController.getInstallationForDeviceToken(deviceToken, function(err, result) {
-			console.log('result RESULT', result);
-
 			result = result.results;
 
 			if (result.length) {
 				// Installation exists. Update it
-				console.log('objectId', result[0].objectId);
 				parseRequest.call(ParseAPI, 'PUT', '/1/installations/' + result[0].objectId, {
 					channels: channels
 				}, callback);
