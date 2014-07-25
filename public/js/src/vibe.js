@@ -35,6 +35,16 @@ window.Vibe.run = function() {
 			}
 		});
 	};
+	window.Vibe.syncDeviceToken = function() {
+		var user = window.Vibe.user;
+
+		if (window.Vibe._data_.currentUserDeviceToken
+					&& user.get('device_token') !== window.Vibe._data_.currentUserDeviceToken) {
+			user.save({
+				device_token: window.Vibe._data_.currentUserDeviceToken
+			});
+		}
+	};
 
 	// Load in data, such as user
 	if (window.isCordova) {
@@ -43,6 +53,7 @@ window.Vibe.run = function() {
 		window.Vibe.user.fetchCurrentUser(function() {
 			window.Vibe.getAdmins();
 			window.Vibe.renderViews();
+			window.Vibe.syncDeviceToken();
 			Router.init(true);
 		}, function() {
 			Router.init(true);

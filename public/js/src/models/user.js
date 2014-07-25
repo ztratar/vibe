@@ -12,7 +12,8 @@ var User = BaseModel.extend({
 		company: {
 			name: ''
 		},
-		tutorial: {}
+		tutorial: {},
+		device_token: ''
 	},
 
 	initialize: function(opts) {

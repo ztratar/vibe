@@ -27,6 +27,20 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.vibration/www/vibration.js",
+        "id": "org.apache.cordova.vibration.notification",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
+        "id": "org.apache.cordova.dialogs.notification",
+        "merges": [
+            "navigator.notification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -35,7 +49,9 @@ module.exports.metadata =
     "org.apache.cordova.statusbar": "0.1.6",
     "com.appsee.plugin": "2.0.8",
     "com.ionic.keyboard": "1.0.2",
-    "com.phonegap.plugins.PushPlugin": "2.2.0"
+    "com.phonegap.plugins.PushPlugin": "2.2.0",
+    "org.apache.cordova.vibration": "0.3.10-dev",
+    "org.apache.cordova.dialogs": "0.2.9-dev"
 }
 // BOTTOM OF METADATA
 });

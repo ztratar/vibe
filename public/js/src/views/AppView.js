@@ -66,14 +66,6 @@ var AppView = Backbone.View.extend({
 		var numUnread = this.notificationsView.notifications.unread().length;
 		this.headerView.changeUnreadNum(numUnread);
 		document.title = (numUnread > 0 ? '(' + numUnread + ') ' : '') + this.origPageTitle;
-
-		if (window.isCordova && window.device.platform === 'ios') {
-			window.plugins.pushNotification.setApplicationIconBadgeNumber(
-				function() {},
-				function() {},
-				numUnread
-			);
-		}
 	},
 
 	run: function() {

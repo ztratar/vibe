@@ -34,8 +34,6 @@
 			document.addEventListener("deviceready", function() {
 				var $html = $('html');
 
-				require(['vibe']);
-
 				// Keyboard Stuff
 				cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 				var keyboardShowHandler = function() {
@@ -60,9 +58,11 @@
 				window.addEventListener('native.keyboardshow', keyboardShowHandler);
 				window.addEventListener('native.keyboardhide', keyboardHideHandler);
 
-				// Puhs Notification Stuff
-				var pushNotification = window.plugins.pushNotification;
-				if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
+				// Push Notification Stuff
+				var pushNotification = window.plugins.pushNotification,
+					devicePlatform = window.cordova.platformId;
+
+				if (devicePlatform == 'android' || devicePlatform == 'Android' || devicePlatform == "amazon-fireos" ){
 					// TODO; Android push notifs
 					pushNotification.register(
 						successHandler,
@@ -73,23 +73,41 @@
 						}
 					);
 				} else {
-					var tokenHandler = function(result) {
-							console.log('device token' + result);
-						},
-						errorHandler = function() {
+					function onNotificationAPN(event) {
+						if (event.sound) {
+							var snd = new Media(event.sound);
+							snd.play();
+						}
 
+						if (event.badge) {
+							pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+						}
+					};
+
+					window.pushCallbacks = {};
+					window.pushCallbacks.onNotificationAPN = onNotificationAPN;
+
+					var tokenHandler = function(result) {
+							// Store device token as part of user
+							window.Vibe._data_.currentUserDeviceToken = result;
+						},
+						errorHandler = function(err) {
 						};
+
 					pushNotification.register(
 						tokenHandler,
 						errorHandler,
 						{
-							"badge":"true",
-							"sound":"true",
-							"alert":"true",
-							"ecb":"onNotificationAPN"
+							"badge": "true",
+							"sound": "true",
+							"alert": "false",
+							"ecb":"pushCallbacks.onNotificationAPN"
 						}
 					);
 				}
+
+				// Start the app
+				require(['vibe']);
 
 				window.Appsee.start("4f3e7a4378e7410791af2a0e75081fb1");
 			}, false);

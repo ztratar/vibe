@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	Async = require('async'),
 	crypto = require('crypto'),
 	email = require('./email')(),
+	parseApp = require('./parse'),
 	helpers = require('../helpers'),
 	twilio = require('twilio'),
 	app,
@@ -433,6 +434,17 @@ exports.update = function(req, res, next){
 		if (body.isAdmin !== undefined) user.isAdmin = body.isAdmin;
 		if (body.email && body.email !== user.email) user.startChangeEmail(body.email);
 		if (body.tutorial) user.tutorial = body.tutorial;
+		if (body.device_token && user._id.toString() === req.user._id.toString()) {
+			user.device_token = body.device_token;
+			parseApp.insertInstallationDataWithChannels(
+				'ios',
+				user.device_token,
+				[
+					'user-' + user._id.toString(),
+					'company-' + user.company._id.toString()
+				]
+			);
+		}
 
 		// Ensure current user for password changes
 		if (body.password && user._id.toString() === req.user._id.toString()) {

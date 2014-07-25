@@ -35,6 +35,14 @@
                         {
                             "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -80,7 +88,13 @@
                     "ImageIO.framework": [],
                     "CoreLocation.framework": [],
                     "AssetsLibrary.framework": [],
-                    "MobileCoreServices.framework": []
+                    "MobileCoreServices.framework": [],
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": "true",
+                            "count": 2
+                        }
+                    ]
                 }
             }
         }
@@ -96,6 +110,12 @@
             "PACKAGE_NAME": "org.vibeapp.vibe"
         },
         "com.phonegap.plugins.PushPlugin": {
+            "PACKAGE_NAME": "org.vibeapp.vibe"
+        },
+        "org.apache.cordova.vibration": {
+            "PACKAGE_NAME": "org.vibeapp.vibe"
+        },
+        "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "org.vibeapp.vibe"
         }
     },

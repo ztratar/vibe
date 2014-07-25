@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	helpers = require('../helpers'),
 	email = require('./email')(),
 	live = require('../live')(),
+	parseApp = require('./parse'),
 	app;
 
 /*
@@ -166,6 +167,10 @@ exports.send = function(notifOpts, cb) {
 	}], function(err, notification) {
 		var notifUrl = '/api/users/' + notifOpts.for_user.toString() + '/notifications';
 		live.send(notifUrl, notification);
+		parseApp.sendPush({
+			channels: ['user-' + notifOpts.for_user.toString()],
+			data: 'Test'
+		});
 
 		if (cb && typeof cb === 'function') {
 			if (err) return cb(err);

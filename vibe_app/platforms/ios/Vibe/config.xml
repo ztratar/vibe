@@ -27,8 +27,11 @@
     <feature name="Appsee">
         <param name="ios-package" value="CDVAppsee" />
     </feature>
-    <feature name="PushPlugin">
-        <param name="ios-package" value="PushPlugin" />
+    <feature name="Vibration">
+        <param name="ios-package" value="CDVVibration" />
+    </feature>
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
     </feature>
     <name>Vibe</name>
     <description>
@@ -45,6 +48,9 @@
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="IonicKeyboard" />
+    </feature>
+    <feature name="PushPlugin">
+        <param name="ios-package" value="PushPlugin" />
     </feature>
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
 </widget>

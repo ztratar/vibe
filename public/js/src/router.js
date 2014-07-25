@@ -427,6 +427,7 @@ var Router = Backbone.Router.extend({
 				window.Vibe.user.fetchCurrentUser(function() {
 					window.Vibe.getAdmins();
 					window.Vibe.renderViews();
+					window.Vibe.syncDeviceToken();
 
 					window.Vibe.appRouter.initScreens();
 					window.Vibe.appRouter.navigate('/', true);
