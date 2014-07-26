@@ -139,6 +139,8 @@ helpers.adminUserOverride = function(req, res, next) {
 	var User = mongoose.model('User');
 	var Company = mongoose.model('Company');
 
+	if (!req.user) next();
+
 	if (req.user.isSuperAdmin
 			&& req._parsedUrl.query
 			&& req._parsedUrl.query.length
