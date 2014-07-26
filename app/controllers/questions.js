@@ -243,6 +243,15 @@ exports.createAnswer = function(req, res) {
 							num_people: questionInstance.users_voted.length,
 							question: req.question.body,
 							questionId: req.question._id
+						},
+						push: function(userId) {
+							// Send to user who asked the question every 3 votes
+							// or everyone upon vote completion
+							return (
+								(userId.toString() === req.question.creator.toString()
+								&& questionInstance.users_voted.length % 3 === 1)
+								|| (questionInstance.users_voted.length === questionInstance.num_sent_to)
+							);
 						}
 					});
 
@@ -387,6 +396,13 @@ exports.newChat = function(req, res, next){
 				first_user_id: req.user._id,
 				questionId: req.question._id,
 				question: req.question.body
+			},
+			push: function(userId, prevClusteredNotif) {
+				if (!prevClusteredNotif) return true;
+				if (prevClusteredNotif && (Date.now() - prevClusteredNotif.time_updated) > 1000 * 60 * 60) {
+					return true;
+				}
+				return false;
 			}
 		});
 	});
@@ -462,6 +478,7 @@ exports.send = function(req, res, questionId, next) {
 
 			notificationsController.sendToCompany(req, {
 				type: 'question',
+				push: true,
 				img: req.user.avatar,
 				data: {
 					user: req.user.name,

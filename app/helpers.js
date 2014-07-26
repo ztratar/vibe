@@ -43,8 +43,10 @@ helpers.requireLogin = function(res, req) {
 	}
 };
 
-helpers.getUsersListString = function(users) {
+helpers.getUsersListString = function(users, html) {
 	var baseUserStr = ''
+
+	html = html || false;
 
 	if (!users.length) return false;
 
@@ -58,7 +60,11 @@ helpers.getUsersListString = function(users) {
 		baseUserStr = users[0].name + ', ' + users[1].name + ', and ' + (users.length-2) + ' others';
 	}
 
-	baseUserStr = '<strong>' + _.escape(baseUserStr) + '</strong>';
+	baseUserStr += _.escape(baseUserStr);
+	if (html) {
+		baseUserStr = '<strong>' + baseUserStr + '</strong>';
+	}
+
 	if (users.length > 1) {
 		return baseUserStr + ' are';
 	} else {

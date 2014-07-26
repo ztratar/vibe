@@ -32,6 +32,15 @@ var parseController = {
 
 			parseApp.insertInstallationDataWithChannels(deviceType, deviceToken, channels, callback);
 		});
+	},
+
+	sendPush: function(options) {
+		options.data = _.extend({
+			alert: '',
+			badge: 'Increment'
+		}, options.data);
+
+		parseController.app.sendPush(options);
 	}
 
 };

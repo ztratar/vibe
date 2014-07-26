@@ -39,8 +39,8 @@ NotificationSchema.path('for_user').validate(function(userId) {
 
 NotificationSchema.methods = {
 
-	getCalculatedData: function(userExcludeId) {
-		var users = this.data.users,
+	getCalculatedData: function(userExcludeId, html) {
+		var users = this.data ? this.data.users : [],
 			firstUserId = this.data ? this.data.first_user_id : '',
 			firstUser,
 			peopleString = '',
@@ -52,6 +52,8 @@ NotificationSchema.methods = {
 				link: '',
 				timeAgo: ''
 			};
+
+		html = html || false;
 
 		if (users && users.length) {
 			users = _.filter(users, function(user) {
@@ -67,7 +69,7 @@ NotificationSchema.methods = {
 			adhocSortedUsers = [firstUser].concat(adhocSortedUsers);
 
 			if (adhocSortedUsers.length) {
-				peopleString = helpers.getUsersListString(adhocSortedUsers);
+				peopleString = helpers.getUsersListString(adhocSortedUsers, html);
 			}
 			returnObj.img = config.AWS.cloudfrontDomain + firstUser.avatar;
 		}

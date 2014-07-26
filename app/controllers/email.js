@@ -12,7 +12,7 @@ var _ = require('underscore'),
 function addNotificationTemplateVars(currentUser, notifications) {
 	for (var i = 0; i < notifications.length; i++) {
 		var tempNotification = notifications[i].toObject();
-		_.extend(tempNotification, notifications[i].getCalculatedData(currentUser._id));
+		_.extend(tempNotification, notifications[i].getCalculatedData(currentUser._id, true));
 		notifications[i] = tempNotification;
 	}
 
@@ -112,7 +112,10 @@ exports.send_unread_notifications = function(user) {
 			subject: '(' + notifications.length + ') - ' + notifications[0].notifBody,
 			templateName: 'unread_notifications',
 			templateData: {
-				notifications: notifications
+				notifications: notifications,
+				unescape: function(model, attr) {
+					return model[attr];
+				}
 			}
 		});
 	});

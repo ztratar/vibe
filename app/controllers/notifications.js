@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	helpers = require('../helpers'),
 	email = require('./email')(),
 	live = require('../live')(),
-	parseApp = require('./parse').app,
+	parseController = require('./parse'),
 	app;
 
 /*
@@ -108,6 +108,8 @@ exports.sendToUsers = function(userIds, notifOpts) {
  * pub/sub listeners, etc.
  */
 exports.send = function(notifOpts, cb) {
+	var prevClusteredNotif;
+
 	Async.waterfall([function(asyncCb) {
 		if (!notifOpts.cluster_tag) {
 			return asyncCb(null, null);
@@ -118,6 +120,7 @@ exports.send = function(notifOpts, cb) {
 			cluster_tag: notifOpts.cluster_tag
 		}, function(err, notification) {
 			if (err) return asyncCb(err);
+			prevClusteredNotif = notification;
 			asyncCb(null, notification);
 		});
 	}, function(notification, asyncCb) {
@@ -165,15 +168,19 @@ exports.send = function(notifOpts, cb) {
 			});
 		}
 	}], function(err, notification) {
-		var notifUrl = '/api/users/' + notifOpts.for_user.toString() + '/notifications';
+		var notifUrl = '/api/users/' + notifOpts.for_user.toString() + '/notifications',
+			pushNotif = (typeof notifOpts.push === 'function') ? notifOpts.push(notifOpts.for_user, prevClusteredNotif) : notifOpts.push;
+
 		live.send(notifUrl, notification);
 
-		parseApp.sendPush({
-			channels: ['user-' + notifOpts.for_user.toString()],
-			data: {
-				alert: notification.getCalculatedData(notifOpts.for_user).notifBody
-			}
-		});
+		if (pushNotif) {
+			parseController.sendPush({
+				channels: ['user-' + notifOpts.for_user.toString()],
+				data: {
+					alert: notification.getCalculatedData(notifOpts.for_user).notifBody
+				}
+			});
+		}
 
 		if (cb && typeof cb === 'function') {
 			if (err) return cb(err);

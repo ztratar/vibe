@@ -13,7 +13,7 @@
 		<td class="media-body">
 			<a href="{{ model.link }}" style="text-decoration: none;">
 				<p style="font-size: 20px; font-weight: 500; font-family: 'Helvetica Neue'; margin: 0 0 10px 0; color: #223e59;">
-					{{ model.notifBody }}
+					{{ unescape(model,'notifBody') }}
 				</p>
 				<span style="font-size: 12px; color: #888;">
 					{{ model.timeAgo }}

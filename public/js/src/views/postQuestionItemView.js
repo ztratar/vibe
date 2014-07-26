@@ -102,7 +102,7 @@ var PostQuestionItemView = BaseView.extend({
 	},
 
 	renderCompletionPercentage: function() {
-		this.$percentage.html((this.question.getLatestCompletionPercentage(this.numCompletionUpped) * 100) + '%');
+		this.$percentage.html(Math.round((this.question.getLatestCompletionPercentage(this.numCompletionUpped) * 100)) + '%');
 	},
 
 	vote: function(ev) {

@@ -9,6 +9,8 @@ var mongoose = require('mongoose'),
 	notificationsController = require('./notifications')(),
 	helpers = require('../helpers'),
 	live = require('../live')(),
+	usersController = require('./users')(),
+	parseController = require('./parse'),
 	app;
 
 /*
@@ -164,6 +166,13 @@ exports.newChat = function(req, res, next){
 				first_user_id: req.user._id,
 				feedbackId: req.feedback._id,
 				feedback: req.feedback.body
+			},
+			push: function(userId, prevClusteredNotif) {
+				if (!prevClusteredNotif) return true;
+				if (prevClusteredNotif && (Date.now() - prevClusteredNotif.time_updated) > 1000 * 60 * 60) {
+					return true;
+				}
+				return false;
 			}
 		});
 	});
@@ -195,6 +204,17 @@ exports.create = function(req, res, next) {
 		if (err) return helpers.sendError(res, err);
 
 		live.send('/api/feedback/pending', feedback.stripInfo());
+
+		usersController.getAdmins(req, null, function(err, admins) {
+			_.each(admins, function(admin) {
+				parseController.sendPush({
+					channels: ['user-' + admin._id.toString()],
+					data: {
+						alert: 'Someone submitted feedback'
+					}
+				});
+			});
+		});
 
 		return res.send(feedback.stripInfo(req.user));
 	});
@@ -274,6 +294,19 @@ exports.agree = function(req, res, next) {
 					num_people: feedback.num_votes,
 					feedback: feedback.body,
 					feedbackId: feedback._id
+				},
+				push: function(userId, prevClusteredNotif) {
+					// Only send mobile push notifications to the user
+					// who created the feedback and throttle to mod 3
+					// Also block re-sends if the last one was sent a minute ago
+					if (prevClusteredNotif && (Date.now() - prevClusteredNotif.time_updated) < 1000 * 60) {
+						return false;
+					}
+
+					return (
+						(feedback.num_votes % 3 === 2)
+						&& (userId.toString() === feedback.creator.toString())
+					);
 				}
 			});
 
@@ -393,7 +426,8 @@ exports.approve = function(req, res, next) {
 
 		notificationsController.send({
 			for_user: req.feedback.creator,
-			type: 'feedback-approved'
+			type: 'feedback-approved',
+			push: true
 		});
 	});
 };
@@ -429,7 +463,8 @@ exports.archive = function(req, res, next) {
 			type: 'feedback-archived',
 			data: {
 				reason: req.body.status_change_reason
-			}
+			},
+			push: true
 		});
 
 		res.send(feedback.stripInfo(req.user));
