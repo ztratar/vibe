@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	_ = require('underscore'),
 	helpers = require('../helpers'),
 	Feedback = mongoose.model('Feedback'),
+	Question = mongoose.model('Question'),
 	Post = mongoose.model('Post'),
 	authTypes = ['github', 'twitter', 'facebook', 'google'],
 	env = process.env.NODE_ENV || 'development',
@@ -242,13 +243,32 @@ UserSchema.methods = {
 					for_user: user._id,
 					company: feedback.company,
 					content_type: 'feedback',
-					feedback: feedback._id
+					feedback: feedback._id,
+					sort_time: feedback.time_status_changed
 				});
 			});
 
-			Post.create(postObjs, function(err, posts) {
-				if (err) return cb(err);
-				cb(null, posts);
+			Question.find({
+				company: user.company
+			}, function(err, questions) {
+				_.each(questions, function(question) {
+					postObjs.push({
+						for_user: user._id,
+						company: question.company,
+						content_type: 'question',
+						question: question._id,
+						sort_time: question.time_last_sent
+					});
+				});
+
+				postObjs = _.sortBy(postObjs, function(postObj) {
+					return Date.parse(postObj.sort_time);
+				});
+
+				Post.create(postObjs, function(err, posts) {
+					if (err) return cb(err);
+					cb(null, posts);
+				});
 			});
 		});
 	}

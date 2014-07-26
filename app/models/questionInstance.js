@@ -71,6 +71,7 @@ QuestionInstanceSchema.methods = {
 			});
 		});
 	}
+
 };
 
 mongoose.model('QuestionInstance', QuestionInstanceSchema);
