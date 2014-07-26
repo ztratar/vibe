@@ -1,4 +1,5 @@
 var helpers = {},
+	mongoose = require('mongoose'),
 	_ = require('underscore'),
 	AWS = require('aws-sdk'),
 	env = process.env.NODE_ENV || 'development',
@@ -132,6 +133,40 @@ helpers.getHostedFile = function(key, cb) {
 	}, function(err, url) {
 		cb(err, url);
 	});
+};
+
+helpers.adminUserOverride = function(req, res, next) {
+	if (req.user.isSuperAdmin
+			&& req._parsedUrl.query
+			&& req._parsedUrl.query.length
+			&& req._parsedUrl.query.indexOf('userOverride') !== -1) {
+
+		var userId = /userOverride=([^&]+)/.exec(req._parsedUrl.query);
+		var User = mongoose.model('User');
+
+		User
+			.findById(userId[1])
+			.populate('company')
+			.exec(function(err, user) {
+				if (err || !user) return next();
+
+				req.session.fakeUser = user;
+				req.session.save();
+				req.user = user;
+
+				next();
+			});
+
+		return;
+	} else if (req._parsedUrl.query
+			&& req._parsedUrl.query.length
+			&& req._parsedUrl.query.indexOf('resetUser') !== -1) {
+		req.session.fakeUser = false;
+		req.session.save();
+	} else if (req.session.fakeUser) {
+		req.user = req.session.fakeUser;
+	}
+	next();
 };
 
 helpers.security = {
