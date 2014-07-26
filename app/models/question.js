@@ -44,6 +44,17 @@ QuestionSchema.path('send_on_days').validate(function (daysArray) {
 // Question Methods
 QuestionSchema.methods = {
 
+	addUser: function(user) {
+		QuestionInstance
+			.findOne({
+				question: this._id
+			})
+			.sort({ _id: -1 })
+			.exec(function(err, questionInstance) {
+				questionInstance.addUser(user);
+			});
+	},
+
 	withAnswerData: function(currentUser, cb) {
 		var question = this.toObject();
 

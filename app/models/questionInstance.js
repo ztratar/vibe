@@ -70,6 +70,17 @@ QuestionInstanceSchema.methods = {
 				cb(null, answer);
 			});
 		});
+	},
+
+	addUser: function(user) {
+		this.update({
+			$push: {
+				users_sent_to: user._id
+			},
+			$inc: {
+				num_sent_to: 1
+			}
+		}, function() {});
 	}
 
 };

@@ -259,6 +259,8 @@ UserSchema.methods = {
 						question: question._id,
 						sort_time: question.time_last_sent
 					});
+
+					question.addUser(user);
 				});
 
 				postObjs = _.sortBy(postObjs, function(postObj) {
