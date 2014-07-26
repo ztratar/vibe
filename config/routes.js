@@ -91,6 +91,7 @@ module.exports = function (app, passport) {
 	app.get('/terms.html', c.page.terms);
 
 	app.get('/admin/invite_company', s.requireSuperAdmin, c.page.admin_invite_company);
+	app.get('/api/admin/users', s.requireSuperAdmin, c.users.getAllUsers);
 
 	app.get('*', c.page.index);
 };

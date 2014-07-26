@@ -339,6 +339,21 @@ exports.get = function(req, res, next){
 	});
 };
 
+/*
+ * GET /api/admin/users
+ *
+ * Get all users in the entire system. Requires super admin
+ */
+exports.getAllUsers = function(req, res, next){
+	User.find({}, function(err, users) {
+		if (err) return helpers.sendError(res, "Couldn't find any users");
+		if (!users) return res.send([]);
+
+		res.send(_.map(users, function(user) {
+			return user.stripInfo();
+		}));
+	});
+};
 
 /*
  * GET /api/users/me
