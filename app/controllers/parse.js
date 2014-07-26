@@ -38,7 +38,8 @@ var parseController = {
 	sendPush: function(options) {
 		options.data = _.extend({
 			alert: '',
-			badge: 'Increment'
+			badge: 'Increment',
+			sound: 'Default'
 		}, options.data);
 
 		parseController.app.sendPush(options);
