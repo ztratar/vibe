@@ -1,4 +1,5 @@
-var qs = require('querystring'),
+var _ = require('underscore'),
+	qs = require('querystring'),
 	https = require('https'),
 	ParseAPI = require('node-parse-api'),
 	Parse = ParseAPI.Parse,
