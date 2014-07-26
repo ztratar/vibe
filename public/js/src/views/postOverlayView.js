@@ -89,7 +89,6 @@ var PostOverlayView = BaseView.extend({
 		var offset;
 
 		if ($('.overlay-container').hasClass('expand')) {
-			console.log('has expand!');
 			var screenHeight = this.$el.height(),
 				windowHeight = screenHeight + 64,
 				postHeight = 500;
@@ -102,7 +101,6 @@ var PostOverlayView = BaseView.extend({
 
 			offset = Math.round((screenHeight - postHeight)/2);
 		} else {
-			console.log('no has expand!');
 			offset = 122;
 		}
 

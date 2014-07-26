@@ -42,6 +42,10 @@ var ManageTeamView = Backbone.View.extend({
 						defClass += 'btn-info';
 					}
 
+					if (model._id === window.Vibe.user.get('_id')) {
+						defClass += ' hidden';
+					}
+
 					return defClass;
 				},
 				text: function(model) {
@@ -58,7 +62,15 @@ var ManageTeamView = Backbone.View.extend({
 				}
 			}, {
 				icon: '&#61943;',
-				className: 'x-icon',
+				className: function(model) {
+					var defClass = 'x-icon';
+
+					if (model._id === window.Vibe.user.get('_id')) {
+						defClass += ' hidden';
+					}
+
+					return defClass;
+				},
 				click: function(model) {
 					that.users.remove(model);
 					model.destroy();
