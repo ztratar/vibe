@@ -136,13 +136,15 @@ helpers.getHostedFile = function(key, cb) {
 };
 
 helpers.adminUserOverride = function(req, res, next) {
+	var User = mongoose.model('User');
+	var Company = mongoose.model('Company');
+
 	if (req.user.isSuperAdmin
 			&& req._parsedUrl.query
 			&& req._parsedUrl.query.length
 			&& req._parsedUrl.query.indexOf('userOverride') !== -1) {
 
 		var userId = /userOverride=([^&]+)/.exec(req._parsedUrl.query);
-		var User = mongoose.model('User');
 
 		User
 			.findById(userId[1])
@@ -151,6 +153,7 @@ helpers.adminUserOverride = function(req, res, next) {
 				if (err || !user) return next();
 
 				req.session.fakeUser = user;
+				req.session.fakeCompany = user.company;
 				req.session.save();
 				req.user = user;
 
@@ -162,9 +165,11 @@ helpers.adminUserOverride = function(req, res, next) {
 			&& req._parsedUrl.query.length
 			&& req._parsedUrl.query.indexOf('resetUser') !== -1) {
 		req.session.fakeUser = false;
+		req.session.fakeCompany = false;
 		req.session.save();
 	} else if (req.session.fakeUser) {
-		req.user = req.session.fakeUser;
+		req.user = new User(req.session.fakeUser);
+		req.user.setValue('company', new Company(req.session.fakeCompany));
 	}
 	next();
 };
