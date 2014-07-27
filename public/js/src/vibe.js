@@ -14,7 +14,14 @@ window.Vibe = window.Vibe || {};
 
 window.Vibe.run = function() {
 	// Initialize Faye for real-time pub sub
-	window.Vibe.faye = new Faye.Client(window.fayeServerRoute);
+	window.Vibe.faye = new Faye.Client(window.fayeServerRoute, {
+		timeout: 60,
+		retry: 5
+	});
+
+	if (window.isCordova) {
+		window.Vibe.faye.disable('websocket');
+	}
 
 	// Set up the data cache
 	window.Vibe.modelCache = new ModelCache();

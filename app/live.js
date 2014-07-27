@@ -37,7 +37,7 @@ var recurseFormatDates = function(inputObj) {
 exports.start = function() {
 	var nodeAdapterOpts = {
 		mount: '/faye',
-		timeout: 60
+		timeout: 40
 	};
 
 	if (rtg) {
