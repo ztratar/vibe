@@ -11,8 +11,6 @@ var _ = require('underscore'),
 		'proxy': process.env ? process.env.PROXIMO_URL : ''
 	});
 
-console.log("PROX", process.env ? process.env.PROXIMO_URL : '');
-
 qs.escape = function(q){ return q; };
 
 var pushController = {
@@ -66,16 +64,14 @@ var pushController = {
 			if (user.device_type !== 'android') return false;
 
 			var message = new gcm.Message({
-				collapseKey: 'New notifications',
+				collapseKey: message,
 				timeToLive: 10,
 				data: {
-					message: message
+					alert: message
 				}
 			});
 
-			pushController.gcmApp.send(message, [user.device_token], 4, function(err, result) {
-				console.log('gcm res', err, result);
-			});
+			pushController.gcmApp.send(message, [user.device_token], 4, function(err, result) {});
 		});
 	}
 
