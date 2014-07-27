@@ -8,10 +8,10 @@ var _ = require('underscore'),
 	Parse = ParseAPI.Parse,
 	parseApp = new Parse('wKLFQwfrUOHY7DeJefZ7Wx3H9Jzrc0mX2eNdBMeX', 'xYWR0StMPwShnkCMiIJJL6AyooRrDOB8cuio08DR'),
 	gcmApp = new gcm.Sender('AIzaSyDhpAVO4sE0OP70QDbw6wLfGlFfp5tPTsI', {
-		'proxy': process.ENV ? process.ENV.PROXIMO_URL : ''
+		'proxy': process.env ? process.env.PROXIMO_URL : ''
 	});
 
-console.log("PROX", process.ENV ? process.ENV.PROXIMO_URL : '');
+console.log("PROX", process.env ? process.env.PROXIMO_URL : '');
 
 qs.escape = function(q){ return q; };
 
