@@ -48,6 +48,9 @@ html {
 #triangleUp path {
   fill: #3D90A5;
 }
+.splash-page .container {
+  max-width: 920px;
+}
 .splash-page .other-sections {
   position: absolute;
   top: 100%;
@@ -340,7 +343,7 @@ html {
   position: absolute;
   bottom: 0;
   left: 50%;
-  margin-left: -350px;
+  margin-left: -373px;
 }
 @media (max-width: 768px) {
   .splash-page .section.intro-section img {
