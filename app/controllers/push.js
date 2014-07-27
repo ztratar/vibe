@@ -30,12 +30,8 @@ var pushController = {
 		pushController.getInstallationForDeviceToken(deviceToken, function(err, result) {
 			result = result.results;
 
-			console.log('got install from token', deviceToken, result);
-
 			if (result.length) {
 				// Installation exists. Update it
-				console.log('setting channels with update', result[0].objectId, channels);
-
 				parseRequest.call(ParseAPI, 'PUT', '/1/installations/' + result[0].objectId, {
 					channels: channels
 				}, callback);
@@ -43,7 +39,6 @@ var pushController = {
 				return;
 			}
 
-			console.log('token not found, setting channels with insert', channels);
 			parseApp.insertInstallationDataWithChannels(deviceType, deviceToken, channels, callback);
 		});
 	},
