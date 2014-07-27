@@ -76,12 +76,11 @@
 
 				if (devicePlatform == 'android' || devicePlatform == 'Android' || devicePlatform == "amazon-fireos" ){
 					window.pushCallbacks.onNotificationAndroid = function(e) {
-						console.log('android message received', event);
 						if (e.event === 'registered') {
 							window.Vibe._data_.currentUserDeviceType = 'android';
 							window.Vibe._data_.currentUserDeviceToken = e.regid;
-							console.log('registered android', e.regid);
 						} else if (e.event === 'message') {
+							console.log('MESSAGE', e);
 							if (e.foreground) {
 								var soundfile = e.soundname || e.payload.sound,
 									my_media = new Media("/android_asset/www/"+ soundfile);
@@ -92,9 +91,7 @@
 					};
 
 					pushNotification.register(
-						function(result) {
-							console.log('push notif reg', result);
-						},
+						function(result) {},
 						function(err) {},
 						{
 							'senderID': '217202406384',
