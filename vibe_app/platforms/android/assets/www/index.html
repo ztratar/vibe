@@ -69,63 +69,10 @@
 				window.addEventListener('native.keyboardhide', keyboardHideHandler);
 
 				// Push Notification Stuff
-				var pushNotification = window.plugins.pushNotification,
-					devicePlatform = window.cordova.platformId;
-
-				window.pushCallbacks = {};
+				var devicePlatform = window.cordova.platformId;
 
 				if (devicePlatform == 'android' || devicePlatform == 'Android' || devicePlatform == "amazon-fireos" ){
 					$html.addClass('android');
-
-					window.pushCallbacks.onNotificationAndroid = function(e) {
-						if (e.event === 'registered') {
-							window.Vibe._data_.currentUserDeviceType = 'android';
-							window.Vibe._data_.currentUserDeviceToken = e.regid;
-						} else if (e.event === 'message') {
-							console.log('MESSAGE', e);
-							if (e.foreground) {
-								var soundfile = e.soundname || e.payload.sound,
-									my_media = new Media("/android_asset/www/"+ soundfile);
-
-								my_media.play();
-							}
-						}
-					};
-
-					pushNotification.register(
-						function(result) {},
-						function(err) {},
-						{
-							'senderID': '217202406384',
-							'ecb': 'pushCallbacks.onNotificationAndroid'
-						}
-					);
-				} else {
-					window.pushCallbacks.onNotificationIOS = function(event) {
-						if (event.sound) {
-							var snd = new Media(event.sound);
-							snd.play();
-						}
-
-						if (event.badge) {
-							pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
-						}
-					};
-
-					pushNotification.register(
-						function(result) {
-							// Store device token as part of user
-							window.Vibe._data_.currentUserDeviceType = 'ios';
-							window.Vibe._data_.currentUserDeviceToken = result;
-						},
-						function(err) {},
-						{
-							"badge": "true",
-							"sound": "true",
-							"alert": "false",
-							"ecb":"pushCallbacks.onNotificationIOS"
-						}
-					);
 				}
 
 				// Start the app

@@ -11627,6 +11627,38 @@ html {
     max-width: 286px;
   }
 }
+.ask-push-notification-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 43, 67, 0.79);
+}
+.ask-push-notification-view .pane {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  padding: 0 18px;
+}
+.ask-push-notification-view .pane > div {
+  padding-bottom: 90px;
+}
+.ask-push-notification-view a.accept {
+  position: fixed;
+  font-weight: 600;
+  color: white;
+  bottom: 18px;
+  left: 18px;
+  right: 18px;
+  padding: 14px;
+  font-size: 18px;
+  width: auto;
+}
+.ask-push-notification-view a.accept.hit {
+  -webkit-animation: bounceHit 0.32s linear;
+  animation: bounceHit 0.32s linear;
+}
 html,
 body {
   text-align: center;

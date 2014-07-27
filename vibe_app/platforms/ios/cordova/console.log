@@ -666,3 +666,35 @@ objc[46449]: Class AXEmojiUtilities is implemented in both /Applications/Xcode.a
 2014-07-26 19:31:23.060 Vibe[46449:70b] active
 2014-07-26 19:31:51.398 Vibe[46449:70b] active
 2014-07-26 19:31:55.767 Vibe[46449:70b] active
+objc[21139]: Class AXEmojiUtilities is implemented in both /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/PrivateFrameworks/AccessibilityUtilities.framework/AccessibilityUtilities and /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/libAXSpeechManager.dylib. One of the two will be used. Which one is undefined.
+2014-07-27 14:53:19.036 Vibe[21139:70b] Cannot find executable for CFBundle 0xaa74f00 </Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/AccessibilityBundles/StoreKitFramework.axbundle> (not loaded)
+2014-07-27 14:53:19.044 Vibe[21139:70b] Cannot find executable for CFBundle 0xa98f600 </Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/AccessibilityBundles/CertUIFramework.axbundle> (not loaded)
+2014-07-27 14:53:19.057 Vibe[21139:70b] Cannot find executable for CFBundle 0xaa908d0 </Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/AccessibilityBundles/GeoServices.axbundle> (not loaded)
+2014-07-27 14:53:19.280 Vibe[21139:70b] Multi-tasking -> Device: YES, App: YES
+2014-07-27 14:53:19.391 Vibe[21139:70b] Unlimited access to network resources
+2014-07-27 14:53:19.805 Vibe[21139:70b] [CDVTimer][statusbar] 113.873005ms
+2014-07-27 14:53:19.811 Vibe[21139:70b] [CDVTimer][file] 5.699992ms
+2014-07-27 14:53:19.813 Vibe[21139:70b] [CDVTimer][keyboard] 0.559032ms
+2014-07-27 14:53:19.814 Vibe[21139:70b] [CDVTimer][TotalPluginStartup] 122.742951ms
+2014-07-27 14:53:19.833 Vibe[21139:70b] active
+2014-07-27 14:53:20.048 Vibe[21139:70b] Resetting plugins due to page load.
+2014-07-27 14:53:20.566 Vibe[21139:70b] Finished load of: file:///Users/ztratar/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/948EB854-8EBF-456E-A7C2-B64C06BB6955/Vibe.app/www/index.html
+2014-07-27 14:53:20.648 Vibe[21139:200f] Appsee: **** Starting new session *****
+2014-07-27 14:53:20.652 Vibe[21139:200f] Appsee: ConfigRequestId = 07099d3bedce433abd6c0fee2e56ca98
+2014-07-27 14:53:20.937 Vibe[21139:200f] Appsee: Got session id: 53d574cffa9c00056df3358b
+objc[22165]: Class AXEmojiUtilities is implemented in both /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/PrivateFrameworks/AccessibilityUtilities.framework/AccessibilityUtilities and /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/usr/lib/libAXSpeechManager.dylib. One of the two will be used. Which one is undefined.
+2014-07-27 14:57:15.970 Vibe[22165:70b] Cannot find executable for CFBundle 0xab87ef0 </Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/AccessibilityBundles/CertUIFramework.axbundle> (not loaded)
+2014-07-27 14:57:15.984 Vibe[22165:70b] Cannot find executable for CFBundle 0xac81da0 </Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/AccessibilityBundles/GeoServices.axbundle> (not loaded)
+2014-07-27 14:57:15.992 Vibe[22165:70b] Cannot find executable for CFBundle 0xaac3d60 </Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk/System/Library/AccessibilityBundles/StoreKitFramework.axbundle> (not loaded)
+2014-07-27 14:57:16.066 Vibe[22165:70b] Multi-tasking -> Device: YES, App: YES
+2014-07-27 14:57:16.106 Vibe[22165:70b] Unlimited access to network resources
+2014-07-27 14:57:16.413 Vibe[22165:70b] [CDVTimer][statusbar] 82.565010ms
+2014-07-27 14:57:16.418 Vibe[22165:70b] [CDVTimer][file] 3.840983ms
+2014-07-27 14:57:16.419 Vibe[22165:70b] [CDVTimer][keyboard] 0.117958ms
+2014-07-27 14:57:16.420 Vibe[22165:70b] [CDVTimer][TotalPluginStartup] 88.671029ms
+2014-07-27 14:57:16.433 Vibe[22165:70b] active
+2014-07-27 14:57:16.631 Vibe[22165:70b] Resetting plugins due to page load.
+2014-07-27 14:57:17.436 Vibe[22165:70b] Finished load of: file:///Users/ztratar/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/948EB854-8EBF-456E-A7C2-B64C06BB6955/Vibe.app/www/index.html
+2014-07-27 14:57:17.473 Vibe[22165:1c27] Appsee: **** Starting new session *****
+2014-07-27 14:57:17.478 Vibe[22165:1c27] Appsee: ConfigRequestId = c5010ef518e3464c8b9a2d4380627c11
+2014-07-27 14:57:17.783 Vibe[22165:1c27] Appsee: Got session id: 53d575bc807193139efa4f30

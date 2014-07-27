@@ -17,6 +17,7 @@ import ManagePollsView from 'views/managePollsView';
 import PostChatView from 'views/postChatView';
 import LoginView from 'views/loginView';
 import ForgotPasswordView from 'views/forgotPasswordView';
+import AskPushNotificationView from 'views/askPushNotificationView';
 
 var Router = Backbone.Router.extend({
 
@@ -51,6 +52,7 @@ var Router = Backbone.Router.extend({
 		// Mobile routes
 		'login': 'login',
 		'forgotPassword': 'forgotPassword',
+		'push_notifications': 'pushNotifications',
 		'requestAccess': 'requestAccess'
 	},
 
@@ -425,17 +427,32 @@ var Router = Backbone.Router.extend({
 		var loginView = new LoginView({
 			loginCallback: function() {
 				window.Vibe.user.fetchCurrentUser(function() {
-					window.Vibe.getAdmins();
-					window.Vibe.renderViews();
-					window.Vibe.syncDeviceToken();
-
-					window.Vibe.appRouter.initScreens();
-					window.Vibe.appRouter.navigate('/', true);
+					window.Vibe.appRouter.navigate('/push_notifications', true);
 				});
 			}
 		});
 		$('#vibe-app').html(loginView.$el);
 		loginView.render();
+	},
+
+	pushNotifications: function() {
+		if (!window.isCordova) return;
+
+		var askView = new AskPushNotificationView({
+
+			onFinish: function() {
+				window.Vibe.getAdmins();
+				window.Vibe.renderViews();
+				window.Vibe.syncDeviceToken();
+
+				window.Vibe.appRouter.initScreens();
+				window.Vibe.appRouter.navigate('/', true);
+			}
+
+		});
+
+		$('#vibe-app').html(askView.$el);
+		askView.render();
 	},
 
 	forgotPassword: function() {

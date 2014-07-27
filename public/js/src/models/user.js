@@ -96,6 +96,13 @@ var User = BaseModel.extend({
 		this.save({
 			tutorial: tutorial
 		});
+	},
+
+	saveDeviceInfo: function(type, token) {
+		this.save({
+			device_type: type,
+			device_token: token
+		});
 	}
 
 });
