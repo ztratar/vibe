@@ -12,12 +12,16 @@ import TutorialHelper from 'helpers/tutorialHelper';
 
 window.Vibe = window.Vibe || {};
 
-window.Vibe.run = function() {
+window.Vibe.initLive = function() {
 	// Initialize Faye for real-time pub sub
 	window.Vibe.faye = new Faye.Client(window.fayeServerRoute, {
 		timeout: 60,
 		retry: 5
 	});
+};
+
+window.Vibe.run = function() {
+	window.Vibe.initLive();
 
 	if (window.isCordova) {
 		window.Vibe.faye.disable('websocket');

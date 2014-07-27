@@ -53,9 +53,9 @@ var HomeView = BaseView.extend({
 
 	renderFeedbackApproval: function() {
 		if (window.Vibe.user.get('isAdmin')) {
-			var feedbackApprovalView = new FeedbackApprovalView();
-			this.$feedbackApproval.html(feedbackApprovalView.$el);
-			feedbackApprovalView.render();
+			this.feedbackApprovalView = new FeedbackApprovalView();
+			this.$feedbackApproval.html(this.feedbackApprovalView.$el);
+			this.feedbackApprovalView.render();
 		}
 	},
 
