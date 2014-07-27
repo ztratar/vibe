@@ -286,7 +286,12 @@
 /Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/plugins/org.apache.cordova.vibration/www \
 /Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/plugins/org.apache.cordova.vibration/www/vibration.js \
 /Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons \
+/Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/android \
 /Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/ios \
+/Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/android/icon-36-ldpi.png \
+/Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/android/icon-48-mdpi.png \
+/Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/android/icon-72-hdpi.png \
+/Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/android/icon-96-xhdpi.png \
 /Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/ios/icon-40.png \
 /Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/ios/icon-40@2x.png \
 /Users/ztratar/playground/vibe/vibe_app/platforms/android/assets/www/res/icons/ios/icon-50.png \

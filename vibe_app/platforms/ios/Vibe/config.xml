@@ -48,7 +48,7 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
-    <icon src="icon.png" />
+    <icon src="res/icons" />
     <access origin="*" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />

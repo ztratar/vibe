@@ -8457,6 +8457,12 @@ html {
     bottom: 200px;
   }
 }
+@media (max-width: 480px) {
+  html.keyboard-shown.android .chat-view {
+    bottom: 0px;
+    margin-bottom: 18px;
+  }
+}
 .chat-view {
   max-width: 580px;
   height: 524px;
@@ -10431,6 +10437,10 @@ html {
 }
 .overlay-container.expand .post-overlay-view .post-wrapper .new-post .input-wrap .identity-wrap {
   opacity: 1;
+}
+.android .overlay-container.expand .post-overlay-view .post-wrapper .new-post {
+  top: 0 !important;
+  height: 100% !important;
 }
 .feedback-approval-container {
   z-index: 100;
