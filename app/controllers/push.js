@@ -63,7 +63,7 @@ var pushController = {
 		User.findById(userId, function(err, user) {
 			if (user.device_type !== 'android') return false;
 
-			var message = new gcm.Message({
+			var gMessage = new gcm.Message({
 				collapseKey: message,
 				timeToLive: 10,
 				data: {
@@ -71,7 +71,7 @@ var pushController = {
 				}
 			});
 
-			pushController.gcmApp.send(message, [user.device_token], 4, function(err, result) {});
+			pushController.gcmApp.send(gMessage, [user.device_token], 4, function(err, result) {});
 		});
 	}
 
