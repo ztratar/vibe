@@ -1,0 +1,49 @@
+<ul class="steps">
+	<% for (var i = 1; i <= questions.length; i++) { %>
+	<li class="<%- (i === activeQuestionCounter) ? 'active' : ''%>"><%- i %></li>
+	<% } %>
+</ul>
+<% for (var j = 1; j <= questions.length; j++) { %>
+<div class="participants-bar q<%- j %> <%- (j === 1) ? 'showNow' : '' %>">
+	<img src="<%= window.staticRoute %>img/anonymous.png">
+	<div class="words"><span>anonymous </span><i class="icon to-arrow">&#61812</i><span> everyone</span></div>
+	<img class="to" src="<%= window.staticRoute %>img/everyone.png">
+</div>
+<div class="question q<%- j %>">
+	<h2><%= questions.at(j-1).get('body') %></h2>
+	<ul class="answers">
+		<li class="top-left">
+			<a href="#" class="answer-vwell">
+				<div>
+					<img src="<%= window.staticRoute %>img/lol-100.png">
+					<h3>Very well!</h3>
+				</div>
+			</a>
+		</li>	
+		<li class="top-right">
+			<a href="#" class="answer-vwell">
+				<div>
+					<img src="<%= window.staticRoute %>img/happy-100.png">
+					<h3>Well</h3>
+				</div>
+			</a>
+		</li>	
+		<li class="bottom-left">
+			<a href="#" class="answer-vwell">
+				<div>
+					<img src="<%= window.staticRoute %>img/sad-100.png">
+					<h3>Poorly</h3>
+				</div>
+			</a>
+		</li>	
+		<li class="bottom-right">
+			<a href="#" class="answer-vwell">
+				<div>
+					<img src="<%= window.staticRoute %>img/cry-100.png">
+					<h3>Terribly</h3>
+				</div>
+			</a>
+		</li>	
+	</ul>
+</div>
+<% } %>

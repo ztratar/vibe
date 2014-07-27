@@ -1,0 +1,38 @@
+<span class="score"><%- feedback.get('num_votes') %></span>
+<% if (window.Vibe.user.get('isAdmin')) { %>
+<a href="#" class="pull-down">
+	<i class="icon x-icon">&#61943;</i>
+</a>
+<% } %>
+<div class="v-centered">
+	<div>
+		<h4><%- feedback.get('body') %></h4>
+	</div>
+</div>
+<div class="action-bar clearfix">
+	<% if (feedback.get('current_user_agreed')) { %>
+	<a href="#" class="btn agreed">
+		<i class="icon">&#61845;</i>
+		Agreed!
+	</a>
+	<% } else { %>
+	<a href="#" class="btn agree">
+		<i class="icon">&#61845;</i>
+		Agree
+	</a>
+	<% } %>
+	<% if (numUnread > 0) { %>
+	<a href="#" class="btn discuss with-unread">
+		<i class="icon">&#61704;</i>
+		Discuss
+		<span class="unread-chats">
+			<%- numUnread %><span> new</span>
+		</span>
+	</a>
+	<% } else { %>
+	<a href="#" class="btn discuss">
+		<i class="icon">&#61704;</i>
+		Discuss
+	</a>
+	<% } %>
+</div>

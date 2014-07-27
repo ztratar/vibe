@@ -1,0 +1,28 @@
+<div class="custom-picker">
+	<input type="text" name="custom_question" class="form-control" placeholder="Type a custom poll...">
+	<button type="button" class="btn btn-info add-new">Add</button>
+</div>
+<ul class="questions">
+	<% if (this.selectedQuestions.length) { %>
+	<li class="divider">
+		Selected
+	</li>
+	<% }; %>
+	<% this.selectedQuestions.each(function(question) { %>
+	<li>
+		<h3><%- question.get('body') %></h3>
+		<a class="icon deselect" data-question-id="<%= question.get('_id') %>" href="#">&#61943;</a>
+	</li>
+	<% }); %>
+	<% if (this.suggestedQuestions.length) { %>
+	<li class="divider">
+		Suggested
+	</li>
+	<% } %>
+	<% this.suggestedQuestions.each(function(question) { %>
+	<li>
+		<h3><%- question.get('body') %></h3>
+		<a class="select btn btn-info" data-metaquestion-id="<%= question.get('_id') %>" href="#">Add</a>
+	</li>
+	<% }); %>
+</ul>

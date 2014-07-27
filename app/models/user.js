@@ -34,6 +34,7 @@ var UserSchema = new Schema({
 	},
 
 	device_token: { type: String, default: '' },
+	device_type: { type: String, default: '' },
 
 	isAdmin: { type: Boolean, default: false },
 	isSuperAdmin: { type: Boolean, default: false },

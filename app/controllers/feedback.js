@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 	helpers = require('../helpers'),
 	live = require('../live')(),
 	usersController = require('./users')(),
-	parseController = require('./parse'),
+	pushController = require('./push'),
 	app;
 
 /*
@@ -207,11 +207,9 @@ exports.create = function(req, res, next) {
 
 		usersController.getAdmins(req, null, function(err, admins) {
 			_.each(admins, function(admin) {
-				parseController.sendPush({
-					channels: ['user-' + admin._id.toString()],
-					data: {
-						alert: 'Someone submitted feedback'
-					}
+				pushController.sendPush({
+					userId: admin._id.toString(),
+					message: 'Someone submitted feedback'
 				});
 			});
 		});

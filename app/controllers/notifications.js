@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	helpers = require('../helpers'),
 	email = require('./email')(),
 	live = require('../live')(),
-	parseController = require('./parse'),
+	pushController = require('./push'),
 	app;
 
 /*
@@ -174,11 +174,9 @@ exports.send = function(notifOpts, cb) {
 		live.send(notifUrl, notification);
 
 		if (pushNotif) {
-			parseController.sendPush({
-				channels: ['user-' + notifOpts.for_user.toString()],
-				data: {
-					alert: notification.getCalculatedData(notifOpts.for_user).notifBody
-				}
+			pushController.sendPush({
+				userId: notifOpts.for_user.toString(),
+				message: notification.getCalculatedData(notifOpts.for_user).notifBody
 			});
 		}
 

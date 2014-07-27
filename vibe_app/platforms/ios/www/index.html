@@ -72,18 +72,37 @@
 				var pushNotification = window.plugins.pushNotification,
 					devicePlatform = window.cordova.platformId;
 
+				window.pushCallbacks = {};
+
 				if (devicePlatform == 'android' || devicePlatform == 'Android' || devicePlatform == "amazon-fireos" ){
-					// TODO; Android push notifs
+					window.pushCallbacks.onNotificationAndroid = function(e) {
+						console.log('android message received', event);
+						if (e.event === 'registered') {
+							window.Vibe._data_.currentUserDeviceType = 'android';
+							window.Vibe._data_.currentUserDeviceToken = e.regid;
+							console.log('registered android', e.regid);
+						} else if (e.event === 'message') {
+							if (e.foreground) {
+								var soundfile = e.soundname || e.payload.sound,
+									my_media = new Media("/android_asset/www/"+ soundfile);
+
+								my_media.play();
+							}
+						}
+					};
+
 					pushNotification.register(
-						successHandler,
-						errorHandler,
+						function(result) {
+							console.log('push notif reg', result);
+						},
+						function(err) {},
 						{
-							"senderID":"replace_with_sender_id",
-							"ecb":"onNotification"
+							'senderID': '217202406384',
+							'ecb': 'pushCallbacks.onNotificationAndroid'
 						}
 					);
 				} else {
-					function onNotificationAPN(event) {
+					window.pushCallbacks.onNotificationIOS = function(event) {
 						if (event.sound) {
 							var snd = new Media(event.sound);
 							snd.play();
@@ -94,24 +113,18 @@
 						}
 					};
 
-					window.pushCallbacks = {};
-					window.pushCallbacks.onNotificationAPN = onNotificationAPN;
-
-					var tokenHandler = function(result) {
+					pushNotification.register(
+						function(result) {
 							// Store device token as part of user
+							window.Vibe._data_.currentUserDeviceType = 'ios';
 							window.Vibe._data_.currentUserDeviceToken = result;
 						},
-						errorHandler = function(err) {
-						};
-
-					pushNotification.register(
-						tokenHandler,
-						errorHandler,
+						function(err) {},
 						{
 							"badge": "true",
 							"sound": "true",
 							"alert": "false",
-							"ecb":"pushCallbacks.onNotificationAPN"
+							"ecb":"pushCallbacks.onNotificationIOS"
 						}
 					);
 				}

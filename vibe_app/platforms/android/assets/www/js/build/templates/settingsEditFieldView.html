@@ -1,0 +1,26 @@
+<form class="form-horizontal">
+	<div class="alert alert-block alert-danger"></div>
+	<% if (askForCurrent) { %>
+	<div class="form-group">
+		<label for="input<%- attributeName %>Current" class="col-xs-3 col-sm-2 control-label input-lg">Current</label>
+		<div class="input-col col-xs-9 col-sm-10">
+			<input type="<%- fieldType %>" name="<%- attributeName %>_current" class="form-control input-lg" id="input<%- attributeName %>Current" placeholder="Current <%- attributeName %>..." value="">
+		</div>
+	</div>
+	<% } %>
+	<div class="form-group">
+		<label for="input<%- attributeName %>" class="col-xs-3 col-sm-2 control-label input-lg"><%- title %></label>
+		<div class="input-col col-xs-9 col-sm-10">
+			<input type="<%- fieldType %>" name="<%- attributeName %>" class="form-control input-lg" id="input<%- attributeName %>" placeholder="<%- placeholder %>" value="<%- currentValue %>">
+		</div>
+	</div>
+	<% if (confirm) { %>
+	<div class="form-group">
+		<label for="input<%- attributeName %>Confirm" class="col-xs-3 col-sm-2 control-label input-lg">Confirm</label>
+		<div class="input-col col-xs-9 col-sm-10">
+			<input type="<%- fieldType %>" name="<%- attributeName %>_confirm" class="form-control input-lg" id="input<%- attributeName %>Confirm" placeholder="Again..." value="">
+		</div>
+	</div>
+	<% } %>
+	<p><%- helperText %></p>
+</form>

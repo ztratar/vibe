@@ -1,0 +1,25 @@
+<div class="question-col">
+	<h3><%- model.body %></h3>
+	<span class="last-sent">
+		Last sent <%- lastSentString %> <% if (model.user_last_sent) { %>by <%- model.user_last_sent %><% } %>
+	</span>
+</div>
+<% if (question_type === 'suggested') { %>
+<div class="save-col">
+	<a href="#" class="btn btn-info action save-question">
+		<i class="icon">&#61943;</i>
+		Save to my polls
+	</a>
+</div>
+<% } else { %>
+<a href="#" class="x-action action">
+	<i class="icon x-icon">&#61943;</i>
+</a>
+<div class="send-now-col">
+	<% if (!sentInLastDay) { %>
+	<a href="#" class="btn btn-success send-now">Send now</a>
+	<% } else { %>
+	<a href="#" class="btn btn-success send-now" disabled="disabled">Sent!</a>
+	<% } %>
+</div>
+<% } %>

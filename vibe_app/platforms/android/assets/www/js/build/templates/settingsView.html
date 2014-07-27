@@ -1,0 +1,41 @@
+<div class="settings-group with-avatar">
+	<div class="avatar-picker small">
+		<img class="avatar-img" src="<%= window.Vibe.user.get('avatar') %>">
+		<a href="#">Edit avatar</a>
+		<input type="file" name="avatar" id="avatar-input">
+		<input type="text" name="avatar_base64" class="hidden" value="">
+	</div>
+	<div class="form-groups-right">
+		<a href="#" class="name settings-item-row">
+			<%- window.Vibe.user.get('name') %>
+			<i class="icon pull-right">&#61815;</i>
+		</a>
+		<a href="#" class="email settings-item-row">
+			<%- window.Vibe.user.get('email') %>
+			<i class="icon pull-right">&#61815;</i>
+		</a>
+		<a href="#" class="password settings-item-row">
+			Change Password
+			<i class="icon pull-right">&#61815;</i>
+		</a>
+	</div>
+</div>
+<% if (window.Vibe.user.get('isAdmin')) { %>
+<div class="settings-group">
+	<h3>Admin</h3>
+	<a href="#" class="manage-team settings-item-row">
+		Manage Team
+		<i class="icon pull-right">&#61815;</i>
+	</a>
+	<a href="#" class="manage-polls settings-item-row">
+		Manage Polls
+		<i class="icon pull-right">&#61815;</i>
+	</a>
+</div>
+<% } %>
+<div class="settings-group">
+	<a href="#" class="settings-item-row log-out">
+		Log out
+	</a>
+</div>
+

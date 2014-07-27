@@ -52,7 +52,8 @@ window.Vibe.run = function() {
 		/*if (window.Vibe._data_.currentUserDeviceToken
 					&& user.get('device_token') !== window.Vibe._data_.currentUserDeviceToken) {*/
 			user.save({
-				device_token: window.Vibe._data_.currentUserDeviceToken
+				device_token: window.Vibe._data_.currentUserDeviceToken,
+				device_type: window.Vibe._data_.currentUserDeviceType
 			});
 		//}
 	};
