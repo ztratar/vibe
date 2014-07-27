@@ -444,6 +444,8 @@ exports.update = function(req, res, next){
 
 		var body = req.body;
 
+		console.log('saving user', body);
+
 		if (body.name) user.name = body.name;
 		if (body.avatar) user.avatar = body.avatar;
 		if (body.isAdmin !== undefined) user.isAdmin = body.isAdmin;
@@ -454,6 +456,7 @@ exports.update = function(req, res, next){
 			user.device_token = body.device_token;
 
 			if (user.device_type === 'ios') {
+				console.log('in device type', user.device_token);
 				pushController.insertOrUpdateInstallationDataWithChannels(
 					'ios',
 					user.device_token,
