@@ -75,6 +75,8 @@
 				window.pushCallbacks = {};
 
 				if (devicePlatform == 'android' || devicePlatform == 'Android' || devicePlatform == "amazon-fireos" ){
+					$html.addClass('android');
+
 					window.pushCallbacks.onNotificationAndroid = function(e) {
 						if (e.event === 'registered') {
 							window.Vibe._data_.currentUserDeviceType = 'android';

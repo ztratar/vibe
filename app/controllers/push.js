@@ -64,10 +64,10 @@ var pushController = {
 			if (user.device_type !== 'android') return false;
 
 			var gMessage = new gcm.Message({
-				collapseKey: message,
+				collapseKey: 'New notifications!',
 				timeToLive: 10,
 				data: {
-					alert: message
+					title: message
 				}
 			});
 

@@ -67,6 +67,7 @@ window.Vibe.run = function() {
 			window.Vibe.renderViews();
 			window.Vibe.syncDeviceToken();
 			Router.init(true);
+			window.Vibe.appRouter.navigate('/', true);
 		}, function() {
 			Router.init(true);
 			window.Vibe.appRouter.navigate('/login', true);
