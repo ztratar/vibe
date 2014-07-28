@@ -120,7 +120,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 		}));
 
 		app.use(function(req, res, next) {
-			if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
+			if (!csrfValue(req) || req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
 				var newToken = req.csrfToken();
 				res.cookie('x-csrf-token', newToken);
 				res.locals.token = newToken;
