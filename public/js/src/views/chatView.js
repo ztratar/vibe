@@ -120,6 +120,7 @@ var ChatView = BaseView.extend({
 
 		var newChatItem = this.chatTemplate({
 				body: chat.get('body'),
+				userName: chat.get('creator').name,
 				userAvatar: avatar,
 				timeago: moment(chat.get('time_created')).fromNow()
 			}),

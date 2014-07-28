@@ -8663,7 +8663,7 @@ html {
     line-height: 17px;
   }
 }
-.chat-view .chat-scroll-container .chat-item .chat-bubble span {
+.chat-view .chat-scroll-container .chat-item .chat-bubble > span {
   display: block;
   font-size: 11px;
   color: white;

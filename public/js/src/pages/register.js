@@ -92,8 +92,8 @@ $(function() {
 			return false;
 		}
 
-		if (!password.length) {
-			$error.html('Please enter a password').show();
+		if (!password.length || password.length < 8) {
+			$error.html('Password must be at least 8 characters').show();
 			return false;
 		}
 
@@ -126,6 +126,7 @@ $(function() {
 			password = form1.find('input[name="password"]').val(),
 			avatar_base64 = form1.find('input[name="avatar_base64"]').val(),
 			hash = /hash=([^&]+)/.exec(window.location.search),
+			$button = $(this).find('button'),
 			$error = $(this).find('.alert-danger'),
 			company_name = $(this).find('input[name="company_name"]').val(),
 			company_website = $(this).find('input[name="company_website"]').val(),
@@ -159,6 +160,9 @@ $(function() {
 			eventLabel: stringifiedInfo
 		});
 
+		$button.attr('disabled', 'disabled');
+		$button.html('Creating your account...');
+
 		$.ajax({
 			url: '/api/users',
 			method: 'POST',
@@ -181,9 +185,23 @@ $(function() {
 					});
 
 					unmarkCurrentStepAsLoading();
+					$button.html('Next');
 					$error.html(d.error).show();
 				} else {
 					nextStep();
+				}
+			},
+			error: function(d) {
+				if (d.error) {
+					Analytics.log({
+						eventCategory: 'register',
+						eventAction: 'step-2-error',
+						eventLabel: d.error
+					});
+
+					unmarkCurrentStepAsLoading();
+					$button.html('Next');
+					$error.html(d.error).show();
 				}
 			}
 		});
