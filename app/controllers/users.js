@@ -493,6 +493,7 @@ exports.update = function(req, res, next){
 		}
 
 		user.save(function(err, user){
+			console.log('attempted to save user', err, user);
 			if (err) return helpers.sendError(res, err);
 			res.send(user.stripInfo());
 
