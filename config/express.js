@@ -8,8 +8,8 @@ var express = require('express'),
 	swig = require('swig');
 
 module.exports = function (app, config, passport) {
-
 	app.use(function(req, res, next) {
+		res.header('Access-Control-Allow-Origin', 'https://*.getvibe.com, https://getvibe.com, http://localhost:3000');
 		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 		next();
 	});
