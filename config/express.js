@@ -79,9 +79,12 @@ module.exports = function (app, config, passport) {
 			value: csrfValue
 		}));
 		app.use(function(req, res, next) {
-			var newToken = req.csrfToken();
-			res.cookie('x-csrf-token', newToken);
-			res.locals.token = newToken;
+			console.log(req.method);
+			if (req.method !== 'OPTIONS') {
+				var newToken = req.csrfToken();
+				res.cookie('x-csrf-token', newToken);
+				res.locals.token = newToken;
+			}
 			next();
 		});
 
