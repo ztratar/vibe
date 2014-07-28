@@ -3,7 +3,7 @@
  */
 
 var express = require('express'),
-	mongoStore = require('connect-mongo')(express),
+	MongoStore = require('connect-mongostore')(express),
 	helpers = require('../app/helpers'),
 	swig = require('swig');
 
@@ -66,9 +66,8 @@ module.exports = function (app, config, passport, mongooseConnection, afterMongo
 		// express/mongo session storage
 		app.use(express.session({
 			secret: 'noobjs',
-			store: new mongoStore({
-				url: config.db,
-				mongoose_connection: mongooseConnection.connections[0],
+			store: new MongoStore({
+				mongooseConnection: mongooseConnection.connections[0],
 				collection : 'sessions'
 			}, function() {
 				afterMongoConnect();
