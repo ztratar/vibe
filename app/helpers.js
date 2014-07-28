@@ -167,7 +167,7 @@ helpers.adminUserOverride = function(req, res, next) {
 			&& req._parsedUrl.query.indexOf('resetUser') !== -1) {
 		req.session.fakeUser = false;
 		req.session.save();
-		next();
+		return next();
 	} else if (req.session.fakeUser) {
 		User
 			.findById(req.session.fakeUser._id)
@@ -176,7 +176,9 @@ helpers.adminUserOverride = function(req, res, next) {
 				req.user = user;
 				next();
 			});
+		return;
 	}
+	next();
 };
 
 helpers.security = {

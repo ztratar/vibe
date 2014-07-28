@@ -5,7 +5,8 @@
 var express = require('express'),
 	MongoStore = require('connect-mongostore')(express),
 	helpers = require('../app/helpers'),
-	swig = require('swig');
+	swig = require('swig'),
+	env = process.env.NODE_ENV || 'development';
 
 // CSRF Tokens
 var csrfValue = function(req) {
@@ -13,8 +14,6 @@ var csrfValue = function(req) {
 		|| (req.query && req.query._csrf)
 		|| (req.cookies['x-csrf-token'])
 		|| (req.cookies['x-xsrf-token']);
-
-	console.log('token found', token);
 
 	return token;
 };
@@ -63,14 +62,33 @@ module.exports = function (app, config, passport, mongooseConnection) {
 			next();
 		});
 
-		// express/mongo session storage
-		app.use(express.session({
-			secret: 'noobjs',
-			store: new MongoStore({
-				mongooseConnection: mongooseConnection.connections[0],
-				collection : 'sessions'
-			})
-		}));
+		if (env === 'development') {
+			app.use(express.session({
+				secret: 'noobjs',
+				store: new MongoStore({
+					db: 'vibe',
+					username: mongooseConnection.connections[0].user,
+					password: mongooseConnection.connections[0].pass,
+					mongooseConnection: mongooseConnection.connections[0],
+					collection : 'sessions'
+				})
+			}));
+		} else {
+			mongooseConnection.connections[0].db.serverConfig.host = mongooseConnection.connections[0].hosts[0].host;
+			mongooseConnection.connections[0].db.serverConfig.port = mongooseConnection.connections[0].hosts[0].port;
+
+			// express/mongo session storage
+			app.use(express.session({
+				secret: 'noobjs',
+				store: new MongoStore({
+					db: 'vibe',
+					username: mongooseConnection.connections[0].user,
+					password: mongooseConnection.connections[0].pass,
+					mongooseConnection: mongooseConnection.connections[0],
+					collection : 'sessions'
+				})
+			}));
+		}
 
 		app.use(function (req, res, next) {
 			res.locals.session = req.session;
@@ -107,7 +125,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 			if (err.message && ~err.message.indexOf('not found')) return next()
 
 			// log it
-			console.log('Express error', err)
+			console.log('Express error', err);
 
 			res.send(err.status || 500, { error: err.message })
 		});
