@@ -189,7 +189,7 @@ helpers.adminUserOverride = function(req, res, next) {
 helpers.security = {
 
 	requireLogin: function(req, res, next) {
-		console.log('-> Requiring login...');
+		console.log('-> Requiring login...', req.isAuthenticated(), req.user);
 		if (req.isAuthenticated()
 				&& req.user
 				&& req.user.active) {
