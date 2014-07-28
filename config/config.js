@@ -21,7 +21,7 @@ module.exports = {
 	test: {
 	},
 	production: {
-		db: 'mongodb://vibe:ksdiocskla@ds059559-a0.mongolab.com:59559,ds059559-a1.mongolab.com:59559/vibe',
+		db: 'mongodb://vibe:ksdiocskla@ds059559-a0.mongolab.com:59559/vibe,mongodb://vibe:ksdiocskla@ds059559-a1.mongolab.com:59559',
 		static_path: 'https://www.getvibe.com',
 		root: rootPath,
 		app: {
