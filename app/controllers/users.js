@@ -212,6 +212,12 @@ exports.createFromAccessRequest = function (req, res, next) {
 		}], function(err, company, user) {
 			if (err) return sendStandardError();
 
+			twilioClient.sms.messages.create({
+				to: '+16308548826',
+				from: '+13312155958',
+				body: user.email + ' created an account from Access'
+			});
+
 			req.logIn(user, function(err) {
 				if (err) return sendStandardError();
 				return res.send(user.stripInfo());
@@ -310,6 +316,12 @@ exports.createFromUserInvite = function(req, res, next) {
 		});
 	}], function(err, user) {
 		if (err) return sendStandardError();
+
+		twilioClient.sms.messages.create({
+			to: '+16308548826',
+			from: '+13312155958',
+			body: user.email + ' created an account from Invite'
+		});
 
 		req.logIn(user, function(err) {
 			if (err) return sendStandardError();
