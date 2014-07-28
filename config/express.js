@@ -13,7 +13,6 @@ var csrfValue = function(req) {
 		|| (req.query && req.query._csrf)
 		|| (req.cookies['x-csrf-token'])
 		|| (req.cookies['x-xsrf-token']);
-	console.log('found token', token);
 	return token;
 };
 
@@ -55,10 +54,6 @@ module.exports = function (app, config, passport) {
 			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
 			if (req.method === 'OPTIONS') {
-				console.log('opts cookie', (req.body && req.body._csrf)
-					|| (req.query && req.query._csrf)
-					|| (req.cookies['x-csrf-token'])
-					|| (req.cookies['x-xsrf-token']))
 				return res.send(200);
 			}
 
@@ -90,7 +85,6 @@ module.exports = function (app, config, passport) {
 		}));
 		app.use(function(req, res, next) {
 			var newToken = req.csrfToken();
-			console.log('new token', req.method, newToken);
 			res.cookie('x-csrf-token', newToken);
 			res.locals.token = newToken;
 			next();

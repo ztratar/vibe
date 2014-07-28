@@ -8,6 +8,7 @@ import UserListInviteView from 'views/userListInviteView';
 import avatarInputHelper from 'helpers/avatarInputHelper';
 import imageInputHelper from 'helpers/imageInputHelper';
 import Analytics from 'helpers/analytics';
+import Cookies from 'helpers/cookies';
 
 $(function() {
 	if (window.pageName !== 'register') {
@@ -169,7 +170,8 @@ $(function() {
 			companyName: company_name,
 			companyWebsite: company_website,
 			companyLogo: company_logo,
-			companyInviteHash: hash
+			companyInviteHash: hash,
+			_csrf: Cookies.get('x-csrf-token')
 		}, {
 			success: function(model, d) {
 				if (d.error) {
