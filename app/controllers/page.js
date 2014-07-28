@@ -9,8 +9,13 @@ var env = process.env.NODE_ENV || 'development',
 exports.index = function(req, res) {
 	if (req.isAuthenticated()) {
 		if (req.user.active === false) {
+			// In case you tried to go in as an inactie
+			req.session.fakeUser = false;
+			req.session.fakeCompany = false;
+			req.session.save();
+
 			req.logout();
-			res.redirect('/login');
+			return res.redirect('/login');
 		}
 
 		async.parallel([
