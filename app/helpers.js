@@ -154,7 +154,7 @@ helpers.adminUserOverride = function(req, res, next) {
 			.exec(function(err, user) {
 				if (err || !user) return next();
 
-				req.session.fakeUser = user;
+				req.session.fakeUser = user._id.toString();
 				req.session.save();
 				req.user = user;
 
@@ -165,19 +165,22 @@ helpers.adminUserOverride = function(req, res, next) {
 	} else if (req._parsedUrl.query
 			&& req._parsedUrl.query.length
 			&& req._parsedUrl.query.indexOf('resetUser') !== -1) {
+
 		req.session.fakeUser = false;
 		req.session.save();
-		return next();
 	} else if (req.session.fakeUser) {
 		User
-			.findById(req.session.fakeUser._id)
+			.findById(req.session.fakeUser)
 			.populate('company')
 			.exec(function(err, user) {
-				req.user = user;
+				if (user) {
+					req.user = user;
+				}
 				next();
 			});
 		return;
 	}
+
 	next();
 };
 
