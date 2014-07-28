@@ -7,6 +7,16 @@ var express = require('express'),
 	helpers = require('../app/helpers'),
 	swig = require('swig');
 
+// CSRF Tokens
+var csrfValue = function(req) {
+	var token = (req.body && req.body._csrf)
+		|| (req.query && req.query._csrf)
+		|| (req.cookies['x-csrf-token'])
+		|| (req.cookies['x-xsrf-token']);
+	console.log('found token', token);
+	return token;
+};
+
 module.exports = function (app, config, passport) {
 	app.use(function(req, res, next) {
 		res.header('Access-Control-Allow-Origin', 'https://www.getvibe.com');
@@ -14,6 +24,9 @@ module.exports = function (app, config, passport) {
 		res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
 		if (req.method === 'OPTIONS') {
+			var sameToken = csrfValue(req);
+			res.cookie('x-csrf-token', sameToken);
+			res.locals.token = sameToken;
 			return res.send(200);
 		}
 
@@ -71,15 +84,6 @@ module.exports = function (app, config, passport) {
 			app.use(passport.session());
 		}
 
-		// CSRF Tokens
-		var csrfValue = function(req) {
-			var token = (req.body && req.body._csrf)
-				|| (req.query && req.query._csrf)
-				|| (req.cookies['x-csrf-token'])
-				|| (req.cookies['x-xsrf-token']);
-			console.log('found token', token);
-			return token;
-		};
 		app.use(express.csrf({
 			value: csrfValue
 		}));
