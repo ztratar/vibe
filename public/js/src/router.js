@@ -140,7 +140,26 @@ var Router = Backbone.Router.extend({
 				helperText: 'Please enter your full name. Your identity is only visible in chat.'
 			});
 
-		window.Vibe.appView.headerView.setHomeButtons();
+		window.Vibe.appView.headerView.setButtons({
+			title: 'Name',
+			leftAction: {
+				icon: '',
+				title: 'Cancel',
+				click: function(ev) {
+					that.navigateWithAnimation('/settings', 'pushRight', {
+						trigger: true
+					});
+					return false;
+				}
+			},
+			rightAction: {
+				title: 'Save',
+				click: function() {
+					settingsEditFieldView.saveField();
+					return false;
+				}
+			}
+		});
 
 		this.screenRouter.currentScreenContainer.html(settingsEditFieldView.$el);
 		settingsEditFieldView.render();
