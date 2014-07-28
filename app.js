@@ -49,17 +49,17 @@ var mongooseConnection = mongoose.connect(config.mongoosedb, function(e) {
 	var server = http.createServer(app);
 
 	// express settings
-	require('./config/express')(app, config, passport, mongooseConnection, function() {
-		// Bootstrap routes
-		require('./config/routes')(app, passport);
+	require('./config/express')(app, config, passport, mongooseConnection);
 
-		// Start faye
-		require('./app/live')(server);
+	// Bootstrap routes
+	require('./config/routes')(app, passport);
 
-		// Start the app by listening on <port>
-		server.listen(port);
-		console.log('Express app started on port ' + port);
-	});
+	// Start faye
+	require('./app/live')(server);
+
+	// Start the app by listening on <port>
+	server.listen(port);
+	console.log('Express app started on port ' + port);
 });
 
 // expose app
