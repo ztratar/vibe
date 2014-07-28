@@ -33,6 +33,7 @@ var imageInputHelper = function(fileInput, imgElem, textInput, opts) {
 					},
 					{
 						contain: true,
+						canvas: true,
 						maxWidth: opts.maxWidth,
 						maxHeight: opts.maxHeight,
 						orientation: orientation
