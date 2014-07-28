@@ -71,12 +71,6 @@ exports.request = function(req, res, next){
  * 		email (String)
  */
 exports.invite = function(req, res) {
-	if (!req.user.isAdmin) {
-		return res.send({
-			error: 'You do not have access to do this'
-		});
-	}
-
 	// Check if valid email
 	if (!helpers.isValidEmail(req.body.email)) {
 		return res.send({
