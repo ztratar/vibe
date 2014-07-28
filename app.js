@@ -16,7 +16,12 @@ var env = process.env.NODE_ENV || 'development',
 	app;
 
 // Bootstrap db connection
+console.log('-----');
+console.log('Attempting to create Mongoose connection...');
 var mongooseConnection = mongoose.connect(config.mongoosedb, function(e) {
+	console.log('Mongoose connection created!');
+	console.log('-----');
+
 	// Bootstrap models
 	var models_path = __dirname + '/app/models',
 		models = [
@@ -41,6 +46,7 @@ var mongooseConnection = mongoose.connect(config.mongoosedb, function(e) {
 	// bootstrap passport config
 	require('./config/passport')(passport, config);
 
+	console.log('Setting up express & http...');
 	app = express();
 	var server = http.createServer(app);
 

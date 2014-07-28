@@ -15,6 +15,8 @@ var csrfValue = function(req) {
 		|| (req.cookies['x-csrf-token'])
 		|| (req.cookies['x-xsrf-token']);
 
+	console.log('-> Getting CSRF', token);
+
 	return token;
 };
 
@@ -51,6 +53,8 @@ module.exports = function (app, config, passport, mongooseConnection) {
 		app.use(express.methodOverride());
 
 		app.use(function(req, res, next) {
+			console.log('-> Request incoming', req.method);
+
 			res.header('Access-Control-Allow-Origin', 'https://www.getvibe.com');
 			res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -62,6 +66,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 			next();
 		});
 
+		console.log('Setting up sessions...');
 		if (env === 'development') {
 			app.use(express.session({
 				secret: 'noobjs',
@@ -89,6 +94,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 		}
 
 		app.use(function (req, res, next) {
+			console.log('-> Local session being stored');
 			res.locals.session = req.session;
 			next();
 		});
@@ -106,11 +112,15 @@ module.exports = function (app, config, passport, mongooseConnection) {
 			var newToken = req.csrfToken();
 			res.cookie('x-csrf-token', newToken);
 			res.locals.token = newToken;
+
+			console.log('-> Setting new CSRF', newToken);
+
 			next();
 		});
 
 		app.use(helpers.adminUserOverride);
 
+		console.log('Setting up router...');
 		// routes should be at the last
 		app.use(app.router);
 

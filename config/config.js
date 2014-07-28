@@ -38,5 +38,3 @@ module.exports = {
 		}
 	}
 };
-
-//		db: 'mongodb://vibe:ksdiocskla@ds059559-a0.mongolab.com:59559/vibe,mongodb://vibe:ksdiocskla@ds059559-a1.mongolab.com:59559',

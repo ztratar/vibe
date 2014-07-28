@@ -8,6 +8,9 @@ var env = process.env.NODE_ENV || 'development',
  */
 exports.index = function(req, res) {
 	if (req.isAuthenticated()) {
+
+		console.log('-> Loading index page...');
+
 		if (req.user.active === false) {
 			// In case you tried to go in as an inactie
 			req.session.fakeUser = false;
@@ -37,6 +40,7 @@ exports.index = function(req, res) {
 			});
 		});
 	} else {
+		console.log('-> Loading splash page...');
 		res.render('splash/index', {
 			env: process.env.NODE_ENV || 'development',
 			config: config
@@ -64,6 +68,9 @@ exports.login = function (req, res) {
  */
 exports.register = function (req, res) {
 	if (req.isAuthenticated()) res.redirect('/');
+
+	console.log('-> Loading register page...');
+
 	res.render('users/register', {
 		env: process.env.NODE_ENV || 'development',
 		config: config
@@ -75,6 +82,8 @@ exports.register = function (req, res) {
  */
 exports.registerFromInvite = function (req, res) {
 	if (req.isAuthenticated()) res.redirect('/');
+
+	console.log('-> Loading registerFromInvite page...');
 
 	var company_name = /company_name=([^&]+)/.exec(req._parsedUrl.query);
 

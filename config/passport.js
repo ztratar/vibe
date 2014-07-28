@@ -12,6 +12,7 @@ module.exports = function (passport, config) {
 	})
 
 	passport.deserializeUser(function(id, done) {
+		console.log('-> User deserializing', id);
 		User.findOne({ _id: id })
 			.populate('company')
 			.exec(function (err, user) {
@@ -25,6 +26,7 @@ module.exports = function (passport, config) {
 			passwordField: 'password'
 		},
 		function(email, password, done) {
+			console.log('-> Passport auth local strategy');
 			User.findOne({ email: email }, function (err, user) {
 				if (err) { return done(err) }
 				if (!user) {
