@@ -67,9 +67,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 				secret: 'noobjs',
 				store: new MongoStore({
 					db: 'vibe',
-					username: mongooseConnection.connections[0].user,
-					password: mongooseConnection.connections[0].pass,
-					mongooseConnection: mongooseConnection.connections[0],
+					host: mongooseConnection.connections[0].host,
 					collection : 'sessions'
 				})
 			}));
