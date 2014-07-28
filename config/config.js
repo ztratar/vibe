@@ -21,7 +21,7 @@ module.exports = {
 	test: {
 	},
 	production: {
-		db:	process.env.MONGOLAB_URI || 'mongodb://vibe:ksdiocskla@ds033487.mongolab.com:33487/heroku_app24476177/vibe',
+		db: 'mongodb://vibe:ksdiocskla@ds059559-a0.mongolab.com:59559,ds059559-a1.mongolab.com:59559/vibe',
 		static_path: 'https://www.getvibe.com',
 		root: rootPath,
 		app: {
