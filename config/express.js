@@ -57,7 +57,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 
 			res.header('Access-Control-Allow-Origin', 'https://www.getvibe.com');
 			res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
 			if (req.method === 'OPTIONS') {
 				return res.send(200);
