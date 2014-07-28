@@ -16,8 +16,8 @@ var env = process.env.NODE_ENV || 'development',
 	app;
 
 // Bootstrap db connection
-mongoose.connect(config.mongoosedb, function(e) {
-	console.log('connected info', e);
+var mongooseConnection = mongoose.connect(config.mongoosedb, function(e) {
+	console.log('connected info', e, mongooseConnection);
 
 	// Bootstrap models
 	var models_path = __dirname + '/app/models',
@@ -47,7 +47,7 @@ mongoose.connect(config.mongoosedb, function(e) {
 	var server = http.createServer(app);
 
 	// express settings
-	require('./config/express')(app, config, passport, function() {
+	require('./config/express')(app, config, passport, mongooseConnection, function() {
 		// Bootstrap routes
 		require('./config/routes')(app, passport);
 
