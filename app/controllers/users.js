@@ -460,8 +460,9 @@ exports.update = function(req, res, next){
 
 		var changedAvatar = false;
 
+		// Doesn't cast when admin is overriding requests user
 		if (user.company instanceof Company) {
-			user.company = user.company._id;
+			user.setValue('company', user.company._id);
 			console.log('was company. Now is', user.company);
 		}
 
