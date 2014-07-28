@@ -124,7 +124,7 @@ var PostQuestionItemView = BaseView.extend({
 		this.postChatView = new PostChatView.default({
 			post: this.model,
 			question: this.question,
-			forceChatPosition: window.isCordova
+			forceChatPosition: window.isCordova || ($(window).width() < 780)
 		});
 		window.Vibe.appView.showOverlay(this.postChatView, {
 			noAnimation: window.isCordova

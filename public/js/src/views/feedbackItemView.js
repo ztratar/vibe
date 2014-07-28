@@ -104,7 +104,7 @@ var FeedbackItemView = BaseView.extend({
 		this.postChatView = new PostChatView({
 			post: this.model,
 			feedback: this.feedback,
-			forceChatPosition: window.isCordova
+			forceChatPosition: window.isCordova || ($(window).width() < 780)
 		});
 		window.Vibe.appView.showOverlay(this.postChatView, {
 			noAnimation: window.isCordova
