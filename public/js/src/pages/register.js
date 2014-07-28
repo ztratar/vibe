@@ -159,21 +159,20 @@ $(function() {
 			eventLabel: stringifiedInfo
 		});
 
-		user.set({
-			name: name,
-			email: email,
-			avatar: avatar_base64
-		});
-
-		user.save({
-			password: password,
-			companyName: company_name,
-			companyWebsite: company_website,
-			companyLogo: company_logo,
-			companyInviteHash: hash,
-			_csrf: Cookies.get('x-csrf-token')
-		}, {
-			success: function(model, d) {
+		$.ajax({
+			url: '/api/users',
+			method: 'POST',
+			data: {
+				name: name,
+				email: email,
+				avatar: avatar_base64,
+				password: password,
+				companyName: company_name,
+				companyWebsite: company_website,
+				companyLogo: company_logo,
+				companyInviteHash: hash
+			},
+			success: function(d) {
 				if (d.error) {
 					Analytics.log({
 						eventCategory: 'register',
