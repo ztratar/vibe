@@ -524,16 +524,12 @@ _.extend(Router.prototype, {
 
 });
 
-var initRouter = function(doNotPushState) {
+var initRouter = function() {
 	window.Vibe.appRouter = new Router();
 
 	window.Vibe.appRouter.once('loaded', function() {
 		window.Vibe.appView.headerView.renderCurrentComponents();
 	});
-
-	if (!doNotPushState) {
-		window.Vibe.appRouter.index();
-	}
 
 	Backbone.history.start({
 		pushState: true,

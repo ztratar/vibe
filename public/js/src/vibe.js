@@ -66,10 +66,10 @@ window.Vibe.run = function() {
 			window.Vibe.getAdmins();
 			window.Vibe.renderViews();
 			window.Vibe.syncDeviceToken();
-			Router.init(true);
+			Router.init();
 			window.Vibe.appRouter.navigate('/', true);
 		}, function() {
-			Router.init(true);
+			Router.init();
 			window.Vibe.appRouter.navigate('/login', true);
 		});
 	} else {
@@ -81,8 +81,6 @@ window.Vibe.run = function() {
 			TutorialHelper.demoIntro();
 		}
 	}
-
-	// inits window.Vibe.appRouter
 };
 
 window.Vibe.run();
