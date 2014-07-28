@@ -18,21 +18,6 @@ var csrfValue = function(req) {
 };
 
 module.exports = function (app, config, passport) {
-	app.use(function(req, res, next) {
-		res.header('Access-Control-Allow-Origin', 'https://www.getvibe.com');
-		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-		res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-		if (req.method === 'OPTIONS') {
-			var sameToken = csrfValue(req);
-			res.cookie('x-csrf-token', sameToken);
-			res.locals.token = sameToken;
-			return res.send(200);
-		}
-
-		next();
-	});
-
 	app.set('showStackError', true);
 	// should be placed before express.static
 	app.use(express.compress({
@@ -63,6 +48,21 @@ module.exports = function (app, config, passport) {
 		// bodyParser should be above methodOverride
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
+
+		app.use(function(req, res, next) {
+			res.header('Access-Control-Allow-Origin', 'https://www.getvibe.com');
+			res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+			if (req.method === 'OPTIONS') {
+				var sameToken = csrfValue(req);
+				res.cookie('x-csrf-token', sameToken);
+				res.locals.token = sameToken;
+				return res.send(200);
+			}
+
+			next();
+		});
 
 		// express/mongo session storage
 		app.use(express.session({
