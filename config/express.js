@@ -9,7 +9,7 @@ var express = require('express'),
 
 module.exports = function (app, config, passport) {
 	app.use(function(req, res, next) {
-		res.header('Access-Control-Allow-Origin', 'https://*.getvibe.com');
+		res.header('Access-Control-Allow-Origin', 'https://www.getvibe.com');
 		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 		next();
 	});
