@@ -95,7 +95,17 @@ module.exports = function (app, config, passport, mongooseConnection) {
 
 		app.use(function (req, res, next) {
 			console.log('-> Local session being stored');
+
+			var hour = 3600000,
+				day = hour * 24,
+				expire = day * 365;
+
+			req.session.cookie.expires = new Date(Date.now() + expire);
+			req.session.cookie.maxAge = expire;
+			req.session.save();
+
 			res.locals.session = req.session;
+
 			next();
 		});
 
@@ -108,12 +118,14 @@ module.exports = function (app, config, passport, mongooseConnection) {
 		app.use(express.csrf({
 			value: csrfValue
 		}));
-		app.use(function(req, res, next) {
-			var newToken = req.csrfToken();
-			res.cookie('x-csrf-token', newToken);
-			res.locals.token = newToken;
 
-			console.log('-> Setting new CSRF', newToken);
+		app.use(function(req, res, next) {
+			if (req.method === 'POST' || req.method === 'PUT' || req.method === 'DELETE') {
+				var newToken = req.csrfToken();
+				res.cookie('x-csrf-token', newToken);
+				res.locals.token = newToken;
+				console.log('-> Setting new CSRF', newToken);
+			}
 
 			next();
 		});
