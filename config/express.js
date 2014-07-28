@@ -19,7 +19,7 @@ var csrfValue = function(req) {
 	return token;
 };
 
-module.exports = function (app, config, passport) {
+module.exports = function (app, config, passport, afterMongoConnect) {
 	app.set('showStackError', true);
 	// should be placed before express.static
 	app.use(express.compress({
@@ -69,6 +69,8 @@ module.exports = function (app, config, passport) {
 			store: new mongoStore({
 				url: config.db,
 				collection : 'sessions'
+			}, function() {
+				afterMongoConnect();
 			})
 		}));
 
