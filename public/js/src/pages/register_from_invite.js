@@ -47,17 +47,18 @@ $(function() {
 			return false;
 		}
 
-		user = new User({
-			name: name,
-			email: email,
-			avatar: avatar_base64,
-			password: password
-		});
 
-		user.save({
-			userInviteHash: hash
-		}, {
-			success: function(model, d) {
+		$.ajax({
+			url: '/api/users',
+			method: 'POST',
+			data: {
+				name: name,
+				email: email,
+				avatar: avatar_base64,
+				password: password,
+				userInviteHash: hash
+			},
+			success: function(d) {
 				if (d.error) {
 					$error.html(d.error).show();
 				} else {
