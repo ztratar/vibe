@@ -55,9 +55,10 @@ module.exports = function (app, config, passport) {
 			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
 			if (req.method === 'OPTIONS') {
-				var sameToken = csrfValue(req);
-				res.cookie('x-csrf-token', sameToken);
-				res.locals.token = sameToken;
+				console.log('opts cookie', (req.body && req.body._csrf)
+					|| (req.query && req.query._csrf)
+					|| (req.cookies['x-csrf-token'])
+					|| (req.cookies['x-xsrf-token']))
 				return res.send(200);
 			}
 
