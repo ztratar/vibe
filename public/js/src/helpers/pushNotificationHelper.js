@@ -1,5 +1,5 @@
-var pushNotification = window.plugins.pushNotification,
-	devicePlatform = window.cordova.platformId,
+var pushNotification = window.plugins ? window.plugins.pushNotification : undefined,
+	devicePlatform = window.cordova ? window.cordova.platformId : undefined,
 	registerCallback;
 
 var pushNotificationHelper = {

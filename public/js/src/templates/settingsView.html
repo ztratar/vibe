@@ -41,6 +41,19 @@
 	</a>
 </div>
 <% } %>
+<% if (!window.isCordova) { %>
+<div class="settings-group">
+	<h3>Get the app</h3>
+	<a class="settings-item-row" href="https://play.google.com/store/apps/details?id=org.vibeapp.vibe">
+		Download for Android
+		<i class="icon pull-right">&#61815;</i>
+	</a>
+	<a class="settings-item-row" href="http://www.testflightapp.com/install/c89434e98f4da18192bdf8b48d535d55-MTIyMjI1NzY/">
+		Download for iPhone
+		<i class="icon pull-right">&#61815;</i>
+	</a>
+</div>
+<% } %>
 <div class="settings-group">
 	<a href="#" class="settings-item-row log-out">
 		Log out
