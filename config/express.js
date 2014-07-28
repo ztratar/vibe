@@ -13,6 +13,10 @@ module.exports = function (app, config, passport) {
 		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 		res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
+		if (req.method === 'OPTIONS') {
+			return res.send(200);
+		}
+
 		next();
 	});
 
@@ -79,12 +83,9 @@ module.exports = function (app, config, passport) {
 			value: csrfValue
 		}));
 		app.use(function(req, res, next) {
-			console.log(req.method);
-			if (req.method !== 'OPTIONS') {
-				var newToken = req.csrfToken();
-				res.cookie('x-csrf-token', newToken);
-				res.locals.token = newToken;
-			}
+			var newToken = req.csrfToken();
+			res.cookie('x-csrf-token', newToken);
+			res.locals.token = newToken;
 			next();
 		});
 
