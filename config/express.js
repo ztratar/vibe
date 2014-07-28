@@ -13,6 +13,9 @@ var csrfValue = function(req) {
 		|| (req.query && req.query._csrf)
 		|| (req.cookies['x-csrf-token'])
 		|| (req.cookies['x-xsrf-token']);
+
+	console.log('token found', token);
+
 	return token;
 };
 
