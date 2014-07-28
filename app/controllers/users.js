@@ -458,8 +458,18 @@ exports.update = function(req, res, next){
 
 		console.log('saving user', body);
 
+		var changedAvatar = false;
+
+		if (user.company instanceof Company) {
+			user.company = user.company._id;
+			console.log('was company. Now is', user.company);
+		}
+
 		if (body.name) user.name = body.name;
-		if (body.avatar) user.avatar = body.avatar;
+		if (body.avatar && user.avatar !== body.avatar) {
+			changedAvatar = true;
+			user.avatar = body.avatar;
+		}
 		if (body.isAdmin !== undefined) user.isAdmin = body.isAdmin;
 		if (body.email && body.email !== user.email) user.startChangeEmail(body.email);
 		if (body.tutorial) user.tutorial = body.tutorial;
@@ -497,7 +507,7 @@ exports.update = function(req, res, next){
 			if (err) return helpers.sendError(res, err);
 			res.send(user.stripInfo());
 
-			if (body.avatar) user.convertAvatar();
+			if (changedAvatar) user.convertAvatar();
 		});
 	});
 };
