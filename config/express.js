@@ -67,6 +67,7 @@ module.exports = function (app, config, passport, mongooseConnection, afterMongo
 		app.use(express.session({
 			secret: 'noobjs',
 			store: new mongoStore({
+				url: config.db,
 				mongoose_connection: mongooseConnection.connections[0],
 				collection : 'sessions'
 			}, function() {
