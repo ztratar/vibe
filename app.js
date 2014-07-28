@@ -16,7 +16,9 @@ var env = process.env.NODE_ENV || 'development',
 	app;
 
 // Bootstrap db connection
-mongoose.connect(config.db, function() {
+mongoose.connect(config.db, function(e) {
+	console.log('connected info', e);
+
 	// Bootstrap models
 	var models_path = __dirname + '/app/models',
 		models = [
