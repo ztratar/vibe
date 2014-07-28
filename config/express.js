@@ -115,7 +115,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 			app.use(passport.session());
 		}
 
-		app.use(express.csrf({
+		/*app.use(express.csrf({
 			value: csrfValue
 		}));
 
@@ -128,7 +128,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 			}
 
 			next();
-		});
+		});*/
 
 		app.use(helpers.adminUserOverride);
 
