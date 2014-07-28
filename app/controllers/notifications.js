@@ -16,6 +16,8 @@ var mongoose = require('mongoose'),
  * Get all of your current notifications
  */
 exports.index = function(req, res) {
+	console.log('-> In notification index controller...', req.user._id);
+
 	var afterTime = /afterTime=([^&]+)/.exec(req.url),
 		beforeTime = /beforeTime=([^&]+)/.exec(req.url),
 		queryObj = {

@@ -139,6 +139,8 @@ helpers.adminUserOverride = function(req, res, next) {
 	var User = mongoose.model('User');
 	var Company = mongoose.model('Company');
 
+	console.log('-> Checking admin override');
+
 	if (!req.user) return next();
 
 	if (req.user.isSuperAdmin
@@ -187,9 +189,11 @@ helpers.adminUserOverride = function(req, res, next) {
 helpers.security = {
 
 	requireLogin: function(req, res, next) {
+		console.log('-> Requiring login...');
 		if (req.isAuthenticated()
 				&& req.user
 				&& req.user.active) {
+			console.log('-> Logged in user found...');
 			next(null, req, res);
 		} else {
 			req.logout();
