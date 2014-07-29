@@ -75,7 +75,7 @@ var Router = Backbone.Router.extend({
 		this.homeView.render();
 
 		this.homeView.posts.url = window.Vibe.serverUrl + 'api/posts';
-		this.homeView.posts.fetch();
+		this.homeView.posts.fetch({ reset: true });
 
 		window.Vibe.faye.subscribe('/api/users/' + window.Vibe.user.get('_id') + '/posts', function(newPost) {
 			that.homeView.posts.addCached(newPost);
