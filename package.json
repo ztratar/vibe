@@ -17,7 +17,7 @@
     "bcrypt": "^0.7.8",
     "connect-flash": "~0.1.1",
     "connect-mongo": "~0.4.0",
-    "connect-mongostore": "https://github.com/ztratar/connect-mongostore/tarball/master",
+    "connect-mongostore": "git+https://cf04a16eaff8c582237f4627f15f9affcfdcb1ae:x-oauth-basic@github.com/ztratar/connect-mongostore.git",
     "express": "~3.5.0",
     "express-rate": "0.0.1",
     "faye": "^1.0.1",
