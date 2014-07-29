@@ -20,7 +20,7 @@ var csrfValue = function(req) {
 	return token;
 };
 
-module.exports = function (app, config, passport, mongooseConnection) {
+module.exports = function (app, config, passport, mongooseConnection, afterSessionConnectCb) {
 	app.set('showStackError', true);
 	// should be placed before express.static
 	app.use(express.compress({
@@ -74,7 +74,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 					db: 'vibe',
 					host: mongooseConnection.connections[0].host,
 					collection : 'sessions'
-				})
+				}, afterSessionConnectCb)
 			}));
 		} else {
 			mongooseConnection.connections[0].db.serverConfig.host = mongooseConnection.connections[0].hosts[0].host;
@@ -89,7 +89,7 @@ module.exports = function (app, config, passport, mongooseConnection) {
 					password: mongooseConnection.connections[0].pass,
 					mongooseConnection: mongooseConnection.connections[0],
 					collection : 'sessions'
-				})
+				}, afterSessionConnectCb)
 			}));
 		}
 

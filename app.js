@@ -29,51 +29,50 @@ var env = process.env.NODE_ENV || 'development',
 console.log('-----');
 console.log('Attempting to create Mongoose connection...');
 var mongooseConnection = mongoose.connect(config.mongoosedb, {
-		server: {
-			socketOptions: {
-				keepAlive: 1
-			}
-		},
-		replset: {
-			socketOptions: {
-				keepAlive: 1
-			}
+	server: {
+		socketOptions: {
+			keepAlive: 1
 		}
-	}, function(e) {
-		console.log('Mongoose connection created!');
-		console.log('-----');
+	},
+	replset: {
+		socketOptions: {
+			keepAlive: 1
+		}
+	}
+}, function(e) {
+	console.log('Mongoose connection created!');
+	console.log('-----');
 
-		// Bootstrap models
-		var models_path = __dirname + '/app/models',
-			models = [
-				'accessRequest',
-				'answer',
-				'chat',
-				'company',
-				'feedback',
-				'metaquestion',
-				'notification',
-				'questionInstance',
-				'question',
-				'post',
-				'user',
-				'userInvite'
-			];
+	// Bootstrap models
+	var models_path = __dirname + '/app/models',
+		models = [
+			'accessRequest',
+			'answer',
+			'chat',
+			'company',
+			'feedback',
+			'metaquestion',
+			'notification',
+			'questionInstance',
+			'question',
+			'post',
+			'user',
+			'userInvite'
+		];
 
-		_.each(models, function(modelName) {
-			require(models_path + '/' + modelName);
-		});
+	_.each(models, function(modelName) {
+		require(models_path + '/' + modelName);
+	});
 
-		// bootstrap passport config
-		require('./config/passport')(passport, config);
+	// bootstrap passport config
+	require('./config/passport')(passport, config);
 
-		console.log('Setting up express & http...');
-		app = express();
-		var server = http.createServer(app);
+	console.log('Setting up express & http...');
+	app = express();
+	var server = http.createServer(app);
 
-		// express settings
-		require('./config/express')(app, config, passport, mongooseConnection);
-
+	// express settings
+	require('./config/express')(app, config, passport, mongooseConnection, function() {
 		// Bootstrap routes
 		require('./config/routes')(app, passport);
 
@@ -84,6 +83,7 @@ var mongooseConnection = mongoose.connect(config.mongoosedb, {
 		server.listen(port);
 		console.log('Express app started on port ' + port);
 	});
+});
 
 // expose app
 exports = module.exports = app;
