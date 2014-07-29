@@ -15,10 +15,20 @@ var csrfValue = function(req) {
 		|| (req.cookies['x-csrf-token'])
 		|| (req.cookies['x-xsrf-token']);
 
-	console.log('-> Getting CSRF', token);
-
 	return token;
 };
+
+// Set up Sentry / Raven for error monitoring
+var raven,
+	ravenClient;
+
+if (process && process.env && process.env.SENTRY_DSN) {
+	raven = require('raven');
+	ravenClient = new raven.Client(process.env.SENTRY_DSN);
+
+	// Catch all uncaught errors automatically
+	ravenClient.patchGlobal();
+}
 
 module.exports = function (app, config, passport, mongooseConnection, afterSessionConnectCb) {
 	app.set('showStackError', true);
@@ -146,6 +156,9 @@ module.exports = function (app, config, passport, mongooseConnection, afterSessi
 
 			// log it
 			console.log('Express error', err);
+			if (err && err.message) {
+				ravenClient.captureMessage(new Error(err.message));
+			}
 
 			res.send(err.status || 500, { error: err.message })
 		});
@@ -155,5 +168,5 @@ module.exports = function (app, config, passport, mongooseConnection, afterSessi
 			res.status(404).render('404', { url: req.originalUrl, error: 'Not found' })
 		});
 
-	})
-}
+	});
+};
