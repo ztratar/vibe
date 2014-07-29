@@ -1,4 +1,14 @@
 /**
+ * Server Analytics
+ */
+if (process && process.env && process.env.NODETIME_ACCOUNT_KEY) {
+	require('nodetime').profile({
+		accountKey: process.env.NODETIME_ACCOUNT_KEY,
+		appName: 'Vibe'
+	});
+}
+
+/**
  * Module dependencies.
  */
 var http = require('http'),

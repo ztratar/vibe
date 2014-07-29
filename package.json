@@ -26,6 +26,7 @@
     "mongoose": "~3.8.8",
     "node-gcm": "^0.9.12",
     "node-parse-api": "^0.2.8",
+    "nodetime": "^0.8.15",
     "passport": "~0.2.0",
     "passport-facebook": "~1.0.2",
     "passport-github": "~0.1.5",
