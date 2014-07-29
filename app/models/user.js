@@ -29,7 +29,7 @@ var UserSchema = new Schema({
 	avatar: { type: String, default: '' },
 
 	pending: {
-		changeHash: { type: String },
+		hash: { type: String },
 		email: { type: String }
 	},
 

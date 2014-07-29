@@ -128,18 +128,24 @@ exports.reset_password = function(req, res) {
 exports.change_email = function(req, res) {
 	var hash = /hash=([^&]+)/.exec(req._parsedUrl.query);
 
-	if (!req.isAuthenticated()) {
-		return res.redirect('/login');
+	if (hash.length) {
+		hash = hash[1];
+	} else {
+		return res.redirect('/');
 	}
 
-	if (req.user.pending.hash = hash) {
+	if (!req.isAuthenticated()) {
+		return res.redirect('/login?changeEmailHash=' + hash);
+	}
+
+	if (req.user.pending.hash === hash) {
 		req.user.changeEmailTo(req.user.pending.email);
 		res.render('users/change_email', {
 			env: process.env.NODE_ENV || 'development',
 			config: config
 		});
 	} else {
-		res.send(500);
+		res.send('Incorrect email change code provided. Please request a new change and try again.');
 	}
 };
 

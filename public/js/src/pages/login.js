@@ -8,6 +8,12 @@ $(function() {
 		return;
 	}
 
+	var changeEmailHash = /changeEmailHash=([^&]+)/.exec(window.location.search);
+
+	if (changeEmailHash) {
+		$('h1.sub-header').html('Log in to change your email');
+	}
+
 	$('input[name="email"]').focus();
 	$('form.login').on('submit', function() {
 		var email = $(this).find('input[name="email"]').val(),
@@ -50,7 +56,11 @@ $(function() {
 					return false;
 				}
 
-				window.location.reload();
+				if (changeEmailHash) {
+					window.location.href = '/change_email?hash=' + changeEmailHash[1];
+				} else {
+					window.location.reload();
+				}
 			}
 		});
 
