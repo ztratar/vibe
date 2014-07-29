@@ -408,7 +408,14 @@ var Router = Backbone.Router.extend({
 			closeUrl: closeUrl || '',
 			forceChatPosition: (window.Backbone.history.fragment.indexOf('/chat') !== -1)
 		});
+
 		window.Vibe.appView.showOverlay(postChatView);
+
+		if (!window.Vibe.appView.$notificationsContainer.hasClass('expand')) {
+			postChatView.on('remove', function() {
+				window.Vibe.appRouter.navigate('/', true);
+			});
+		}
 	},
 
 	feedback: function(feedbackId) {
@@ -434,9 +441,15 @@ var Router = Backbone.Router.extend({
 			closeUrl: closeUrl || '',
 			forceChatPosition: (window.Backbone.history.fragment.indexOf('/chat') !== -1)
 		});
-		window.Vibe.appView.showOverlay(postChatView);
-	},
 
+		window.Vibe.appView.showOverlay(postChatView);
+
+		if (!window.Vibe.appView.$notificationsContainer.hasClass('expand')) {
+			postChatView.on('remove', function() {
+				window.Vibe.appRouter.navigate('/', true);
+			});
+		}
+	},
 
 	// Cordova only pages
 
