@@ -18,7 +18,8 @@ require.config({
 		'load-image-orientation': '../libs/load-image-orientation',
 		'load-image-meta': '../libs/load-image-meta',
 		'load-image-exif': '../libs/load-image-exif',
-		'load-image-exif-map': '../libs/load-image-exif-map'
+		'load-image-exif-map': '../libs/load-image-exif-map',
+		raven: '../libs/raven'
 	},
 	shim: {
 		d3: {

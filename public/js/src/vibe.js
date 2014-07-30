@@ -3,6 +3,8 @@ import 'jquery';
 import 'underscore';
 import 'backbone';
 import 'faye';
+module Raven from 'raven';
+
 import Router from 'router';
 import ScreenRouter from 'screenRouter';
 import ModelCache from 'modelCache';
@@ -11,6 +13,11 @@ import AppView from 'views/AppView';
 import TutorialHelper from 'helpers/tutorialHelper';
 
 window.Vibe = window.Vibe || {};
+
+// Init client side error tracking to Sentry
+Raven
+	.config('https://df5d81e633614449bd5d0e3320afe867@app.getsentry.com/28143')
+	.install();
 
 window.Vibe.initLive = function() {
 	// Initialize Faye for real-time pub sub
