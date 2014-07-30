@@ -292,6 +292,29 @@ exports.update = function (req, res, next) {
 };
 
 /*
+ * PUT /questions/:question/remove_posts
+ *
+ * Remove the active posts associated with this question.
+ * Only available to admins.
+ */
+exports.removePosts = function(req, res, next) {
+	Post.update({
+		question: req.question._id,
+		active: true
+	}, {
+		$set: {
+			active: false
+		}
+	}, {
+		multi: true
+	}, function(err, numAffected) {
+		if (err) return helpers.sendError(res, err);
+
+		res.send(req.question);
+	});
+};
+
+/*
  * GET /api/questions/:question/chats
  *
  * Get comment associated with question

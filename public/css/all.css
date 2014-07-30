@@ -10794,6 +10794,7 @@ html {
   }
 }
 .posts-view > div a.pull-down {
+  z-index: 30;
   position: absolute;
   top: -8px;
   right: -8px;

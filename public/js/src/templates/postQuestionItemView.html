@@ -1,3 +1,9 @@
+<% if (window.Vibe.user.get('isAdmin')) { %>
+<a href="#" class="pull-down">
+	<i class="icon x-icon">&#61943;</i>
+</a>
+<% } %>
+
 <p class="sub-text">
 	<strong><%- userSent.get('name') %></strong><span class="user-sep-lg"> asked </span><span class="user-sep"> &ndash; </span><%- timeSent %>
 	&ndash; <strong class="percentage-voted"><%- Math.round(question.getLatestCompletionPercentage()*100) %>%</strong> voted

@@ -23,7 +23,8 @@ var PostQuestionItemView = BaseView.extend({
 
 	events: {
 		'tap ul.answers a': 'vote',
-		'tap a.discuss': 'discuss'
+		'tap a.discuss': 'discuss',
+		'tap a.pull-down': 'adminPullDown'
 	},
 
 	initialize: function(opts) {
@@ -138,6 +139,27 @@ var PostQuestionItemView = BaseView.extend({
 			eventCategory: 'question',
 			eventAction: 'clicked-discuss'
 		});
+
+		return false;
+	},
+
+	adminPullDown: function() {
+		var that = this,
+			confirmView = new ConfirmDialogView({
+				title: 'Are you sure?',
+				body: 'As an admin, you can remove the posts for this question. This will also delete all relevant discussion.',
+				onConfirm: function() {
+					if (that.model) that.model.trigger('destroy');
+					that.question.removePosts();
+				}
+			});
+
+		Analytics.log({
+			eventCategory: 'question',
+			eventAction: 'clicked-admin-pulldown'
+		});
+
+		window.Vibe.appView.showOverlay(confirmView);
 
 		return false;
 	},
