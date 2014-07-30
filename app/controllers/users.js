@@ -1,5 +1,6 @@
 // Module dependencies.
 var mongoose = require('mongoose'),
+	env = process.env.NODE_ENV || 'development',
 	_ = require('underscore'),
 	User = mongoose.model('User'),
 	Company = mongoose.model('Company'),
@@ -14,7 +15,16 @@ var mongoose = require('mongoose'),
 	app,
 	passport;
 
-var twilioClient = new twilio.RestClient('ACecea4c8ecb6fddd7efe2d730b61ea188', 'a6aa3583ace3e2292bf5939fc897c9ff');
+var twilioClient = new twilio.RestClient('ACecea4c8ecb6fddd7efe2d730b61ea188', 'a6aa3583ace3e2292bf5939fc897c9ff'),
+	twilioSendPersonalMessage = function(message) {
+		if (env !== 'development') {
+			twilioClient.sms.messages.create({
+				to: '+16308548826',
+				from: '+13312155958',
+				body: message
+			});
+		}
+	};
 
 /*
  * POST /api/login
@@ -49,11 +59,9 @@ exports.login = function (req, res) {
 				});
 			}
 
-			twilioClient.sms.messages.create({
-				to: '+16308548826',
-				from: '+13312155958',
-				body: req.body.email + ' logged onto Vibe'
-			});
+			if (!user.isSuperAdmin) {
+				twilioSendPersonalMessage(req.body.email + ' logged onto Vibe');
+			}
 
 			return res.send({
 				message: 'success'
@@ -212,11 +220,7 @@ exports.createFromAccessRequest = function (req, res, next) {
 		}], function(err, company, user) {
 			if (err) return sendStandardError();
 
-			twilioClient.sms.messages.create({
-				to: '+16308548826',
-				from: '+13312155958',
-				body: user.email + ' created an account from Access'
-			});
+			twilioSendPersonalMessage(user.email + ' created an account from Access');
 
 			req.logIn(user, function(err) {
 				if (err) return sendStandardError();
@@ -317,11 +321,7 @@ exports.createFromUserInvite = function(req, res, next) {
 	}], function(err, user) {
 		if (err) return sendStandardError();
 
-		twilioClient.sms.messages.create({
-			to: '+16308548826',
-			from: '+13312155958',
-			body: user.email + ' created an account from Invite'
-		});
+		twilioSendPersonalMessage(user.email + ' created an account from Invite');
 
 		req.logIn(user, function(err) {
 			if (err) return sendStandardError();
@@ -471,6 +471,8 @@ exports.update = function(req, res, next){
 		if (body.device_type) user.device_type = body.device_type;
 		if (body.device_token && user._id.toString() === req.user._id.toString()) {
 			user.device_token = body.device_token;
+
+			twilioSendPersonalMessage(user.email + ' registered a ' + user.device_type + ' device');
 
 			if (user.device_type === 'ios') {
 				console.log('in device type', user.device_token);
