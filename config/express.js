@@ -77,31 +77,19 @@ module.exports = function (app, config, passport, mongooseConnection, afterSessi
 		});
 
 		console.log('Setting up sessions...');
-		if (env === 'development') {
-			app.use(express.session({
-				secret: 'noobjs',
-				store: new MongoStore({
-					db: 'vibe',
-					host: mongooseConnection.connections[0].host,
-					collection : 'sessions'
-				}, afterSessionConnectCb)
-			}));
-		} else {
-			mongooseConnection.connections[0].db.serverConfig.host = mongooseConnection.connections[0].hosts[0].host;
-			mongooseConnection.connections[0].db.serverConfig.port = mongooseConnection.connections[0].hosts[0].port;
-
-			// express/mongo session storage
-			app.use(express.session({
-				secret: 'noobjs',
-				store: new MongoStore({
-					db: 'vibe',
-					username: mongooseConnection.connections[0].user,
-					password: mongooseConnection.connections[0].pass,
-					mongooseConnection: mongooseConnection.connections[0],
-					collection : 'sessions'
-				}, afterSessionConnectCb)
-			}));
-		}
+		// express/mongo session storage
+		app.use(express.session({
+			secret: 'noobjs',
+			store: new MongoStore({
+				db: 'vibe',
+				host: mongooseConnection.connections[0].host,
+				port: mongooseConnection.connections[0].port,
+				username: mongooseConnection.connections[0].user,
+				password: mongooseConnection.connections[0].pass,
+				mongooseConnection: mongooseConnection.connections[0],
+				collection : 'sessions'
+			}, afterSessionConnectCb)
+		}));
 
 		app.use(function (req, res, next) {
 			console.log('-> Local session being stored');
