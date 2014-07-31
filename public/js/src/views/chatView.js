@@ -4,9 +4,9 @@ import BaseView from 'views/baseView';
 import Chat from 'models/chat';
 import Chats from 'models/chats';
 import Analytics from 'helpers/analytics';
+import ChatItemView from 'views/chatItemView';
 
 module template from 'text!templates/chatView.html';
-module chatTemplate from 'text!templates/chatItem.html';
 module chatEmptyStateTemplate from 'text!templates/chatEmptyState.html';
 module loaderTemplate from 'text!templates/loader.html';
 
@@ -15,7 +15,6 @@ var ChatView = BaseView.extend({
 	className: 'chat-view',
 
 	template: _.template(template),
-	chatTemplate: _.template(chatTemplate),
 	chatEmptyStateTemplate: _.template(chatEmptyStateTemplate),
 	loaderTemplate: _.template(loaderTemplate),
 
@@ -36,7 +35,7 @@ var ChatView = BaseView.extend({
 
 		this.chatTitle = opts.chatTitle || 'Chat';
 
-		this.chatItemTimes = [];
+		this.chatViews = [];
 
 		if (opts.closeChat) {
 			this.customCloseChat = opts.closeChat;
@@ -75,18 +74,14 @@ var ChatView = BaseView.extend({
 		this.addAll();
 		this.scrollToBottom();
 
-		this.chatTimeUpdateInterval = setInterval(function() {
-			_.each(that.chatItemTimes, function(chatItemTime) {
-				chatItemTime.elem.html(moment(chatItemTime.time).fromNow());
-			});
-		}, 5000);
-
 		_.delay(function() {
 			that.infScrollHandler();
 		}, 800);
 
 		this.on('remove', function() {
-			clearInterval(that.chatTimeUpdateInterval);
+			_.each(that.chatViews, function(chatView) {
+				chatView.stopUpdateTime();
+			});
 		});
 
 		Analytics.log({
@@ -112,21 +107,9 @@ var ChatView = BaseView.extend({
 	},
 
 	addOne: function(chat) {
-		var avatar = chat.get('creator').avatar;
-
-		if (avatar.indexOf('data:image') === -1) {
-			avatar = window.Vibe.config.cloudfrontDomain + avatar;
-		}
-
-		var newChatItem = this.chatTemplate({
-				body: chat.get('body'),
-				userName: chat.get('creator').name,
-				userAvatar: avatar,
-				timeago: moment(chat.get('time_created')).fromNow()
-			}),
-			$chatElem = $('<div/>');
-
-		$chatElem.html(newChatItem);
+		var chatItemView = new ChatItemView({
+			model: chat
+		});
 
 		if (this.emptyState) {
 			this.$chatsContainer.html('');
@@ -138,15 +121,13 @@ var ChatView = BaseView.extend({
 			atBottom = (currentScrollTop >= scrollHeight - 40);
 
 		if (this.chats.indexOf(chat) === 0) {
-			this.$chatsContainer.append($chatElem);
+			this.$chatsContainer.append(chatItemView.$el);
 		} else {
-			this.$chatsContainer.prepend($chatElem);
+			this.$chatsContainer.prepend(chatItemView.$el);
 		}
+		chatItemView.render();
 
-		this.chatItemTimes.push({
-			elem: $chatElem.find('span.time'),
-			time: chat.get('time_created')
-		});
+		this.chatViews.push(chatItemView);
 
 		if (atBottom) {
 			this.scrollToBottom();

@@ -8618,10 +8618,44 @@ html {
   position: relative;
   padding: 12px 0;
 }
+.chat-view .chat-scroll-container .chat-item:hover a.pull-down {
+  opacity: 1;
+  visibility: visible;
+}
 @media (max-width: 480px) {
   .chat-view .chat-scroll-container .chat-item {
     padding: 8px 0;
   }
+}
+.chat-view .chat-scroll-container .chat-item a.pull-down {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #232529;
+  color: white;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  z-index: 30;
+  background: transparent;
+  box-shadow: none;
+  width: 16px;
+  height: 16px;
+  top: 6px;
+  right: 2px;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: all 0.18s ease-in-out;
+  transition: all 0.18s ease-in-out;
+}
+.chat-view .chat-scroll-container .chat-item a.pull-down i {
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 0 -2px;
+}
+.chat-view .chat-scroll-container .chat-item a.pull-down i {
+  font-size: 16px;
 }
 .chat-view .chat-scroll-container .chat-item img {
   width: 58px;
