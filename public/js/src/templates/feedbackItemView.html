@@ -1,4 +1,3 @@
-<span class="score"><%- feedback.get('num_votes') %></span>
 <% if (window.Vibe.user.get('isAdmin')) { %>
 <a href="#" class="pull-down">
 	<i class="icon x-icon">&#61943;</i>
@@ -13,12 +12,12 @@
 	<% if (feedback.get('current_user_agreed')) { %>
 	<a href="#" class="btn agreed">
 		<i class="icon">&#61845;</i>
-		Agreed!
+		Agreed! <% if (feedback.get('num_votes') > 0) { %>(<%- feedback.get('num_votes') %>)<% } %>
 	</a>
 	<% } else { %>
 	<a href="#" class="btn agree">
 		<i class="icon">&#61845;</i>
-		Agree
+		Agree <% if (feedback.get('num_votes') > 0) { %>(<%- feedback.get('num_votes') %>)<% } %>
 	</a>
 	<% } %>
 	<% if (numUnread > 0) { %>

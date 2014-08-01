@@ -11225,49 +11225,6 @@ html {
     min-height: 200px;
   }
 }
-.feedback-item-view .score {
-  position: absolute;
-  left: -14px;
-  top: -14px;
-  font-size: 28px;
-  font-weight: 600;
-  background: #67C481;
-  width: 62px;
-  height: 62px;
-  border-radius: 100px;
-  line-height: 60px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-}
-@media (max-width: 480px) {
-  .feedback-item-view .score {
-    width: 42px;
-    height: 42px;
-    top: -6px;
-    left: -6px;
-    font-size: 22px;
-    line-height: 42px;
-  }
-}
-.feedback-item-view .score.pop {
-  -webkit-animation: popZoom 0.32s linear 0s forwards;
-  animation: popZoom 0.32s linear 0s forwards;
-}
-@media (max-width: 480px) {
-  .feedback-item-view .score.pop {
-    -webkit-animation: popZoomMobile 0.32s linear 0s forwards;
-    animation: popZoomMobile 0.32s linear 0s forwards;
-  }
-}
-.feedback-item-view .score.pop-reverse {
-  -webkit-animation: popZoomReverse 0.32s linear 0s forwards;
-  animation: popZoomReverse 0.32s linear 0s forwards;
-}
-@media (max-width: 480px) {
-  .feedback-item-view .score.pop-reverse {
-    -webkit-animation: popZoomMobileReverse 0.32s linear 0s forwards;
-    animation: popZoomMobileReverse 0.32s linear 0s forwards;
-  }
-}
 .feedback-item-view .action-bar {
   background: #5a93cc;
   border-radius: 0 0 6px 6px;
@@ -11286,6 +11243,10 @@ html {
 .feedback-item-view .action-bar a.btn i {
   font-size: 28px;
   margin-right: 10px;
+}
+.feedback-item-view .action-bar a.btn i.pop {
+  -webkit-animation: popZoomMobile 0.32s linear 0s forwards;
+  animation: popZoomMobile 0.32s linear 0s forwards;
 }
 .feedback-item-view .action-bar a.btn:hover {
   background: rgba(255, 255, 255, 0.04);

@@ -45,10 +45,10 @@ var FeedbackItemView = BaseView.extend({
 			that.feedback.set({
 				'num_votes': newNumVotes
 			});
-			that.$score.addClass('pop');
+			that.$agree.addClass('pop');
 
 			setTimeout(function() {
-				that.$score.removeClass('pop');
+				that.$agree.removeClass('pop');
 			}, 500);
 		});
 	},
@@ -60,7 +60,7 @@ var FeedbackItemView = BaseView.extend({
 			numTotalChats: this.numTotalChats
 		}));
 
-		this.$score = this.$('.score');
+		this.$agree = this.$('.agree i, .agreed i');
 
 		this.delegateEvents();
 		return this;
@@ -72,10 +72,10 @@ var FeedbackItemView = BaseView.extend({
 
 		feedback.agree();
 
-		this.$score.addClass('pop');
+		this.$agree.addClass('pop');
 
 		setTimeout(function() {
-			that.$score.removeClass('pop');
+			that.$agree.removeClass('pop');
 		}, 500);
 
 		Analytics.log({
@@ -91,12 +91,6 @@ var FeedbackItemView = BaseView.extend({
 			feedback = this.feedback;
 
 		feedback.undoAgree();
-
-		this.$score.addClass('pop-reverse');
-
-		setTimeout(function() {
-			that.$score.removeClass('pop-reverse');
-		}, 500);
 
 		return false;
 	},
