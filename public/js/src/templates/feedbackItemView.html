@@ -24,7 +24,7 @@
 	<% if (numUnread > 0) { %>
 	<a href="#" class="btn discuss with-unread">
 		<i class="icon">&#61704;</i>
-		Discuss
+		Discuss <% if (numTotalChats > 0) { %>(<%- numTotalChats %>)<% } %>
 		<span class="unread-chats">
 			<%- numUnread %><span> new</span>
 		</span>
@@ -32,7 +32,7 @@
 	<% } else { %>
 	<a href="#" class="btn discuss">
 		<i class="icon">&#61704;</i>
-		Discuss
+		Discuss <% if (numTotalChats > 0) { %>(<%- numTotalChats %>)<% } %>
 	</a>
 	<% } %>
 </div>

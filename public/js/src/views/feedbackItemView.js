@@ -56,7 +56,8 @@ var FeedbackItemView = BaseView.extend({
 	render: function() {
 		this.$el.html(this.template({
 			feedback: this.feedback,
-			numUnread: this.numUnread
+			numUnread: this.numUnread,
+			numTotalChats: this.numTotalChats
 		}));
 
 		this.$score = this.$('.score');
@@ -155,6 +156,8 @@ var FeedbackItemView = BaseView.extend({
 			chatsLastSeen = this.feedback.get('chat').chats_last_seen,
 			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
 
+		this.numTotalChats = totalChats;
+
 		if (myLastSeen) {
 			this.numUnread = totalChats - myLastSeen;
 		} else {
@@ -165,6 +168,7 @@ var FeedbackItemView = BaseView.extend({
 		window.Vibe.faye.subscribe('/api/feedback/' + this.feedback.get('_id') + '/chats', function(newChat) {
 			if (!that.chatOpen) {
 				that.numUnread++;
+				that.numTotalChats++;
 				that.render();
 			}
 		});

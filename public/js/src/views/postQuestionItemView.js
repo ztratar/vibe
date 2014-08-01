@@ -72,7 +72,8 @@ var PostQuestionItemView = BaseView.extend({
 
 	renderActionBar: function() {
 		this.$actionBarContainer.html(this.actionBarTemplate({
-			numUnread: this.numUnread
+			numUnread: this.numUnread,
+			numTotalChats: this.numTotalChats
 		}));
 
 		this.delegateEvents();
@@ -176,6 +177,8 @@ var PostQuestionItemView = BaseView.extend({
 			chatsLastSeen = this.question.get('chat').chats_last_seen,
 			myLastSeen = chatsLastSeen ? chatsLastSeen[window.Vibe.user.get('_id')] : false;
 
+		this.numTotalChats = totalChats;
+
 		if (myLastSeen) {
 			this.numUnread = totalChats - myLastSeen;
 		} else {
@@ -186,6 +189,7 @@ var PostQuestionItemView = BaseView.extend({
 		window.Vibe.faye.subscribe('/api/questions/' + this.question.get('_id') + '/chats', function(newChat) {
 			if (!that.chatOpen) {
 				that.numUnread++;
+				that.numTotalChats++;
 				that.renderActionBar();
 			}
 		});
