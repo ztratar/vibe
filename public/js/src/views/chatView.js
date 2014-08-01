@@ -138,7 +138,7 @@ var ChatView = BaseView.extend({
 
 	newChat: function(ev) {
 		if (ev.type === 'keydown' && ev.keyCode !== 13) {
-			return;
+			return true;
 		}
 
 		var that = this,
