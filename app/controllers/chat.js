@@ -1,6 +1,8 @@
 // Module dependencies.
 var mongoose = require('mongoose'),
 	_ = require('underscore'),
+	Feedback = mongoose.model('Feedback'),
+	Question = mongoose.model('Question'),
 	Chat = mongoose.model('Chat'),
 	app;
 
@@ -13,6 +15,24 @@ exports.delete = function(req, res, next) {
 	Chat.findById(req.params.id, function(err, chat) {
 		if (err) return helpers.sendError(res, err);
 		if (!chat) return helpers.sendError(res, 'No chat found');
+
+		var UpdateModel,
+			updateField;
+		if (chat.feedback) {
+			UpdateModel = Feedback;
+			updateField = 'feedback';
+		} else if (chat.question) {
+			UpdateModel = Question;
+			updateField = 'question';
+		}
+
+		UpdateModel.update({
+			_id: chat[updateField]
+		}, {
+			$inc: {
+				'chat.num_chats': -1
+			}
+		}, function() {});
 
 		chat.remove(function() {
 			res.send(200);
