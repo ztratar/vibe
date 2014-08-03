@@ -8419,7 +8419,7 @@ html {
   }
 }
 .notifications-container .notifications-view li a .fake-img.img-question {
-  background: #e69d30;
+  background: #e59926;
 }
 .notifications-container .notifications-view li a .fake-img.img-feedback-archived {
   background: #223e59;
@@ -8944,8 +8944,8 @@ html {
   }
 }
 .post-wrapper .manage-polls {
-  background: #e69d30;
-  border-color: #e69d30;
+  background: #e59926;
+  border-color: #e59926;
   font-weight: 600;
   margin-left: 10px;
   padding: 12px 22px;
@@ -10827,7 +10827,7 @@ html {
   font-size: 136px;
   height: 140px;
   line-height: 151px;
-  color: #e9aa4b;
+  color: #e8a641;
 }
 @media (max-width: 480px) {
   .posts-view-wrap .posts-view-empty .media i {
@@ -11016,7 +11016,7 @@ html {
   }
 }
 .post-question-item-view {
-  background: #e69d30;
+  background: #e59926;
 }
 .post-question-item-view h4 {
   margin-top: 0;
@@ -11122,7 +11122,7 @@ html {
   display: table;
   height: 100%;
   width: 100%;
-  background: #f0a73b;
+  background: #efa330;
   border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   -webkit-transition: background 0.12s ease-out;
@@ -11130,7 +11130,7 @@ html {
 }
 .post-question-item-view ul.answers li a:hover {
   text-decoration: none;
-  background: #f3ae47;
+  background: #f2aa3d;
 }
 .post-question-item-view ul.answers li a.selected {
   -webkit-animation: bounceHit 0.32s linear;
