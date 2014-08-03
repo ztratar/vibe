@@ -137,6 +137,16 @@ var TimeSeriesChartView = Backbone.View.extend({
 				y: topMargin + (realChartHeight * (1 - yPercentage))
 			};
 
+			if (i > 1) {
+				var prevPoint = this.getPoint(i-1);
+				if (prevPoint) {
+					coords.x = Math.max(coords.x, prevPoint.x + 70);
+				}
+				if (i === this.answerData.length - 1) {
+					coords.x = Math.min(coords.x, this.chartWidth - this.getChartMargin() - 70);
+				}
+			}
+
 			this.points[i] = coords;
 		}
 
