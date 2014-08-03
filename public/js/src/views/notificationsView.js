@@ -20,12 +20,25 @@ var NotificationsView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(this.template());
 		this.$notifList = this.$('.notifications-list');
+		this.$emptyState = this.$('.notification-empty-state');
+
+		this.determineEmptyState();
 
 		return this;
 	},
 
+	determineEmptyState: function() {
+		if (this.notifications.length) {
+			this.$emptyState.hide();
+			this.$notifList.show();
+		} else {
+			this.$notifList.hide();
+			this.$emptyState.show();
+		}
+	},
+
 	addAll: function() {
-		this.$notifList.empty();
+		this.determineEmptyState();
 		this.notifications.each(this.addOne, this);
 	},
 

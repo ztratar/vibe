@@ -1,5 +1,5 @@
 .notifications-container {
-	background: rgba(6, 11, 29, 0);
+	background: rgba(15, 23, 51, 0);
 	position: fixed;
 	top: 64px;
 	left: 0;
@@ -17,7 +17,7 @@
 		z-index: 190;
 		pointer-events: auto;
 		visibility: visible;
-		background: rgba(6, 11, 29, 0.97);
+		background: rgba(15, 23, 51, 1);
 		opacity: 1;
 		bottom: 0;
 	}
@@ -123,6 +123,60 @@
 					color: rgba(255,255,255,.4);
 
 					@media (max-width: @screen-xs) {
+						font-size: 14px;
+					}
+				}
+			}
+		}
+
+		.notification-empty-state {
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			.media {
+				margin: 0 auto;
+				width: 320px;
+				text-align: left;
+
+				i {
+					color: rgba(46, 204, 113, 0.75);
+					font-size: 92px;
+					height: 100px;
+					line-height: 114px;
+					margin-right: 32px;
+				}
+
+				h4 {
+					font-size: 32px;
+					font-weight: 600;
+					line-height: 38px;
+					margin-top: 11px;
+					margin-bottom: 7px;
+					opacity: 0.6;
+				}
+
+				p {
+					font-size: 20px;
+					opacity: .3;
+				}
+
+				@media (max-width: @screen-xs) {
+					width: 254px;
+
+					i {
+						font-size: 60px;
+						margin-right: 10px;
+						height: 74px;
+						line-height: 87px;
+					}
+
+					h4 {
+						font-size: 16px;
+						line-height: 22px;
+					}
+
+					p {
 						font-size: 14px;
 					}
 				}
