@@ -30,6 +30,7 @@ var NotificationsView = Backbone.View.extend({
 	determineEmptyState: function() {
 		if (this.notifications.length) {
 			this.$emptyState.hide();
+			this.$notifList.empty();
 			this.$notifList.show();
 		} else {
 			this.$notifList.hide();

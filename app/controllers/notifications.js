@@ -119,7 +119,8 @@ exports.send = function(notifOpts, cb) {
 
 		// Check for notification to cluster
 		Notification.findOne({
-			cluster_tag: notifOpts.cluster_tag
+			cluster_tag: notifOpts.cluster_tag,
+			for_user: notifOpts.for_user
 		}, function(err, notification) {
 			if (err) return asyncCb(err);
 			prevClusteredNotif = notification;
