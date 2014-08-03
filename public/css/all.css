@@ -9038,6 +9038,11 @@ html {
 .rating-chart-view rect.zero {
   fill: #F8B653;
 }
+.rating-chart-view text {
+  font-size: 18px;
+  font-weight: bold;
+  fill: #DAA85E;
+}
 .percentage-tooltip {
   position: absolute;
   background: #f1c686;

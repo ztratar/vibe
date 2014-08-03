@@ -47,6 +47,7 @@ var RatingChartView = Backbone.View.extend({
 
 	initChart: function() {
 		this.bars = [];
+		this.voteNums = [];
 		this.windowWidth = $(window).width();
 		this.chartHeight = this.$el.height();
 		this.chartWidth = this.$el.width();
@@ -110,7 +111,8 @@ var RatingChartView = Backbone.View.extend({
 	},
 
 	drawBar: function(voteKey, voteData) {
-		var barYInfo = this.getBarCoords(voteData),
+		var that = this,
+			barYInfo = this.getBarCoords(voteData),
 			barHeight = barYInfo.height,
 			startY = barYInfo.startY,
 			barXPos = this.getChartMargin() + (voteKey-1) * this.barCalcInterval,
@@ -128,12 +130,29 @@ var RatingChartView = Backbone.View.extend({
 			startY -= 10;
 		}
 
-		var rect = this.svg
-					.append('rect')
+		var rect = this.svg.append('rect')
 					.attr('width', this.chartSettings.barWidth)
 					.attr('height', barHeight)
 					.attr('x', barXPos)
 					.attr('y', startY);
+
+		var axis = this.svg.append('g')
+					.attr('width', this.chartSettings.barWidth)
+					.attr('height', this.chartHeight - this.getChartBottomMargin())
+					.attr('transform', function(d) {
+						var xPos = barXPos+(that.chartSettings.barWidth/2),
+							yPos = that.chartHeight - that.getChartBottomMargin() - 14;
+						return 'translate('+Math.round(xPos)+', '+yPos+')';
+					});
+
+		var num_votes = axis
+					.append('text')
+					.attr('text-anchor', 'middle')
+					.attr('x', 0)
+					.attr('y', 0);
+		if (voteData) {
+			num_votes.text(voteData);
+		}
 
 		var img = this.svg
 					.append('svg:image')
@@ -146,6 +165,7 @@ var RatingChartView = Backbone.View.extend({
 		if (zerodValue) rect.attr('class', 'zero');
 
 		this.bars.push(rect);
+		this.voteNums.push(num_votes);
 	},
 
 	getBarCoords: function(voteData) {
@@ -178,7 +198,8 @@ var RatingChartView = Backbone.View.extend({
 			// Animate new bar coords
 			_.each(that.bars, function(bar, ind) {
 				var barHeight = newBarCoords[ind].height,
-					startY = newBarCoords[ind].startY;
+					startY = newBarCoords[ind].startY,
+					voteNum = that.voteNums[ind];
 
 				if (barHeight === 0) {
 					bar.attr('class', 'zero');
@@ -193,6 +214,10 @@ var RatingChartView = Backbone.View.extend({
 					.attr('height', barHeight)
 					.attr('y', startY)
 					.duration(800);
+
+				if (that.groupedBarData[ind+1]) {
+					voteNum.text(that.groupedBarData[ind+1]);
+				}
 			});
 		}, 300);
 	}
