@@ -86,7 +86,7 @@ NotificationSchema.methods = {
 			returnObj.notifBody = numPeopleString + ' voted on "' + this.data.question + '"';
 			returnObj.link = serverUrl + 'questions/' + this.data.questionId;
 		} else if (this.type === 'feedback-archived') {
-			returnObj.notifBody = 'Your suggestion was read and archived';
+			returnObj.notifBody = 'Your feedback was read and archived';
 			if (this.data.reason && this.data.reason.length) {
 				returnObj.notifBody += ' with the note "' + _.escape(this.data.reason) + '"';
 			}
@@ -95,7 +95,7 @@ NotificationSchema.methods = {
 			returnObj.notifBody = 'Congratulations, your feedback was just sent to everyone!';
 			returnObj.link = serverUrl;
 		} else if (this.type === 'feedback-agree') {
-			returnObj.notifBody = numPeopleString + ' agreed with the suggestion "' + this.data.feedback + '"';
+			returnObj.notifBody = numPeopleString + ' agreed with the feedback "' + this.data.feedback + '"';
 			returnObj.link = serverUrl + 'feedback/' + this.data.feedbackId;
 		} else if (this.type === 'question-chat') {
 			returnObj.notifBody = peopleString + ' chatting on "' + this.data.question + '"';

@@ -17,8 +17,8 @@ var TutorialHelper = {
 			}, {
 				icon: '#61804',
 				iconbg: '#2f557c',
-				title: 'An anonymous suggestion box',
-				body: 'Lets employees tell you how they really feel -- no awkwardness. Did they make an interesting suggestion? One click can turn it into a group discussion.'
+				title: 'An anonymous feedback box',
+				body: 'Lets employees tell you how they really feel -- no awkwardness. Did they give interesting feedback? One click can turn it into a group discussion.'
 			}, {
 				icon: '#61753',
 				iconbg: '#E69D30',
@@ -54,10 +54,10 @@ var TutorialHelper = {
 				body: 'You\'re one of my first users. What you want and think mean absolutely everything to me.<br><br> Email me day or night at zach@getvibe.com!'
 			}, {
 				img: window.staticRoute + 'img/tutorials/first_time_user/1.png',
-				body: 'Vibe has an anonymous suggestion box so you can test ideas and thoughts without expectations or awkwardness.'
+				body: 'Vibe has an anonymous feedback box so you can test ideas and thoughts without expectations or awkwardness.'
 			}, {
 				img: window.staticRoute + 'img/tutorials/first_time_user/2.png',
-				body: 'The best suggestions might be broadcasted out! These will show up in your feed -- you can anonymously agree with them.'
+				body: 'The best feedback might be broadcasted out! These will show up in your feed -- you can anonymously agree with them.'
 			}, {
 				img: window.staticRoute + 'img/tutorials/first_time_user/3.png',
 				body: 'Turns out everyone loved the idea? Great! Discussion uses your real identity.'
@@ -89,8 +89,8 @@ var TutorialHelper = {
 			}, {
 				icon: '#61804',
 				iconbg: '#2f557c',
-				title: 'An anonymous suggestion box',
-				body: 'Lets employees tell you how they really feel -- no awkwardness. Did they make an interesting suggestion? One click can turn it into a group discussion.'
+				title: 'An anonymous feedback box',
+				body: 'Lets employees tell you how they really feel -- no awkwardness. Did they give interesting feedback? One click can turn it into a group discussion.'
 			}, {
 				icon: '#61753',
 				iconbg: '#E69D30',
