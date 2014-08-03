@@ -10277,7 +10277,7 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  overflow-y: scroll;
+  overflow: hidden;
 }
 .post-overlay-view .post-wrapper {
   z-index: 200;
