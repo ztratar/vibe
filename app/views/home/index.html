@@ -13,7 +13,7 @@
 	{% if env == 'development' %}
 	<script data-main="/js/build/start" src="/js/libs/require.js"></script>
 	{% else %}
-	<script src="/js/production/all.js"></script>
+	<script src="/js/production/all.js?v={{ config.frontendCacheVersion }}"></script>
 	<script>
 		require(['vibe']);
 	</script>
