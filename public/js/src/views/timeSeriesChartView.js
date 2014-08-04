@@ -104,11 +104,9 @@ var TimeSeriesChartView = BaseView.extend({
 		if (point1) {
 			this.drawLine(this.numPoints, point1, point2);
 			this.drawCircle(this.numPoints-1, point1.x, point1.y);
-			this.drawCircleText(this.numPoints-1, point1.x, point1.y, point1.avg);
 		}
 		this.drawAxisMarker(this.numPoints, point2.x);
 		this.drawCircle(this.numPoints, point2.x, point2.y);
-		this.drawCircleText(this.numPoints, point2.x, point2.y, point2.avg);
 
 		if (pointData.avg === false) {
 			var lastCircle = _.last(this.circles),
@@ -219,20 +217,6 @@ var TimeSeriesChartView = BaseView.extend({
 			});
 
 		return circle;
-	},
-
-	drawCircleText: function(i, x, y, avgText) {
-		var r = (this.useSmallVersion() ? 10 : 14);
-
-		var g = this.svg.append('g')
-				.attr('transform', 'translate('+(x+0.5)+','+(y+4.5)+')');
-
-		avgText = Math.round(avgText*10) / 10;
-
-		var text = g.append('text')
-					.attr('text-anchor', 'middle')
-					.attr('class', 'inCircle')
-					.text(avgText);
 	},
 
 	drawAxisGradient: function() {
