@@ -68,7 +68,8 @@ var ManagePollsView = BaseView.extend({
 	},
 
 	render: function() {
-		var that = this;
+		var that = this,
+			cachedData = {};
 
 		this.$el.html(this.template());
 
@@ -80,9 +81,6 @@ var ManagePollsView = BaseView.extend({
 
 		this.selectedQuestionsList.render();
 		this.suggestedQuestionsList.render();
-
-		this.selectedQuestions.fetch();
-		this.suggestedQuestions.fetch();
 
 		this.$addPollInput = this.$('.add-poll input');
 		this.$loaderContainer = this.$('.loader-container');
@@ -99,8 +97,29 @@ var ManagePollsView = BaseView.extend({
 		});
 
 		this.delegateEvents();
-
 		this.showLoader();
+
+		cachedData.selected = window.Vibe.modelCache.getAndRemove('selected-questions');
+		cachedData.suggested = window.Vibe.modelCache.getAndRemove('suggested-questions');
+
+		if (!cachedData.selected) {
+			this.selectedQuestions.fetch({
+				success: function(model, data) {
+					window.Vibe.modelCache.set('selected-questions', data, 1000 * 60);
+				}
+			});
+		} else {
+			this.selectedQuestions.reset(cachedData.selected);
+		}
+		if (!cachedData.suggested) {
+			this.suggestedQuestions.fetch({
+				success: function(model, data) {
+					window.Vibe.modelCache.set('suggested-questions', data, 1000 * 60);
+				}
+			});
+		} else {
+			this.suggestedQuestions.reset(cachedData.suggested);
+		}
 
 		return this;
 	},

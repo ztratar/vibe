@@ -9,6 +9,56 @@
 		padding: 10px 0;
 		position: relative;
 
+		div.checkbox {
+			margin: -1px 6px 0 0;
+			width: 18px;
+			height: 18px;
+			background: #1D1F20;
+			vertical-align: middle;
+
+			@media (max-width: @screen-xs) {
+				padding: 0;
+			}
+
+			label {
+				width: 20px;
+				height: 22px;
+
+				@media (max-width: @screen-xs) {
+					width: 14px;
+					height: 14px;
+				}
+
+				&:after {
+					left: 3px;
+					width: 20px;
+					height: 8px;
+					border: 3px solid #fcfff4;
+					border-top: none;
+					border-right: none;
+
+					@media (max-width: @screen-xs) {
+						width: 14px;
+						top: 4px;
+						left: 4px;
+					}
+				}
+			}
+		}
+
+		span.results-label {
+			cursor: pointer;
+			text-transform: uppercase;
+			margin-right: 22px;
+			font-size: 12px;
+			color: rgba(255, 255, 255, 0.65);
+
+			@media (max-width: @screen-xs) {
+				font-size: 10px;
+				margin-right: 0;
+			}
+		}
+
 		a.x-action {
 			position: absolute;
 			opacity: 0.5;
@@ -21,7 +71,7 @@
 		}
 
 		.question-col {
-			padding: 7px 295px 6px 0;
+			padding: 7px 175px 6px 0;
 			min-height: 62px;
 
 			@media (max-width: @screen-xs) {
@@ -29,13 +79,14 @@
 			}
 
 			h3 {
-				margin: 0;
+				margin: 0 0 8px 0;
 				font-size: 18px;
 				line-height: 24px;
 
 				@media (max-width: @screen-xs) {
 					font-size: 15px;
 					line-height: 18px;
+					margin: 0 0 3px 0;
 				}
 			}
 
@@ -46,6 +97,7 @@
 
 				@media (max-width: @screen-xs) {
 					font-size: 10px;
+					display: block;
 				}
 			}
 		}
@@ -79,7 +131,7 @@
 		.send-now-col {
 			position: absolute;
 			right: 65px;
-			top: 22px;
+			top: 25px;
 
 			@media (max-width: @screen-xs) {
 				right: 8px;

@@ -149,7 +149,10 @@ var PostOverlayView = BaseView.extend({
 			feedback = new Feedback();
 
 		if (!inputVal.length) {
-			window.Vibe.appView.showNotif('Feedback can\'t be blank', 2000, 'danger');
+			window.Vibe.appView.showNotif('Feedback can\'t be blank', {
+				timeToRead: 2000,
+				addClass: 'danger'
+			});
 			return false;
 		}
 
@@ -169,7 +172,10 @@ var PostOverlayView = BaseView.extend({
 						eventLabel: data.error
 					});
 
-					window.Vibe.appView.showNotif(data.error, 2000, 'danger');
+					window.Vibe.appView.showNotif(data.error, {
+						timeToRead: 2000,
+						addClass: 'danger'
+					});
 					return;
 				}
 

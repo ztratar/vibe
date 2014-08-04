@@ -284,6 +284,12 @@ exports.createAnswer = function(req, res) {
 exports.update = function (req, res, next) {
 	if (req.body.active !== undefined) req.question.active = req.body.active;
 	if (req.body.send_on_days !== undefined) req.question.send_on_days = req.body.send_on_days;
+	if (req.body.audience !== undefined) {
+		if (req.body.audience !== req.question.audience
+				&& req.user.isAdmin) {
+			req.question.audience = req.body.audience;
+		}
+	}
 
 	req.question.save(function(err, question){
 		if (err) return next(err);

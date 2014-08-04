@@ -2,6 +2,7 @@ import 'underscore';
 import 'backbone';
 
 import User from 'models/user';
+import Users from 'models/users';
 import BaseView from 'views/baseView';
 import ConfirmDialogView from 'views/confirmDialogView';
 import PostChatView from 'views/postChatView';
@@ -11,6 +12,7 @@ import Analytics from 'helpers/analytics';
 
 module template from 'text!templates/postQuestionItemView.html';
 module actionBarTemplate from 'text!templates/postQuestionItemActionBar.html';
+module sentToAdminsTemplate from 'text!templates/postQuestionSentToAdmins.html';
 
 var PostChatView = require('views/postChatView');
 
@@ -20,6 +22,7 @@ var PostQuestionItemView = BaseView.extend({
 
 	template: _.template(template),
 	actionBarTemplate: _.template(actionBarTemplate),
+	sentToAdminsTemplate: _.template(sentToAdminsTemplate),
 
 	events: {
 		'tap ul.answers a': 'vote',
@@ -63,7 +66,11 @@ var PostQuestionItemView = BaseView.extend({
 		this.$percentage = this.$('.percentage-voted');
 
 		_.delay(_.bind(function() {
-			this.renderChart();
+			if (this.question.get('audience') === 'admins') {
+				this.renderSentToAdminThanks();
+			} else {
+				this.renderChart();
+			}
 			this.delegateEvents();
 		}, this), this.chartDelay);
 
@@ -96,6 +103,13 @@ var PostQuestionItemView = BaseView.extend({
 
 		this.$chartContainer.html(this.chartView.$el);
 		this.chartView.render();
+	},
+
+	renderSentToAdminThanks: function() {
+		var admins = new Users(window.Vibe._data_.admins);
+		this.$chartContainer.html(this.sentToAdminsTemplate({
+			adminNames: admins.getNames()
+		}));
 	},
 
 	increaseCompletionPercentage: function() {

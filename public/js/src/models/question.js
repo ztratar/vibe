@@ -73,6 +73,26 @@ var Question = BaseModel.extend({
 			type: 'PUT',
 			url: this.url() + '/remove_posts'
 		});
+	},
+
+	makePrivateToAdmins: function(cb) {
+		this.save({
+			audience: 'admins'
+		},{
+			success: function() {
+				cb && cb();
+			}
+		});
+	},
+
+	makePublic: function(cb) {
+		this.save({
+			audience: 'all'
+		},{
+			success: function() {
+				cb && cb();
+			}
+		});
 	}
 
 });

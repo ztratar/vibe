@@ -108,6 +108,11 @@ var AppView = Backbone.View.extend({
 
 		if (!view) return;
 
+		if (this.closeOverlayTimeout) {
+			this.$overlayContainer.removeClass('remove');
+			clearTimeout(this.closeOverlayTimeout);
+		}
+
 		this.overlayedView = view;
 
 		this.$overlayViewContainer.html(view.$el);
@@ -143,6 +148,10 @@ var AppView = Backbone.View.extend({
 
 		view.on('remove', function() {
 			that.closeOverlay();
+
+			if (opts.onRemove) {
+				opts.onRemove();
+			}
 		});
 	},
 
@@ -158,7 +167,7 @@ var AppView = Backbone.View.extend({
 		this.$overlayContainer.addClass('remove');
 
 		// Wait for the animation
-		_.delay(function() {
+		this.closeOverlayTimeout = setTimeout(function() {
 			if (that.overlayedView) {
 				that.overlayedView.trigger('remove-done');
 			}
@@ -230,33 +239,44 @@ var AppView = Backbone.View.extend({
 		});
 	},
 
-	showNotif: function(text, timeToRead, addClass) {
-		var that = this;
+	showNotif: function(text, opts) {
+		opts = opts || {};
 
-		timeToRead = timeToRead || 2100;
-		addClass = addClass || '';
+		var that = this,
+			timeToRead = opts.timeToRead || 2100,
+			addClass = opts.addClass || '',
+			type = opts.type || 'center';
 
-		this.$notifText.html(text);
+		if (this.notifShowTimeout) clearTimeout(this.notifShowTimeout);
+		if (this.notifHideTimeout) clearTimeout(this.notifHideTimeout);
 
-		this.$notifHolder
-			.addClass('with-anim')
-			.addClass('show-notif');
-
+		this.$notifHolder.attr('class', 'notif-holder now ' + type);
+		_.delay(function() {
+			that.$notifHolder.removeClass('now');
+		}, 5);
 		if (addClass) {
 			this.$notifHolder.addClass(addClass);
 		}
+		this.$notifText.html(text);
+
+		this.notifShowTimeout = setTimeout(function() {
+			that.$notifHolder
+				.addClass('with-anim')
+				.addClass('show-notif');
+		}, 140);
 
 		_.delay(function() {
 			that.$notifHolder.removeClass('with-anim');
 		}, 500);
 
-		_.delay(function() {
+		this.notifHideTimeout = setTimeout(function() {
 			that.$notifHolder.removeClass('show-notif');
-			if (addClass) {
-				_.delay(function() {
+			that.notifHideTimeout = setTimeout(function() {
+				that.$notifHolder.removeClass(type);
+				if (addClass) {
 					that.$notifHolder.removeClass(addClass);
-				}, 420);
-			}
+				}
+			}, 420);
 		}, timeToRead);
 	},
 

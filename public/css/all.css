@@ -7572,7 +7572,8 @@ div.checkbox label:after {
   -ms-transform: rotate(-45deg) scale(0.9, 0.9);
   transform: rotate(-45deg) scale(0.9, 0.9);
 }
-div.checkbox label:hover:after {
+div.checkbox label:hover:after,
+div.checkbox label.fakeHover:after {
   opacity: 0.3;
 }
 div.checkbox input[type=checkbox]:checked + label:after {
@@ -10184,6 +10185,10 @@ html {
   border-radius: 10px;
   padding: 24px 40px;
 }
+.notif-holder.now {
+  -webkit-transition: all 0s ease-out;
+  transition: all 0s ease-out;
+}
 .notif-holder.show-notif {
   z-index: 400;
   opacity: 1;
@@ -10200,6 +10205,34 @@ html {
 }
 .notif-holder.danger .notif-text {
   background: #d9534f;
+}
+.notif-holder.top {
+  -webkit-transform: translate3d(0, -80px, 0);
+  transform: translate3d(0, -80px, 0);
+  background: none;
+  pointer-events: none;
+  top: 0;
+  bottom: auto;
+  -webkit-animation: none !important;
+  animation: none !important;
+  transition: all 0.22s ease-out, background 0s;
+  -webkit-transition: all 0.22s ease-out, background 0s;
+}
+.notif-holder.top.show-notif {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.notif-holder.top .v-centered,
+.notif-holder.top .v-centered > div {
+  display: block;
+  margin: 0;
+  padding: 0;
+  height: auto;
+  width: auto;
+}
+.notif-holder.top .notif-text {
+  border-radius: 0 0 10px 10px;
+  padding: 14px 40px;
 }
 .user-list-view {
   list-style: none;
@@ -10272,6 +10305,56 @@ html {
   padding: 10px 0;
   position: relative;
 }
+.question-list-view > li div.checkbox {
+  margin: -1px 6px 0 0;
+  width: 18px;
+  height: 18px;
+  background: #1D1F20;
+  vertical-align: middle;
+}
+@media (max-width: 480px) {
+  .question-list-view > li div.checkbox {
+    padding: 0;
+  }
+}
+.question-list-view > li div.checkbox label {
+  width: 20px;
+  height: 22px;
+}
+@media (max-width: 480px) {
+  .question-list-view > li div.checkbox label {
+    width: 14px;
+    height: 14px;
+  }
+}
+.question-list-view > li div.checkbox label:after {
+  left: 3px;
+  width: 20px;
+  height: 8px;
+  border: 3px solid #fcfff4;
+  border-top: none;
+  border-right: none;
+}
+@media (max-width: 480px) {
+  .question-list-view > li div.checkbox label:after {
+    width: 14px;
+    top: 4px;
+    left: 4px;
+  }
+}
+.question-list-view > li span.results-label {
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-right: 22px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+}
+@media (max-width: 480px) {
+  .question-list-view > li span.results-label {
+    font-size: 10px;
+    margin-right: 0;
+  }
+}
 .question-list-view > li a.x-action {
   position: absolute;
   opacity: 0.5;
@@ -10284,7 +10367,7 @@ html {
   }
 }
 .question-list-view > li .question-col {
-  padding: 7px 295px 6px 0;
+  padding: 7px 175px 6px 0;
   min-height: 62px;
 }
 @media (max-width: 480px) {
@@ -10293,7 +10376,7 @@ html {
   }
 }
 .question-list-view > li .question-col h3 {
-  margin: 0;
+  margin: 0 0 8px 0;
   font-size: 18px;
   line-height: 24px;
 }
@@ -10301,6 +10384,7 @@ html {
   .question-list-view > li .question-col h3 {
     font-size: 15px;
     line-height: 18px;
+    margin: 0 0 3px 0;
   }
 }
 .question-list-view > li .question-col span.last-sent {
@@ -10311,6 +10395,7 @@ html {
 @media (max-width: 480px) {
   .question-list-view > li .question-col span.last-sent {
     font-size: 10px;
+    display: block;
   }
 }
 .question-list-view > li .save-col {
@@ -10341,7 +10426,7 @@ html {
 .question-list-view > li .send-now-col {
   position: absolute;
   right: 65px;
-  top: 22px;
+  top: 25px;
 }
 @media (max-width: 480px) {
   .question-list-view > li .send-now-col {
@@ -11264,6 +11349,28 @@ html {
 }
 .post-question-item-view .chart-container .rating-chart-view {
   height: 100%;
+}
+.post-question-item-view .chart-container .admin-sent {
+  background: #dc8f1a;
+  max-width: 440px;
+  display: inline-block;
+  padding: 4px 32px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 7px;
+}
+.post-question-item-view .chart-container .admin-sent h3 {
+  font-size: 38px;
+  font-weight: 400;
+}
+.post-question-item-view .chart-container .admin-sent h3 i {
+  font-size: 38px;
+  font-weight: bold;
+  margin-right: 6px;
+}
+.post-question-item-view .chart-container .admin-sent p {
+  font-size: 18px;
+  display: inline-block;
+  max-width: 400px;
 }
 .post-question-item-view .vote-results-container {
   height: 280px;

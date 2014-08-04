@@ -7,8 +7,14 @@ _.extend(ModelCache.prototype, {
 	clear: function() {
 		this.cache = {};
 	},
-	set: function(key, val) {
+	set: function(key, val, ttl) {
 		this.cache[key] = val;
+
+		if (ttl) {
+			setTimeout(_.bind(function() {
+				delete this.cache[key];
+			}, this), ttl);
+		}
 	},
 	getAndRemove: function(key) {
 		var cacheVal = this.cache[key] || false;

@@ -1,8 +1,15 @@
 <div class="question-col">
 	<h3><%- model.body %></h3>
-	<span class="last-sent">
-		Last sent <%- lastSentString %> <% if (model.user_last_sent) { %>by <%- model.user_last_sent.name %><% } %>
-	</span>
+	<div class="question-meta">
+		<div class="checkbox">
+			<input type="checkbox" name="checkbox_<%- model._id %>" id="checkbox_<%- model._id %>" <% if (model.audience === 'admins') { %>checked<% } %>>
+			<label for="checkbox_<%- model._id %>"></label>
+		</div>
+		<span class="results-label">Admin only results?</span>
+		<span class="last-sent">
+			Last sent <%- lastSentString %> <% if (model.user_last_sent) { %>by <%- model.user_last_sent.name %><% } %>
+		</span>
+	</div>
 </div>
 <% if (question_type === 'suggested') { %>
 <div class="save-col">

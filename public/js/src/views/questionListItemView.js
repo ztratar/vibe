@@ -1,5 +1,6 @@
 import 'backbone';
 import Analytics from 'helpers/analytics';
+import ConfirmDialogView from 'views/confirmDialogView';
 
 module moment from 'moment';
 module template from 'text!templates/questionListItemView.html';
@@ -13,7 +14,11 @@ var QuestionListItemView = Backbone.View.extend({
 	events: {
 		'click a.action': 'actionTriggered',
 		'click ul.days a': 'dayClicked',
-		'click a.send-now': 'sendNow'
+		'click a.send-now': 'sendNow',
+		'click span.results-label': 'togglePrivacy',
+		'click label': 'togglePrivacy',
+		'mouseenter span.results-label': 'fakeShowCheckHover',
+		'mouseleave span.results-label': 'fakeHideCheckHover'
 	},
 
 	initialize: function(opts) {
@@ -47,6 +52,8 @@ var QuestionListItemView = Backbone.View.extend({
 		}));
 
 		this.$sendNowButton = this.$('.send-now');
+		this.$checkbox = this.$('input[type="checkbox"]');
+		this.$cblabel = this.$('label');
 
 		return this;
 	},
@@ -107,6 +114,48 @@ var QuestionListItemView = Backbone.View.extend({
 		});
 
 		return false;
+	},
+
+	togglePrivacy: function() {
+		var that = this,
+			checked = this.$checkbox.prop('checked');
+
+		if (checked) {
+			var confirmView = new ConfirmDialogView({
+				title: 'Are you sure?',
+				body: 'The votes on the question, past and present, will be made viewable by employees. You can make it private again at any time.',
+				onConfirm: function() {
+					that.$checkbox.prop('checked', false);
+					that.model.makePublic(function() {
+						window.Vibe.appView.showNotif('Saved!', {
+							type: 'top'
+						});
+					});
+				}
+			});
+			window.Vibe.appView.showOverlay(confirmView, {
+				onRemove: function() {
+					window.Vibe.appRouter.homeView.managePolls();
+				}
+			});
+		} else {
+			this.$checkbox.prop('checked', 'checked');
+			this.model.makePrivateToAdmins(function() {
+				window.Vibe.appView.showNotif('Saved!', {
+					type: 'top'
+				});
+			});
+		}
+
+		return false;
+	},
+
+	fakeShowCheckHover: function() {
+		this.$cblabel.addClass('fakeHover');
+	},
+
+	fakeHideCheckHover: function() {
+		this.$cblabel.removeClass('fakeHover');
 	}
 
 });
