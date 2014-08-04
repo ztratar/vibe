@@ -27,10 +27,14 @@ var RatingChartView = Backbone.View.extend({
 	initialize: function(opts) {
 		var that = this;
 
-		this.model = opts.model;
-
-		this.model.on('change', this.render, this);
-		this.model.on('newAnswer', this.addNewAnswer, this);
+		if (opts.model) {
+			this.model = opts.model;
+			this.model.on('change', this.render, this);
+			this.model.on('newAnswer', this.addNewAnswer, this);
+			this.answerData = this.model.get('answer_data')[0];
+		} else {
+			this.answerData = opts.answerData;
+		}
 
 		this.forceSmallChart = opts.forceSmallChart || false;
 
@@ -40,7 +44,7 @@ var RatingChartView = Backbone.View.extend({
 	},
 
 	render: function() {
-		if (this.model.get('answer_data') && this.model.get('answer_data').length) {
+		if (this.answerData) {
 			this.initChart();
 		}
 	},
@@ -58,7 +62,6 @@ var RatingChartView = Backbone.View.extend({
 			.attr("height", this.chartHeight)
 			.attr("width", this.chartWidth);
 
-		this.answerData = this.model.get('answer_data')[0];
 		this.processData();
 
 		this.drawChart();

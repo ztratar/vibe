@@ -8982,7 +8982,14 @@ html {
     height: 100%;
   }
 }
-.time-series-chart-view svg {
+.time-series-chart-view .time-series-chart {
+  height: 100%;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: all 0.24s ease-in-out;
+  transition: all 0.24s ease-in-out;
+}
+.time-series-chart-view .time-series-chart svg {
   display: block;
   margin: 0 auto;
   -webkit-transform: translate3d(0, 0, 0);
@@ -8990,55 +8997,132 @@ html {
   -webkit-transition: all 0.6s ease-out;
   transition: all 0.6s ease-out;
 }
-.time-series-chart-view line {
+.time-series-chart-view .time-series-chart line {
   fill: none;
   stroke: #F8BC65;
   stroke-width: 2px;
   opacity: 1;
 }
-.time-series-chart-view line.axis {
+.time-series-chart-view .time-series-chart line.axis {
   opacity: 0.1;
   stroke: url(#axis-gradient);
 }
-.time-series-chart-view line.anim {
+.time-series-chart-view .time-series-chart line.anim {
   -webkit-transition: all 1.2s ease-in-out;
   transition: all 1.2s ease-in-out;
 }
-.time-series-chart-view line.new {
+.time-series-chart-view .time-series-chart line.new {
   opacity: 0;
   -webkit-transition: all 0s;
   transition: all 0s;
 }
-.time-series-chart-view circle {
+.time-series-chart-view .time-series-chart circle {
   fill: #FFF;
+  opacity: 0.98;
+}
+.time-series-chart-view .time-series-chart circle.anim {
+  -webkit-transition: all 1.2s ease-in-out;
+  transition: all 1.2s ease-in-out;
+}
+.time-series-chart-view .time-series-chart circle.new {
+  opacity: 0;
+  -webkit-transition: all 0s;
+  transition: all 0s;
+}
+.time-series-chart-view .time-series-chart circle:hover {
+  -webkit-transition: opacity 0.3s ease-in;
+  transition: opacity 0.3s ease-in;
+  cursor: pointer;
   opacity: 1;
 }
-.time-series-chart-view circle.anim {
-  -webkit-transition: all 1.2s ease-in-out;
-  transition: all 1.2s ease-in-out;
-}
-.time-series-chart-view circle.new {
-  opacity: 0;
-  -webkit-transition: all 0s;
-  transition: all 0s;
-}
-.time-series-chart-view text {
+.time-series-chart-view .time-series-chart text {
   fill: rgba(255, 255, 255, 0.6);
 }
 @media (max-width: 480px) {
-  .time-series-chart-view text {
+  .time-series-chart-view .time-series-chart text {
     font-size: 12px;
   }
 }
-.rating-chart-view rect {
+.time-series-chart-view .time-series-chart text.inCircle {
+  pointer-events: none;
+  font-weight: bold;
+  fill: #DAA85E;
+  font-size: 12px;
+}
+.time-series-chart-view .rating-chart {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  z-index: 40;
+  background: #e59926;
+  visibility: hidden;
+  position: absolute;
+  -webkit-transform: scale(0.94, 0.94);
+  -ms-transform: scale(0.94, 0.94);
+  transform: scale(0.94, 0.94);
+  -webkit-transition: all 0.24s ease-in-out 0s;
+  transition: all 0.24s ease-in-out 0s;
+}
+.time-series-chart-view .rating-chart .rating-chart-container {
+  height: 100%;
+  margin-left: 70px;
+}
+@media (max-width: 480px) {
+  .time-series-chart-view .rating-chart .rating-chart-container {
+    margin-right: -10px;
+    margin-left: 40px;
+  }
+}
+.time-series-chart-view .rating-chart .back-to-time {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 3px;
+  padding: 4px 8px 10px;
+}
+.time-series-chart-view .rating-chart .back-to-time:hover {
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.06);
+}
+.time-series-chart-view .rating-chart .back-to-time i {
+  font-size: 32px;
+}
+@media (max-width: 480px) {
+  .time-series-chart-view .rating-chart .back-to-time {
+    left: -8px;
+  }
+  .time-series-chart-view .rating-chart .back-to-time i {
+    font-size: 24px;
+  }
+}
+.time-series-chart-view.show-rating .rating-chart {
+  -webkit-transition: all 0.24s ease-in-out 0.08s;
+  transition: all 0.24s ease-in-out 0.08s;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  visibility: visible;
+  opacity: 1;
+}
+.time-series-chart-view.show-rating .time-series-chart {
+  opacity: 0;
+  visibility: hidden;
+}
+.rating-chart-view rect,
+.rating-chart rect {
   fill: #F8EEDF;
   -webkit-transition: all 0.8s ease-in-out;
   transition: all 0.8s ease-in-out;
 }
-.rating-chart-view rect.zero {
+.rating-chart-view rect.zero,
+.rating-chart rect.zero {
   fill: #F8B653;
 }
-.rating-chart-view text {
+.rating-chart-view text,
+.rating-chart text {
   font-size: 18px;
   font-weight: bold;
   fill: #DAA85E;
@@ -11502,6 +11586,9 @@ html {
   margin: 0;
 }
 .post-chat-view .post-section .post-question-item-view .action-bar {
+  display: none;
+}
+.post-chat-view .post-section .post-question-item-view a.pull-down {
   display: none;
 }
 .post-chat-view .chat-section {

@@ -1,12 +1,17 @@
 import 'backbone';
 import 'underscore';
+import BaseView from 'views/baseView';
+import RatingChartView from 'views/ratingChartView';
 
+module template from 'text!templates/timeSeriesChartView.html';
 module moment from 'moment';
 module d3 from 'd3';
 
-var TimeSeriesChartView = Backbone.View.extend({
+var TimeSeriesChartView = BaseView.extend({
 
 	className: 'time-series-chart-view',
+
+	template: _.template(template),
 
 	chartSettings: {
 		chartMargin: 80,
@@ -21,6 +26,10 @@ var TimeSeriesChartView = Backbone.View.extend({
 	},
 
 	smallChartWindowWidthBreakpoint: 550,
+
+	events: {
+		'tap a.back-to-time': 'closeRatingChart'
+	},
 
 	useSmallVersion: function() {
 		return (this.windowWidth < this.smallChartWindowWidthBreakpoint) || this.forceSmallChart;
@@ -46,6 +55,9 @@ var TimeSeriesChartView = Backbone.View.extend({
 	},
 
 	render: function() {
+		this.$el.html(this.template());
+		this.$ratingChartContainer = this.$el.find('.rating-chart-container');
+
 		if (this.answerData.length > 1) {
 			this.windowWidth = $(window).width();
 			this.initChart();
@@ -55,10 +67,12 @@ var TimeSeriesChartView = Backbone.View.extend({
 			}
 			this.renderAxisText();
 		}
+
+		this.delegateEvents();
 	},
 
 	initChart: function() {
-		var $chart = this.$el;
+		var $chart = this.$('.time-series-chart');
 
 		// Store time variables used for x position calculations
 		this.mostRecentTime = Date.parse(_.last(this.answerData).time_sent),
@@ -90,9 +104,11 @@ var TimeSeriesChartView = Backbone.View.extend({
 		if (point1) {
 			this.drawLine(this.numPoints, point1, point2);
 			this.drawCircle(this.numPoints-1, point1.x, point1.y);
+			this.drawCircleText(this.numPoints-1, point1.x, point1.y, point1.avg);
 		}
 		this.drawAxisMarker(this.numPoints, point2.x);
 		this.drawCircle(this.numPoints, point2.x, point2.y);
+		this.drawCircleText(this.numPoints, point2.x, point2.y, point2.avg);
 
 		if (pointData.avg === false) {
 			var lastCircle = _.last(this.circles),
@@ -112,7 +128,7 @@ var TimeSeriesChartView = Backbone.View.extend({
 
 	getPoint: function(i, answerItem) {
 		var chartWidth = this.chartWidth,
-			topMargin = this.useSmallVersion() ? 10 : 14,
+			topMargin = this.useSmallVersion() ? 14 : 18,
 			pointTime,
 			realChartHeight,
 			yPercentage,
@@ -134,7 +150,8 @@ var TimeSeriesChartView = Backbone.View.extend({
 
 			coords = {
 				x: (xPercentage * (this.chartWidth-(2*this.getChartMargin()))) + this.getChartMargin(),
-				y: topMargin + (realChartHeight * (1 - yPercentage))
+				y: topMargin + (realChartHeight * (1 - yPercentage)),
+				avg: answerItem.avg
 			};
 
 			if (i > 1) {
@@ -167,16 +184,55 @@ var TimeSeriesChartView = Backbone.View.extend({
 	},
 
 	drawCircle: function(i, x, y, r) {
-		r = r || (this.useSmallVersion() ? 10 : 14);
+		r = r || (this.useSmallVersion() ? 12 : 14);
 
-		var circle = this.svg.append('circle')
-			.attr('cx', x)
-			.attr('cy', y)
-			.attr('r', r);
+		var that = this,
+			circle = this.svg.append('circle')
+				.attr('cx', x)
+				.attr('cy', y)
+				.attr('r', r);
 
 		this.circles[i] = circle;
 
+		circle
+			.on('mouseenter', function(d) {
+				circle.transition()
+					.duration(300)
+					.attr('r', r + 3);
+			})
+			.on('mouseleave', function(d) {
+				circle.transition()
+					.duration(300)
+					.attr('r', r);
+			})
+			.on('click', function(d) {
+				circle.transition()
+					.duration(300)
+					.attr('r', r+12);
+
+				var ratingChartView = new RatingChartView({
+					answerData: that.answerData[i-1]
+				});
+				that.$ratingChartContainer.html(ratingChartView.$el);
+				ratingChartView.render();
+				that.$el.addClass('show-rating');
+			});
+
 		return circle;
+	},
+
+	drawCircleText: function(i, x, y, avgText) {
+		var r = (this.useSmallVersion() ? 10 : 14);
+
+		var g = this.svg.append('g')
+				.attr('transform', 'translate('+(x+0.5)+','+(y+4.5)+')');
+
+		avgText = Math.round(avgText*10) / 10;
+
+		var text = g.append('text')
+					.attr('text-anchor', 'middle')
+					.attr('class', 'inCircle')
+					.text(avgText);
 	},
 
 	drawAxisGradient: function() {
@@ -264,6 +320,11 @@ var TimeSeriesChartView = Backbone.View.extend({
 				.attr('y2', newPoint.y)
 				.duration(800);
 		}, 300);
+	},
+
+	closeRatingChart: function() {
+		this.$el.removeClass('show-rating');
+		return false;
 	}
 
 });
