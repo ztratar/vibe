@@ -43,6 +43,7 @@ module.exports = function (app, passport) {
 	app.get('/api/feedback/:feedback/chats', s.requireLogin, c.feedback.getChats);
 	app.get('/api/posts', s.requireLogin, c.posts.index);
 	app.get('/api/notifications', s.requireLogin, c.notifications.index);
+	app.get('/api/logout', c.users.logout);
 
 	app.post('/api/login', c.users.login);
 	app.post('/api/logout', c.users.logout);
