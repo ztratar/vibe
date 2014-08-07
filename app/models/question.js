@@ -51,7 +51,9 @@ QuestionSchema.methods = {
 			})
 			.sort({ _id: -1 })
 			.exec(function(err, questionInstance) {
-				questionInstance.addUser(user);
+				if (questionInstance) {
+					questionInstance.addUser(user);
+				}
 			});
 	},
 

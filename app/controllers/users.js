@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 	_ = require('underscore'),
 	User = mongoose.model('User'),
 	Company = mongoose.model('Company'),
+	Post = mongoose.model('Post'),
 	AccessRequest = mongoose.model('AccessRequest'),
 	UserInvite = mongoose.model('UserInvite'),
 	Async = require('async'),
@@ -318,6 +319,7 @@ exports.createFromUserInvite = function(req, res, next) {
 		user.generateNewUserPostsFeed(function(err, posts) {
 			cb(null, user);
 		});
+		user.convertAvatar();
 	}], function(err, user) {
 		if (err) return sendStandardError();
 
@@ -326,8 +328,6 @@ exports.createFromUserInvite = function(req, res, next) {
 		req.logIn(user, function(err) {
 			if (err) return sendStandardError();
 			res.send(user.stripInfo());
-
-			user.convertAvatar();
 		});
 	});
 };
@@ -423,6 +423,33 @@ exports.getAdmins = function(req, res, cb) {
 		} else {
 			res.send(mappedUsers);
 		}
+	});
+};
+
+/*
+ * GET /api/admin/user/:user/regenerate_feed
+ *
+ * Re-created the users feed
+ */
+exports.regenerateFeed = function(req, res, cb) {
+	var userId = req.params.user;
+	if (userId === 'me') {
+		userId = req.user._id;
+	}
+
+	User.findById(userId, function(err, user) {
+		if (err || !user) res.send(500);
+		Post.update({
+			for_user: user._id
+		}, {
+			$set: {
+				active: false
+			}
+		}, function(err, numAffected) {
+			user.generateNewUserPostsFeed(function() {
+				res.send({ message: 'New feed created' });
+			});
+		});
 	});
 };
 

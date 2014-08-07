@@ -253,15 +253,18 @@ UserSchema.methods = {
 				company: user.company
 			}, function(err, questions) {
 				_.each(questions, function(question) {
-					postObjs.push({
-						for_user: user._id,
-						company: question.company,
-						content_type: 'question',
-						question: question._id,
-						sort_time: question.time_last_sent
-					});
+					// Only add questions that have actually been asked
+					if (question.time_last_sent) {
+						postObjs.push({
+							for_user: user._id,
+							company: question.company,
+							content_type: 'question',
+							question: question._id,
+							sort_time: question.time_last_sent
+						});
 
-					question.addUser(user);
+						question.addUser(user);
+					}
 				});
 
 				postObjs = _.sortBy(postObjs, function(postObj) {
