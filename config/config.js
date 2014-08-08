@@ -22,7 +22,7 @@ module.exports = {
 	test: {
 	},
 	production: {
-		frontendCacheVersion: '1.0.1',
+		frontendCacheVersion: '1.0.2',
 		mongoosedb: 'mongodb://vibe:ksdiocskla@ds059549-a0.mongolab.com:59549/heroku_app24476177',
 		db: 'mongodb://vibe:ksdiocskla@ds059549-a0.mongolab.com:59549/heroku_app24476177',
 		static_path: 'https://www.getvibe.com',

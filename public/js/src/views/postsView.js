@@ -56,7 +56,7 @@ var PostsView = Backbone.View.extend({
 
 	addAll: function(ev) {
 		if (this.posts.length) {
-			this.showLoader();
+			this.removeLoader();
 			this.$posts.html('');
 			this.posts.each(this.addOne, this);
 		} else if (ev) {
