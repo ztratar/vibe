@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 	env = process.env.NODE_ENV || 'development',
 	_ = require('underscore'),
 	User = mongoose.model('User'),
+	Chat = mongoose.model('Chat'),
 	Company = mongoose.model('Company'),
 	Post = mongoose.model('Post'),
 	AccessRequest = mongoose.model('AccessRequest'),
@@ -427,7 +428,7 @@ exports.getAdmins = function(req, res, cb) {
 };
 
 /*
- * GET /api/admin/user/:user/regenerate_feed
+ * GET /api/admin/users/:user/regenerate_feed
  *
  * Re-created the users feed
  */
@@ -449,6 +450,33 @@ exports.regenerateFeed = function(req, res, cb) {
 			user.generateNewUserPostsFeed(function() {
 				res.send({ message: 'New feed created' });
 			});
+		});
+	});
+};
+
+/*
+ * GET /api/admin/users/:user/refresh_chat_avatars
+ *
+ * Update denormalized avatar
+ */
+exports.refreshChatAvatars = function(req, res) {
+	var userId = req.params.user;
+	if (userId === 'me') {
+		userId = req.user._id;
+	}
+
+	User.findById(userId, function(err, user) {
+		if (err || !user) res.send(500);
+		Chat.update({
+			'creator.ref': user._id
+		}, {
+			$set: {
+				'creator.avatar': user.avatar
+			}
+		}, {
+			multi: true
+		}, function(err, numAffected) {
+			res.send({ message: 'Avatars updated' });
 		});
 	});
 };
