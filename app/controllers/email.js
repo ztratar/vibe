@@ -109,7 +109,7 @@ exports.send_unread_notifications = function(user) {
 		exports.send({
 			to: user.email,
 			from: 'info@getvibe.com',
-			subject: '(' + notifications.length + ') - ' + notifications[0].notifBody,
+			subject: '(' + notifications.length + ') - ' + notifications[0].notifBody.replace('<strong>','').replace('</strong>',''),
 			templateName: 'unread_notifications',
 			templateData: {
 				notifications: notifications,
