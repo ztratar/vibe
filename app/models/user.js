@@ -250,7 +250,8 @@ UserSchema.methods = {
 			});
 
 			Question.find({
-				company: user.company
+				company: user.company,
+				active: true
 			}, function(err, questions) {
 				_.each(questions, function(question) {
 					// Only add questions that have actually been asked

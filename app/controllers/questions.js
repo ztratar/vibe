@@ -282,7 +282,20 @@ exports.createAnswer = function(req, res) {
  * inactive.
  */
 exports.update = function (req, res, next) {
-	if (req.body.active !== undefined) req.question.active = req.body.active;
+	if (req.body.active !== undefined) {
+		req.question.active = req.body.active;
+		if (req.body.active === false) {
+			Post.update({
+				question: req.question._id
+			}, {
+				$set: {
+					active: false
+				}
+			}, {
+				multi: true
+			}, function(err, numAffected) {});
+		}
+	}
 	if (req.body.send_on_days !== undefined) req.question.send_on_days = req.body.send_on_days;
 	if (req.body.audience !== undefined) {
 		if (req.body.audience !== req.question.audience
