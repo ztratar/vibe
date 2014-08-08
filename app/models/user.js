@@ -135,6 +135,10 @@ UserSchema.methods = {
 		user.hashed_password = undefined;
 		user.salt = undefined;
 		user.provider = undefined;
+		user.reset_password_hash = undefined;
+		user.pending = undefined;
+		user.device_token = undefined;
+		user.device_type = undefined;
 
 		return user;
 	},
