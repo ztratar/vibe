@@ -16,6 +16,10 @@ exports.delete = function(req, res, next) {
 		if (err) return helpers.sendError(res, err);
 		if (!chat) return helpers.sendError(res, 'No chat found');
 
+		if (!(req.user.isAdmin || chat.creator.ref.toString() === req.user._id.toString())) {
+			return helpers.sendError(res, 'You don\'t have permission to do this');
+		}
+
 		var UpdateModel,
 			updateField;
 		if (chat.feedback) {

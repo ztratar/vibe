@@ -80,7 +80,7 @@ module.exports = function (app, passport) {
 	app.delete('/api/users/:id', s.requireAdmin, c.users.delete);
 	app.delete('/api/userinvites/:id', s.requireAdmin, c.users.uninvite);
 	app.delete('/api/feedback/:feedback', s.requireAdmin, c.feedback.delete);
-	app.delete('/api/chats/:id', s.requireAdmin, c.chat.delete);
+	app.delete('/api/chats/:id', s.requireLogin, c.chat.delete);
 
 	//
 	// PAGES

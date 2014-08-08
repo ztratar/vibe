@@ -30,7 +30,8 @@ var ChatItemView = Backbone.View.extend({
 			body: this.model.get('body'),
 			userName: this.model.get('creator').name,
 			userAvatar: avatar,
-			timeago: moment(this.model.get('time_created')).fromNow()
+			timeago: moment(this.model.get('time_created')).fromNow(),
+			showPullDown: window.Vibe.user.get('isAdmin') || this.model.get('creator').ref === window.Vibe.user.get('_id')
 		}));
 
 		this.$timeElem = this.$('span.time');

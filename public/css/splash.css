@@ -43,6 +43,7 @@ html {
   background: white;
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 #triangleUp path {
@@ -83,6 +84,7 @@ html {
 }
 .splash-page .section.light-solid {
   background-image: -webkit-linear-gradient(top, #fcfcfc 0%, #e5ecf3 100%);
+  background-image: -o-linear-gradient(top, #fcfcfc 0%, #e5ecf3 100%);
   background-image: linear-gradient(to bottom, #fcfcfc 0%, #e5ecf3 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffcfcfc', endColorstr='#ffe5ecf3', GradientType=0);
@@ -119,6 +121,7 @@ html {
   background: inherit;
   -webkit-transform: rotate(-2deg);
   -ms-transform: rotate(-2deg);
+  -o-transform: rotate(-2deg);
   transform: rotate(-2deg);
 }
 .splash-page .section.ss-style-doublediagonal::before {
@@ -128,6 +131,7 @@ html {
   background: #116094;
   -webkit-transform: rotate(-3deg);
   -ms-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
   transform: rotate(-3deg);
   -webkit-transform-origin: 3% 0;
   transform-origin: 3% 0;
@@ -178,11 +182,13 @@ html {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transition: all 0.26s ease-out 0s;
+  -o-transition: all 0.26s ease-out 0s;
   transition: all 0.26s ease-out 0s;
 }
 .splash-page .section.intro-section .intro-page.splash-request-access {
   padding-bottom: 0;
   -webkit-transition: all 0.26s ease-out 0.16s;
+  -o-transition: all 0.26s ease-out 0.16s;
   transition: all 0.26s ease-out 0.16s;
 }
 .splash-page .section.intro-section .intro-page.page-hide {
@@ -192,6 +198,7 @@ html {
   -webkit-transform: translate3d(0, -20px, 0);
   transform: translate3d(0, -20px, 0);
   -webkit-transition: all 0.26s ease-out 0s;
+  -o-transition: all 0.26s ease-out 0s;
   transition: all 0.26s ease-out 0s;
 }
 .splash-page .section.intro-section .intro-page.page-hide.splash-intro {
@@ -252,6 +259,7 @@ html {
 .splash-page .section.intro-section .splash-request-access > div a.cancel-request-access i {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
   transform: rotate(45deg);
   font-size: 42px;
   color: white;
