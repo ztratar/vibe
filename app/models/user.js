@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	crypto = require('crypto'),
 	_ = require('underscore'),
 	helpers = require('../helpers'),
+	Chat = mongoose.model('Chat'),
 	Feedback = mongoose.model('Feedback'),
 	Question = mongoose.model('Question'),
 	Post = mongoose.model('Post'),
@@ -198,7 +199,17 @@ UserSchema.methods = {
 			if (err) return;
 			user.avatar = avatarKey;
 			user.avatar_v++;
-			user.save();
+			user.save(function(err, user) {
+				Chat.update({
+					'creator.ref': user._id
+				}, {
+					$set: {
+						'creator.avatar': user.avatar
+					}
+				}, {
+					multi: true
+				}, function(err, numAffected) {});
+			});
 		});
 	},
 
