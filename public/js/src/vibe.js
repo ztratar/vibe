@@ -81,6 +81,15 @@ window.Vibe.run = function() {
 		});
 	} else {
 		window.Vibe.user = new User(window.Vibe._data_.currentUser);
+
+		if (window.UserVoice) {
+			window.UserVoice.push(['identify', {
+			  email:      window.Vibe.user.get('email'),
+			  name:       window.Vibe.user.get('name'),
+			  id:         window.Vibe.user.get('_id')
+			}]);
+		}
+
 		window.Vibe.renderViews();
 		Router.init();
 
