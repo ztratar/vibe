@@ -66,7 +66,7 @@ var PostQuestionItemView = BaseView.extend({
 		this.$percentage = this.$('.percentage-voted');
 
 		_.delay(_.bind(function() {
-			if (this.question.get('audience') === 'admins') {
+			if (this.question.get('audience') === 'admins' && !window.Vibe.user.get('isAdmin')) {
 				this.renderSentToAdminThanks();
 			} else {
 				this.renderChart();
