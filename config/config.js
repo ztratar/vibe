@@ -23,7 +23,7 @@ module.exports = {
 	},
 	production: {
 		frontendCacheVersion: '1.0.2',
-		mongoosedb: 'mongodb://heroku_app24476177:80cqqo8p1631qqbrcfsn4ui08u@ds063330.mongolab.com:63330/heroku_app24476177'
+		mongoosedb: 'mongodb://heroku_app24476177:80cqqo8p1631qqbrcfsn4ui08u@ds063330.mongolab.com:63330/heroku_app24476177',
 		db: 'mongodb://heroku_app24476177:80cqqo8p1631qqbrcfsn4ui08u@ds063330.mongolab.com:63330/heroku_app24476177',
 		static_path: 'https://www.getvibe.com',
 		root: rootPath,
