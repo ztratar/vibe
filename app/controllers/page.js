@@ -153,14 +153,14 @@ exports.change_email = function(req, res) {
  * STATIC PAGE LOAD - Admin Invite Company Page
  */
 exports.admin_invite_company = function(req, res) {
-	if (req.isAuthenticated() && req.user.isSuperAdmin) {
+	//if (req.isAuthenticated() && req.user.isSuperAdmin) {
 		res.render('admin/invite_company', {
 			env: process.env.NODE_ENV || 'development',
 			config: config
 		});
-	} else {
+	/*} else {
 		res.redirect('/');
-	}
+	}*/
 };
 
 /*
