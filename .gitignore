@@ -9,5 +9,6 @@ vibe_app/platforms/ioss/www/js
 vibe_app/www/js/
 vibe_app/www/css/
 vibe_app/www/img/
+config/config.js
 public/js/build/
 .DS_Store
