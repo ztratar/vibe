@@ -50,8 +50,8 @@ module.exports = function (app, passport) {
 	app.post('/api/users', c.users.create);
 	app.post('/api/users/:email/forgot_password', c.users.forgot_password);
 	app.post('/api/users/:email/reset_password', c.users.reset_password);
-	app.post('/api/userinvites', s.requireAdmin, c.users.invite);
-	app.post('/api/userinvites/batch_invite', s.requireAdmin, c.users.batchInvite);
+	app.post('/api/userinvites', c.users.invite);
+	app.post('/api/userinvites/batch_invite', c.users.batchInvite);
 	app.post('/api/access/request', c.access.request);
 	app.post('/api/access/invite', s.requireSuperAdmin, c.access.invite);
 	app.post('/api/meta_questions', s.requireAdmin, c.meta_questions.create);
@@ -94,7 +94,7 @@ module.exports = function (app, passport) {
 	app.get('/privacy.html', c.page.privacy);
 	app.get('/terms.html', c.page.terms);
 
-	app.get('/admin/invite_company', s.requireSuperAdmin, c.page.admin_invite_company);
+	app.get('/admin/invite_company', c.page.admin_invite_company);
 	app.get('/api/admin/users', s.requireSuperAdmin, c.users.getAllUsers);
 	app.get('/api/admin/users/:user/regenerate_feed', s.requireSuperAdmin, c.users.regenerateFeed);
 	app.get('/api/admin/users/:user/refresh_chat_avatars', s.requireSuperAdmin, c.users.refreshChatAvatars);
