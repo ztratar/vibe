@@ -17,8 +17,7 @@ module.exports = {
 			region: 'us-west-2',
 			Bucket: 'vibe-app-dev',
 			cloudfrontDomain: 'https://d10y1c0fzsnik8.cloudfront.net/'
-		},
-		meow: {}
+		}
 	},
 	test: {
 	},
