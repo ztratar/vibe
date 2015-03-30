@@ -53,7 +53,7 @@ module.exports = function (app, passport) {
 	app.post('/api/userinvites', c.users.invite);
 	app.post('/api/userinvites/batch_invite', c.users.batchInvite);
 	app.post('/api/access/request', c.access.request);
-	app.post('/api/access/invite', s.requireSuperAdmin, c.access.invite);
+	app.post('/api/access/invite', c.access.invite);
 	app.post('/api/meta_questions', s.requireAdmin, c.meta_questions.create);
 	app.post('/api/questions', s.requireAdmin, c.questions.create);
 	app.post('/api/questions/:question/chats', s.requireLogin, c.questions.newChat);
